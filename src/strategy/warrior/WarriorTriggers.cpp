@@ -19,7 +19,7 @@ bool VigilanceTrigger::IsActive()
     {
         return false;
     }
-    
+
     Group* group = bot->GetGroup();
     if (!group)
     {
@@ -63,7 +63,7 @@ bool VigilanceTrigger::IsActive()
         }
 
         // Determine Highest Gear Score
-        uint32 gearScore = botAI->GetEquipGearScore(member, false, false);
+        uint32 gearScore = botAI->GetEquipGearScore(member/*, false, false*/);
         if (gearScore > highestGearScore)
         {
             highestGearScore = gearScore;

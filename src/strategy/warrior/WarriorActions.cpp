@@ -58,7 +58,7 @@ Unit* CastVigilanceAction::GetTarget()
         }
 
         // Determine Highest Gear Score
-        uint32 gearScore = botAI->GetEquipGearScore(member, false, false);
+        uint32 gearScore = botAI->GetEquipGearScore(member/*, false, false*/);
         if (gearScore > highestGearScore)
         {
             highestGearScore = gearScore;
@@ -218,7 +218,7 @@ bool CastShatteringThrowAction::isPossible()
     if (!target)
         return false;
 
-    // Range check: Shattering Throw is 30 yards    
+    // Range check: Shattering Throw is 30 yards
     if (!bot->IsWithinDistInMap(target, 30.0f))
     {
         return false;

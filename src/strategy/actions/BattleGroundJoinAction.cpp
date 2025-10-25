@@ -176,6 +176,7 @@ bool BGJoinAction::gatherArenaTeam(ArenaType type)
             continue;
 
         memberBotAI->Reset();
+        member->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TELEPORTED | AURA_INTERRUPT_FLAG_CHANGE_MAP);
         member->TeleportTo(bot->GetMapId(), bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ(), 0);
 
         LOG_INFO("playerbots", "Bot {} <{}>: Member of <{}>", member->GetGUID().ToString().c_str(),
@@ -424,7 +425,7 @@ bool BGJoinAction::JoinQueue(uint32 type)
     uint32 bgTypeId_ = bgTypeId;
     uint32 instanceId = 0;  // 0 = First Available
 
-    bool isPremade = false;
+    // bool isPremade = false; //not used, line marked for removal.
     bool isArena = false;
     bool isRated = false;
     uint8 arenaslot = 0;
@@ -454,7 +455,7 @@ bool BGJoinAction::JoinQueue(uint32 type)
     bool joinAsGroup = bot->GetGroup() && bot->GetGroup()->GetLeaderGUID() == bot->GetGUID();
 
     // in wotlk only arena requires battlemaster guid
-    ObjectGuid guid = isArena ? unit->GetGUID() : bot->GetGUID();
+    // ObjectGuid guid = isArena ? unit->GetGUID() : bot->GetGUID(); //not used, line marked for removal.
 
     switch (bgTypeId)
     {
@@ -546,9 +547,11 @@ bool BGJoinAction::JoinQueue(uint32 type)
 
     if (!isArena)
     {
-        WorldPacket packet(CMSG_BATTLEMASTER_JOIN, 20);
-        packet << bot->GetGUID() << bgTypeId_ << instanceId << joinAsGroup;
-        bot->GetSession()->HandleBattlemasterJoinOpcode(packet);
+        WorldPacket* packet = new WorldPacket(CMSG_BATTLEMASTER_JOIN, 20);
+        *packet << bot->GetGUID() << bgTypeId_ << instanceId << joinAsGroup;
+        /// FIX race condition
+        // bot->GetSession()->HandleBattlemasterJoinOpcode(packet);
+        bot->GetSession()->QueuePacket(packet);
     }
     else
     {
@@ -686,7 +689,7 @@ bool BGLeaveAction::Execute(Event event)
 
     WorldPacket packet(CMSG_BATTLEFIELD_PORT, 20);
     packet << type << unk2 << (uint32)_bgTypeId << unk << uint8(0);
-    bot->GetSession()->HandleBattleFieldPortOpcode(packet);
+    bot->GetSession()->QueuePacket(new WorldPacket(packet));
 
     if (IsRandomBot)
         botAI->SetMaster(nullptr);
@@ -870,7 +873,7 @@ bool BGStatusAction::Execute(Event event)
             break;
     }
 
-    TeamId teamId = bot->GetTeamId();
+    //TeamId teamId = bot->GetTeamId(); //not used, line marked for removal.
 
     if (Time1 == TIME_TO_AUTOREMOVE)  // Battleground is over, bot needs to leave
     {
@@ -915,7 +918,7 @@ bool BGStatusAction::Execute(Event event)
 
                     WorldPacket packet(CMSG_BATTLEFIELD_PORT, 20);
                     packet << type << unk2 << (uint32)_bgTypeId << unk << action;
-                    bot->GetSession()->HandleBattleFieldPortOpcode(packet);
+                    bot->GetSession()->QueuePacket(new WorldPacket(packet));
 
                     botAI->ResetStrategies(false);
                     if (!bot->GetBattleground())
@@ -952,7 +955,7 @@ bool BGStatusAction::Execute(Event event)
         if (leaveQ && ((bot->GetGroup() && bot->GetGroup()->IsLeader(bot->GetGUID())) ||
                        !(bot->GetGroup() || botAI->GetMaster())))
         {
-            TeamId teamId = bot->GetTeamId();
+            //TeamId teamId = bot->GetTeamId(); //not used, line marked for removal.
             bool realPlayers = false;
             if (isRated)
                 realPlayers = sRandomPlayerbotMgr->BattlegroundData[queueTypeId][bracketId].ratedArenaPlayerCount > 0;
@@ -970,7 +973,7 @@ bool BGStatusAction::Execute(Event event)
             WorldPacket packet(CMSG_BATTLEFIELD_PORT, 20);
             action = 0;
             packet << type << unk2 << (uint32)_bgTypeId << unk << action;
-            bot->GetSession()->HandleBattleFieldPortOpcode(packet);
+            bot->GetSession()->QueuePacket(new WorldPacket(packet));
 
             botAI->ResetStrategies(!IsRandomBot);
             botAI->GetAiObjectContext()->GetValue<uint32>("bg type")->Set(0);
@@ -1037,7 +1040,7 @@ bool BGStatusAction::Execute(Event event)
 
         WorldPacket packet(CMSG_BATTLEFIELD_PORT, 20);
         packet << type << unk2 << (uint32)_bgTypeId << unk << action;
-        bot->GetSession()->HandleBattleFieldPortOpcode(packet);
+        bot->GetSession()->QueuePacket(new WorldPacket(packet));
 
         botAI->ResetStrategies(false);
         if (!bot->GetBattleground())

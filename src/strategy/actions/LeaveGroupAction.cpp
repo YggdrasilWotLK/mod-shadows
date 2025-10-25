@@ -30,8 +30,8 @@ bool PartyCommandAction::Execute(Event event)
     Player* master = GetMaster();
     if (master && member == master->GetName())
         return Leave(bot);
-	
-	botAI->Reset();
+
+    botAI->Reset();
 
     return false;
 }
@@ -64,16 +64,18 @@ bool UninviteAction::Execute(Event event)
         if (bot->GetGUID() == guid)
             return Leave(bot);
     }
-	
-	botAI->Reset();
+
+    botAI->Reset();
 
     return false;
 }
 
 bool LeaveGroupAction::Leave(Player* player)
 {
-    if (player && !GET_PLAYERBOT_AI(player) &&
+    if (player &&
+        !botAI &&
         !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, player))
+
         return false;
 
     bool aiMaster = GET_PLAYERBOT_AI(botAI->GetMaster()) != nullptr;
@@ -84,7 +86,7 @@ bool LeaveGroupAction::Leave(Player* player)
     bool shouldStay = randomBot && bot->GetGroup() && player == bot;
     if (!shouldStay)
     {
-        bot->RemoveFromGroup();
+        botAI->LeaveOrDisbandGroup();
     }
 
     if (randomBot)
@@ -162,8 +164,8 @@ bool LeaveFarAwayAction::isUseful()
     {
         return true;
     }
-	
-	botAI->Reset();
+
+    botAI->Reset();
 
     return false;
 }

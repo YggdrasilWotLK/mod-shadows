@@ -11,6 +11,7 @@
 #include "GridNotifiersImpl.h"
 #include "PlayerbotAIConfig.h"
 #include "Playerbots.h"
+#include "PositionValue.h"
 
 bool UseMeetingStoneAction::Execute(Event event)
 {
@@ -48,7 +49,7 @@ bool UseMeetingStoneAction::Execute(Event event)
 
     GameObjectTemplate const* goInfo = gameObject->GetGOInfo();
     if (!goInfo || goInfo->entry != 179944)
-		return false;
+        return false;
 
     return Teleport(master, bot);
 }
@@ -109,7 +110,7 @@ bool SummonAction::SummonUsingGos(Player* summoner, Player* player)
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(summoner, sPlayerbotAIConfig->sightDistance);
     Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(summoner, targets, u_check);
-    Cell::VisitAllObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
+    Cell::VisitObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
 
     for (GameObject* go : targets)
     {
@@ -129,7 +130,7 @@ bool SummonAction::SummonUsingNpcs(Player* summoner, Player* player)
     std::list<Unit*> targets;
     Acore::AnyUnitInObjectRangeCheck u_check(summoner, sPlayerbotAIConfig->sightDistance);
     Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(summoner, targets, u_check);
-    Cell::VisitAllObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
+    Cell::VisitObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
 
     for (Unit* unit : targets)
     {
@@ -168,7 +169,7 @@ bool SummonAction::Teleport(Player* summoner, Player* player)
     // Player* master = GetMaster();
     if (!summoner)
         return false;
-    
+
     if (player->GetVehicle())
     {
         botAI->TellError("You cannot summon me while I'm on a vehicle");
@@ -217,18 +218,31 @@ bool SummonAction::Teleport(Player* summoner, Player* player)
                 if (bot->isDead() && revive)
                 {
                     bot->ResurrectPlayer(1.0f, false);
+                    bot->SpawnCorpseBones();
                     botAI->TellMasterNoFacing("I live, again!");
                     botAI->GetAiObjectContext()->GetValue<GuidVector>("prioritized targets")->Reset();
                 }
 
                 player->GetMotionMaster()->Clear();
                 AI_VALUE(LastMovement&, "last movement").clear();
+                player->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TELEPORTED | AURA_INTERRUPT_FLAG_CHANGE_MAP);
                 player->TeleportTo(mapId, x, y, z, 0);
+
+                if (botAI->HasStrategy("stay", botAI->GetState()))
+                {
+                    PositionMap& posMap = AI_VALUE(PositionMap&, "position");
+                    PositionInfo stayPosition = posMap["stay"];
+
+                    stayPosition.Set(x,y, z, mapId);
+                    posMap["stay"] = stayPosition;
+                }
+
                 return true;
             }
         }
     }
 
-    botAI->TellError("Not enough place to summon");
+    if(summoner != player)
+         botAI->TellError("Not enough place to summon");
     return false;
 }

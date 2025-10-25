@@ -102,7 +102,7 @@ void TalkToQuestGiverAction::RewardNoItem(Quest const* quest, Object* questGiver
 {
     std::map<std::string, std::string> args;
     args["%quest"] = chat->FormatQuest(quest);
-    
+
     if (bot->CanRewardQuest(quest, false))
     {
         out << BOT_TEXT2("quest_status_completed", args);
@@ -173,7 +173,6 @@ void TalkToQuestGiverAction::RewardMultipleItem(Quest const* quest, Object* ques
     std::ostringstream outid;
     if (!botAI->IsAlt() || sPlayerbotAIConfig->autoPickReward == "yes")
     {
-        // Pick the first item of the best rewards.
         bestIds = BestRewards(quest);
         if (!bestIds.empty())
         {
@@ -206,17 +205,18 @@ void TalkToQuestGiverAction::RewardMultipleItem(Quest const* quest, Object* ques
     }
     else
     {
-        // Try to pick the usable item. If multiple list usable rewards.
+        // Try to pick the usable item. If multiple, list usable rewards.
         bestIds = BestRewards(quest);
-        if (!bestIds.empty())
-        {
+
+        if (bestIds.size() > 1)
             AskToSelectReward(quest, out, true);
-        }
-        else
+
+        else if (!bestIds.empty())
         {
             // Pick the first item
-            ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RewardChoiceItemId[*bestIds.begin()]);
-            bot->RewardQuest(quest, *bestIds.begin(), questGiver, true);
+            uint32 firstId = *bestIds.begin();
+            ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RewardChoiceItemId[firstId]);
+            bot->RewardQuest(quest, firstId, questGiver, true);
 
             out << "Rewarded " << ChatHelper::FormatItem(item);
         }

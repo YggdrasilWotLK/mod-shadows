@@ -38,7 +38,6 @@ private:
     bool ShouldAutoRelease() const;
     bool ShouldDelayBattlegroundRelease() const;
 
-    inline static std::unordered_map<uint32_t, time_t> m_botReleaseTimes;
     time_t m_bgGossipTime = 0;
 };
 
@@ -54,6 +53,15 @@ public:
 private:
     int64 CalculateDeadTime() const;
     void PerformGraveyardTeleport(const GraveyardStruct* graveyard) const;
+};
+
+// SelfResurrectAction action registration
+class SelfResurrectAction : public Action
+{
+public:
+    SelfResurrectAction(PlayerbotAI* ai) : Action(ai, "self resurrect") {}
+    virtual bool Execute(Event event) override;
+    bool isUseful() override;
 };
 
 #endif

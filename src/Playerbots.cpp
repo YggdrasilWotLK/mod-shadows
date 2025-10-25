@@ -29,6 +29,7 @@
 #include "ScriptMgr.h"
 #include "cs_playerbots.h"
 #include "cmath"
+#include "BattleGroundTactics.h"
 
 class PlayerbotsDatabaseScript : public DatabaseScript
 {
@@ -86,7 +87,8 @@ public:
         PLAYERHOOK_ON_BEFORE_CRITERIA_PROGRESS,
         PLAYERHOOK_ON_BEFORE_ACHI_COMPLETE,
         PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT,
-        PLAYERHOOK_ON_GIVE_EXP
+        PLAYERHOOK_ON_GIVE_EXP,
+        PLAYERHOOK_ON_BEFORE_TELEPORT
     }) {}
 
     void OnPlayerLogin(Player* player) override
@@ -95,8 +97,27 @@ public:
         {
             sPlayerbotsMgr->AddPlayerbotData(player, false);
             sRandomPlayerbotMgr->OnPlayerLogin(player);
-
         }
+    }
+
+    bool OnPlayerBeforeTeleport(Player* player, uint32 mapid, float /*x*/, float /*y*/, float /*z*/, float /*orientation*/, uint32 /*options*/, Unit* /*target*/) override
+    {
+        // Only apply to bots to prevent affecting real players
+        if (!player || !player->GetSession()->IsBot())
+            return true;
+
+        // If changing maps, proactively clean visibility references to prevent
+        // stale pointers in other players' visibility maps during the teleport.
+        // This fixes a race condition where:
+        // 1. Bot A teleports and its visible objects start getting cleaned up
+        // 2. Bot B is simultaneously updating visibility and tries to access objects in Bot A's old visibility map
+        // 3. Those objects may already be freed, causing a segmentation fault
+        if (player->GetMapId() != mapid && player->IsInWorld())
+        {
+            player->GetObjectVisibilityContainer().CleanVisibilityReferences();
+        }
+
+        return true;  // Allow teleport to continue
     }
 
     void OnPlayerAfterUpdate(Player* player, uint32 diff) override
@@ -175,33 +196,47 @@ public:
         sRandomPlayerbotMgr->HandleCommand(type, msg, player);
     }
 
-    bool OnPlayerBeforeCriteriaProgress(Player* player, AchievementCriteriaEntry const* /*criteria*/) override
+    bool OnPlayerBeforeAchievementComplete(Player* player, AchievementEntry const* achievement) override
     {
-        if (sRandomPlayerbotMgr->IsRandomBot(player))
+        if ((sRandomPlayerbotMgr->IsRandomBot(player) || sRandomPlayerbotMgr->IsAddclassBot(player)) &&
+            (achievement->flags & (ACHIEVEMENT_FLAG_REALM_FIRST_REACH | ACHIEVEMENT_FLAG_REALM_FIRST_KILL)))
         {
             return false;
         }
-        return true;
-    }
 
-    bool OnPlayerBeforeAchievementComplete(Player* player, AchievementEntry const* /*achievement*/) override
-    {
-        if (sRandomPlayerbotMgr->IsRandomBot(player))
-        {
-            return false;
-        }
         return true;
     }
 
     void OnPlayerGiveXP(Player* player, uint32& amount, Unit* /*victim*/, uint8 /*xpSource*/) override
     {
-        if (!player->GetSession()->IsBot())
+        // early return
+        if (sPlayerbotAIConfig->randomBotXPRate == 1.0 || !player)
             return;
-        
-        if (sPlayerbotAIConfig->playerbotsXPrate != 1.0)
+
+        // no XP multiplier, when player is no bot.
+        if (!player->GetSession()->IsBot() || !sRandomPlayerbotMgr->IsRandomBot(player))
+            return;
+
+        // no XP multiplier, when bot is in a group with a real player.
+        if (Group* group = player->GetGroup())
         {
-            amount = static_cast<uint32>(std::round(static_cast<float>(amount) * sPlayerbotAIConfig->playerbotsXPrate));
+            for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
+            {
+                Player* member = gref->GetSource();
+                if (!member)
+                {
+                    continue;
+                }
+
+                if (!member->GetSession()->IsBot())
+                {
+                    return;
+                }
+            }
         }
+
+        // otherwise apply bot XP multiplier.
+        amount = static_cast<uint32>(std::round(static_cast<float>(amount) * sPlayerbotAIConfig->randomBotXPRate));
     }
 };
 
@@ -260,11 +295,11 @@ public:
         LOG_INFO("server.loading", "║     mod-playerbots is a community-driven open-source     ║");
         LOG_INFO("server.loading", "║  project based on AzerothCore, licensed under AGPLv3.0   ║");
         LOG_INFO("server.loading", "╟──────────────────────────────────────────────────────────╢");
-        LOG_INFO("server.loading", "║      https://github.com/liyunfan1223/mod-playerbots      ║");
+        LOG_INFO("server.loading", "║      https://github.com/mod-playerbots/mod-playerbots    ║");
         LOG_INFO("server.loading", "╚══════════════════════════════════════════════════════════╝");
 
         uint32 oldMSTime = getMSTime();
-        
+
         LOG_INFO("server.loading", " ");
         LOG_INFO("server.loading", "Load Playerbots Config...");
 
@@ -358,7 +393,48 @@ public:
         sRandomPlayerbotMgr->OnPlayerLogout(player);
     }
 
-    void OnPlayerbotLogoutBots() override { sRandomPlayerbotMgr->LogoutAllBots(); }
+    void OnPlayerbotLogoutBots() override
+    {
+        LOG_INFO("playerbots", "Logging out all bots...");
+        sRandomPlayerbotMgr->LogoutAllBots();
+    }
+};
+
+class PlayerBotsBGScript : public BGScript
+{
+public:
+    PlayerBotsBGScript() : BGScript("PlayerBotsBGScript") {}
+
+    void OnBattlegroundStart(Battleground* bg) override
+    {
+        BGStrategyData data;
+
+        switch (bg->GetBgTypeID())
+        {
+            case BATTLEGROUND_WS:
+                data.allianceStrategy = urand(0, WS_STRATEGY_MAX - 1);
+                data.hordeStrategy = urand(0, WS_STRATEGY_MAX - 1);
+                break;
+            case BATTLEGROUND_AB:
+                data.allianceStrategy = urand(0, AB_STRATEGY_MAX - 1);
+                data.hordeStrategy = urand(0, AB_STRATEGY_MAX - 1);
+                break;
+            case BATTLEGROUND_AV:
+                data.allianceStrategy = urand(0, AV_STRATEGY_MAX - 1);
+                data.hordeStrategy = urand(0, AV_STRATEGY_MAX - 1);
+                break;
+            case BATTLEGROUND_EY:
+                data.allianceStrategy = urand(0, EY_STRATEGY_MAX - 1);
+                data.hordeStrategy = urand(0, EY_STRATEGY_MAX - 1);
+                break;
+            default:
+                break;
+        }
+
+        bgStrategies[bg->GetInstanceID()] = data;
+    }
+
+    void OnBattlegroundEnd(Battleground* bg, TeamId /*winnerTeam*/) override { bgStrategies.erase(bg->GetInstanceID()); }
 };
 
 void AddPlayerbotsScripts()
@@ -369,6 +445,7 @@ void AddPlayerbotsScripts()
     new PlayerbotsServerScript();
     new PlayerbotsWorldScript();
     new PlayerbotsScript();
+    new PlayerBotsBGScript();
 
     AddSC_playerbots_commandscript();
 }

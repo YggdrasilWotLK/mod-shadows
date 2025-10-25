@@ -21,6 +21,9 @@ Unit* FlagCarrierValue::Calculate()
         {
             BattlegroundWS* bg = (BattlegroundWS*)botAI->GetBot()->GetBattleground();
 
+            if (!bg)
+                return nullptr;
+
             if ((!sameTeam && bot->GetTeamId() == TEAM_HORDE || (sameTeam && bot->GetTeamId() == TEAM_ALLIANCE)) &&
                 !bg->GetFlagPickerGUID(TEAM_HORDE).IsEmpty())
                 carrier = ObjectAccessor::GetPlayer(bg->GetBgMap(), bg->GetFlagPickerGUID(TEAM_HORDE));
@@ -43,6 +46,9 @@ Unit* FlagCarrierValue::Calculate()
         if (botAI->GetBot()->GetBattlegroundTypeId() == BATTLEGROUND_EY)
         {
             BattlegroundEY* bg = (BattlegroundEY*)botAI->GetBot()->GetBattleground();
+
+            if (!bg)
+                return nullptr;
 
             if (bg->GetFlagPickerGUID().IsEmpty())
                 return nullptr;
@@ -96,7 +102,7 @@ std::vector<CreatureData const*> BgMastersValue::Calculate()
         }
     }
 
-    return std::move(bmGuids);
+    return bmGuids;
 }
 
 CreatureData const* BgMasterValue::Calculate()
@@ -114,7 +120,7 @@ CreatureData const* BgMasterValue::NearestBm(bool allowDead)
 
     std::vector<CreatureData const*> bmPairs = AI_VALUE2(std::vector<CreatureData const*>, "bg masters", qualifier);
 
-    float rDist;
+    float rDist = 0.0f;
     CreatureData const* rbmPair = nullptr;
 
     for (auto& bmPair : bmPairs)

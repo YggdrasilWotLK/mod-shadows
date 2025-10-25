@@ -234,6 +234,15 @@ public:
     }
 };
 
+class BlessingOfSanctuaryOnPartyTrigger : public BuffOnPartyTrigger
+{
+public:
+    BlessingOfSanctuaryOnPartyTrigger(PlayerbotAI* botAI)
+        : BuffOnPartyTrigger(botAI, "blessing of sanctuary", 2 * 2000)
+    {
+    }
+};
+
 class AvengingWrathTrigger : public BoostTrigger
 {
 public:

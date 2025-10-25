@@ -11,6 +11,7 @@
 #include "HealthTriggers.h"
 #include "RangeTriggers.h"
 #include "Trigger.h"
+#include "Player.h"
 
 class PlayerbotAI;
 class Unit;
@@ -243,10 +244,18 @@ public:
     std::string const getName() override { return "my attacker count"; }
 };
 
+class BeingAttackedTrigger : public MyAttackerCountTrigger
+{
+public:
+    BeingAttackedTrigger(PlayerbotAI* botAI) : MyAttackerCountTrigger(botAI, 1) {}
+    std::string const getName() override { return "being attacked"; }
+};
+
 class MediumThreatTrigger : public MyAttackerCountTrigger
 {
 public:
     MediumThreatTrigger(PlayerbotAI* botAI) : MyAttackerCountTrigger(botAI, 2) {}
+    bool IsActive() override;
 };
 
 class LowTankThreatTrigger : public Trigger
@@ -646,6 +655,17 @@ private:
     time_t lastCheck;
 };
 
+class TimerBGTrigger : public Trigger
+{
+public:
+    TimerBGTrigger(PlayerbotAI* botAI) : Trigger(botAI, "timer bg"), lastCheck(0) {}
+
+    bool IsActive() override;
+
+private:
+    time_t lastCheck;
+};
+
 class TankAssistTrigger : public NoAttackersTrigger
 {
 public:
@@ -819,6 +839,14 @@ public:
     SitTrigger(PlayerbotAI* botAI) : StayTimeTrigger(botAI, sPlayerbotAIConfig->sitDelay, "sit") {}
 };
 
+class ReturnToStayPositionTrigger : public Trigger
+{
+public:
+    ReturnToStayPositionTrigger(PlayerbotAI* ai) : Trigger(ai, "return to stay position", 2) {}
+
+    virtual bool IsActive() override;
+};
+
 class ReturnTrigger : public StayTimeTrigger
 {
 public:
@@ -906,4 +934,25 @@ public:
 public:
     virtual Value<Unit*>* GetTargetValue();
 };
+
+class SelfResurrectTrigger : public Trigger
+{
+public:
+    SelfResurrectTrigger(PlayerbotAI* ai) : Trigger(ai, "can self resurrect") {}
+
+    bool IsActive() override { return !bot->IsAlive() && bot->GetUInt32Value(PLAYER_SELF_RES_SPELL); }
+};
+
+class NewPetTrigger : public Trigger
+{
+public:
+    NewPetTrigger(PlayerbotAI* ai) : Trigger(ai, "new pet"), lastPetGuid(ObjectGuid::Empty), triggered(false) {}
+
+    bool IsActive() override;
+
+private:
+    ObjectGuid lastPetGuid;
+    bool triggered;
+};
+
 #endif

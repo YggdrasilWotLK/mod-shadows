@@ -93,9 +93,21 @@ void ChatCommandHandlerStrategy::InitTriggers(std::vector<TriggerNode*>& trigger
     triggers.push_back(
         new TriggerNode("disperse", NextAction::array(0, new NextAction("disperse set", relevance), NULL)));
     triggers.push_back(
-	    new TriggerNode("open items", NextAction::array(0, new NextAction("open items", relevance), nullptr)));
+        new TriggerNode("open items", NextAction::array(0, new NextAction("open items", relevance), nullptr)));
     triggers.push_back(
         new TriggerNode("qi", NextAction::array(0, new NextAction("query item usage", relevance), nullptr)));
+    triggers.push_back(
+        new TriggerNode("unlock items", NextAction::array(0, new NextAction("unlock items", relevance), nullptr)));
+    triggers.push_back(
+        new TriggerNode("unlock traded item", NextAction::array(0, new NextAction("unlock traded item", relevance), nullptr)));
+    triggers.push_back(
+        new TriggerNode("wipe", NextAction::array(0, new NextAction("wipe", relevance), nullptr)));
+    triggers.push_back(new TriggerNode("tame", NextAction::array(0, new NextAction("tame", relevance), nullptr)));
+    triggers.push_back(new TriggerNode("glyphs", NextAction::array(0, new NextAction("glyphs", relevance), nullptr))); // Added for custom Glyphs
+    triggers.push_back(new TriggerNode("glyph equip", NextAction::array(0, new NextAction("glyph equip", relevance), nullptr))); // Added for custom Glyphs
+    triggers.push_back(new TriggerNode("pet", NextAction::array(0, new NextAction("pet", relevance), nullptr)));
+    triggers.push_back(new TriggerNode("pet attack", NextAction::array(0, new NextAction("pet attack", relevance), nullptr)));
+    triggers.push_back(new TriggerNode("roll", NextAction::array(0, new NextAction("roll", relevance), nullptr)));
 }
 
 ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI)
@@ -109,6 +121,7 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : Pas
     //supported.push_back("log");
     supported.push_back("los");
     supported.push_back("rpg status");
+    supported.push_back("rpg do quest");
     supported.push_back("aura");
     supported.push_back("drop");
     supported.push_back("share");
@@ -128,7 +141,7 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : Pas
     supported.push_back("remove glyph");
     //supported.push_back("autogear");
     supported.push_back("equip upgrade");
-    //supported.push_back("chat");
+    supported.push_back("chat");
     supported.push_back("home");
     supported.push_back("destroy");
     supported.push_back("reset botAI");
@@ -138,6 +151,7 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : Pas
     supported.push_back("gb");
     supported.push_back("bank");
     supported.push_back("invite");
+    supported.push_back("lfg");
     supported.push_back("spell");
     supported.push_back("rti");
     supported.push_back("position");
@@ -171,4 +185,11 @@ ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : Pas
     supported.push_back("calc");
     supported.push_back("open items");
     supported.push_back("qi");
+    supported.push_back("unlock items");
+    supported.push_back("unlock traded item");
+    supported.push_back("tame");
+    supported.push_back("glyphs"); // Added for custom Glyphs
+    supported.push_back("glyph equip"); // Added for custom Glyphs
+    supported.push_back("pet");
+    supported.push_back("pet attack");
 }

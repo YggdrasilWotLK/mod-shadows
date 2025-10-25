@@ -11,6 +11,7 @@
 #include "Playerbots.h"
 #include "Queue.h"
 #include "Strategy.h"
+#include "Timer.h"
 
 Engine::Engine(PlayerbotAI* botAI, AiObjectContext* factory) : PlayerbotAIAware(botAI), aiObjectContext(factory)
 {
@@ -87,7 +88,7 @@ Engine::~Engine(void)
 void Engine::Reset()
 {
     strategyTypeMask = 0;
-    
+
     ActionNode* action = nullptr;
 
     while ((action = queue.Pop()) != nullptr)
@@ -108,6 +109,8 @@ void Engine::Reset()
     }
 
     multipliers.clear();
+
+    actionNodeFactories.creators.clear();
 }
 
 void Engine::Init()
@@ -120,9 +123,10 @@ void Engine::Init()
         strategyTypeMask |= strategy->GetType();
         strategy->InitMultipliers(multipliers);
         strategy->InitTriggers(triggers);
-
-        Event emptyEvent;
-        MultiplyAndPush(strategy->getDefaultActions(), 0.0f, false, emptyEvent, "default");
+        for (auto &iter : strategy->actionNodeFactories.creators)
+        {
+            actionNodeFactories.creators[iter.first] = iter.second;
+        }
     }
 
     if (testMode)
@@ -150,7 +154,7 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
 
     uint32 iterations = 0;
     uint32 iterationsPerTick = queue.Size() * (minimal ? 2 : sPlayerbotAIConfig->iterationsPerTick);
-    
+
     while (++iterations <= iterationsPerTick)
     {
         basket = queue.Peek();
@@ -248,11 +252,9 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
 
 ActionNode* Engine::CreateActionNode(std::string const name)
 {
-    for (std::map<std::string, Strategy*>::iterator i = strategies.begin(); i != strategies.end(); i++)
-    {
-        if (ActionNode* node = i->second->GetAction(name))
-            return node;
-    }
+    ActionNode* node = actionNodeFactories.GetContextObject(name, botAI);
+    if (node)
+        return node;
 
     return new ActionNode(name,
                           /*P*/ nullptr,
@@ -432,6 +434,7 @@ bool Engine::HasStrategy(std::string const name) { return strategies.find(name) 
 void Engine::ProcessTriggers(bool minimal)
 {
     std::unordered_map<Trigger*, Event> fires;
+    uint32 now = getMSTime();
     for (std::vector<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
     {
         TriggerNode* node = *i;
@@ -451,7 +454,7 @@ void Engine::ProcessTriggers(bool minimal)
         if (fires.find(trigger) != fires.end())
             continue;
 
-        if (testMode || trigger->needCheck())
+        if (testMode || trigger->needCheck(now))
         {
             if (minimal && node->getFirstRelevance() < 100)
                 continue;

@@ -4,7 +4,6 @@
  */
 
 #include "StatsValues.h"
-
 #include "Playerbots.h"
 #include "ServerFacade.h"
 
@@ -40,6 +39,11 @@ bool IsDeadValue::Calculate()
 
 bool PetIsDeadValue::Calculate()
 {
+    if ((bot->GetLevel() < 10 && bot->getClass() == CLASS_HUNTER) || bot->IsMounted())
+    {
+        return false;
+    }
+
     if (!bot->GetPet())
     {
         uint32 ownerid = bot->GetGUID().GetCounter();
@@ -113,6 +117,10 @@ bool HasManaValue::Calculate()
 {
     Unit* target = GetTarget();
     if (!target)
+        return false;
+
+    constexpr uint32 PRIEST_SPIRIT_OF_REDEMPTION_SPELL_ID = 27827u;
+    if (target->HasAura(PRIEST_SPIRIT_OF_REDEMPTION_SPELL_ID))
         return false;
 
     return target->GetPower(POWER_MANA);

@@ -39,6 +39,7 @@ public:
         creators["blessing of wisdom"] = &blessing_of_wisdom;
         creators["blessing of kings on party"] = &blessing_of_kings_on_party;
         creators["blessing of wisdom on party"] = &blessing_of_wisdom_on_party;
+        creators["blessing of sanctuary on party"] = &blessing_of_sanctuary_on_party;
         creators["blessing of sanctuary"] = &blessing_of_sanctuary;
         creators["seal of command"] = &seal_of_command;
         creators["taunt spell"] = &hand_of_reckoning;
@@ -83,6 +84,13 @@ private:
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
+    static ActionNode* blessing_of_sanctuary_on_party(PlayerbotAI* /* ai */)
+    {
+        return new ActionNode("blessing of sanctuary on party",
+                              /*P*/ nullptr,
+                              /*A*/ nullptr,
+                              /*C*/ nullptr);
+    }
     static ActionNode* retribution_aura(PlayerbotAI* /* ai */)
     {
         return new ActionNode("retribution aura",
@@ -105,7 +113,7 @@ private:
                               /*A*/ nullptr,  // NextAction::array(0, new NextAction("flash of light"), NULL),
                               /*C*/ nullptr);
     }
-    // static ActionNode* seal_of_light(PlayerbotAI* ai)
+    // static ActionNode* seal_of_light(PlayerbotAI* /* ai */)
     // {
     //     return new ActionNode ("seal of light",
     //         /*P*/ NULL,

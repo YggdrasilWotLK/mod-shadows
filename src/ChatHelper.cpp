@@ -305,6 +305,49 @@ ItemIds ChatHelper::parseItems(std::string const text)
     return itemIds;
 }
 
+ItemWithRandomProperty ChatHelper::parseItemWithRandomProperty(std::string const text)
+{
+    ItemWithRandomProperty res;
+
+    size_t itemStart = text.find("Hitem:");
+    if (itemStart == std::string::npos)
+        return res;
+
+    itemStart += 6;
+    if (itemStart >= text.length())
+        return res;
+
+    size_t colonPos = text.find(':', itemStart);
+    if (colonPos == std::string::npos)
+        return res;
+
+    std::string itemIdStr = text.substr(itemStart, colonPos - itemStart);
+    res.itemId = atoi(itemIdStr.c_str());
+
+    std::vector<std::string> params;
+    size_t currentPos = colonPos + 1;
+
+    while (currentPos < text.length()) {
+        size_t nextColon = text.find(':', currentPos);
+        if (nextColon == std::string::npos) {
+            size_t hTag = text.find("|h", currentPos);
+            if (hTag != std::string::npos) {
+                params.push_back(text.substr(currentPos, hTag - currentPos));
+            }
+            break;
+        }
+
+        params.push_back(text.substr(currentPos, nextColon - currentPos));
+        currentPos = nextColon + 1;
+    }
+
+    if (params.size() >= 6) {
+        res.randomPropertyId = atoi(params[5].c_str());
+    }
+
+    return res;
+}
+
 std::string const ChatHelper::FormatQuest(Quest const* quest)
 {
     if (!quest)
@@ -321,7 +364,7 @@ std::string const ChatHelper::FormatQuest(Quest const* quest)
 
     if (questTitle.empty())
         questTitle = quest->GetTitle();
-    
+
     out << "|cFFFFFF00|Hquest:" << quest->GetQuestId() << ':' << quest->GetQuestLevel() << "|h[" << questTitle << "]|h|r";
     return out.str();
 }
@@ -382,14 +425,14 @@ std::string const ChatHelper::FormatSpell(SpellInfo const* spellInfo)
 std::string const ChatHelper::FormatItem(ItemTemplate const* proto, uint32 count, uint32 total)
 {
     char color[32];
-    sprintf(color, "%x", ItemQualityColors[proto->Quality]);
+    snprintf(color, sizeof(color), "%x", ItemQualityColors[proto->Quality]);
 
     std::string itemName;
     const ItemLocale* locale = sObjectMgr->GetItemLocale(proto->ItemId);
 
     if (locale && locale->Name.size() > sWorld->GetDefaultDbcLocale())
         itemName = locale->Name[sWorld->GetDefaultDbcLocale()];
-    
+
     if (itemName.empty())
         itemName = proto->Name1;
 
@@ -409,7 +452,7 @@ std::string const ChatHelper::FormatItem(ItemTemplate const* proto, uint32 count
 std::string const ChatHelper::FormatQItem(uint32 itemId)
 {
     char color[32];
-    sprintf(color, "%x", ItemQualityColors[0]);
+    snprintf(color, sizeof(color), "%x", ItemQualityColors[0]);
 
     std::ostringstream out;
     out << "|c" << color << "|Hitem:" << itemId << ":0:0:0:0:0:0:0"
@@ -634,7 +677,7 @@ std::set<uint32> extractGeneric(std::string_view text, std::string_view prefix)
         std::string_view number_str = text_view.substr(pos, end_pos - pos);
 
         uint32 number = 0;
-        
+
         auto [ptr, ec] = std::from_chars(number_str.data(), number_str.data() + number_str.size(), number);
 
         if (ec == std::errc())

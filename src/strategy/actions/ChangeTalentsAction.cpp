@@ -11,9 +11,18 @@
 #include "PlayerbotAIConfig.h"
 #include "PlayerbotFactory.h"
 #include "Playerbots.h"
+#include "AiObjectContext.h"
+#include "Log.h"
 
 bool ChangeTalentsAction::Execute(Event event)
 {
+    auto* flag = botAI->GetAiObjectContext()->GetValue<bool>("custom_glyphs"); // Added for custom Glyphs
+
+    if (flag->Get()) // Added for custom Glyphs
+    {
+        flag->Set(false);
+        LOG_INFO("playerbots", "Custom Glyph Flag set to OFF");
+    }
     std::string param = event.getParam();
 
     std::ostringstream out;
@@ -29,7 +38,7 @@ bool ChangeTalentsAction::Execute(Event event)
             if (param.find("switch 1") != std::string::npos)
             {
                 bot->ActivateSpec(0);
-                out << "Activing primary talents.";
+                out << "Activating primary talents.";
                 botAI->ResetStrategies();
             }
             else if (param.find("switch 2") != std::string::npos)
@@ -127,7 +136,7 @@ std::string ChangeTalentsAction::SpecList()
 std::string ChangeTalentsAction::SpecPick(std::string param)
 {
     int cls = bot->getClass();
-    int specFound = 0;
+    // int specFound = 0; //not used, line marked for removal.
     for (int specNo = 0; specNo < MAX_SPECNO; ++specNo)
     {
         if (sPlayerbotAIConfig->premadeSpecName[cls][specNo].size() == 0)
@@ -137,6 +146,10 @@ std::string ChangeTalentsAction::SpecPick(std::string param)
         if (sPlayerbotAIConfig->premadeSpecName[cls][specNo] == param)
         {
             PlayerbotFactory::InitTalentsBySpecNo(bot, specNo, true);
+
+            PlayerbotFactory factory(bot, bot->GetLevel());
+            factory.InitGlyphs(false);
+
             std::ostringstream out;
             out << "Picking " << sPlayerbotAIConfig->premadeSpecName[cls][specNo];
             return out.str();
