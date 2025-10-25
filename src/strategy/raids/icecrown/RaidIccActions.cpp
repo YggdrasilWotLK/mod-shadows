@@ -938,7 +938,7 @@ bool IccGunshipTeleportHordeAction::Execute(Event event)
     if (!boss || !boss->IsAlive() || !boss->HasUnitState(UNIT_STATE_CASTING))
     {
         // If we're too far from waiting position, go there
-        if (bot->GetExactDist2d(ICC_GUNSHIP_TELEPORT_HORDE2) > MAX_WAITING_DISTANCE && bot->GetPositionZ() > 210.0f))
+        if (bot->GetExactDist2d(ICC_GUNSHIP_TELEPORT_HORDE2) > MAX_WAITING_DISTANCE && bot->GetPositionZ() > 210.0f)
             return TeleportTo(ICC_GUNSHIP_TELEPORT_HORDE2);
     }
     else if (boss->HasUnitState(UNIT_STATE_CASTING) && boss->FindCurrentSpellBySpellId(SPELL_BELOW_ZERO) &&
@@ -948,7 +948,7 @@ bool IccGunshipTeleportHordeAction::Execute(Event event)
         UpdateBossSkullIcon(boss, SKULL_ICON_INDEX);
 
         // Teleport non-tank bots to attack position if not already there
-        if (!botAI->IsAssistTank(bot) && bot->GetExactDist2d(ICC_GUNSHIP_TELEPORT_HORDE) > MAX_ATTACK_DISTANCE && bot->GetPositionZ() > 210.0f))
+        if (!botAI->IsAssistTank(bot) && bot->GetExactDist2d(ICC_GUNSHIP_TELEPORT_HORDE) > MAX_ATTACK_DISTANCE && bot->GetPositionZ() > 210.0f)
             return TeleportTo(ICC_GUNSHIP_TELEPORT_HORDE);
     }
 
@@ -9347,4 +9347,3 @@ void IccLichKingAddsAction::HandleVileSpiritMechanics()
         }
     }
 }
-
