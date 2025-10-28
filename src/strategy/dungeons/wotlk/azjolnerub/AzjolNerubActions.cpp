@@ -95,6 +95,168 @@ bool WatchersTargetAction::Execute(Event event)
     return false;
 }
 
+bool WatchersTankPositionAction::Execute(Event event)
+{
+    // Only tanks should use this action
+    if (!botAI->IsTank(bot))
+        return false;
+
+    Unit* watcher = nullptr;
+    GuidVector attackers = AI_VALUE(GuidVector, "attackers");
+    
+    // Find any watcher in combat
+    for (auto& attacker : attackers)
+    {
+        Unit* unit = botAI->GetUnit(attacker);
+        if (!unit) { continue; }
+        
+        uint32 entry = unit->GetEntry();
+        if (entry == NPC_WATCHER_SILTHIK || entry == NPC_WATCHER_GASHRA || 
+            entry == NPC_WATCHER_NARJIL || entry == NPC_WATCHER_SKIRMISHER ||
+            entry == NPC_WATCHER_SHADOWCASTER || entry == NPC_WATCHER_WARRIOR)
+        {
+            watcher = unit;
+            break;
+        }
+    }
+    
+    if (!watcher)
+        return false;
+    
+    // Main tank should pick up watchers and bring them to stack position
+    if (botAI->IsMainTank(bot) && botAI->HasAggro(watcher))
+    {
+        float distance = bot->GetExactDist2d(AN_WATCHER_STACK_POSITION.GetPositionX(), 
+                                             AN_WATCHER_STACK_POSITION.GetPositionY());
+        
+        if (distance > 3.0f)
+        {
+            return MoveTo(bot->GetMapId(), 
+                         AN_WATCHER_STACK_POSITION.GetPositionX(),
+                         AN_WATCHER_STACK_POSITION.GetPositionY(), 
+                         AN_WATCHER_STACK_POSITION.GetPositionZ(),
+                         false, false, false, false, MovementPriority::MOVEMENT_COMBAT);
+        }
+        
+        // Face the watcher when in position
+        if (distance <= 3.0f)
+        {
+            bot->SetFacingToObject(watcher);
+            return true;
+        }
+    }
+    
+    // Assist tank should also move to stack position
+    if (botAI->IsAssistTank(bot))
+    {
+        float distance = bot->GetExactDist2d(AN_WATCHER_STACK_POSITION.GetPositionX(), 
+                                             AN_WATCHER_STACK_POSITION.GetPositionY());
+        
+        if (distance > 3.0f)
+        {
+            return MoveTo(bot->GetMapId(), 
+                         AN_WATCHER_STACK_POSITION.GetPositionX(),
+                         AN_WATCHER_STACK_POSITION.GetPositionY(), 
+                         AN_WATCHER_STACK_POSITION.GetPositionZ(),
+                         false, false, false, false, MovementPriority::MOVEMENT_COMBAT);
+        }
+        
+        if (distance <= 3.0f && watcher)
+        {
+            bot->SetFacingToObject(watcher);
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+bool WatchersGroupStackAction::Execute(Event event)
+{
+    // This is for non-tanks to stack on the tank
+    if (botAI->IsTank(bot))
+        return false;
+    
+    // Check if watchers are active
+    GuidVector attackers = AI_VALUE(GuidVector, "attackers");
+    bool hasWatcher = false;
+    bool hasKrikthir = false;
+    
+    for (auto& attacker : attackers)
+    {
+        Unit* unit = botAI->GetUnit(attacker);
+        if (!unit) { continue; }
+        
+        uint32 entry = unit->GetEntry();
+        
+        if (entry == NPC_KRIKTHIR)
+        {
+            hasKrikthir = true;
+        }
+        else if (entry == NPC_WATCHER_SILTHIK || entry == NPC_WATCHER_GASHRA || 
+                 entry == NPC_WATCHER_NARJIL || entry == NPC_WATCHER_SKIRMISHER ||
+                 entry == NPC_WATCHER_SHADOWCASTER || entry == NPC_WATCHER_WARRIOR)
+        {
+            hasWatcher = true;
+        }
+    }
+    
+    // Only stack when watchers are active and Krik'thir is not
+    if (!hasWatcher || hasKrikthir)
+        return false;
+    
+    // Find the main tank
+    Unit* tank = nullptr;
+    GuidVector members = AI_VALUE(GuidVector, "group members");
+    
+    for (auto& memberGuid : members)
+    {
+        Unit* member = botAI->GetUnit(memberGuid);
+        if (!member || !member->IsAlive())
+            continue;
+        
+        if (botAI->IsMainTank(member))
+        {
+            tank = member;
+            break;
+        }
+    }
+    
+    // If no main tank found, try assist tank
+    if (!tank)
+    {
+        for (auto& memberGuid : members)
+        {
+            Unit* member = botAI->GetUnit(memberGuid);
+            if (!member || !member->IsAlive())
+                continue;
+            
+            if (botAI->IsTank(member))
+            {
+                tank = member;
+                break;
+            }
+        }
+    }
+    
+    if (!tank)
+        return false;
+    
+    float distance = bot->GetExactDist2d(tank);
+    
+    // Stack within 8 yards of the tank for AoE
+    if (distance > 8.0f)
+    {
+        return MoveTo(bot->GetMapId(), 
+                     tank->GetPositionX(),
+                     tank->GetPositionY(), 
+                     tank->GetPositionZ(),
+                     false, false, false, false, MovementPriority::MOVEMENT_COMBAT);
+    }
+    
+    return false;
+}
+
 bool AnubarakDodgePoundAction::isUseful() { return !AI_VALUE2(bool, "behind", "current target"); }
 bool AnubarakDodgePoundAction::Execute(Event event)
 {
