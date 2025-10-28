@@ -90,10 +90,10 @@ float YmironMultiplier::GetValue(Action* action)
 
     if (boss->FindCurrentSpellBySpellId(SPELL_BANE) || boss->HasAura(SPELL_BANE))
     {
-        if (dynamic_cast<AvoidYmironBaneAction*>(action))
-            return 1.0f;
-        
-        return 0.0f;
+        if (dynamic_cast<AttackAction*>(action))
+        {
+            return 0.0f;
+        }
     }
     return 1.0f;
 }

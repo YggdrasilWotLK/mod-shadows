@@ -60,6 +60,11 @@ bool AvoidYmironBaneAction::Execute(Event event)
     if (pet)
         pet->AttackStop();
 
+    // Tank stops attacking but stands still
+    if (boss->GetVictim() == bot)
+        return false;
+
+    // Warrior/Mage/Shaman must stay close to try to spellsteal/purge Bane
     if (!boss->HasAura(SPELL_BANE))
     {
         switch (bot->getClass())
@@ -71,6 +76,7 @@ bool AvoidYmironBaneAction::Execute(Event event)
         }
     }
 	
+    // Warrior/Mage/Shaman try to reflect when Bane aura is active
     if (boss->HasAura(SPELL_BANE))
     {
         switch (bot->getClass())
@@ -78,17 +84,19 @@ bool AvoidYmironBaneAction::Execute(Event event)
             case CLASS_WARRIOR:
                 if (botAI->CanCastSpell(30356, boss, true))
                     return botAI->CastSpell(30356, boss);
-				break;
+                break;
             case CLASS_MAGE:
-                return botAI->CastSpell(30449, boss);
+                if (botAI->CastSpell(30449, boss))
+                    return true;
+                break;
             case CLASS_SHAMAN:
-                return botAI->CastSpell(8012, boss);
+                if (botAI->CastSpell(8012, boss))
+                    return true;
+                break;
         }
     }
-	
-    if (boss->GetVictim() == bot)
-        return false;
-
+    
+    // Everyone else runs away (including warrior/mage/shaman if spell failed)
     float botX = bot->GetPositionX();
     float botY = bot->GetPositionY();
     float bossX = boss->GetPositionX();
@@ -108,6 +116,30 @@ bool AvoidYmironBaneAction::Execute(Event event)
     float targetX = botX + dirX * moveDistance;
     float targetY = botY + dirY * moveDistance;
     float targetZ = 104.76f;
+    
+    // Healer: stay within 20 yards of tank
+    if (botAI->IsHeal(bot))
+    {
+        Unit* tank = boss->GetVictim();
+        if (tank)
+        {
+            float distToTank = sqrt(pow(targetX - tank->GetPositionX(), 2) + pow(targetY - tank->GetPositionY(), 2));
+            if (distToTank > 20.0f)
+            {
+                // Clamp position to 20 yards from tank
+                float tankDirX = targetX - tank->GetPositionX();
+                float tankDirY = targetY - tank->GetPositionY();
+                float tankLen = sqrt(tankDirX * tankDirX + tankDirY * tankDirY);
+                if (tankLen > 0)
+                {
+                    tankDirX /= tankLen;
+                    tankDirY /= tankLen;
+                }
+                targetX = tank->GetPositionX() + tankDirX * 20.0f;
+                targetY = tank->GetPositionY() + tankDirY * 20.0f;
+            }
+        }
+    }
     
     float minX = 351.0f;
     float maxX = 434.0f;
