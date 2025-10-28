@@ -52,3 +52,40 @@ float KrikthirMultiplier::GetValue(Action* action)
     }
     return 1.0f;
 }
+
+float WatchersStackMultiplier::GetValue(Action* action)
+{
+    GuidVector attackers = AI_VALUE(GuidVector, "attackers");
+    
+    bool hasWatcher = false;
+    bool hasKrikthir = false;
+    
+    for (auto& attacker : attackers)
+    {
+        Unit* unit = botAI->GetUnit(attacker);
+        if (!unit) { continue; }
+        
+        uint32 entry = unit->GetEntry();
+        
+        if (entry == NPC_KRIKTHIR)
+        {
+            hasKrikthir = true;
+        }
+        else if (entry == NPC_WATCHER_SILTHIK || entry == NPC_WATCHER_GASHRA || 
+                 entry == NPC_WATCHER_NARJIL || entry == NPC_WATCHER_SKIRMISHER ||
+                 entry == NPC_WATCHER_SHADOWCASTER || entry == NPC_WATCHER_WARRIOR)
+        {
+            hasWatcher = true;
+        }
+    }
+    
+    if (!hasWatcher || hasKrikthir)
+        return 1.0f;
+    
+    if (dynamic_cast<WatchersTankPositionAction*>(action) || 
+        dynamic_cast<WatchersGroupStackAction*>(action) ||
+        dynamic_cast<WatchersTargetAction*>(action))
+        return 1.0f;
+    
+    return 0.0f;
+}

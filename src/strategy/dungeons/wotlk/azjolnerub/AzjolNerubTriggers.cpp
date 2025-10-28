@@ -26,21 +26,31 @@ bool KrikthirWebWrapTrigger::IsActive()
 
 bool KrikthirWatchersTrigger::IsActive()
 {
-    if (!botAI->IsDps(bot)) { return false; }
-
-    // Target is not findable from threat table using AI_VALUE2(),
-    // therefore need to search manually for the unit name
-    GuidVector targets = AI_VALUE(GuidVector, "possible targets no los");
-
-    for (auto i = targets.begin(); i != targets.end(); ++i)
+    GuidVector attackers = AI_VALUE(GuidVector, "attackers");
+    
+    bool hasWatcher = false;
+    bool hasKrikthir = false;
+    
+    for (auto i = attackers.begin(); i != attackers.end(); ++i)
     {
         Unit* unit = botAI->GetUnit(*i);
-        if (unit && unit->GetEntry() == NPC_KRIKTHIR)
+        if (!unit) { continue; }
+        
+        uint32 entry = unit->GetEntry();
+        
+        if (entry == NPC_KRIKTHIR)
         {
-            return true;
+            hasKrikthir = true;
+        }
+        else if (entry == NPC_WATCHER_SILTHIK || entry == NPC_WATCHER_GASHRA || 
+                 entry == NPC_WATCHER_NARJIL || entry == NPC_WATCHER_SKIRMISHER ||
+                 entry == NPC_WATCHER_SHADOWCASTER || entry == NPC_WATCHER_WARRIOR)
+        {
+            hasWatcher = true;
         }
     }
-    return false;
+    
+    return hasWatcher && !hasKrikthir;
 }
 
 // bool AnubarakImpaleTrigger::IsActive()
