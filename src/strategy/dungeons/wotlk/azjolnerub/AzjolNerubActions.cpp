@@ -173,7 +173,7 @@ bool WatchersTankPositionAction::Execute(Event event)
 
 bool WatchersGroupStackAction::Execute(Event event)
 {
-    // This is for non-tanks to stack on the tank
+    // This is for non-tanks to stack on whoever has aggro
     if (botAI->IsTank(bot))
         return false;
     
@@ -181,6 +181,7 @@ bool WatchersGroupStackAction::Execute(Event event)
     GuidVector attackers = AI_VALUE(GuidVector, "attackers");
     bool hasWatcher = false;
     bool hasKrikthir = false;
+    Unit* watcher = nullptr;
     
     for (auto& attacker : attackers)
     {
@@ -198,59 +199,28 @@ bool WatchersGroupStackAction::Execute(Event event)
                  entry == NPC_WATCHER_SHADOWCASTER || entry == NPC_WATCHER_WARRIOR)
         {
             hasWatcher = true;
+            watcher = unit;
         }
     }
     
     // Only stack when watchers are active and Krik'thir is not
-    if (!hasWatcher || hasKrikthir)
+    if (!hasWatcher || hasKrikthir || !watcher)
         return false;
     
-    // Find the main tank
-    Unit* tank = nullptr;
-    GuidVector members = AI_VALUE(GuidVector, "group members");
-    
-    for (auto& memberGuid : members)
-    {
-        Unit* member = botAI->GetUnit(memberGuid);
-        if (!member || !member->IsAlive())
-            continue;
-        
-        if (botAI->IsMainTank(member))
-        {
-            tank = member;
-            break;
-        }
-    }
-    
-    // If no main tank found, try assist tank
-    if (!tank)
-    {
-        for (auto& memberGuid : members)
-        {
-            Unit* member = botAI->GetUnit(memberGuid);
-            if (!member || !member->IsAlive())
-                continue;
-            
-            if (botAI->IsTank(member))
-            {
-                tank = member;
-                break;
-            }
-        }
-    }
-    
-    if (!tank)
+    // Find whoever has aggro on the watcher
+    Unit* target = watcher->GetVictim();
+    if (!target)
         return false;
     
-    float distance = bot->GetExactDist2d(tank);
+    float distance = bot->GetExactDist2d(target);
     
-    // Stack within 8 yards of the tank for AoE
+    // Stack within 8 yards of whoever has aggro
     if (distance > 8.0f)
     {
         return MoveTo(bot->GetMapId(), 
-                     tank->GetPositionX(),
-                     tank->GetPositionY(), 
-                     tank->GetPositionZ(),
+                     target->GetPositionX(),
+                     target->GetPositionY(), 
+                     target->GetPositionZ(),
                      false, false, false, false, MovementPriority::MOVEMENT_COMBAT);
     }
     
