@@ -22,8 +22,6 @@ bool AvoidFreezingCloudAction::Execute(Event event)
 
     float distance = bot->GetExactDist2d(closestTrigger->GetPosition());
     float radius = 3.0f;
-    // Large buffer for this - the radius of the breath is a lot smaller than the graphic, but it looks dumb
-    // if the bot stands just outside the hitbox but still visibly in the cloud patches.
     float distanceExtra = 3.0f;
 
     if (distance < radius + distanceExtra - 1.0f)
@@ -62,6 +60,17 @@ bool AvoidYmironBaneAction::Execute(Event event)
     if (pet)
         pet->AttackStop();
 
+    if (!boss->HasAura(SPELL_BANE))
+    {
+        switch (bot->getClass())
+        {
+            case CLASS_WARRIOR:
+            case CLASS_MAGE:
+            case CLASS_SHAMAN:
+                return false;
+        }
+    }
+	
     if (boss->HasAura(SPELL_BANE))
     {
         switch (bot->getClass())
@@ -69,7 +78,7 @@ bool AvoidYmironBaneAction::Execute(Event event)
             case CLASS_WARRIOR:
                 if (botAI->CanCastSpell(30356, boss, true))
                     return botAI->CastSpell(30356, boss);
-                break;
+				break;
             case CLASS_MAGE:
                 return botAI->CastSpell(30449, boss);
             case CLASS_SHAMAN:
