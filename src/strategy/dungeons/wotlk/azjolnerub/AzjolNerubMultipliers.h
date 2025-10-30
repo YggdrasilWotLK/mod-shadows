@@ -12,13 +12,4 @@ class KrikthirMultiplier : public Multiplier
         virtual float GetValue(Action* action);
 };
 
-class WatchersStackMultiplier : public Multiplier
-{
-    public:
-        WatchersStackMultiplier(PlayerbotAI* ai) : Multiplier(ai, "watchers stack") {}
-
-    public:
-        virtual float GetValue(Action* action);
-};
-
 #endif

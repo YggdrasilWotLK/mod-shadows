@@ -10,9 +10,7 @@ void WotlkDungeonANStrategy::InitTriggers(std::vector<TriggerNode*> &triggers)
     triggers.push_back(new TriggerNode("krik'thir web wrap",
         NextAction::array(0, new NextAction("attack web wrap", ACTION_RAID + 5), nullptr)));
     triggers.push_back(new TriggerNode("krik'thir watchers",
-        NextAction::array(0, new NextAction("watchers tank position", ACTION_EMERGENCY + 5),
-                             new NextAction("watchers group stack", ACTION_EMERGENCY + 4),
-                             new NextAction("krik'thir priority", ACTION_RAID + 4), nullptr)));
+        NextAction::array(0, new NextAction("krik'thir priority", ACTION_RAID + 4), nullptr)));
 
     // Hadronox
     // The core AC triggers are very buggy with this boss, but default strat seems to play correctly
@@ -30,5 +28,4 @@ void WotlkDungeonANStrategy::InitTriggers(std::vector<TriggerNode*> &triggers)
 void WotlkDungeonANStrategy::InitMultipliers(std::vector<Multiplier*> &multipliers)
 {
     multipliers.push_back(new KrikthirMultiplier(botAI));
-    multipliers.push_back(new WatchersStackMultiplier(botAI));
 }
