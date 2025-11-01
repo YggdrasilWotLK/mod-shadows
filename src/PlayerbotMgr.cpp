@@ -485,7 +485,17 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
     {
         ObjectGuid masterGuid = master->GetGUID();
         if (master->GetGroup() && !master->GetGroup()->IsLeader(masterGuid))
-            master->GetGroup()->ChangeLeader(masterGuid);
+        {
+            Player* currentLeader = ObjectAccessor::FindPlayer(master->GetGroup()->GetLeaderGUID());
+            if (currentLeader)
+            {
+                PlayerbotAI* leaderAI = GET_PLAYERBOT_AI(currentLeader);
+                if (leaderAI && !leaderAI->IsRealPlayer())
+                {
+                    master->GetGroup()->ChangeLeader(masterGuid);
+                }
+            }
+        }
     }
 
     Group* group = bot->GetGroup();

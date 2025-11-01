@@ -370,19 +370,7 @@ void PlayerbotAI::UpdateAIGroupMembership()
 
     Group* group = bot->GetGroup();
 
-    if (!bot->InBattleground() && !bot->inRandomLfgDungeon() && !group->isLFGGroup())
-    {
-        Player* leader = group->GetLeader();
-        if (leader && leader != bot)  // Ensure the leader is valid and not the bot itself
-        {
-            PlayerbotAI* leaderAI = GET_PLAYERBOT_AI(leader);
-            if (leaderAI && !leaderAI->IsRealPlayer())
-            {
-                LeaveOrDisbandGroup();
-            }
-        }
-    }
-    else if (group->isLFGGroup())
+    if (group->isLFGGroup())
     {
         bool hasRealPlayer = false;
 
