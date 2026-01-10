@@ -259,7 +259,7 @@ public:
             gref = gref->next();
         }
 
-        players.insert(players.begin() + group->GetMembersCount() / 2, master);
+        players.insert(players.begin() + players.size() / 2, master);
 
         return MoveLine(players, 0.0f, x, y, z, orientation, range);
     }
