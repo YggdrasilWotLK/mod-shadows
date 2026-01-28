@@ -5837,7 +5837,20 @@ bool IccValithriaDreamCloudAction::Execute(Event event)
 bool IccSindragosaGroupPositionAction::Execute(Event event)
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "sindragosa");
-    if (!boss || boss->HasUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY))
+    if (!boss)
+        return false;
+
+    if (bot->GetPositionX() > 4476.0f) // Fix bots falling off platform
+    {
+        bot->TeleportTo(bot->GetMapId(), 4475.0f, 2484.0f, 203.4f, bot->GetOrientation());
+    }
+    
+    if (bot->GetPositionZ() < 202.5f) // Fix bots falling off platform
+    {
+        bot->TeleportTo(bot->GetMapId(), bot->GetPositionX(), bot->GetPositionY(), 203.4f, bot->GetOrientation());
+    }
+
+    if (boss->GetPositionZ() > 220.0f && boss->GetPositionX() > 4400.0f) // Take no action if boss is in air
         return false;
 
     Aura* aura = botAI->GetAura("mystic buffet", bot, false, true);
