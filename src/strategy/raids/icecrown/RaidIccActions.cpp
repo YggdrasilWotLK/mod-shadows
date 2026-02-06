@@ -6828,6 +6828,9 @@ bool IccSindragosaFrostBombAction::Execute(Event event)
 // The Lich King
 bool IccLichKingShadowTrapAction::Execute(Event event)
 {
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (!boss || !botAI->IsTank(bot))
         return false;
@@ -7007,6 +7010,10 @@ bool IccLichKingNecroticPlagueAction::Execute(Event event)
 
 bool IccLichKingWinterAction::Execute(Event event)
 {
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (!boss)
         return false;
@@ -7081,6 +7088,10 @@ bool IccLichKingWinterAction::Execute(Event event)
 
 void IccLichKingWinterAction::HandlePositionCorrection()
 {
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     Unit* currentTarget = AI_VALUE(Unit*, "current target");
 
@@ -7222,6 +7233,10 @@ const Position* IccLichKingWinterAction::GetMainTankRangedPosition()
 
 bool IccLichKingWinterAction::IsPositionSafeFromDefile(float x, float y, float z, float minSafeDistance)
 {
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (!boss)
         return true;  // No boss, assume safe
@@ -7359,6 +7374,10 @@ void IccLichKingWinterAction::HandleTankPositioning()
     if (!botAI->IsTank(bot))
         return;
 
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (!boss)
         return;
@@ -7452,7 +7471,11 @@ void IccLichKingWinterAction::HandleMeleePositioning()
     // Handle non-ranged DPS positioning - USE MAIN TANK'S POSITION
     if (!botAI->IsRanged(bot))
     {
-        Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
+        
+    if (bot->GetMapId() != 631) 
+        return false;
+        
+    Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
         const Position* targetPos = GetMainTankPosition();
         float distToTarget = bot->GetDistance2d(targetPos->GetPositionX(), targetPos->GetPositionY());
         if (distToTarget > 8.0f)
@@ -7812,6 +7835,10 @@ bool IccLichKingAddsAction::Execute(Event event)
     if (bot->HasAura(SPELL_HARVEST_SOUL_VALKYR))  // Don't process actions if bot is picked up by Val'kyr
         return false;
 
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
 
     Difficulty diff = bot->GetRaidDifficulty();
@@ -9019,6 +9046,10 @@ void IccLichKingAddsAction::HandleValkyrMechanics(Difficulty diff)
 {
     GuidVector npcs = AI_VALUE(GuidVector, "nearest hostile npcs");
     std::vector<Unit*> grabbingValkyrs;
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
 
     // Find grabbing Val'kyrs
@@ -9152,6 +9183,10 @@ void IccLichKingAddsAction::HandleValkyrAssignment(const std::vector<Unit*>& gra
     if (!group)
         return;
 
+    
+    if (bot->GetMapId() != 631) 
+        return false;
+        
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (boss && boss->HealthBelowPct(40))
         return;
