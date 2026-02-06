@@ -7089,8 +7089,8 @@ bool IccLichKingWinterAction::Execute(Event event)
 void IccLichKingWinterAction::HandlePositionCorrection()
 {
     
-    if (bot->GetMapId() != 631) 
-        return false;
+    if (bot->GetMapId() != 631)
+        return;
         
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     Unit* currentTarget = AI_VALUE(Unit*, "current target");
@@ -7376,7 +7376,7 @@ void IccLichKingWinterAction::HandleTankPositioning()
 
     
     if (bot->GetMapId() != 631) 
-        return false;
+        return;
         
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (!boss)
@@ -7473,7 +7473,7 @@ void IccLichKingWinterAction::HandleMeleePositioning()
     {
         
     if (bot->GetMapId() != 631) 
-        return false;
+        return;
         
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
         const Position* targetPos = GetMainTankPosition();
@@ -9048,7 +9048,7 @@ void IccLichKingAddsAction::HandleValkyrMechanics(Difficulty diff)
     std::vector<Unit*> grabbingValkyrs;
     
     if (bot->GetMapId() != 631) 
-        return false;
+        return;
         
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
 
@@ -9185,7 +9185,7 @@ void IccLichKingAddsAction::HandleValkyrAssignment(const std::vector<Unit*>& gra
 
     
     if (bot->GetMapId() != 631) 
-        return false;
+        return;
         
     Unit* boss = AI_VALUE2(Unit*, "find target", "the lich king");
     if (boss && boss->HealthBelowPct(40))
