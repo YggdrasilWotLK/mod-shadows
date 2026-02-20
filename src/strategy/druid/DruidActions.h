@@ -58,6 +58,9 @@ public:
         : HealPartyMemberAction(botAI, "regrowth", 35.0f, HealingManaEfficiency::HIGH)
     {
     }
+
+    bool isUseful() override;
+    Unit* GetTarget() override;
 };
 
 class CastHealingTouchOnPartyAction : public HealPartyMemberAction
