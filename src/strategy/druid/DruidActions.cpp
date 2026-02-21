@@ -52,6 +52,8 @@ bool CastRebirthAction::isUseful()
 Unit* CastRegrowthOnPartyAction::GetTarget()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return nullptr;
     MinValueCalculator calc(100);
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
@@ -77,6 +79,8 @@ bool CastRegrowthOnPartyAction::isUseful()
 Unit* CastRejuvenationOnNotFullAction::GetTarget()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return nullptr;
     MinValueCalculator calc(100);
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
