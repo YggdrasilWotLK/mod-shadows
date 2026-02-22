@@ -9,12 +9,10 @@
 #include "GenericTriggers.h"
 #include "PlayerbotAI.h"
 
-BUFF_TRIGGER(BattleShoutTrigger, "battle shout");
 BUFF_TRIGGER(BattleStanceTrigger, "battle stance");
 BUFF_TRIGGER(DefensiveStanceTrigger, "defensive stance");
 BUFF_TRIGGER(BerserkerStanceTrigger, "berserker stance");
 BUFF_TRIGGER(ShieldBlockTrigger, "shield block");
-BUFF_TRIGGER(CommandingShoutTrigger, "commanding shout");
 DEBUFF_TRIGGER(DisarmDebuffTrigger, "disarm");
 DEBUFF_TRIGGER(SunderArmorDebuffTrigger, "sunder armor");
 DEBUFF_TRIGGER(MortalStrikeDebuffTrigger, "mortal strike");
@@ -80,6 +78,21 @@ public:
     bool IsActive() override;
 };
 
+class BattleShoutTrigger : public BuffTrigger
+{
+public:
+    BattleShoutTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "battle shout") {}
+
+    bool IsActive() override;
+};
+
+class CommandingShoutTrigger : public BuffTrigger
+{
+public:
+    CommandingShoutTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "commanding shout") {}
+
+    bool IsActive() override;
+};
 
 // class SlamTrigger : public HasAuraTrigger
 // {

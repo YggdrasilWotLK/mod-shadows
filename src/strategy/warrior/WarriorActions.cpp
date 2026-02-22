@@ -178,7 +178,6 @@ Unit* CastShatteringThrowAction::GetTarget()
 
 bool CastShatteringThrowAction::isUseful()
 {
-
     // Spell cooldown check
     if (!bot->HasSpell(64382))
     {

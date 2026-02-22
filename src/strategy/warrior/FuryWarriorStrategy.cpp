@@ -60,8 +60,10 @@ void FuryWarriorStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
                                        NextAction::array(0, new NextAction("charge", ACTION_MOVE + 9), nullptr)));
     triggers.push_back(new TriggerNode(
         "berserker stance", NextAction::array(0, new NextAction("berserker stance", ACTION_HIGH + 9), nullptr)));
-    triggers.push_back(new TriggerNode("battle shout",
-                                       NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 8), nullptr)));
+	triggers.push_back(new TriggerNode("battle shout",
+		NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 9), nullptr)));
+	triggers.push_back(new TriggerNode("commanding shout",
+		NextAction::array(0, new NextAction("commanding shout", ACTION_HIGH + 9), nullptr)));
     // triggers.push_back(new TriggerNode("target critical health", NextAction::array(0, new NextAction("execute",
     // ACTION_HIGH + 4), nullptr))); triggers.push_back(new TriggerNode("sudden death", NextAction::array(0, new
     // NextAction("execute", ACTION_HIGH + 4), nullptr))); triggers.push_back(new TriggerNode("hamstring",

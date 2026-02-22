@@ -57,6 +57,7 @@ public:
         creators["death wish"] = &WarriorTriggerFactoryInternal::death_wish;
         creators["recklessness"] = &WarriorTriggerFactoryInternal::recklessness;
         creators["battle shout"] = &WarriorTriggerFactoryInternal::battle_shout;
+        creators["commanding shout"] = &WarriorTriggerFactoryInternal::commanding_shout;
         creators["rend"] = &WarriorTriggerFactoryInternal::rend;
         creators["rend on attacker"] = &WarriorTriggerFactoryInternal::rend_on_attacker;
         creators["bloodrage"] = &WarriorTriggerFactoryInternal::bloodrage;
@@ -85,7 +86,6 @@ public:
         creators["intercept on enemy healer"] = &WarriorTriggerFactoryInternal::intercept_on_enemy_healer;
         creators["intercept"] = &WarriorTriggerFactoryInternal::intercept;
         creators["taunt on snare target"] = &WarriorTriggerFactoryInternal::taunt_on_snare_target;
-        creators["commanding shout"] = &WarriorTriggerFactoryInternal::commanding_shout;
         creators["intercept on snare target"] = &WarriorTriggerFactoryInternal::intercept_on_snare_target;
         creators["spell reflection"] = &WarriorTriggerFactoryInternal::spell_reflection;
         creators["sudden death"] = &WarriorTriggerFactoryInternal::sudden_death;
@@ -114,6 +114,7 @@ private:
     static Trigger* death_wish(PlayerbotAI* botAI) { return new DeathWishTrigger(botAI); }
     static Trigger* recklessness(PlayerbotAI* botAI) { return new RecklessnessTrigger(botAI); }
     static Trigger* battle_shout(PlayerbotAI* botAI) { return new BattleShoutTrigger(botAI); }
+    static Trigger* commanding_shout(PlayerbotAI* botAI) { return new CommandingShoutTrigger(botAI); }
     static Trigger* rend(PlayerbotAI* botAI) { return new RendDebuffTrigger(botAI); }
     static Trigger* rend_on_attacker(PlayerbotAI* botAI) { return new RendDebuffOnAttackerTrigger(botAI); }
     static Trigger* bloodrage(PlayerbotAI* botAI) { return new BloodrageBuffTrigger(botAI); }
@@ -147,7 +148,6 @@ private:
     static Trigger* shockwave(PlayerbotAI* botAI) { return new ShockwaveTrigger(botAI); }
     static Trigger* instant_slam(PlayerbotAI* botAI) { return new SlamInstantTrigger(botAI); }
     static Trigger* sudden_death(PlayerbotAI* botAI) { return new SuddenDeathTrigger(botAI); }
-    static Trigger* commanding_shout(PlayerbotAI* botAI) { return new CommandingShoutTrigger(botAI); }
     static Trigger* taunt_on_snare_target(PlayerbotAI* botAI) { return new TauntSnareTrigger(botAI); }
     static Trigger* intercept(PlayerbotAI* botAI) { return new InterceptInterruptSpellTrigger(botAI); }
     static Trigger* intercept_on_enemy_healer(PlayerbotAI* botAI)
@@ -207,6 +207,7 @@ public:
         creators["challenging shout"] = &WarriorAiObjectContextInternal::challenging_shout;
         creators["shield wall"] = &WarriorAiObjectContextInternal::shield_wall;
         creators["battle shout"] = &WarriorAiObjectContextInternal::battle_shout;
+        creators["commanding shout"] = &WarriorAiObjectContextInternal::commanding_shout;
         creators["battle shout taunt"] = &WarriorAiObjectContextInternal::battle_shout_taunt;
         creators["thunder clap"] = &WarriorAiObjectContextInternal::thunder_clap;
         creators["taunt"] = &WarriorAiObjectContextInternal::taunt;
@@ -222,7 +223,6 @@ public:
         creators["concussion blow"] = &WarriorAiObjectContextInternal::concussion_blow;
         creators["shield bash on enemy healer"] = &WarriorAiObjectContextInternal::shield_bash_on_enemy_healer;
         creators["berserker stance"] = &WarriorAiObjectContextInternal::berserker_stance;
-        creators["commanding shout"] = &WarriorAiObjectContextInternal::commanding_shout;
         creators["retaliation"] = &WarriorAiObjectContextInternal::retaliation;
         creators["mortal strike"] = &WarriorAiObjectContextInternal::mortal_strike;
         creators["sweeping strikes"] = &WarriorAiObjectContextInternal::sweeping_strikes;
@@ -287,6 +287,7 @@ private:
     static Action* challenging_shout(PlayerbotAI* botAI) { return new CastChallengingShoutAction(botAI); }
     static Action* shield_wall(PlayerbotAI* botAI) { return new CastShieldWallAction(botAI); }
     static Action* battle_shout(PlayerbotAI* botAI) { return new CastBattleShoutAction(botAI); }
+    static Action* commanding_shout(PlayerbotAI* botAI) { return new CastCommandingShoutAction(botAI); }
     static Action* battle_shout_taunt(PlayerbotAI* botAI) { return new CastBattleShoutTauntAction(botAI); }
     static Action* thunder_clap(PlayerbotAI* botAI) { return new CastThunderClapAction(botAI); }
     static Action* shield_bash_on_enemy_healer(PlayerbotAI* botAI)
@@ -298,7 +299,6 @@ private:
     static Action* taunt_on_snare_target(PlayerbotAI* botAI) { return new CastTauntOnSnareTargetAction(botAI); }
     static Action* thunder_clap_on_snare_target(PlayerbotAI* botAI) { return new CastThunderClapSnareAction(botAI); }
     static Action* berserker_stance(PlayerbotAI* botAI) { return new CastBerserkerStanceAction(botAI); }
-    static Action* commanding_shout(PlayerbotAI* botAI) { return new CastCommandingShoutAction(botAI); }
     static Action* retaliation(PlayerbotAI* botAI) { return new CastRetaliationAction(botAI); }
     static Action* mortal_strike(PlayerbotAI* botAI) { return new CastMortalStrikeAction(botAI); }
     static Action* sweeping_strikes(PlayerbotAI* botAI) { return new CastSweepingStrikesAction(botAI); }

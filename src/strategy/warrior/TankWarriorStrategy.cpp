@@ -14,7 +14,6 @@ public:
     {
         creators["charge"] = &charge;
         creators["sunder armor"] = &sunder_armor;
-        creators["commanding shout"] = &commanding_shout;
         // creators["shield slam"] = &shield_slam;
         creators["devastate"] = &devastate;
         creators["last stand"] = &last_stand;
@@ -30,7 +29,6 @@ private:
     // ACTION_NODE_A(charge, "charge", "intercept with stance");
     ACTION_NODE_A(charge, "charge", "reach melee");
     ACTION_NODE_A(sunder_armor, "sunder armor", "melee");
-    ACTION_NODE_A(commanding_shout, "commanding shout", "battle shout");
     // ACTION_NODE_A(shield_slam, "shield slam", "heroic strike");
     ACTION_NODE_A(devastate, "devastate", "sunder armor");
     ACTION_NODE_A(last_stand, "last stand", "intimidating shout");
@@ -91,8 +89,10 @@ void TankWarriorStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         "thunder clap and rage", NextAction::array(0, new NextAction("thunder clap", ACTION_MOVE + 11), nullptr)));
     triggers.push_back(new TriggerNode(
         "defensive stance", NextAction::array(0, new NextAction("defensive stance", ACTION_HIGH + 9), nullptr)));
-    triggers.push_back(new TriggerNode(
-        "commanding shout", NextAction::array(0, new NextAction("commanding shout", ACTION_HIGH + 8), nullptr)));
+	triggers.push_back(new TriggerNode("battle shout",
+        NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 8), nullptr)));
+    triggers.push_back(new TriggerNode("commanding shout",
+        NextAction::array(0, new NextAction("commanding shout", ACTION_HIGH + 8), nullptr)));
     triggers.push_back(
         new TriggerNode("bloodrage", NextAction::array(0, new NextAction("bloodrage", ACTION_HIGH + 2), nullptr)));
     triggers.push_back(
@@ -118,7 +118,6 @@ void TankWarriorStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction::array(0, new NextAction("last stand", ACTION_EMERGENCY + 3),
                              new NextAction("enraged regeneration", ACTION_EMERGENCY + 2),
                                 nullptr)));
-    // triggers.push_back(new TriggerNode("medium aoe", NextAction::array(0, new NextAction("battle shout taunt",
     // ACTION_HIGH + 1), nullptr)));
     triggers.push_back(new TriggerNode(
         "high aoe", NextAction::array(0, new NextAction("challenging shout", ACTION_HIGH + 3), nullptr)));

@@ -19,8 +19,8 @@ BUFF_ACTION(CastBerserkerStanceAction, "berserker stance");
 
 // shouts
 BUFF_ACTION(CastBattleShoutAction, "battle shout");
+BUFF_ACTION(CastCommandingShoutAction, "commanding shout");
 MELEE_ACTION_U(CastBattleShoutTauntAction, "battle shout", CastSpellAction::isUseful());  // useful to rebuff
-// DEBUFF_ACTION_R(CastDemoralizingShoutAction, "demoralizing shout", 8.0f);                 // low range debuff
 
 class CastDemoralizingShoutAction : public CastMeleeDebuffSpellAction
 {
@@ -40,8 +40,6 @@ public:
 
 MELEE_ACTION(CastChallengingShoutAction, "challenging shout");
 DEBUFF_ACTION_R(CastIntimidatingShoutAction, "intimidating shout", 8.0f);
-// shouts 2.4.3
-BUFF_ACTION(CastCommandingShoutAction, "commanding shout");
 
 // arms
 MELEE_ACTION(CastHeroicStrikeAction, "heroic strike");

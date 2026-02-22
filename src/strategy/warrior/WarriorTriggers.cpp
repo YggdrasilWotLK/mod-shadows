@@ -120,3 +120,42 @@ bool ShatteringThrowTrigger::IsActive()
     return false; // No valid targets within range
 }
 
+static bool HasPaladinMightBuff(PlayerbotAI* botAI, Player* bot)
+{
+    return botAI->HasAura("blessing of might", bot) || botAI->HasAura("greater blessing of might", bot);
+}
+
+static bool HasOtherWarriorBattleShout(PlayerbotAI* botAI, Player* bot)
+{
+    Group* group = bot->GetGroup();
+    if (!group)
+        return false;
+
+    for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
+    {
+        Player* member = ref->GetSource();
+        if (!member || member == bot || !member->IsAlive())
+            continue;
+
+        if (member->getClass() == CLASS_WARRIOR && botAI->HasAura("battle shout", bot))
+            return true;
+    }
+
+    return false;
+}
+
+bool BattleShoutTrigger::IsActive()
+{
+    if (HasPaladinMightBuff(botAI, bot) || HasOtherWarriorBattleShout(botAI, bot))
+        return false;
+
+    return !botAI->HasAura("battle shout", bot);
+}
+
+bool CommandingShoutTrigger::IsActive()
+{
+    if (!HasPaladinMightBuff(botAI, bot) && !HasOtherWarriorBattleShout(botAI, bot))
+        return false;
+
+    return !botAI->HasAura("commanding shout", bot);
+}

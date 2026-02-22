@@ -76,8 +76,11 @@ void ArmsWarriorStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(new TriggerNode("battle stance",
         NextAction::array(0, new NextAction("battle stance", ACTION_HIGH + 10), nullptr)));
 
-    triggers.push_back(new TriggerNode("battle shout",
-        NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 9), nullptr)));
+	triggers.push_back(new TriggerNode("battle shout",
+        NextAction::array(0, new NextAction("battle shout", ACTION_HIGH + 8), nullptr)));
+
+    triggers.push_back(new TriggerNode("commanding shout",
+        NextAction::array(0, new NextAction("commanding shout", ACTION_HIGH + 8), nullptr)));
 
     triggers.push_back(new TriggerNode("rend",
         NextAction::array(0, new NextAction("rend", ACTION_HIGH + 8), nullptr)));
