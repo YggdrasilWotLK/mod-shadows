@@ -5,6 +5,7 @@
 
 #include "PriestAiObjectContext.h"
 
+#include "DiscPriestStrategy.h"
 #include "GenericPriestStrategy.h"
 #include "HolyPriestStrategy.h"
 #include "NamedObjectContext.h"
@@ -57,6 +58,7 @@ public:
         creators["dps"] = &PriestCombatStrategyFactoryInternal::dps;
         creators["holy dps"] = &PriestCombatStrategyFactoryInternal::holy_dps;
         creators["holy heal"] = &PriestCombatStrategyFactoryInternal::holy_heal;
+        creators["disc heal"] = &PriestCombatStrategyFactoryInternal::disc_heal;
     }
 
 private:
@@ -64,6 +66,7 @@ private:
     static Strategy* dps(PlayerbotAI* botAI) { return new ShadowPriestStrategy(botAI); }
     static Strategy* holy_dps(PlayerbotAI* botAI) { return new HolyPriestStrategy(botAI); }
     static Strategy* holy_heal(PlayerbotAI* botAI) { return new HolyHealPriestStrategy(botAI); }
+    static Strategy* disc_heal(PlayerbotAI* botAI) { return new DiscPriestStrategy(botAI); }
 };
 
 class PriestTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -178,6 +181,8 @@ public:
         creators["power word: shield on almost full health below"] =
             &PriestAiObjectContextInternal::power_word_shield_on_almost_full_health_below;
         creators["power word: shield on not full"] = &PriestAiObjectContextInternal::power_word_shield_on_not_full;
+        creators["power word: shield on weakened soul"] =
+            &PriestAiObjectContextInternal::power_word_shield_on_weakened_soul;
         creators["renew"] = &PriestAiObjectContextInternal::renew;
         creators["renew on party"] = &PriestAiObjectContextInternal::renew_on_party;
         creators["greater heal"] = &PriestAiObjectContextInternal::greater_heal;
@@ -291,6 +296,10 @@ private:
         return new CastPowerWordShieldOnAlmostFullHealthBelowAction(ai);
     }
     static Action* power_word_shield_on_not_full(PlayerbotAI* ai) { return new CastPowerWordShieldOnNotFullAction(ai); }
+    static Action* power_word_shield_on_weakened_soul(PlayerbotAI* ai)
+    {
+        return new CastPowerWordShieldOnWeakenedSoulAction(ai);
+    }
     static Action* renew(PlayerbotAI* botAI) { return new CastRenewAction(botAI); }
     static Action* renew_on_party(PlayerbotAI* botAI) { return new CastRenewOnPartyAction(botAI); }
     static Action* greater_heal(PlayerbotAI* botAI) { return new CastGreaterHealAction(botAI); }

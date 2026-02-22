@@ -197,6 +197,17 @@ public:
     Unit* GetTarget() override;
 };
 
+class CastPowerWordShieldOnWeakenedSoulAction : public HealPartyMemberAction
+{
+public:
+    CastPowerWordShieldOnWeakenedSoulAction(PlayerbotAI* ai)
+        : HealPartyMemberAction(ai, "power word: shield", 15.0f, HealingManaEfficiency::HIGH)
+    {
+    }
+    bool isUseful() override;
+    Unit* GetTarget() override;
+};
+
 class CastMindSearAction : public CastSpellAction
 {
 public:

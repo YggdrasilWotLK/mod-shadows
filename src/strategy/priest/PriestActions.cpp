@@ -106,3 +106,28 @@ bool CastPowerWordShieldOnNotFullAction::isUseful()
 {
     return GetTarget();
 }
+
+Unit* CastPowerWordShieldOnWeakenedSoulAction::GetTarget()
+{
+    Group* group = bot->GetGroup();
+    MinValueCalculator calc(100);
+    for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
+    {
+        Player* player = gref->GetSource();
+        if (!player)
+            continue;
+        if (player->isDead())
+            continue;
+        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+            continue;
+        if (botAI->HasAnyAuraOf(player, "weakened soul", "power word: shield", nullptr))
+            continue;
+        calc.probe(player->GetHealthPct(), player);
+    }
+    return (Unit*)calc.param;
+}
+
+bool CastPowerWordShieldOnWeakenedSoulAction::isUseful()
+{
+    return GetTarget();
+}

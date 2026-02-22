@@ -297,7 +297,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
             }
             else if (tab == PRIEST_TAB_DISCIPLINE)
             {
-                engine->addStrategiesNoInit("heal", nullptr);
+                engine->addStrategiesNoInit("disc heal", nullptr);
             }
             else
             {
