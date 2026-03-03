@@ -22,32 +22,32 @@ public:
     }
 
 private:
-    static ActionNode* flametongue_weapon([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* flametongue_weapon(PlayerbotAI* botAI)
     {
         return new ActionNode("flametongue weapon",
                               /*P*/ nullptr,
-                              /*A*/ NextAction::array(0, new NextAction("rockbiter weapon"), nullptr),
+                              /*A*/ botAI->GetBot()->HasSpell(8024) ? nullptr : NextAction::array(0, new NextAction("rockbiter weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* frostbrand_weapon([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* frostbrand_weapon(PlayerbotAI* botAI)
     {
         return new ActionNode("frostbrand weapon",
                               /*P*/ nullptr,
-                              /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
+                              /*A*/ botAI->GetBot()->HasSpell(8033) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* windfury_weapon([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* windfury_weapon(PlayerbotAI* botAI)
     {
         return new ActionNode("windfury weapon",
                               /*P*/ nullptr,
-                              /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
+                              /*A*/ botAI->GetBot()->HasSpell(8232) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* earthliving_weapon([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* earthliving_weapon(PlayerbotAI* botAI)
     {
         return new ActionNode("earthliving weapon",
                               /*P*/ nullptr,
-                              /*A*/ NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
+                              /*A*/ botAI->GetBot()->HasSpell(51730) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
     static ActionNode* wind_shear(PlayerbotAI*) { return new ActionNode("wind shear", nullptr, nullptr, nullptr); }
