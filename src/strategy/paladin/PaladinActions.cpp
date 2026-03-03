@@ -250,7 +250,6 @@ bool CastBlessingOfWisdomOnPartyAction::Execute(Event event)
     return botAI->CastSpell(castName, target);
 }
 
-
 Value<Unit*>* CastBlessingOfSanctuaryOnPartyAction::GetTargetValue()
 {
     return context->GetValue<Unit*>(
@@ -266,17 +265,12 @@ bool CastBlessingOfSanctuaryOnPartyAction::Execute(Event event)
 
     Unit* target = GetTarget();
     if (!target)
-    {
-        // Fallback: GetTarget() can be null if no one needs a buff.
-        // Keep a valid pointer for the checks/logs that follow.
-        target = bot;
-    }
+        return false;
 
-    Player* targetPlayer = target ? target->ToPlayer() : nullptr;
+    Player* targetPlayer = target->ToPlayer();
 
-    // Small helpers to check relevant auras
     const auto HasKingsAura = [&](Unit* u) -> bool {
-        return botAI->HasAura("blessing of kings", u) || botAI->HasAura("greater blessing of kings", u);
+        return u->HasAura(20217) || u->HasAura(25898) || u->HasAura(72586);
     };
     const auto HasSanctAura = [&](Unit* u) -> bool {
         return botAI->HasAura("blessing of sanctuary", u) || botAI->HasAura("greater blessing of sanctuary", u);
@@ -292,87 +286,88 @@ bool CastBlessingOfSanctuaryOnPartyAction::Execute(Event event)
         }
     }
 
-    if (Player* self = bot->ToPlayer())
-    {
-        bool selfHasSanct = HasSanctAura(self);
-        bool needSelf = IsTankRole(self) && !selfHasSanct;
-
-        LOG_DEBUG("playerbots", "[Sanct] {} isTank={} selfHasSanct={} needSelf={}",
-                  bot->GetName(), IsTankRole(self), selfHasSanct, needSelf);
-
-        if (needSelf)
-        {
-            target = self;
-            targetPlayer = self;
-        }
-    }
-
-    // Try to re-target a valid tank in group if needed
-    bool targetOk = false;
-    if (targetPlayer)
-    {
-        bool hasSanct = HasSanctAura(targetPlayer);
-        targetOk = IsTankRole(targetPlayer) && !hasSanct;
-    }
-
-    if (!targetOk)
-    {
-        if (Group* g = bot->GetGroup())
-        {
-            for (GroupReference* gref = g->GetFirstMember(); gref; gref = gref->next())
-            {
-                Player* p = gref->GetSource();
-                if (!p) continue;
-                if (!p->IsInWorld() || !p->IsAlive()) continue;
-                if (!IsTankRole(p)) continue;
-
-                bool hasSanct = HasSanctAura(p);
-                if (!hasSanct)
-                {
-                    target = p; // prioritize this tank
-                    targetPlayer = p;
-                    targetOk = true;
-                    break;
-                }
-            }
-        }
-    }
+    const bool hasKings = HasKingsAura(target);
 
     {
-        bool hasKings = HasKingsAura(target);
         bool hasSanct = HasSanctAura(target);
         bool knowSanct = bot->HasSpell(SPELL_BLESSING_OF_SANCTUARY);
         LOG_DEBUG("playerbots", "[Sanct] Final target={} hasKings={} hasSanct={} knowSanct={}",
                   target->GetName(), hasKings, hasSanct, knowSanct);
     }
 
-    std::string castName = GetActualBlessingOfSanctuary(target, bot);
-    // If internal logic didn't recognize the tank (e.g., bear druid), force single-target Sanctuary
-    if (castName.empty())
+    auto RP = ai::chat::MakeGroupAnnouncer(bot);
+
+    if (hasKings)
     {
-        if (targetPlayer)
-        {
-            if (IsTankRole(targetPlayer))
-                castName = "blessing of sanctuary"; // force single-target
-            else
-                return false;
-        }
-        else
-            return false;
-    }
-    if (targetPlayer && !IsTankRole(targetPlayer))
-    {
-        auto RP = ai::chat::MakeGroupAnnouncer(bot);
+        std::string castName = "blessing of sanctuary";
         castName = ai::buff::UpgradeToGroupIfAppropriate(bot, botAI, castName, /*announceOnMissing=*/true, RP);
+        bool ok = botAI->CastSpell(castName, target);
+        LOG_DEBUG("playerbots", "[Sanct] Cast {} on {} result={}", castName, target->GetName(), ok);
+        return ok;
     }
     else
     {
-        castName = "blessing of sanctuary";
-    }
+        // Try to re-target a valid tank in group if needed
+        bool targetOk = false;
+        if (targetPlayer)
+        {
+            bool hasSanct = HasSanctAura(targetPlayer);
+            targetOk = IsTankRole(targetPlayer) && !hasSanct;
+        }
+        if (!targetOk)
+        {
+            if (Group* g = bot->GetGroup())
+            {
+                for (GroupReference* gref = g->GetFirstMember(); gref; gref = gref->next())
+                {
+                    Player* p = gref->GetSource();
+                    if (!p) continue;
+                    if (!p->IsInWorld() || !p->IsAlive()) continue;
+                    if (!IsTankRole(p)) continue;
+                    bool hasSanct = HasSanctAura(p);
+                    if (!hasSanct)
+                    {
+                        target = p;
+                        targetPlayer = p;
+                        targetOk = true;
+                        break;
+                    }
+                }
+            }
+        }
 
-    bool ok = botAI->CastSpell(castName, target);
-    LOG_DEBUG("playerbots", "[Sanct] Cast {} on {} result={}", castName, target->GetName(), ok);
-    return ok;
+        if (targetOk)
+        {
+            std::string castName = GetActualBlessingOfSanctuary(target, bot);
+            // If internal logic didn't recognize the tank (e.g., bear druid), force single-target Sanctuary
+            if (castName.empty())
+            {
+                if (targetPlayer && IsTankRole(targetPlayer))
+                    castName = "blessing of sanctuary"; // force single-target
+                else
+                    return false;
+            }
+            if (targetPlayer && !IsTankRole(targetPlayer))
+            {
+                castName = ai::buff::UpgradeToGroupIfAppropriate(bot, botAI, castName, /*announceOnMissing=*/true, RP);
+            }
+            else
+            {
+                castName = "blessing of sanctuary";
+            }
+            bool ok = botAI->CastSpell(castName, target);
+            LOG_DEBUG("playerbots", "[Sanct] Cast {} on {} result={}", castName, target->GetName(), ok);
+            return ok;
+        }
+        else
+        {
+            std::string castName = "blessing of kings";
+            castName = ai::buff::UpgradeToGroupIfAppropriate(bot, botAI, castName, /*announceOnMissing=*/true, RP);
+            bool ok = botAI->CastSpell(castName, target);
+            LOG_DEBUG("playerbots", "[Sanct] Cast {} on {} result={}", castName, target->GetName(), ok);
+            return ok;
+        }
+    }
 }
 
 Value<Unit*>* CastBlessingOfKingsOnPartyAction::GetTargetValue()
