@@ -13,6 +13,8 @@
 class PlayerbotAI;
 class Unit;
 
+bool IsTankRole(Player* p);
+
 // seals
 BUFF_ACTION(CastSealOfRighteousnessAction, "seal of righteousness");
 BUFF_ACTION(CastSealOfJusticeAction, "seal of justice");

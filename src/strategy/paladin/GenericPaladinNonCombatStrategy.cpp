@@ -24,6 +24,8 @@ void GenericPaladinNonCombatStrategy::InitTriggers(std::vector<TriggerNode*>& tr
     triggers.push_back(new TriggerNode("party member low health", NextAction::array(0, new NextAction("holy light on party", 27.0f), nullptr)));
     triggers.push_back(new TriggerNode("party member critical health", NextAction::array(0, new NextAction("holy light on party", 28.0f), nullptr)));
 
+    triggers.push_back(new TriggerNode("self sanctuary", NextAction::array(0, new NextAction("blessing of sanctuary", ACTION_NORMAL), nullptr)));
+
     int specTab = AiFactory::GetPlayerSpecTab(botAI->GetBot());
     if (specTab == 0 || specTab == 1) // Holy or Protection
         triggers.push_back(new TriggerNode("often", NextAction::array(0, new NextAction("apply oil", 1.0f), nullptr)));

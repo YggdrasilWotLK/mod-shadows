@@ -148,6 +148,7 @@ public:
         creators["blessing of sanctuary on party"] = &PaladinTriggerFactoryInternal::blessing_of_sanctuary_on_party;
 
         creators["avenging wrath"] = &PaladinTriggerFactoryInternal::avenging_wrath;
+        creators["self sanctuary"] = &PaladinTriggerFactoryInternal::self_sanctuary;
     }
 
 private:
@@ -218,6 +219,7 @@ private:
     }
 
     static Trigger* avenging_wrath(PlayerbotAI* botAI) { return new AvengingWrathTrigger(botAI); }
+    static Trigger* self_sanctuary(PlayerbotAI* botAI) { return new SelfSanctuaryTrigger(botAI); }
 };
 
 class PaladinAiObjectContextInternal : public NamedObjectContext<Action>

@@ -10,6 +10,7 @@
 #include "GenericTriggers.h"
 #include "SharedDefines.h"
 #include "Unit.h"
+#include "PaladinActions.h"
 
 class PlayerbotAI;
 
@@ -248,4 +249,21 @@ class AvengingWrathTrigger : public BoostTrigger
 public:
     AvengingWrathTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "avenging wrath") {}
 };
+
+class SelfSanctuaryTrigger : public Trigger
+{
+public:
+    SelfSanctuaryTrigger(PlayerbotAI* botAI) : Trigger(botAI, "self sanctuary") {}
+
+    bool IsActive() override
+    {
+        if (!bot->HasSpell(20911))
+            return false;
+        if (!IsTankRole(bot->ToPlayer()))
+            return false;
+        return !botAI->HasAura("blessing of sanctuary", bot) &&
+               !botAI->HasAura("greater blessing of sanctuary", bot);
+    }
+};
+
 #endif
