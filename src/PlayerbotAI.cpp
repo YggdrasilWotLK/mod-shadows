@@ -2547,25 +2547,24 @@ std::vector<Player*> PlayerbotAI::GetPlayersInGroup()
 
 bool PlayerbotAI::SayToGuild(const std::string& msg)
 {
-    if (msg.empty())
-    {
+    if (msg.empty() || !bot->GetGuildId() || !bot->GetSession())
         return false;
-    }
 
-    if (bot->GetGuildId())
-    {
-        if (Guild* guild = sGuildMgr->GetGuildById(bot->GetGuildId()))
-        {
-            if (!guild->HasRankRight(bot, GR_RIGHT_GCHATSPEAK))
-            {
-                return false;
-            }
-            guild->BroadcastToGuild(bot->GetSession(), false, msg.c_str(), LANG_UNIVERSAL);
-            return true;
-        }
-    }
+    Guild* guild = sGuildMgr->GetGuildById(bot->GetGuildId());
+    if (!guild || !guild->HasRankRight(bot, GR_RIGHT_GCHATSPEAK))
+        return false;
 
-    return false;
+    uint32 lang = sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD)
+                  ? LANG_UNIVERSAL
+                  : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
+
+    WorldPacket data(CMSG_MESSAGECHAT);
+    data << uint32(CHAT_MSG_GUILD);
+    data << uint32(lang);
+    data << msg;
+
+    bot->GetSession()->HandleMessagechatOpcode(data);
+    return true;
 }
 
 bool PlayerbotAI::SayToWorld(const std::string& msg)
@@ -2646,35 +2645,39 @@ bool PlayerbotAI::SayToChannel(const std::string& msg, const ChatChannelId& chan
 
 bool PlayerbotAI::SayToParty(const std::string& msg)
 {
-    if (!bot->GetGroup())
+    if (msg.empty() || !bot->GetGroup() || !bot->GetSession())
         return false;
 
-    WorldPacket data;
-    ChatHandler::BuildChatPacket(data, CHAT_MSG_PARTY, msg.c_str(), LANG_UNIVERSAL, CHAT_TAG_NONE, bot->GetGUID(),
-                                 bot->GetName());
+    uint32 lang = (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_CHAT) ||
+                   sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP))
+                   ? LANG_UNIVERSAL
+                   : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
 
-    for (auto reciever : GetPlayersInGroup())
-    {
-        sServerFacade->SendPacket(reciever, &data);
-    }
+    WorldPacket data(CMSG_MESSAGECHAT);
+    data << uint32(CHAT_MSG_PARTY);
+    data << uint32(lang);
+    data << msg;
 
+    bot->GetSession()->HandleMessagechatOpcode(data);
     return true;
 }
 
 bool PlayerbotAI::SayToRaid(const std::string& msg)
 {
-    if (!bot->GetGroup() || bot->GetGroup()->isRaidGroup())
+    if (msg.empty() || !bot->GetGroup() || !bot->GetGroup()->isRaidGroup() || !bot->GetSession())
         return false;
 
-    WorldPacket data;
-    ChatHandler::BuildChatPacket(data, CHAT_MSG_RAID, msg.c_str(), LANG_UNIVERSAL, CHAT_TAG_NONE, bot->GetGUID(),
-                                 bot->GetName());
+    uint32 lang = (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_CHAT) ||
+                   sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP))
+                   ? LANG_UNIVERSAL
+                   : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
 
-    for (auto reciever : GetPlayersInGroup())
-    {
-        sServerFacade->SendPacket(reciever, &data);
-    }
+    WorldPacket data(CMSG_MESSAGECHAT);
+    data << uint32(CHAT_MSG_RAID);
+    data << uint32(lang);
+    data << msg;
 
+    bot->GetSession()->HandleMessagechatOpcode(data);
     return true;
 }
 
