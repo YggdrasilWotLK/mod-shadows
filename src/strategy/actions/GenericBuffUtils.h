@@ -11,9 +11,7 @@
 #include "Group.h"
 #include "Chat.h"
 #include "Language.h"
-
-class Player;
-class PlayerbotAI;
+#include "PlayerbotAI.h"
 
 namespace ai::buff
 {
@@ -44,20 +42,21 @@ namespace ai::buff
 }
 
 namespace ai::chat {
-    inline std::function<void(std::string const&)> MakeGroupAnnouncer(Player* me)
+    inline std::function<void(std::string const&)> MakeGroupAnnouncer(PlayerbotAI* botAI)
     {
-        return [me](std::string const& msg)
+        return [botAI](std::string const& msg)
         {
-            if (Group* g = me->GetGroup())
+            Player* bot = botAI->GetBot();
+            if (Group* g = bot->GetGroup())
             {
-                WorldPacket data;
-                ChatMsg type = g->isRaidGroup() ? CHAT_MSG_RAID : CHAT_MSG_PARTY;
-                ChatHandler::BuildChatPacket(data, type, LANG_UNIVERSAL, me, /*receiver=*/nullptr, msg.c_str());
-                g->BroadcastPacket(&data, true, -1, me->GetGUID());
+                if (g->isRaidGroup())
+                    botAI->SayToRaid(msg);
+                else
+                    botAI->SayToParty(msg);
             }
             else
             {
-                me->Say(msg, LANG_UNIVERSAL);
+                botAI->Say(msg);
             }
         };
     }
