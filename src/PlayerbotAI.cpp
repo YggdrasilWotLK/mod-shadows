@@ -2554,10 +2554,8 @@ bool PlayerbotAI::SayToGuild(const std::string& msg)
     if (!guild || !guild->HasRankRight(bot, GR_RIGHT_GCHATSPEAK))
         return false;
 
-    uint32 lang = sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GUILD)
-                  ? LANG_UNIVERSAL
-                  : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
-
+    
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
     WorldPacket data(CMSG_MESSAGECHAT);
     data << uint32(CHAT_MSG_GUILD);
     data << uint32(lang);
@@ -2569,29 +2567,30 @@ bool PlayerbotAI::SayToGuild(const std::string& msg)
 
 bool PlayerbotAI::SayToWorld(const std::string& msg)
 {
-    if (msg.empty())
-    {
+    if (msg.empty() || !bot->GetSession())
         return false;
-    }
 
     ChannelMgr* cMgr = ChannelMgr::forTeam(bot->GetTeamId());
     if (!cMgr)
         return false;
 
-    // no zone
     if (Channel* worldChannel = cMgr->GetChannel("World", bot))
     {
-        worldChannel->Say(bot->GetGUID(), msg.c_str(), LANG_UNIVERSAL);
+        uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
+        WorldPacket data(CMSG_MESSAGECHAT);
+        data << uint32(CHAT_MSG_CHANNEL);
+        data << uint32(lang);
+        data << worldChannel->GetName();
+        data << msg;
+        bot->GetSession()->HandleMessagechatOpcode(data);
         return true;
     }
-
     return false;
 }
 
 bool PlayerbotAI::SayToChannel(const std::string& msg, const ChatChannelId& chanId)
 {
-    // Checks whether the message or ChannelMgr is valid
-    if (msg.empty())
+    if (msg.empty() || !bot->GetSession())
         return false;
 
     ChannelMgr* cMgr = ChannelMgr::forTeam(bot->GetTeamId());
@@ -2603,43 +2602,25 @@ bool PlayerbotAI::SayToChannel(const std::string& msg, const ChatChannelId& chan
         return false;
 
     const auto current_str_zone = GetLocalizedAreaName(current_zone);
-
-    std::mutex socialMutex;
-    std::lock_guard<std::mutex> lock(socialMutex);  // Blocking for thread safety when accessing SocialMgr
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
 
     for (auto const& [key, channel] : cMgr->GetChannels())
     {
-        // Checks if the channel pointer is valid
-        if (!channel)
+        if (!channel || channel->GetChannelId() != chanId || channel->GetName().empty())
             continue;
 
-        // Checks if the channel matches the specified ChatChannelId
-        if (channel->GetChannelId() == chanId)
-        {
-            // If the channel name is empty, skip it to avoid access problems
-            if (channel->GetName().empty())
-                continue;
+        const auto does_contains = channel->GetName().find(current_str_zone) != std::string::npos;
+        if (chanId != ChatChannelId::LOOKING_FOR_GROUP && chanId != ChatChannelId::WORLD_DEFENSE && !does_contains)
+            continue;
 
-            // Checks if the channel name contains the current zone
-            const auto does_contains = channel->GetName().find(current_str_zone) != std::string::npos;
-            if (chanId != ChatChannelId::LOOKING_FOR_GROUP && chanId != ChatChannelId::WORLD_DEFENSE && !does_contains)
-            {
-                continue;
-            }
-            else if (chanId == ChatChannelId::LOOKING_FOR_GROUP || chanId == ChatChannelId::WORLD_DEFENSE)
-            {
-                // Here you can add the capital check if necessary
-            }
-
-            // Final check to ensure the channel is correct before trying to say something
-            if (channel)
-            {
-                channel->Say(bot->GetGUID(), msg.c_str(), LANG_UNIVERSAL);
-                return true;
-            }
-        }
+        WorldPacket data(CMSG_MESSAGECHAT);
+        data << uint32(CHAT_MSG_CHANNEL);
+        data << uint32(lang);
+        data << channel->GetName();
+        data << msg;
+        bot->GetSession()->HandleMessagechatOpcode(data);
+        return true;
     }
-
     return false;
 }
 
@@ -2648,11 +2629,7 @@ bool PlayerbotAI::SayToParty(const std::string& msg)
     if (msg.empty() || !bot->GetGroup() || !bot->GetSession())
         return false;
 
-    uint32 lang = (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_CHAT) ||
-                   sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP))
-                   ? LANG_UNIVERSAL
-                   : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
-
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
     WorldPacket data(CMSG_MESSAGECHAT);
     data << uint32(CHAT_MSG_PARTY);
     data << uint32(lang);
@@ -2667,11 +2644,7 @@ bool PlayerbotAI::SayToRaid(const std::string& msg)
     if (msg.empty() || !bot->GetGroup() || !bot->GetGroup()->isRaidGroup() || !bot->GetSession())
         return false;
 
-    uint32 lang = (sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_CHAT) ||
-                   sWorld->getBoolConfig(CONFIG_ALLOW_TWO_SIDE_INTERACTION_GROUP))
-                   ? LANG_UNIVERSAL
-                   : (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH);
-
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
     WorldPacket data(CMSG_MESSAGECHAT);
     data << uint32(CHAT_MSG_RAID);
     data << uint32(lang);
@@ -2683,29 +2656,29 @@ bool PlayerbotAI::SayToRaid(const std::string& msg)
 
 bool PlayerbotAI::Yell(const std::string& msg)
 {
-    if (bot->GetTeamId() == TeamId::TEAM_ALLIANCE)
-    {
-        bot->Yell(msg, LANG_COMMON);
-    }
-    else
-    {
-        bot->Yell(msg, LANG_ORCISH);
-    }
+    if (msg.empty() || !bot->GetSession())
+        return false;
 
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
+    WorldPacket data(CMSG_MESSAGECHAT);
+    data << uint32(CHAT_MSG_YELL);
+    data << uint32(lang);
+    data << msg;
+    bot->GetSession()->HandleMessagechatOpcode(data);
     return true;
 }
 
 bool PlayerbotAI::Say(const std::string& msg)
 {
-    if (bot->GetTeamId() == TeamId::TEAM_ALLIANCE)
-    {
-        bot->Say(msg, LANG_COMMON);
-    }
-    else
-    {
-        bot->Say(msg, LANG_ORCISH);
-    }
+    if (msg.empty() || !bot->GetSession())
+        return false;
 
+    uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
+    WorldPacket data(CMSG_MESSAGECHAT);
+    data << uint32(CHAT_MSG_SAY);
+    data << uint32(lang);
+    data << msg;
+    bot->GetSession()->HandleMessagechatOpcode(data);
     return true;
 }
 
