@@ -186,7 +186,6 @@ public:
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
-    bool TeleportTo(const Position& position);
     void CleanupSkullIcon(uint8_t SKULL_ICON_INDEX);
     void UpdateBossSkullIcon(Unit* boss, uint8_t SKULL_ICON_INDEX);
 };
@@ -198,7 +197,6 @@ public:
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
-    bool TeleportTo(const Position& position);
     void CleanupSkullIcon(uint8_t SKULL_ICON_INDEX);
     void UpdateBossSkullIcon(Unit* boss, uint8_t SKULL_ICON_INDEX);
 };
