@@ -75,6 +75,13 @@ bool CastSpellAction::Execute(Event event)
         return botAI->CastSpell(castId, bot);
     }
 
+    if (spell == "call pet")
+    {
+        PetStable* petStable = bot->GetPetStable();
+        if (!petStable || !petStable->CurrentPet || petStable->CurrentPet->PetNumber == 0)
+            return false;
+    }
+
     return botAI->CastSpell(spell, GetTarget());
 }
 
