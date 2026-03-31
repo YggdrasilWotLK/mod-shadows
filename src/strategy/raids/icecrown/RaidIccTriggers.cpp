@@ -583,7 +583,7 @@ bool IccValithriaGroupTrigger::IsActive()
     if (!boss)
         return false;
 
-    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
+    if ((!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) && !bot->HasAura(70766))
         return false;
 
     if (bot->HasAura(SPELL_EXPERIENCED))
@@ -598,7 +598,7 @@ bool IccValithriaPortalTrigger::IsActive()
     if (!boss)
         return false;
 
-    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
+    if ((!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) && !bot->HasAura(70766))
         return false;
 
     Aura* aura = botAI->GetAura("Twisted Nightmares", bot, false, true);
@@ -710,7 +710,7 @@ bool IccValithriaHealTrigger::IsActive()
     if (!boss)
         return false;
 
-    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
+    if ((!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) && !bot->HasAura(70766))
         return false;
 
     // Only healers should use healing

@@ -491,12 +491,11 @@ float IccValithriaDreamCloudMultiplier::GetValue(Action* action)
     Aura* twistedNightmares = botAI->GetAura("Twisted Nightmares", bot);
     Aura* emeraldVigor = botAI->GetAura("Emerald Vigor", bot);
 
-
     if (!boss && !bot->HasAura(SPELL_DREAM_STATE))
         return 1.0f;
 
     if ((dynamic_cast<FollowAction*>(action) || dynamic_cast<CombatFormationMoveAction*>(action)) &&
-        (bot->IsInCombat() && bot->GetPositionX() <= 4260.0f))
+        (bot->HasAura(70766) || (bot->IsInCombat() && bot->GetPositionX() <= 4260.0f)))
         return 0.0f;
 
     if (botAI->IsTank(bot))
