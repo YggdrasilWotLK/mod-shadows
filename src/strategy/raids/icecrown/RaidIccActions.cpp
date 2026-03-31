@@ -5187,6 +5187,23 @@ bool IccValithriaGroupAction::HandleMarkingLogic(bool inGroup1, bool inGroup2, c
     else
         return false;
 
+    Group* group = bot->GetGroup();
+    if (!group)
+        return false;
+
+    Player* marker = nullptr;
+    for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+    {
+        Player* member = itr->GetSource();
+        if (member && member->IsAlive() && (botAI->IsTank(member) || botAI->IsDps(member)))
+        {
+            if (!marker || member->GetGUID() < marker->GetGUID())
+                marker = member;
+        }
+    }
+    if (marker != bot)
+        return false;
+
     context->GetValue<std::string>("rti")->Set(rtiValue);
 
     // Find priority target
@@ -5214,7 +5231,6 @@ bool IccValithriaGroupAction::HandleMarkingLogic(bool inGroup1, bool inGroup2, c
     // Update target icon if needed
     if (priorityTarget && bot->GetGroup())
     {
-        Group* group = bot->GetGroup();
         ObjectGuid currentIcon = group->GetTargetIcon(iconIndex);
         Unit* currentIconUnit = botAI->GetUnit(currentIcon);
 
@@ -5231,7 +5247,7 @@ bool IccValithriaGroupAction::HandleMarkingLogic(bool inGroup1, bool inGroup2, c
             }
         }
 
-        if (!hasOtherIcon && (!currentIconUnit || !currentIconUnit->IsAlive() || currentIconUnit != priorityTarget))
+        if (!hasOtherIcon && (!currentIconUnit || !currentIconUnit->IsAlive()))
         {
             group->SetTargetIcon(iconIndex, bot->GetGUID(), priorityTarget->GetGUID());
         }
@@ -5251,36 +5267,50 @@ bool IccValithriaGroupAction::Handle10ManGroupLogic()
     Group* group = bot->GetGroup();
     if (group)
     {
-        const GuidVector adds = AI_VALUE(GuidVector, "possible targets");
-        Unit* priorityTarget = nullptr;
-
-        for (uint32 entry : addPriority)
+        Player* marker = nullptr;
+        for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
         {
-            for (const auto& guid : adds)
+            Player* member = itr->GetSource();
+            if (member && member->IsAlive() && (botAI->IsTank(member) || botAI->IsDps(member)))
             {
-                if (Unit* unit = botAI->GetUnit(guid))
-                {
-                    if (unit->IsAlive() && unit->GetEntry() == entry &&
-                        unit->GetExactDist2d(ICC_VDW_HEAL_POSITION.GetPositionX(),
-                                             ICC_VDW_HEAL_POSITION.GetPositionY()) <= 50.0f)
-                    {
-                        priorityTarget = unit;
-                        break;
-                    }
-                }
+                if (!marker || member->GetGUID() < marker->GetGUID())
+                    marker = member;
             }
-            if (priorityTarget)
-                break;
         }
 
-        if (priorityTarget)
+        if (marker == bot)
         {
-            ObjectGuid currentIcon = group->GetTargetIcon(DEFAULT_ICON_INDEX);
-            Unit* currentIconUnit = botAI->GetUnit(currentIcon);
+            const GuidVector adds = AI_VALUE(GuidVector, "possible targets");
+            Unit* priorityTarget = nullptr;
 
-            if (!currentIconUnit || !currentIconUnit->IsAlive() || currentIconUnit != priorityTarget)
+            for (uint32 entry : addPriority)
             {
-                group->SetTargetIcon(DEFAULT_ICON_INDEX, bot->GetGUID(), priorityTarget->GetGUID());
+                for (const auto& guid : adds)
+                {
+                    if (Unit* unit = botAI->GetUnit(guid))
+                    {
+                        if (unit->IsAlive() && unit->GetEntry() == entry &&
+                            unit->GetExactDist2d(ICC_VDW_HEAL_POSITION.GetPositionX(),
+                                                 ICC_VDW_HEAL_POSITION.GetPositionY()) <= 50.0f)
+                        {
+                            priorityTarget = unit;
+                            break;
+                        }
+                    }
+                }
+                if (priorityTarget)
+                    break;
+            }
+
+            if (priorityTarget)
+            {
+                ObjectGuid currentIcon = group->GetTargetIcon(DEFAULT_ICON_INDEX);
+                Unit* currentIconUnit = botAI->GetUnit(currentIcon);
+
+                if (!currentIconUnit || !currentIconUnit->IsAlive())
+                {
+                    group->SetTargetIcon(DEFAULT_ICON_INDEX, bot->GetGUID(), priorityTarget->GetGUID());
+                }
             }
         }
     }
