@@ -486,7 +486,7 @@ float IccBqlMultiplier::GetValue(Action* action)
 //VDW
 float IccValithriaDreamCloudMultiplier::GetValue(Action* action)
 {
-    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 100.0f);
+    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 70.0f);
 
     Aura* twistedNightmares = botAI->GetAura("Twisted Nightmares", bot);
     Aura* emeraldVigor = botAI->GetAura("Emerald Vigor", bot);
@@ -495,7 +495,8 @@ float IccValithriaDreamCloudMultiplier::GetValue(Action* action)
     if (!boss && !bot->HasAura(SPELL_DREAM_STATE))
         return 1.0f;
 
-    if (dynamic_cast<FollowAction*>(action) || dynamic_cast<CombatFormationMoveAction*>(action))
+    if ((dynamic_cast<FollowAction*>(action) || dynamic_cast<CombatFormationMoveAction*>(action)) &&
+        (bot->IsInCombat() && bot->GetPositionX() <= 4260.0f))
         return 0.0f;
 
     if (botAI->IsTank(bot))

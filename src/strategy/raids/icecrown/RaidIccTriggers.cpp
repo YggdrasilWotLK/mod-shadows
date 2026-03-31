@@ -579,8 +579,11 @@ bool IccSisterSvalnaTrigger::IsActive()
 // VDW
 bool IccValithriaGroupTrigger::IsActive()
 {
-    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 100.0f);
+    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 70.0f);
     if (!boss)
+        return false;
+
+    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
         return false;
 
     if (bot->HasAura(SPELL_EXPERIENCED))
@@ -591,8 +594,11 @@ bool IccValithriaGroupTrigger::IsActive()
 
 bool IccValithriaPortalTrigger::IsActive()
 {
-    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 100.0f);
+    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 70.0f);
     if (!boss)
+        return false;
+
+    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
         return false;
 
     Aura* aura = botAI->GetAura("Twisted Nightmares", bot, false, true);
@@ -700,8 +706,11 @@ bool IccValithriaPortalTrigger::IsActive()
 
 bool IccValithriaHealTrigger::IsActive()
 {
-    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 100.0f);
+    Unit* boss = bot->FindNearestCreature(NPC_VALITHRIA_DREAMWALKER, 70.0f);
     if (!boss)
+        return false;
+
+    if (!bot->IsInCombat() && bot->GetPositionX() > 4260.0f) // Prevents bots from pulling if outside of pull range
         return false;
 
     // Only healers should use healing
@@ -808,6 +817,9 @@ bool IccValithriaHealTrigger::IsActive()
 
 bool IccValithriaDreamCloudTrigger::IsActive()
 {
+    if (bot->GetPositionX() > 4291.0f) // Prevents bots from pulling from outside of Vali area
+        return false;
+
     // Only active if we're in dream state
     if (!bot->HasAura(SPELL_DREAM_STATE) || bot->HealthBelowPct(50))
         return false;
