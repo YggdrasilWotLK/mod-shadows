@@ -21,6 +21,8 @@ bool CastRemoveShadowformAction::Execute(Event event)
 Unit* CastPowerWordShieldOnAlmostFullHealthBelowAction::GetTarget()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return nullptr;
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
         Player* player = gref->GetSource();
@@ -50,6 +52,8 @@ Unit* CastPowerWordShieldOnAlmostFullHealthBelowAction::GetTarget()
 bool CastPowerWordShieldOnAlmostFullHealthBelowAction::isUseful()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return false;
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
         Player* player = gref->GetSource();
@@ -79,6 +83,8 @@ bool CastPowerWordShieldOnAlmostFullHealthBelowAction::isUseful()
 Unit* CastPowerWordShieldOnNotFullAction::GetTarget()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return nullptr;
     MinValueCalculator calc(100);
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
@@ -110,6 +116,8 @@ bool CastPowerWordShieldOnNotFullAction::isUseful()
 Unit* CastPowerWordShieldOnWeakenedSoulAction::GetTarget()
 {
     Group* group = bot->GetGroup();
+    if (!group)
+        return nullptr;
     MinValueCalculator calc(100);
     for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
     {
