@@ -22,27 +22,4 @@ public:
     bool Execute(Event event) override;
 };
 
-class IngvarStopCastingAction : public Action
-{
-public:
-    IngvarStopCastingAction(PlayerbotAI* ai) : Action(ai, "ingvar stop casting") {}
-    bool Execute(Event event) override;
-};
-
-class IngvarDodgeSmashAction : public MovementAction
-{
-public:
-    IngvarDodgeSmashAction(PlayerbotAI* ai) : MovementAction(ai, "ingvar dodge smash") {}
-    bool Execute(Event event) override;
-    bool isUseful() override;
-};
-
-class IngvarSmashReturnAction : public MovementAction
-{
-public:
-    IngvarSmashReturnAction(PlayerbotAI* ai) : MovementAction(ai, "ingvar smash return") {}
-    bool Execute(Event event) override;
-    bool isUseful() override;
-};
-
 #endif

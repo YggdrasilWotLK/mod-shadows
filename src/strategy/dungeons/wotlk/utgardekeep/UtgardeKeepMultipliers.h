@@ -21,13 +21,4 @@ class SkarvaldAndDalronnMultiplier : public Multiplier
         virtual float GetValue(Action* action);
 };
 
-class IngvarThePlundererMultiplier : public Multiplier
-{
-    public:
-        IngvarThePlundererMultiplier(PlayerbotAI* ai) : Multiplier(ai, "ingvar the plunderer") {}
-
-    public:
-        virtual float GetValue(Action* action);
-};
-
 #endif
