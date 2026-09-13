@@ -7,16 +7,16 @@
 
 #include <ctime>
 #include <unordered_map>
-#include <unordered_set>
 
 #include "Event.h"
 #include "LastMovementValue.h"
 #include "Playerbots.h"
 #include "Transport.h"
 
-static std::unordered_map<ObjectGuid, time_t> mapSeparationSince;
-static std::unordered_set<ObjectGuid> mapSeparationNotified;
-static const time_t MAP_SEPARATION_MESSAGE_DELAY = 5;
+static std::unordered_map<ObjectGuid, time_t> remoteTriggerSince;
+static time_t remoteTriggerLastMessage = 0;
+static const time_t REMOTE_TRIGGER_MESSAGE_DELAY = 5;
+static const time_t REMOTE_TRIGGER_MESSAGE_COOLDOWN = 60;
 
 bool ReachAreaTriggerAction::Execute(Event event)
 {
@@ -44,28 +44,17 @@ bool ReachAreaTriggerAction::Execute(Event event)
 
     if (bot->GetMapId() != at->map)
     {
-        Player* master = botAI->GetMaster();
-        if (master && master->GetMapId() != bot->GetMapId())
+        ObjectGuid guid = bot->GetGUID();
+        time_t now = time(nullptr);
+        auto it = remoteTriggerSince.find(guid);
+        if (it == remoteTriggerSince.end() || now - it->second > 60)
+            remoteTriggerSince[guid] = now;
+        else if (now - it->second >= REMOTE_TRIGGER_MESSAGE_DELAY &&
+                 now - remoteTriggerLastMessage >= REMOTE_TRIGGER_MESSAGE_COOLDOWN)
         {
-            ObjectGuid guid = bot->GetGUID();
-            time_t now = time(nullptr);
-            if (mapSeparationNotified.find(guid) == mapSeparationNotified.end())
-            {
-                auto it = mapSeparationSince.find(guid);
-                if (it == mapSeparationSince.end())
-                    mapSeparationSince[guid] = now;
-                else if (now - it->second >= MAP_SEPARATION_MESSAGE_DELAY)
-                {
-                    botAI->TellError("I won't follow: too far away");
-                    mapSeparationNotified.insert(guid);
-                    mapSeparationSince.erase(it);
-                }
-            }
-            return true;
+            botAI->TellError("I won't follow: too far away");
+            remoteTriggerLastMessage = now;
         }
-        mapSeparationSince.erase(bot->GetGUID());
-        mapSeparationNotified.erase(bot->GetGUID());
-        botAI->TellError("I won't follow: too far away");
         return true;
     }
 
