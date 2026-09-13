@@ -9,9 +9,60 @@
 
 #include "Playerbots.h"
 
+#include <sstream>
+#include <unordered_set>
+
+static bool IsRoleStrategy(std::string const& name)
+{
+    static const std::unordered_set<std::string> roles = {
+        "dps", "disc heal", "holy heal", "holy dps",
+        "arcane", "fire", "frostfire", "frost",
+        "tank", "arms", "fury",
+        "blood", "unholy",
+        "ele", "resto", "enh",
+        "heal", "caster", "cat", "bear",
+        "bm", "mm", "surv",
+        "melee",
+        "affli", "demo", "destro",
+        "tank face", "behind", "save mana", "healer dps"
+    };
+    return roles.find(name) != roles.end();
+}
+
+static std::string FilterRoleStrategies(std::string const& value)
+{
+    std::ostringstream out;
+    bool first = true;
+    size_t start = 0;
+    while (start <= value.size())
+    {
+        size_t end = value.find(',', start);
+        if (end == std::string::npos)
+            end = value.size();
+        std::string token = value.substr(start, end - start);
+        std::string name = token;
+        if (!name.empty() && (name[0] == '+' || name[0] == '-'))
+            name.erase(0, 1);
+        if (!IsRoleStrategy(name))
+        {
+            if (!first)
+                out << ',';
+            out << token;
+            first = false;
+        }
+        start = end + 1;
+    }
+    return out.str();
+}
+
 void PlayerbotDbStore::Load(PlayerbotAI* botAI)
 {
     ObjectGuid::LowType guid = botAI->GetBot()->GetGUID().GetCounter();
+
+    std::vector<std::string> freshRoles;
+    for (std::string const& strategy : botAI->GetStrategies(BOT_STATE_COMBAT))
+        if (IsRoleStrategy(strategy))
+            freshRoles.push_back(strategy);
 
     PlayerbotsDatabasePreparedStatement* stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_DB_STORE);
     stmt->SetData(0, guid);
@@ -30,17 +81,20 @@ void PlayerbotDbStore::Load(PlayerbotAI* botAI)
             {
                 botAI->ClearStrategies(BOT_STATE_COMBAT);
                 botAI->ChangeStrategy("+chat", BOT_STATE_COMBAT);
-                botAI->ChangeStrategy(value, BOT_STATE_COMBAT);
+                botAI->ChangeStrategy(FilterRoleStrategies(value), BOT_STATE_COMBAT);
             }
             else if (key == "nc")
             {
                 botAI->ClearStrategies(BOT_STATE_NON_COMBAT);
                 botAI->ChangeStrategy("+chat", BOT_STATE_NON_COMBAT);
-                botAI->ChangeStrategy(value, BOT_STATE_NON_COMBAT);
+                botAI->ChangeStrategy(FilterRoleStrategies(value), BOT_STATE_NON_COMBAT);
             }
             else if (key == "dead")
                 botAI->ChangeStrategy(value, BOT_STATE_DEAD);
         } while (result->NextRow());
+
+        for (std::string const& role : freshRoles)
+            botAI->ChangeStrategy("+" + role, BOT_STATE_COMBAT);
 
         botAI->GetAiObjectContext()->Load(values);
     }

@@ -132,6 +132,17 @@ std::map<uint8, uint32> AiFactory::GetPlayerSpecTabs(Player* bot)
     return tabs;
 }
 
+bool AiFactory::IsFeralTank(Player* player)
+{
+    if (!player || player->getClass() != CLASS_DRUID || GetPlayerSpecTab(player) != DRUID_TAB_FERAL)
+        return false;
+    if (player->GetShapeshiftForm() == FORM_BEAR || player->GetShapeshiftForm() == FORM_DIREBEAR)
+        return true;
+    if (player->HasAura(16931))
+        return true;
+    return player->HasAura(57878) || player->HasAura(57880) || player->HasAura(57881);
+}
+
 BotRoles AiFactory::GetPlayerRoles(Player* player)
 {
     BotRoles role = BOT_ROLE_NONE;
@@ -362,7 +373,7 @@ void AiFactory::AddDefaultCombatStrategies(Player* player, PlayerbotAI* const fa
                 engine->addStrategiesNoInit("heal", "cure", "dps assist", nullptr);
             else
             {
-                if (player->HasSpell(768) /*cat form*/&& !player->HasAura(16931) /*thick hide*/)
+                if (player->HasSpell(768) /*cat form*/ && !IsFeralTank(player))
                 {
                     engine->addStrategiesNoInit("cat", "dps assist", nullptr);
                 }
@@ -588,7 +599,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
         case CLASS_DRUID:
             if (tab == 1)
             {
-                if (player->GetLevel() >= 20 && !player->HasAura(16931) /*thick hide*/)
+                if (player->GetLevel() >= 20 && !IsFeralTank(player))
                 {
                     nonCombatEngine->addStrategy("dps assist", false);
                 }

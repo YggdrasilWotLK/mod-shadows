@@ -30,6 +30,7 @@ public:
 
     static uint8 GetPlayerSpecTab(Player* player);
     static std::map<uint8, uint32> GetPlayerSpecTabs(Player* player);
+    static bool IsFeralTank(Player* player);
     static BotRoles GetPlayerRoles(Player* player);
     static std::string GetPlayerSpecName(Player* player);
 };

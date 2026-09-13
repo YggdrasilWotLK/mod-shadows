@@ -2060,8 +2060,7 @@ bool PlayerbotAI::IsTank(Player* player, bool bySpec)
             }
             break;
         case CLASS_DRUID:
-            if (tab == DRUID_TAB_FERAL && (player->GetShapeshiftForm() == FORM_BEAR ||
-                                           player->GetShapeshiftForm() == FORM_DIREBEAR || player->HasAura(16931)))
+            if (tab == DRUID_TAB_FERAL && AiFactory::IsFeralTank(player))
             {
                 return true;
             }
