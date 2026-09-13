@@ -398,9 +398,13 @@ void PlayerbotHolder::LogoutPlayerBot(ObjectGuid guid)
         else if (bot && (logout || !botWorldSessionPtr->isLogingOut()))
         {
             botAI->TellMaster("Goodbye!");
-            RemoveFromPlayerbotsMap(guid);                  // deletes bot player ptr inside this WorldSession PlayerBotMap
-            botWorldSessionPtr->LogoutPlayer(true);  // this will delete the bot Player object and PlayerbotAI object
-            delete botWorldSessionPtr;               // finally delete the bot's WorldSession
+            RemoveFromPlayerbotsMap(guid);                  // erase bookkeeping (no delete)
+            // Lifetime control: LogoutPlayer deletes the bot Player object and
+            // must run on the world thread (async deletes raced Lua execution
+            // and crashed in timed-event Player methods). ScheduleBotLogout
+            // takes ownership: it performs LogoutPlayer(true) and deletes the
+            // session on the world thread. Do not touch bot/session after.
+            sWorldSessionMgr->ScheduleBotLogout(botWorldSessionPtr);
         }
     }
 }
