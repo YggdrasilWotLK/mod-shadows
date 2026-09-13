@@ -24,12 +24,17 @@ bool NoManaGemTrigger::IsActive()
         5514    // Mana Agate
     };
     Player* bot = botAI->GetBot();
+    if (!bot)
+        return false;
     for (uint32 gemId : gemIds)
     {
         if (bot->GetItemCount(gemId, false) > 0)  // false = only in bags
             return false;
     }
-    return true;
+    // Only conjure when there is bag space for the gem; otherwise the cast
+    // is wasted on a full inventory.
+    ItemPosCountVec dest;
+    return bot->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, gemIds.front(), 1) == EQUIP_ERR_OK;
 }
 
 bool ArcaneIntellectOnPartyTrigger::IsActive()
