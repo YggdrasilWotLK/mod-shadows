@@ -6,6 +6,7 @@
 #include "InventoryChangeFailureAction.h"
 
 #include "Event.h"
+#include "LootAction.h"
 #include "Playerbots.h"
 
 std::map<InventoryResult, std::string> InventoryChangeFailureAction::messages;
@@ -90,6 +91,13 @@ bool InventoryChangeFailureAction::Execute(Event event)
     p >> err;
     if (err == EQUIP_ERR_OK)
         return false;
+
+    // The full-bag gather bounce already told the master with a custom
+    // message; suppress the duplicate server-driven one so only one fires.
+    if ((err == EQUIP_ERR_INVENTORY_FULL || err == EQUIP_ERR_BAG_FULL ||
+         err == EQUIP_ERR_BAG_FULL4 || err == EQUIP_ERR_BAG_FULL6) &&
+        FullBagGatherNotifiedRecently(botAI->GetBot()))
+        return true;
 
     std::string const msg = messages[(InventoryResult)err];
     if (!msg.empty())

@@ -55,4 +55,9 @@ public:
     bool Execute(Event event) override;
 };
 
+// True when the full-bag gather bounce recently told the master about full
+// bags for this bot. Used to suppress the duplicate server-driven
+// "My inventory is full" message so only the custom one fires.
+bool FullBagGatherNotifiedRecently(Player* bot);
+
 #endif

@@ -17,10 +17,62 @@
 #include "ServerFacade.h"
 #include "GuildMgr.h"
 #include "BroadcastHelper.h"
+#include <ctime>
+#include <unordered_map>
+
+// Bounce for gathering while bags are full: at most one gather attempt per
+// bot every 60 seconds. Entries prune themselves on the next check.
+static std::unordered_map<ObjectGuid, time_t> fullBagGatherAttempts;
+static const uint32 FULL_BAG_GATHER_BOUNCE_SECONDS = 60;
+
+static bool GatherThrottledByFullBags(PlayerbotAI* botAI, uint8 bagSpace, bool recordAttempt)
+{
+    Player* bot = botAI ? botAI->GetBot() : nullptr;
+    if (!bot || bagSpace < 100)
+    {
+        if (bot)
+            fullBagGatherAttempts.erase(bot->GetGUID());
+        return false;
+    }
+
+    time_t now = time(nullptr);
+    auto itr = fullBagGatherAttempts.find(bot->GetGUID());
+    if (itr != fullBagGatherAttempts.end() && (now - itr->second) < (time_t)FULL_BAG_GATHER_BOUNCE_SECONDS)
+        return true;
+
+    if (!recordAttempt)
+        return false;
+
+    // Prune stale entries while here (bots long gone).
+    for (auto it = fullBagGatherAttempts.begin(); it != fullBagGatherAttempts.end();)
+    {
+        if ((now - it->second) > (time_t)(FULL_BAG_GATHER_BOUNCE_SECONDS * 5))
+            it = fullBagGatherAttempts.erase(it);
+        else
+            ++it;
+    }
+
+    fullBagGatherAttempts[bot->GetGUID()] = now;
+    botAI->TellMaster("My inventory is full. Please tell me to trade you items or sell items at a vendor. Trying to loot again in a minute.");
+    return false;
+}
+
+bool FullBagGatherNotifiedRecently(Player* bot)
+{
+    if (!bot)
+        return false;
+
+    auto itr = fullBagGatherAttempts.find(bot->GetGUID());
+    return itr != fullBagGatherAttempts.end() &&
+           (time(nullptr) - itr->second) < (time_t)FULL_BAG_GATHER_BOUNCE_SECONDS;
+}
 
 bool LootAction::Execute(Event /*event*/)
 {
     if (!AI_VALUE(bool, "has available loot"))
+        return false;
+
+    if (GatherThrottledByFullBags(botAI, AI_VALUE(uint8, "bag space"), false))
         return false;
 
     LootObject prevLoot = AI_VALUE(LootObject, "loot target");
@@ -72,6 +124,9 @@ enum ProfessionSpells
 
 bool OpenLootAction::Execute(Event /*event*/)
 {
+    if (GatherThrottledByFullBags(botAI, AI_VALUE(uint8, "bag space"), true))
+        return false;
+
     LootObject lootObject = AI_VALUE(LootObject, "loot target");
     bool result = DoLoot(lootObject);
     if (result)
