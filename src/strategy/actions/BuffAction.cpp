@@ -12,10 +12,17 @@
 class FindBuffVisitor : public IterateItemsVisitor
 {
 public:
-    FindBuffVisitor(Player* bot) : IterateItemsVisitor(), bot(bot) {}
+    FindBuffVisitor(Player* bot) : IterateItemsVisitor(), bot(bot)
+    {
+        aiGuard = GET_PLAYERBOT_AI(bot);
+        context = aiGuard ? aiGuard->GetAiObjectContext() : nullptr;
+    }
 
     bool Visit(Item* item) override
     {
+        if (!context)
+            return true;
+
         if (bot->CanUseItem(item->GetTemplate()) != EQUIP_ERR_OK)
             return true;
 
@@ -39,7 +46,7 @@ public:
                 return true;
 
             Item* itemForSpell =
-                *botAI->GetAiObjectContext()->GetValue<Item*>("item for spell", spellId);
+                *context->GetValue<Item*>("item for spell", spellId);
             if (itemForSpell && itemForSpell->IsInWorld() && itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
                 return true;
 
@@ -57,6 +64,9 @@ public:
 
 private:
     Player* bot;
+    // Keeps the bot AI alive for the visitor's lifetime (logout/destruct race).
+    std::shared_ptr<PlayerbotAI> aiGuard;
+    AiObjectContext* context;
 };
 
 void BuffAction::TellHeader(uint32 subClass)
