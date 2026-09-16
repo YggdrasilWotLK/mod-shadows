@@ -824,8 +824,6 @@ char* strstri(char const* haystack, char const* needle);
 
 TravelDestination* ChooseTravelTargetAction::FindDestination(Player* bot, std::string const name, bool zones, bool npcs, bool quests, bool mobs, bool bosses)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
-
     // AiObjectContext* context = botAI->GetAiObjectContext(); //not used, line marked for removal.
 
     std::vector<TravelDestination*> dests;

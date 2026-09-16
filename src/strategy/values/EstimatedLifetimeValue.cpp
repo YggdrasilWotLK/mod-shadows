@@ -33,15 +33,18 @@ float EstimatedGroupDpsValue::Calculate()
         for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
         {
             Player* member = gref->GetSource();
-            if (member == bot)  // calculated
+            if (!member || member == bot)  // calculated
+                continue;
+
+            if (!member->IsInWorld() || !member->IsAlive())
                 continue;
 
             // ignore real player as they may not help with damage
-            if (!GET_PLAYERBOT_AI(member) || GET_PLAYERBOT_AI(member)->IsRealPlayer())
-                continue;
-
-            if (!member || !member->IsInWorld() || !member->IsAlive())
-                continue;
+            if (auto memberAI = GET_PLAYERBOT_AI(member))
+            {
+                if (memberAI->IsRealPlayer())
+                    continue;
+            }
 
             if (member->GetMapId() != bot->GetMapId())
                 continue;

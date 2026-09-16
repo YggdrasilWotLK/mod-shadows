@@ -181,7 +181,8 @@ public:
                     {
                         if (bot->GetGuildId() == player->GetGuildId())
                         {
-                            GET_PLAYERBOT_AI(bot)->HandleCommand(type, msg, player);
+                            if (auto guildBotAI = GET_PLAYERBOT_AI(bot))
+                                guildBotAI->HandleCommand(type, msg, player);
                         }
                     }
                 }

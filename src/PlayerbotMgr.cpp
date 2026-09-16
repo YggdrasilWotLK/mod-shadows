@@ -625,8 +625,9 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
     }
 
     // bots join World chat if not solo oriented
-    if (bot->GetLevel() >= 10 && sRandomPlayerbotMgr->IsRandomBot(bot) && GET_PLAYERBOT_AI(bot) &&
-        GET_PLAYERBOT_AI(bot)->GetGrouperType() != GrouperType::SOLO)
+    auto loginBotAI = GET_PLAYERBOT_AI(bot);
+    if (bot->GetLevel() >= 10 && sRandomPlayerbotMgr->IsRandomBot(bot) && loginBotAI &&
+        loginBotAI->GetGrouperType() != GrouperType::SOLO)
     {
         // TODO make action/config
         // Make the bot join the world channel for chat
@@ -639,9 +640,9 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
 
     // join standard channels
     uint8 locale = BroadcastHelper::GetLocale();
-    AreaTableEntry const* current_zone = GET_PLAYERBOT_AI(bot)->GetCurrentZone();
+    AreaTableEntry const* current_zone = loginBotAI ? loginBotAI->GetCurrentZone() : nullptr;
     ChannelMgr* cMgr = ChannelMgr::forTeam(bot->GetTeamId());
-    std::string current_zone_name = current_zone ? GET_PLAYERBOT_AI(bot)->GetLocalizedAreaName(current_zone) : "";
+    std::string current_zone_name = (current_zone && loginBotAI) ? loginBotAI->GetLocalizedAreaName(current_zone) : "";
 
     if (current_zone && cMgr)
     {
@@ -670,7 +671,7 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
                     //Currently in magons TBC, if you switch zones, then you join "Trade - <zone>" and "GuildRecruitment - <zone>"
                     //which is a core bug, should be "Trade - City" and "GuildRecruitment - City" in both 1.12 and TBC
                     //but if you (actual player) logout in a city and log back in - you join "City" versions
-                    snprintf(new_channel_name_buf, 100, channel->pattern[locale], GET_PLAYERBOT_AI(bot)->GetLocalizedAreaName(GetAreaEntryByAreaID(3459)).c_str());
+                    snprintf(new_channel_name_buf, 100, channel->pattern[locale], loginBotAI ? loginBotAI->GetLocalizedAreaName(GetAreaEntryByAreaID(3459)).c_str() : "City");
                     new_channel = cMgr->GetJoinChannel(new_channel_name_buf, channel->ChannelID);
                     break;
                 }
@@ -758,9 +759,9 @@ std::string const PlayerbotHolder::ProcessBotCommand(std::string const cmd, Obje
         }
     }
 
-    if (GET_PLAYERBOT_AI(bot))
+    if (auto cmdBotAI = GET_PLAYERBOT_AI(bot))
     {
-        if (Player* master = GET_PLAYERBOT_AI(bot)->GetMaster())
+        if (Player* master = cmdBotAI->GetMaster())
         {
             if (master->GetSession()->GetSecurity() <= SEC_PLAYER && sPlayerbotAIConfig->autoInitOnly &&
                 cmd != "init=auto")
@@ -1066,14 +1067,11 @@ std::vector<std::string> PlayerbotHolder::HandlePlayerbotCommand(char const* arg
 
     if (!strcmp(cmd, "self"))
     {
-        if (GET_PLAYERBOT_AI(master))
+        if (auto selfAI = GET_PLAYERBOT_AI(master))
         {
             messages.push_back("Disable player botAI");
-            if (auto selfAI = GET_PLAYERBOT_AI(master))
-            {
-                selfAI->Invalidate();
-                sPlayerbotsMgr->RemovePlayerBotData(master->GetGUID(), true);
-            }
+            selfAI->Invalidate();
+            sPlayerbotsMgr->RemovePlayerBotData(master->GetGUID(), true);
         }
         else if (sPlayerbotAIConfig->selfBotLevel == 0)
             messages.push_back("Self-bot is disabled");
@@ -1083,7 +1081,8 @@ std::vector<std::string> PlayerbotHolder::HandlePlayerbotCommand(char const* arg
         {
             messages.push_back("Enable player botAI");
             sPlayerbotsMgr->AddPlayerbotData(master, true);
-            GET_PLAYERBOT_AI(master)->SetMaster(master);
+            if (auto newSelfAI = GET_PLAYERBOT_AI(master))
+                newSelfAI->SetMaster(master);
         }
 
         return messages;
@@ -1609,8 +1608,11 @@ void PlayerbotMgr::SaveToDB()
          it != sRandomPlayerbotMgr->GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        if (GET_PLAYERBOT_AI(bot) && GET_PLAYERBOT_AI(bot)->GetMaster() == GetMaster())
-            bot->SaveToDB(false, false);
+        if (auto saveBotAI = GET_PLAYERBOT_AI(bot))
+        {
+            if (saveBotAI->GetMaster() == GetMaster())
+                bot->SaveToDB(false, false);
+        }
     }
 }
 

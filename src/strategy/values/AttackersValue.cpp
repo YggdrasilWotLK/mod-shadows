@@ -149,16 +149,18 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
     if (attacker && bot->GetGroup())
         rti = bot->GetGroup()->GetTargetIcon(7) == attacker->GetGUID();
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto attackerBotAI = GET_PLAYERBOT_AI(bot);
+    if (!attackerBotAI)
+        return false;
 
     bool leaderHasThreat = false;
-    if (attacker && bot->GetGroup() && botAI->GetMaster())
-        leaderHasThreat = attacker->GetThreatMgr().GetThreat(botAI->GetMaster());
+    if (attacker && bot->GetGroup() && attackerBotAI->GetMaster())
+        leaderHasThreat = attacker->GetThreatMgr().GetThreat(attackerBotAI->GetMaster());
 
     bool isMemberBotGroup = false;
-    if (bot->GetGroup() && botAI->GetMaster())
+    if (bot->GetGroup() && attackerBotAI->GetMaster())
     {
-        auto masterBotAI = GET_PLAYERBOT_AI(botAI->GetMaster());
+        auto masterBotAI = GET_PLAYERBOT_AI(attackerBotAI->GetMaster());
         if (masterBotAI && !masterBotAI->IsRealPlayer())
             isMemberBotGroup = true;
     }
@@ -186,12 +188,12 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
              (!bot->duel || bot->duel->Opponent != attacker)) &&
            (!c ||
             (!c->IsInEvadeMode() &&
-             ((!isMemberBotGroup && botAI->HasStrategy("attack tagged", BOT_STATE_NON_COMBAT)) || leaderHasThreat ||
+             ((!isMemberBotGroup && attackerBotAI->HasStrategy("attack tagged", BOT_STATE_NON_COMBAT)) || leaderHasThreat ||
               (!c->hasLootRecipient() &&
                (!c->GetVictim() ||
                 (c->GetVictim() &&
                  ((!c->GetVictim()->IsPlayer() || bot->IsInSameGroupWith(c->GetVictim()->ToPlayer())) ||
-                  (botAI->GetMaster() && c->GetVictim() == botAI->GetMaster()))))) ||
+                  (attackerBotAI->GetMaster() && c->GetVictim() == attackerBotAI->GetMaster()))))) ||
               c->isTappedBy(bot))));
 }
 

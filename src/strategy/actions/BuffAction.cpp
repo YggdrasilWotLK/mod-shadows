@@ -39,7 +39,7 @@ public:
                 return true;
 
             Item* itemForSpell =
-                *GET_PLAYERBOT_AI(bot)->GetAiObjectContext()->GetValue<Item*>("item for spell", spellId);
+                *botAI->GetAiObjectContext()->GetValue<Item*>("item for spell", spellId);
             if (itemForSpell && itemForSpell->IsInWorld() && itemForSpell->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT))
                 return true;
 

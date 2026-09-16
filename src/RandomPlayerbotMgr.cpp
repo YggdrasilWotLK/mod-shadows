@@ -2595,10 +2595,13 @@ void RandomPlayerbotMgr::Refresh(Player* bot)
 
 bool RandomPlayerbotMgr::IsRandomBot(Player* bot)
 {
-    if (bot && GET_PLAYERBOT_AI(bot))
+    if (bot)
     {
-        if (GET_PLAYERBOT_AI(bot)->IsRealPlayer())
-            return false;
+        if (auto randomBotAI = GET_PLAYERBOT_AI(bot))
+        {
+            if (randomBotAI->IsRealPlayer())
+                return false;
+        }
     }
     if (bot)
     {
@@ -2622,10 +2625,13 @@ bool RandomPlayerbotMgr::IsRandomBot(ObjectGuid::LowType bot)
 
 bool RandomPlayerbotMgr::IsAddclassBot(Player* bot)
 {
-    if (bot && GET_PLAYERBOT_AI(bot))
+    if (bot)
     {
-        if (GET_PLAYERBOT_AI(bot)->IsRealPlayer())
-            return false;
+        if (auto addclassBotAI = GET_PLAYERBOT_AI(bot))
+        {
+            if (addclassBotAI->IsRealPlayer())
+                return false;
+        }
     }
     if (bot)
     {
@@ -2972,7 +2978,8 @@ void RandomPlayerbotMgr::HandleCommand(uint32 type, std::string const text, Play
             }
         }
 
-        GET_PLAYERBOT_AI(bot)->HandleCommand(type, text, fromPlayer);
+        if (auto randomBotAI = GET_PLAYERBOT_AI(bot))
+            randomBotAI->HandleCommand(type, text, fromPlayer);
     }
 }
 
@@ -3046,17 +3053,21 @@ void RandomPlayerbotMgr::OnPlayerLogin(Player* player)
         for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
         {
             Player* member = gref->GetSource();
-            auto botAI = GET_PLAYERBOT_AI(bot);
-            if (botAI && member == player && (!botAI->GetMaster() || GET_PLAYERBOT_AI(botAI->GetMaster())))
+            auto groupBotAI = GET_PLAYERBOT_AI(bot);
+            if (groupBotAI && member == player)
             {
-                if (!bot->InBattleground())
+                Player* groupBotMaster = groupBotAI->GetMaster();
+                if (!groupBotMaster || GET_PLAYERBOT_AI(groupBotMaster))
                 {
-                    botAI->SetMaster(player);
-                    botAI->ResetStrategies();
-                    botAI->TellMaster("Hello");
-                }
+                    if (!bot->InBattleground())
+                    {
+                        groupBotAI->SetMaster(player);
+                        groupBotAI->ResetStrategies();
+                        groupBotAI->TellMaster("Hello");
+                    }
 
-                break;
+                    break;
+                }
             }
         }
     }

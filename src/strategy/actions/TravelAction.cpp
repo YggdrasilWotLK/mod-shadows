@@ -63,9 +63,14 @@ bool TravelAction::isUseful()
 bool MoveToDarkPortalAction::Execute(Event event)
 {
     if (bot->GetGroup())
-        if (bot->GetGroup()->GetLeaderGUID() != bot->GetGUID() &&
-            !GET_PLAYERBOT_AI(GET_PLAYERBOT_AI(bot)->GetGroupMaster()))
-            return false;
+    {
+        if (bot->GetGroup()->GetLeaderGUID() != bot->GetGUID() && botAI)
+        {
+            Player* groupMaster = botAI->GetGroupMaster();
+            if (groupMaster && !GET_PLAYERBOT_AI(groupMaster))
+                return false;
+        }
+    }
 
     if (bot->GetLevel() > 57)
     {

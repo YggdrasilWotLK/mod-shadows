@@ -2551,8 +2551,11 @@ std::vector<Player*> PlayerbotAI::GetPlayersInGroup()
             continue;
         }
 
-        if (GET_PLAYERBOT_AI(member) && !GET_PLAYERBOT_AI(member)->IsRealPlayer())
-            continue;
+        if (auto memberBotAI = GET_PLAYERBOT_AI(member))
+        {
+            if (!memberBotAI->IsRealPlayer())
+                continue;
+        }
 
         members.push_back(ref->GetSource());
     }
@@ -2736,9 +2739,13 @@ bool PlayerbotAI::TellMasterNoFacing(std::string const text, PlayerbotSecurityLe
     if ((!master || (masterBotAI && !masterBotAI->IsRealPlayer())) &&
         (sPlayerbotAIConfig->randomBotSayWithoutMaster || HasStrategy("debug", BOT_STATE_NON_COMBAT)))
     {
-        bot->Say(text, (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH));
+        if (bot)
+            bot->Say(text, (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH));
         return true;
     }
+
+    if (!master)
+        return false;
 
     if (!IsTellAllowed(securityLevel))
         return false;
@@ -4448,9 +4455,9 @@ bool PlayerbotAI::AllowActive(ActivityType activityType)
     }
 
     // Has player master. Always active.
-    if (GetMaster())
+    if (Player* validMaster = GetMaster())
     {
-        auto masterBotAI = GET_PLAYERBOT_AI(GetMaster());
+        auto masterBotAI = GET_PLAYERBOT_AI(validMaster);
         if (!masterBotAI || masterBotAI->IsRealPlayer())
         {
             return true;
@@ -4464,7 +4471,7 @@ bool PlayerbotAI::AllowActive(ActivityType activityType)
         for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
         {
             Player* member = gref->GetSource();
-            if ((!member || !member->IsInWorld()) && member->GetMapId() != bot->GetMapId())
+            if (!member || !member->IsInWorld() || member->GetMapId() != bot->GetMapId())
             {
                 continue;
             }

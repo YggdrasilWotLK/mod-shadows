@@ -25,9 +25,12 @@ bool InviteToGroupAction::Invite(Player* inviter, Player* player)
 
     if (Group* group = inviter->GetGroup())
     {
-        if (GET_PLAYERBOT_AI(player) && !GET_PLAYERBOT_AI(player)->IsRealPlayer())
-            if (!group->isRaidGroup() && group->GetMembersCount() > 4)
-                group->ConvertToRaid();
+        if (auto inviteeAI = GET_PLAYERBOT_AI(player))
+        {
+            if (!inviteeAI->IsRealPlayer())
+                if (!group->isRaidGroup() && group->GetMembersCount() > 4)
+                    group->ConvertToRaid();
+        }
     }
 
     WorldPacket p;
@@ -57,8 +60,14 @@ bool InviteNearbyToGroupAction::Execute(Event event)
         if (player->GetGroup())
             continue;
 
-        if (!sPlayerbotAIConfig->randomBotInvitePlayer && GET_PLAYERBOT_AI(player)->IsRealPlayer())
-            continue;
+        if (!sPlayerbotAIConfig->randomBotInvitePlayer)
+        {
+            if (auto nearbyAI = GET_PLAYERBOT_AI(player))
+            {
+                if (nearbyAI->IsRealPlayer())
+                    continue;
+            }
+        }
 
         Group* group = bot->GetGroup();
 
@@ -67,8 +76,6 @@ bool InviteNearbyToGroupAction::Execute(Event event)
 
         if (player->IsBeingTeleported())
             continue;
-
-        auto botAI = GET_PLAYERBOT_AI(bot);
 
         if (botAI)
         {
@@ -87,7 +94,7 @@ bool InviteNearbyToGroupAction::Execute(Event event)
             continue;
 
         // When inviting the 5th member of the group convert to raid for future invites.
-        if (group && botAI->GetGrouperType() > GrouperType::LEADER_5 && !group->isRaidGroup() &&
+        if (group && botAI && botAI->GetGrouperType() > GrouperType::LEADER_5 && !group->isRaidGroup() &&
             bot->GetGroup()->GetMembersCount() > 3)
             group->ConvertToRaid();
 
@@ -178,8 +185,14 @@ bool InviteGuildToGroupAction::Execute(Event event)
         if (player->isDND())
             continue;
 
-        if (!sPlayerbotAIConfig->randomBotInvitePlayer && GET_PLAYERBOT_AI(player)->IsRealPlayer())
-            continue;
+        if (!sPlayerbotAIConfig->randomBotInvitePlayer)
+        {
+            if (auto guildInviteeAI = GET_PLAYERBOT_AI(player))
+            {
+                if (guildInviteeAI->IsRealPlayer())
+                    continue;
+            }
+        }
 
         if (player->IsBeingTeleported())
             continue;

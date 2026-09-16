@@ -338,7 +338,7 @@ bool BGJoinAction::isUseful()
         return false;
 
     // do not try if with player master
-    if (GET_PLAYERBOT_AI(bot)->HasActivePlayerMaster())
+    if (botAI && botAI->HasActivePlayerMaster())
         return false;
 
     // do not try if in group, if in group only leader can queue

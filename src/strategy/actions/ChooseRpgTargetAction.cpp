@@ -310,19 +310,22 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldObject* target)
 
 bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
-    Player* gmaster = botAI->GetGroupMaster();
-    Player* realMaster = botAI->GetMaster();
-    AiObjectContext* context = botAI->GetAiObjectContext();
+    auto followBotAI = GET_PLAYERBOT_AI(bot);
+    if (!followBotAI)
+        return false;
+    Player* gmaster = followBotAI->GetGroupMaster();
+    Player* realMaster = followBotAI->GetMaster();
+    AiObjectContext* context = followBotAI->GetAiObjectContext();
 
     bool inDungeon = false;
 
-    if (botAI->HasActivePlayerMaster())
+    if (followBotAI->HasActivePlayerMaster())
     {
-        if (realMaster->IsInWorld() && realMaster->GetMap()->IsDungeon() && bot->GetMapId() == realMaster->GetMapId())
+        if (realMaster && realMaster->IsInWorld() && realMaster->GetMap() && realMaster->GetMap()->IsDungeon() &&
+            bot->GetMapId() == realMaster->GetMapId())
             inDungeon = true;
 
-        if (realMaster && realMaster->IsInWorld() && realMaster->GetMap()->IsDungeon() &&
+        if (realMaster && realMaster->IsInWorld() && realMaster->GetMap() && realMaster->GetMap()->IsDungeon() &&
             (realMaster->GetMapId() != pos.getMapId()))
             return false;
     }
@@ -330,7 +333,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
     if (!gmaster || bot == gmaster)
         return true;
 
-    if (!botAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
+    if (!followBotAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
         return true;
 
     if (bot->GetDistance(gmaster) > sPlayerbotAIConfig->rpgDistance * 2)
@@ -339,7 +342,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
     Formation* formation = AI_VALUE(Formation*, "formation");
     float distance = gmaster->GetDistance2d(pos.getX(), pos.getY());
 
-    if (!botAI->HasActivePlayerMaster() && distance < 50.0f)
+    if (!followBotAI->HasActivePlayerMaster() && distance < 50.0f)
     {
         Player* player = gmaster;
         if (gmaster && !gmaster->isMoving() ||

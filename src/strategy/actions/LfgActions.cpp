@@ -319,7 +319,7 @@ bool LfgJoinAction::isUseful()
         return false;
 
     // don't use if active player master
-    if (GET_PLAYERBOT_AI(bot)->IsRealPlayer())
+    if (botAI && botAI->IsRealPlayer())
         return false;
 
     if (bot->GetGroup() && bot->GetGroup()->GetLeaderGUID() != bot->GetGUID())

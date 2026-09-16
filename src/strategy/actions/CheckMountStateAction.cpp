@@ -85,7 +85,7 @@ bool CheckMountStateAction::isUseful()
         return false;
 
     // Not useful when bot does not have mount strat and is not currently mounted
-    if (!GET_PLAYERBOT_AI(bot)->HasStrategy("mount", BOT_STATE_NON_COMBAT) && !bot->IsMounted())
+    if (botAI && !botAI->HasStrategy("mount", BOT_STATE_NON_COMBAT) && !bot->IsMounted())
         return false;
 
     // Not useful when level lower than minimum required

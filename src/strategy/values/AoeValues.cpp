@@ -58,9 +58,11 @@ WorldLocation AoePositionValue::Calculate()
     float y1 = 0.f;
     float x2 = 0.f;
     float y2 = 0.f;
+    if (!botAI)
+        return WorldLocation();
     for (GuidVector::iterator i = group.begin(); i != group.end(); ++i)
     {
-        Unit* unit = GET_PLAYERBOT_AI(bot)->GetUnit(*i);
+        Unit* unit = botAI->GetUnit(*i);
         if (!unit)
             continue;
 
