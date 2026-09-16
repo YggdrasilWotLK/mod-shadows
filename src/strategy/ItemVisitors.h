@@ -11,7 +11,10 @@
 #include "Item.h"
 #include "ItemUsageValue.h"
 
+#include <memory>
+
 class AiObjectContext;
+class PlayerbotAI;
 class Player;
 
 char* strstri(char const* str1, char const* str2);
@@ -411,10 +414,13 @@ class FindItemUsageVisitor : public FindUsableItemVisitor
 {
 public:
     FindItemUsageVisitor(Player* bot, ItemUsage usage = ITEM_USAGE_NONE);
+    ~FindItemUsageVisitor();
 
     bool Accept(ItemTemplate const* proto) override;
 
 private:
+    // Keeps the bot AI alive for the visitor's lifetime (logout/destruct race).
+    std::shared_ptr<PlayerbotAI> aiGuard;
     AiObjectContext* context;
     ItemUsage usage;
 };

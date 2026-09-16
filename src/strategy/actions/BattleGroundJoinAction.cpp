@@ -93,7 +93,7 @@ bool BGJoinAction::gatherArenaTeam(ArenaType type)
 
         if (member)
         {
-            PlayerbotAI* memberBotAI = GET_PLAYERBOT_AI(member);
+            auto memberBotAI = GET_PLAYERBOT_AI(member);
             if (!memberBotAI)
                 continue;
 
@@ -171,7 +171,7 @@ bool BGJoinAction::gatherArenaTeam(ArenaType type)
         if (!group->AddMember(member))
             continue;
 
-        PlayerbotAI* memberBotAI = GET_PLAYERBOT_AI(member);
+        auto memberBotAI = GET_PLAYERBOT_AI(member);
         if (!memberBotAI)
             continue;
 

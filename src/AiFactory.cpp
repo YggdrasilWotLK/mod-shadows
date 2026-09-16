@@ -705,7 +705,7 @@ void AiFactory::AddDefaultNonCombatStrategies(Player* player, PlayerbotAI* const
             {
                 if (master)
                 {
-                    PlayerbotAI* masterBotAI = GET_PLAYERBOT_AI(master);
+                    auto masterBotAI = GET_PLAYERBOT_AI(master);
                     if (masterBotAI || sRandomPlayerbotMgr->IsRandomBot(player))
                     {
                         // nonCombatEngine->addStrategy("pvp", false);

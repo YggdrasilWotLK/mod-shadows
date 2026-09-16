@@ -26,7 +26,7 @@ bool TalkToQuestGiverAction::ProcessQuest(Quest const* quest, Object* questGiver
 
     if (sPlayerbotAIConfig->syncQuestForPlayer && master)
     {
-        PlayerbotAI* masterBotAI = GET_PLAYERBOT_AI(master);
+        auto masterBotAI = GET_PLAYERBOT_AI(master);
         if (!masterBotAI || masterBotAI->IsRealPlayer())
         {
             QuestStatus masterStatus = master->GetQuestStatus(quest->GetQuestId());
@@ -262,7 +262,7 @@ bool TurnInQueryQuestAction::Execute(Event event)
 
     if (sPlayerbotAIConfig->syncQuestForPlayer && master)
     {
-        PlayerbotAI* masterBotAI = GET_PLAYERBOT_AI(master);
+        auto masterBotAI = GET_PLAYERBOT_AI(master);
         if (!masterBotAI || masterBotAI->IsRealPlayer())
         {
             QuestStatus masterStatus = master->GetQuestStatus(quest->GetQuestId());

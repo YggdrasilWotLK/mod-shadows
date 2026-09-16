@@ -99,7 +99,7 @@ bool EmoteActionBase::Emote(Unit* target, uint32 type, bool textEmote)
         Player* player = dynamic_cast<Player*>(target);
         if (player)
         {
-            PlayerbotAI* playerBotAI = GET_PLAYERBOT_AI(player);
+            auto playerBotAI = GET_PLAYERBOT_AI(player);
             if (playerBotAI && !player->HasInArc(static_cast<float>(M_PI), bot, sPlayerbotAIConfig->sightDistance))
             {
                 player->SetFacingToObject(bot);
@@ -803,7 +803,7 @@ bool TalkAction::Execute(Event event)
     if (target)
     {
         if (Player* player = dynamic_cast<Player*>(target))
-            if (PlayerbotAI* playerBotAI = GET_PLAYERBOT_AI(player))
+            if (auto playerBotAI = GET_PLAYERBOT_AI(player))
                 playerBotAI->GetAiObjectContext()->GetValue<ObjectGuid>("talk target")->Set(bot->GetGUID());
 
         context->GetValue<ObjectGuid>("talk target")->Set(target->GetGUID());

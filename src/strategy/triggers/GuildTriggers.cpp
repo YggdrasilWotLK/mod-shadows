@@ -43,7 +43,7 @@ bool LeaveLargeGuildTrigger::IsActive()
     if (!leader || !GET_PLAYERBOT_AI(leader) || !GET_PLAYERBOT_AI(leader)->IsRealPlayer())
         return false;
 
-    PlayerbotAI* leaderBotAI = GET_PLAYERBOT_AI(leader);
+    auto leaderBotAI = GET_PLAYERBOT_AI(leader);
     if (!leaderBotAI || leaderBotAI->IsRealPlayer())
         return false;
 

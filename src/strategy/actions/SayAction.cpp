@@ -102,7 +102,7 @@ bool SayAction::Execute(Event event)
         for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
         {
             Player* member = ref->GetSource();
-            PlayerbotAI* memberAi = GET_PLAYERBOT_AI(member);
+            auto memberAi = GET_PLAYERBOT_AI(member);
             if (memberAi)
                 members.push_back(member);
         }
@@ -124,7 +124,7 @@ bool SayAction::Execute(Event event)
         int index = 0;
         for (auto& member : members)
         {
-            PlayerbotAI* memberAi = GET_PLAYERBOT_AI(member);
+            auto memberAi = GET_PLAYERBOT_AI(member);
             if (memberAi)
                 memberAi->GetAiObjectContext()
                     ->GetValue<time_t>("last said", qualifier)

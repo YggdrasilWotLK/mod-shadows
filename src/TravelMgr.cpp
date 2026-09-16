@@ -1085,7 +1085,10 @@ std::string const QuestTravelDestination::getTitle() { return ChatHelper::Format
 
 bool QuestRelationTravelDestination::isActive(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
+    if (!botAI || !botAI->IsAlive())
+        return false;
+
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     if (botAI && !botAI->HasStrategy("rpg quest", BOT_STATE_NON_COMBAT))
@@ -1164,7 +1167,10 @@ bool QuestObjectiveTravelDestination::isActive(Player* bot)
     if (questTemplate->GetQuestLevel() > bot->GetLevel() + 1)
         return false;
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
+    if (!botAI || !botAI->IsAlive())
+        return false;
+
     AiObjectContext* context = botAI->GetAiObjectContext();
     if (questTemplate->GetQuestLevel() + 5 > bot->GetLevel() && !AI_VALUE(bool, "can fight equal"))
         return false;
@@ -1229,7 +1235,10 @@ std::string const QuestObjectiveTravelDestination::getTitle()
 
 bool RpgTravelDestination::isActive(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
+    if (!botAI || !botAI->IsAlive())
+        return false;
+
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     CreatureTemplate const* cInfo = GetCreatureTemplate();
@@ -1250,7 +1259,7 @@ bool RpgTravelDestination::isActive(Player* bot)
         return false;
 
     // Once the target rpged with it is added to the ignore list. We can now move on.
-    GuidSet& ignoreList = GET_PLAYERBOT_AI(bot)->GetAiObjectContext()->GetValue<GuidSet&>("ignore rpg target")->Get();
+    GuidSet& ignoreList = botAI->GetAiObjectContext()->GetValue<GuidSet&>("ignore rpg target")->Get();
 
     for (ObjectGuid const guid : ignoreList)
     {
@@ -1305,7 +1314,10 @@ bool ExploreTravelDestination::isActive(Player* bot)
 
 bool GrindTravelDestination::isActive(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
+    if (!botAI || !botAI->IsAlive())
+        return false;
+
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     if (!AI_VALUE(bool, "should get money"))
@@ -1359,7 +1371,10 @@ std::string const GrindTravelDestination::getTitle()
 
 bool BossTravelDestination::isActive(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
+    if (!botAI || !botAI->IsAlive())
+        return false;
+
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     if (!AI_VALUE(bool, "can fight boss"))
@@ -4088,7 +4103,7 @@ void TravelMgr::setNullTravelTarget(Player* player)
     if (!player)
         return;
 
-    PlayerbotAI* playerBotAI = GET_PLAYERBOT_AI(player);
+    auto playerBotAI = GET_PLAYERBOT_AI(player);
     if (!playerBotAI)
         return;
 

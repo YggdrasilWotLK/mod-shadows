@@ -41,7 +41,7 @@ bool FindNonCcTargetStrategy::IsCcTarget(Unit* attacker)
             if (!member || !member->IsAlive())
                 continue;
 
-            if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(member))
+            if (auto botAI = GET_PLAYERBOT_AI(member))
             {
                 if (botAI->GetAiObjectContext()->GetValue<Unit*>("rti cc target")->Get() == attacker)
                     return true;

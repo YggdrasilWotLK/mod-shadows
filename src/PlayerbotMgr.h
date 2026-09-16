@@ -13,6 +13,9 @@
 #include "QueryHolder.h"
 #include "QueryResult.h"
 
+#include <memory>
+#include <shared_mutex>
+
 class ChatHandler;
 class PlayerbotAI;
 class PlayerbotLoginQueryHolder;
@@ -94,6 +97,9 @@ protected:
 
 private:
     Player* const master;
+    // GUID copy: ~PlayerbotMgr runs while master may be partially destructed,
+    // so it must never dereference master to unregister itself.
+    ObjectGuid const masterGuid;
     PlayerBotErrorMap errors;
     time_t lastErrorTell;
 };
@@ -113,12 +119,19 @@ public:
     void AddPlayerbotData(Player* player, bool isBotAI);
     void RemovePlayerBotData(ObjectGuid const& guid, bool is_AI);
 
-    PlayerbotAI* GetPlayerbotAI(Player* player);
-    PlayerbotMgr* GetPlayerbotMgr(Player* player);
+    // Shared ownership: the returned ref keeps the AI/Mgr alive past map
+    // erase (logout/destruct racing map-thread ticks). Hold it in a local
+    // for the whole use; never store the raw pointer across ticks.
+    std::shared_ptr<PlayerbotAI> GetPlayerbotAI(Player* player);
+    std::shared_ptr<PlayerbotMgr> GetPlayerbotMgr(Player* player);
 
 private:
-    std::unordered_map<ObjectGuid, PlayerbotAIBase*> _playerbotsAIMap;
-    std::unordered_map<ObjectGuid, PlayerbotAIBase*> _playerbotsMgrMap;
+    std::unordered_map<ObjectGuid, std::shared_ptr<PlayerbotAIBase>> _playerbotsAIMap;
+    std::unordered_map<ObjectGuid, std::shared_ptr<PlayerbotAIBase>> _playerbotsMgrMap;
+    // Guards both maps. Readers (map worker threads) take shared_lock;
+    // writers (login/logout/destruct) take unique_lock. Never hold across
+    // ObjectAccessor calls or UpdateAI to avoid lock-order inversion.
+    mutable std::shared_mutex _mapsMutex;
 };
 
 #define sPlayerbotsMgr PlayerbotsMgr::instance()

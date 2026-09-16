@@ -199,7 +199,7 @@ bool GuildManageNearbyAction::Execute(Event event)
         if (player->GetGuildIdInvited())
             continue;
 
-        PlayerbotAI* botAi = GET_PLAYERBOT_AI(player);
+        auto botAi = GET_PLAYERBOT_AI(player);
 
         if (!sPlayerbotAIConfig->randomBotInvitePlayer && botAi && botAi->IsRealPlayer())
             continue;

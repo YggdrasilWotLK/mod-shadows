@@ -18,6 +18,7 @@
 #include "Item.h"
 #include "NewRpgInfo.h"
 #include "NewRpgStrategy.h"
+#include "ObjectGuid.h"
 #include "PlayerbotAIBase.h"
 #include "PlayerbotAIConfig.h"
 #include "PlayerbotSecurity.h"
@@ -32,7 +33,6 @@ class Engine;
 class ExternalEventHelper;
 class Gameobject;
 class Item;
-class ObjectGuid;
 class Player;
 class PlayerbotMgr;
 class Spell;
@@ -528,7 +528,12 @@ public:
     float GetRange(std::string const type);
 
     Player* GetBot() { return bot; }
-    Player* GetMaster() { return master; }
+    // Validated master: revalidates the stored raw pointer against the
+    // object registry (logout/remove/teleport race) and self-heals it.
+    // All new code must use this instead of trusting the raw pointer.
+    // Never call during destruction (uses ObjectAccessor).
+    Player* GetMaster();
+    Player* GetRawMaster() { return master; }
 
     // Checks if the bot is really a player. Players always have themselves as master.
     bool IsRealPlayer() { return master ? (master == bot) : false; }
@@ -566,7 +571,11 @@ public:
     BotCheatMask GetCheat() { return cheatMask; }
     void SetCheat(BotCheatMask mask) { cheatMask = mask; }
 
-    void SetMaster(Player* newMaster) { master = newMaster; }
+    void SetMaster(Player* newMaster);
+    // Returns master only if it is still a live player object. Self-heals a
+    // dangling master pointer (logout/remove/teleport race on map threads)
+    // without ever dereferencing the stale pointer.
+    Player* GetValidMaster();
     AiObjectContext* GetAiObjectContext() { return aiObjectContext; }
     ChatHelper* GetChatHelper() { return &chatHelper; }
     bool IsOpposing(Player* player);
@@ -619,7 +628,11 @@ private:
 
 protected:
     Player* bot;
+    // GUID copy: ~PlayerbotAI runs while bot may be partially destructed, so
+    // it must never dereference bot to unregister itself.
+    ObjectGuid const botGuid;
     Player* master;
+    ObjectGuid masterGuid;
     uint32 accountId;
     AiObjectContext* aiObjectContext;
     Engine* currentEngine;

@@ -1216,7 +1216,7 @@ TravelNodeRoute TravelNodeMap::getRoute(TravelNode* start, TravelNode* goal, Pla
 
     if (bot)
     {
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI)
         {
             if (botAI->HasCheat(BotCheatMask::gold))
@@ -1430,7 +1430,7 @@ TravelNodeRoute TravelNodeMap::getRoute(WorldPosition startPos, WorldPosition en
 TravelPath TravelNodeMap::getFullPath(WorldPosition startPos, WorldPosition endPos, Player* bot)
 {
     TravelPath movePath;
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     std::vector<WorldPosition> beginPath, endPath;
 
     beginPath = endPos.getPathFromPath({startPos}, nullptr, 40);

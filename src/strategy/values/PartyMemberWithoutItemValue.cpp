@@ -27,7 +27,7 @@ public:
         if (!(member->IsInSameGroupWith(botAI->GetBot()) || member->IsInSameRaidWith(botAI->GetBot())))
             return false;
 
-        PlayerbotAI* memberbotAI = GET_PLAYERBOT_AI(member);
+        auto memberbotAI = GET_PLAYERBOT_AI(member);
         if (!memberbotAI)
             return false;
 

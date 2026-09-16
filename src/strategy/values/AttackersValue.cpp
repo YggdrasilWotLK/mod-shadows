@@ -149,7 +149,7 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
     if (attacker && bot->GetGroup())
         rti = bot->GetGroup()->GetTargetIcon(7) == attacker->GetGUID();
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
 
     bool leaderHasThreat = false;
     if (attacker && bot->GetGroup() && botAI->GetMaster())
@@ -158,7 +158,7 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
     bool isMemberBotGroup = false;
     if (bot->GetGroup() && botAI->GetMaster())
     {
-        PlayerbotAI* masterBotAI = GET_PLAYERBOT_AI(botAI->GetMaster());
+        auto masterBotAI = GET_PLAYERBOT_AI(botAI->GetMaster());
         if (masterBotAI && !masterBotAI->IsRealPlayer())
             isMemberBotGroup = true;
     }

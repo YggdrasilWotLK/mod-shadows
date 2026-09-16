@@ -36,7 +36,7 @@ void GuildTaskMgr::Update(Player* player, Player* guildMaster)
         SetTaskValue(0, 0, "advert_cleanup", 1, sPlayerbotAIConfig->guildTaskAdvertCleanupTime);
     }
 
-    PlayerbotAI* masterBotAI = GET_PLAYERBOT_AI(guildMaster);
+    auto masterBotAI = GET_PLAYERBOT_AI(guildMaster);
     uint32 guildId = guildMaster->GetGuildId();
     if (!guildId || !masterBotAI || !guildMaster->GetGuildId())
         return;
@@ -1054,7 +1054,7 @@ void GuildTaskMgr::SendCompletionMessage(Player* player, std::string const verb)
     }
     else
     {
-        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+        if (auto botAI = GET_PLAYERBOT_AI(player))
             if (Player* master = botAI->GetMaster())
                 ChatHandler(master->GetSession()).PSendSysMessage(out.str().c_str());
     }

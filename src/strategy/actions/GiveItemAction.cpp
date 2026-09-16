@@ -21,7 +21,7 @@ bool GiveItemAction::Execute(Event event)
     if (!receiver)
         return false;
 
-    PlayerbotAI* receiverAi = GET_PLAYERBOT_AI(receiver);
+    auto receiverAi = GET_PLAYERBOT_AI(receiver);
     if (!receiverAi)
         return false;
 

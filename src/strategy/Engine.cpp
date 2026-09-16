@@ -594,7 +594,13 @@ bool Engine::ListenAndExecute(Action* action, Event event)
 
 void Engine::LogAction(char const* format, ...)
 {
+    if (!botAI)
+        return;
+
     Player* bot = botAI->GetBot();
+    if (!bot || !format)
+        return;
+
     if (sPlayerbotAIConfig->logInGroupOnly && (!bot->GetGroup() || !botAI->HasRealPlayerMaster()) && !testMode)
         return;
 
@@ -602,8 +608,9 @@ void Engine::LogAction(char const* format, ...)
 
     va_list ap;
     va_start(ap, format);
-    vsprintf(buf, format, ap);
+    vsnprintf(buf, sizeof(buf), format, ap);
     va_end(ap);
+    buf[sizeof(buf) - 1] = '\0';
 
     lastAction += "|";
     lastAction += buf;

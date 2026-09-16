@@ -23,7 +23,7 @@ bool TradeStatusAction::Execute(Event event)
     if (!trader)
         return false;
 
-    PlayerbotAI* traderBotAI = GET_PLAYERBOT_AI(trader);
+    auto traderBotAI = GET_PLAYERBOT_AI(trader);
 
     // Allow the master and group members to trade
     if (trader != master && !traderBotAI && (!bot->GetGroup() || !bot->GetGroup()->IsMember(trader->GetGUID())))

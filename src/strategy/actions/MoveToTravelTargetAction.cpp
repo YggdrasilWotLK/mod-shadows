@@ -32,7 +32,7 @@ bool MoveToTravelTargetAction::Execute(Event event)
             if (!member->isMoving())
                 continue;
 
-            PlayerbotAI* memberBotAI = GET_PLAYERBOT_AI(member);
+            auto memberBotAI = GET_PLAYERBOT_AI(member);
             if (memberBotAI && !memberBotAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
                 continue;
 

@@ -57,7 +57,7 @@ void LootObject::Refresh(Player* bot, ObjectGuid lootGUID)
     reqItem = 0;
     guid.Clear();
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return;
@@ -248,7 +248,7 @@ WorldObject* LootObject::GetWorldObject(Player* bot)
 {
     Refresh(bot, guid);
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return nullptr;
@@ -281,7 +281,7 @@ bool LootObject::IsLootPossible(Player* bot)
     if (!worldObj)
         return false;
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return false;

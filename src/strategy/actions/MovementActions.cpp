@@ -1258,7 +1258,7 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
         {
             Player* pTarget = (Player*)target;
 
-            PlayerbotAI* targetBotAI = GET_PLAYERBOT_AI(pTarget);
+            auto targetBotAI = GET_PLAYERBOT_AI(pTarget);
             if (targetBotAI)  // Try to move to where the bot is going if it is closer and in the same direction.
             {
                 WorldPosition botPos(bot);

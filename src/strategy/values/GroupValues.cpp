@@ -144,7 +144,7 @@ bool GroupReadyValue::Calculate()
 
         if (inDungeon)  // In dungeons all following members need to be alive before continueing.
         {
-            PlayerbotAI* memberAi = GET_PLAYERBOT_AI(member);
+            auto memberAi = GET_PLAYERBOT_AI(member);
 
             bool isFollowing = memberAi ? memberAi->HasStrategy("follow", BOT_STATE_NON_COMBAT) : true;
 

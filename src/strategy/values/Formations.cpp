@@ -411,7 +411,7 @@ float Formation::GetFollowAngle()
 {
     Player* master = GetMaster();
     Group* group = bot->GetGroup();
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
 
     // If there's no master and no group
     if (!master && !group)
@@ -467,7 +467,7 @@ float Formation::GetFollowAngle()
     else if (master)
     {
         // If the bot is following a master, look up the bot's position in the master's list
-        PlayerbotMgr* masterBotMgr = GET_PLAYERBOT_MGR(master);
+        auto masterBotMgr = GET_PLAYERBOT_MGR(master);
         if (masterBotMgr && !GET_PLAYERBOT_AI(master))
         {
             for (auto it = masterBotMgr->GetPlayerBotsBegin(); it != masterBotMgr->GetPlayerBotsEnd(); ++it)

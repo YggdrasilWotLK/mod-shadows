@@ -9,10 +9,13 @@
 #include "Define.h"
 #include "PlayerbotAIConfig.h"
 
+#include <atomic>
+
 class PlayerbotAIBase
 {
 public:
     PlayerbotAIBase(bool isBotAI);
+    virtual ~PlayerbotAIBase() = default;
 
     bool CanUpdateAI();
     void SetNextCheckDelay(uint32 const delay);
@@ -22,6 +25,10 @@ public:
     virtual void UpdateAIInternal(uint32 elapsed, bool minimal = false) = 0;
     bool IsActive();
     bool IsBotAI() const;
+    // Lifetime flag: set to false before the object is erased/deleted so
+    // concurrent map readers (no lock held across use) can skip a dying entry.
+    bool IsAlive() const { return _alive.load(std::memory_order_acquire); }
+    void Invalidate() { _alive.store(false, std::memory_order_release); }
 
 protected:
     uint32 nextAICheckDelay;
@@ -29,6 +36,7 @@ protected:
 
 private:
     bool _isBotAI;
+    std::atomic<bool> _alive{true};
 };
 
 #endif

@@ -279,7 +279,7 @@ void RandomPlayerbotMgr::LogPlayerLocation()
                 out << bot->GetPowerPct(bot->getPowerType()) << ",";
                 out << bot->GetMoney() << ",";
 
-                if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot))
+                if (auto botAI = GET_PLAYERBOT_AI(bot))
                 {
                     out << std::to_string(uint8(botAI->GetGrouperType())) << ",";
                     out << std::to_string(uint8(botAI->GetGuilderType())) << ",";
@@ -323,7 +323,7 @@ void RandomPlayerbotMgr::LogPlayerLocation()
                 out << bot->GetPowerPct(bot->getPowerType()) << ",";
                 out << bot->GetMoney() << ",";
 
-                if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot))
+                if (auto botAI = GET_PLAYERBOT_AI(bot))
                 {
                     out << std::to_string(uint8(botAI->GetGrouperType())) << ",";
                     out << std::to_string(uint8(botAI->GetGuilderType())) << ",";
@@ -1411,7 +1411,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 {
     ObjectGuid botGUID = ObjectGuid::Create<HighGuid::Player>(bot);
     Player* player = GetPlayerBot(botGUID);
-    PlayerbotAI* botAI = player ? GET_PLAYERBOT_AI(player) : nullptr;
+    auto botAI = player ? GET_PLAYERBOT_AI(player) : nullptr;
 
     uint32 isValid = GetEventValue(bot, "add");
     if (!isValid)
@@ -1482,7 +1482,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 
             if (player->GetGroup() && botAI->GetGroupMaster())
             {
-                PlayerbotAI* groupMasterBotAI = GET_PLAYERBOT_AI(botAI->GetGroupMaster());
+                auto groupMasterBotAI = GET_PLAYERBOT_AI(botAI->GetGroupMaster());
                 if (!groupMasterBotAI || groupMasterBotAI->IsRealPlayer())
                 {
                     update = false;
@@ -1520,7 +1520,7 @@ bool RandomPlayerbotMgr::ProcessBot(uint32 bot)
 bool RandomPlayerbotMgr::ProcessBot(Player* bot)
 {
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
         return false;
 
@@ -1667,7 +1667,7 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, std::vector<WorldLocation>&
     if (bot->GetGroup() && !bot->GetGroup()->IsLeader(bot->GetGUID()))
         return;
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (botAI)
     {
         // ignore when in when taxi with boat/zeppelin and has players nearby
@@ -1770,7 +1770,7 @@ void RandomPlayerbotMgr::RandomTeleport(Player* bot, std::vector<WorldLocation>&
         }
 
         bot->GetMotionMaster()->Clear();
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI)
             botAI->Reset(true);
         bot->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_TELEPORTED | AURA_INTERRUPT_FLAG_CHANGE_MAP);
@@ -2379,7 +2379,7 @@ void RandomPlayerbotMgr::IncreaseLevel(Player* bot)
 
 void RandomPlayerbotMgr::RandomizeFirst(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
         return;
 
@@ -2474,7 +2474,7 @@ void RandomPlayerbotMgr::RandomizeFirst(Player* bot)
 
 void RandomPlayerbotMgr::RandomizeMin(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
         return;
 
@@ -2548,7 +2548,7 @@ uint32 RandomPlayerbotMgr::GetZoneLevel(uint16 mapId, float teleX, float teleY, 
 
 void RandomPlayerbotMgr::Refresh(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
         return;
 
@@ -2983,8 +2983,9 @@ void RandomPlayerbotMgr::OnPlayerLogout(Player* player)
     for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
-        if (botAI && player == botAI->GetMaster())
+        auto botAI = GET_PLAYERBOT_AI(bot);
+        // Raw compare: no dereference, no registry lookup while iterating.
+        if (botAI && botAI->IsAlive() && player == botAI->GetRawMaster())
         {
             botAI->SetMaster(nullptr);
             if (!bot->InBattleground())
@@ -3045,7 +3046,7 @@ void RandomPlayerbotMgr::OnPlayerLogin(Player* player)
         for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
         {
             Player* member = gref->GetSource();
-            PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+            auto botAI = GET_PLAYERBOT_AI(bot);
             if (botAI && member == player && (!botAI->GetMaster() || GET_PLAYERBOT_AI(botAI->GetMaster())))
             {
                 if (!bot->InBattleground())
@@ -3195,7 +3196,7 @@ void RandomPlayerbotMgr::PrintStats()
         lvlPerClass[bot->getClass()] += bot->GetLevel();
         lvlPerRace[bot->getRace()] += bot->GetLevel();
 
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI->AllowActivity())
             ++active;
 
@@ -3435,7 +3436,7 @@ std::string const RandomPlayerbotMgr::HandleRemoteCommand(std::string const requ
     if (!bot)
         return "invalid guid";
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
         return "invalid guid";
 

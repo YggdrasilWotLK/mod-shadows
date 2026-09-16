@@ -10,6 +10,8 @@
 #include "Player.h"
 #include "PlayerbotAI.h"
 
+#include <memory>
+
 class Item;
 
 struct ItemTemplate;
@@ -143,7 +145,7 @@ private:
 protected:
     EnchantContainer m_EnchantContainer;
     Player* bot;
-    PlayerbotAI* botAI;
+    std::shared_ptr<PlayerbotAI> botAI;
 };
 
 #endif

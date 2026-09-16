@@ -27,7 +27,7 @@ bool IsTankRole(Player* p)
     if (!p) return false;
     if (p->HasTankSpec())
         return true;
-    if (PlayerbotAI* otherAI = GET_PLAYERBOT_AI(p))
+    if (auto otherAI = GET_PLAYERBOT_AI(p))
     {
         if (otherAI->HasStrategy("tank", BOT_STATE_NON_COMBAT) ||
             otherAI->HasStrategy("tank", BOT_STATE_COMBAT)     ||
@@ -146,7 +146,7 @@ inline std::string const GetActualBlessingOfSanctuary(Unit* target, Player* bot)
     if (!tp)
         return "";
 
-    if (auto* ai = GET_PLAYERBOT_AI(bot))
+    if (auto ai = GET_PLAYERBOT_AI(bot))
     {
         if (Unit* mt = ai->GetAiObjectContext()->GetValue<Unit*>("main tank")->Get())
         {

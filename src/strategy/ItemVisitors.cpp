@@ -78,11 +78,17 @@ bool FindPetVisitor::Accept(ItemTemplate const* proto)
 
 FindItemUsageVisitor::FindItemUsageVisitor(Player* bot, ItemUsage usage) : FindUsableItemVisitor(bot), usage(usage)
 {
-    context = GET_PLAYERBOT_AI(bot)->GetAiObjectContext();
+    aiGuard = GET_PLAYERBOT_AI(bot);
+    context = aiGuard ? aiGuard->GetAiObjectContext() : nullptr;
 };
+
+FindItemUsageVisitor::~FindItemUsageVisitor() = default;
 
 bool FindItemUsageVisitor::Accept(ItemTemplate const* proto)
 {
+    if (!context || !proto)
+        return false;
+
     if (AI_VALUE2(ItemUsage, "item usage", proto->ItemId) == usage)
         return true;
 

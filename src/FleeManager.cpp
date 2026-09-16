@@ -22,7 +22,7 @@ void FleeManager::calculateDistanceToCreatures(FleePoint* point)
 {
     point->minDistance = -1.0f;
     point->sumDistance = 0.0f;
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return;
@@ -55,7 +55,7 @@ bool intersectsOri(float angle, std::vector<float>& angles, float angleIncrement
 
 void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return;
@@ -173,7 +173,7 @@ bool FleeManager::CalculateDestination(float* rx, float* ry, float* rz)
 
 bool FleeManager::isUseful()
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return false;

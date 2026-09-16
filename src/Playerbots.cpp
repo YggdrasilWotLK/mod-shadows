@@ -122,14 +122,20 @@ public:
 
     void OnPlayerAfterUpdate(Player* player, uint32 diff) override
     {
-        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+        if (!player || !player->IsInWorld() || player->IsDuringRemoveFromWorld() || !player->GetSession() ||
+            player->GetSession()->isLogingOut())
+            return;
+
+        if (auto botAI = GET_PLAYERBOT_AI(player))
         {
-            botAI->UpdateAI(diff);
+            if (botAI->IsAlive())
+                botAI->UpdateAI(diff);
         }
 
-        if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+        if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
         {
-            playerbotMgr->UpdateAI(diff);
+            if (playerbotMgr->IsAlive())
+                playerbotMgr->UpdateAI(diff);
         }
     }
 
@@ -137,7 +143,7 @@ public:
     {
         if (type == CHAT_MSG_WHISPER)
         {
-            if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(receiver))
+            if (auto botAI = GET_PLAYERBOT_AI(receiver))
             {
                 botAI->HandleCommand(type, msg, player);
 
@@ -154,7 +160,7 @@ public:
         {
             if (Player* member = itr->GetSource())
             {
-                if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(member))
+                if (auto botAI = GET_PLAYERBOT_AI(member))
                 {
                     botAI->HandleCommand(type, msg, player);
                 }
@@ -166,7 +172,7 @@ public:
     {
         if (type == CHAT_MSG_GUILD)
         {
-            if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+            if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
             {
                 for (PlayerBotMap::const_iterator it = playerbotMgr->GetPlayerBotsBegin();
                      it != playerbotMgr->GetPlayerBotsEnd(); ++it)
@@ -185,7 +191,7 @@ public:
 
     void OnPlayerChat(Player* player, uint32 type, uint32 /*lang*/, std::string& msg, Channel* channel) override
     {
-        if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+        if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
         {
             if (channel->GetFlags() & 0x18)
             {
@@ -247,14 +253,21 @@ public:
 
     void OnDestructPlayer(Player* player) override
     {
-        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+        // Erase-then-release: the GUID is captured while player is still valid
+        // at this hook. Invalidating + erasing first makes the entry
+        // undiscoverable to concurrent map readers; the locals keep the
+        // objects alive until scope end (no manual delete under shared_ptr).
+        ObjectGuid const guid = player->GetGUID();
+        if (auto botAI = GET_PLAYERBOT_AI(player))
         {
-            delete botAI;
+            botAI->Invalidate();
+            sPlayerbotsMgr->RemovePlayerBotData(guid, true);
         }
 
-        if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+        if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
         {
-            delete playerbotMgr;
+            playerbotMgr->Invalidate();
+            sPlayerbotsMgr->RemovePlayerBotData(guid, false);
         }
     }
 };
@@ -269,7 +282,7 @@ public:
     void OnPacketReceived(WorldSession* session, WorldPacket const& packet) override
     {
         if (Player* player = session->GetPlayer())
-            if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+            if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
                 playerbotMgr->HandleMasterIncomingPacket(packet);
     }
 };
@@ -345,7 +358,7 @@ public:
 
     bool OnPlayerbotCheckUpdatesToSend(Player* player) override
     {
-        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+        if (auto botAI = GET_PLAYERBOT_AI(player))
             return botAI->IsRealPlayer();
 
         return true;
@@ -356,11 +369,11 @@ public:
         if (!player)
             return;
 
-        if (PlayerbotAI* botAI = GET_PLAYERBOT_AI(player))
+        if (auto botAI = GET_PLAYERBOT_AI(player))
         {
             botAI->HandleBotOutgoingPacket(*packet);
         }
-        if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+        if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
         {
             playerbotMgr->HandleMasterOutgoingPacket(*packet);
         }
@@ -375,15 +388,15 @@ public:
     void OnPlayerbotUpdateSessions(Player* player) override
     {
         if (player)
-            if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+            if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
                 playerbotMgr->UpdateSessions();
     }
 
     void OnPlayerbotLogout(Player* player) override
     {
-        if (PlayerbotMgr* playerbotMgr = GET_PLAYERBOT_MGR(player))
+        if (auto playerbotMgr = GET_PLAYERBOT_MGR(player))
         {
-            PlayerbotAI* botAI = GET_PLAYERBOT_AI(player);
+            auto botAI = GET_PLAYERBOT_AI(player);
             if (!botAI || botAI->IsRealPlayer())
             {
                 playerbotMgr->LogoutAllBots();

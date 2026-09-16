@@ -307,7 +307,7 @@ void PlayerbotFactory::Randomize(bool incremental)
     sRandomPlayerbotMgr->SetValue(bot->GetGUID().GetCounter(), "specNo", 0);
     if (botAI)
     {
-        sPlayerbotDbStore->Reset(botAI);
+        sPlayerbotDbStore->Reset(botAI.get());
         // botAI->DoSpecificAction("auto talents");
         botAI->ResetStrategies(false);  // fix wrong stored strategy
     }
@@ -4113,7 +4113,7 @@ void PlayerbotFactory::InitArenaTeam()
                 if (arenateam->GetCaptain() && arenateam->GetCaptain().IsPlayer())
                 {
                     Player* bot = ObjectAccessor::FindPlayer(arenateam->GetCaptain());
-                    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+                    auto botAI = GET_PLAYERBOT_AI(bot);
                     if (!botAI || botAI->IsRealPlayer())
                     {
                         continue;

@@ -423,7 +423,7 @@ bool ChooseTravelTargetAction::SetGroupTarget(TravelTarget* target)
         if (!player)
             continue;
 
-        PlayerbotAI* playerBotAI = GET_PLAYERBOT_AI(player);
+        auto playerBotAI = GET_PLAYERBOT_AI(player);
         if (!playerBotAI)
             continue;
 
@@ -824,7 +824,7 @@ char* strstri(char const* haystack, char const* needle);
 
 TravelDestination* ChooseTravelTargetAction::FindDestination(Player* bot, std::string const name, bool zones, bool npcs, bool quests, bool mobs, bool bosses)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
 
     // AiObjectContext* context = botAI->GetAiObjectContext(); //not used, line marked for removal.
 

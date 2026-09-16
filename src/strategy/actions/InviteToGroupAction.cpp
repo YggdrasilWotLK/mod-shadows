@@ -68,7 +68,7 @@ bool InviteNearbyToGroupAction::Execute(Event event)
         if (player->IsBeingTeleported())
             continue;
 
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
 
         if (botAI)
         {
@@ -190,7 +190,7 @@ bool InviteGuildToGroupAction::Execute(Event event)
         if (WorldPosition(player).distance(bot) > 1000 && player->GetLevel() < 15)
             continue;
 
-        PlayerbotAI* playerAi = GET_PLAYERBOT_AI(player);
+        auto playerAi = GET_PLAYERBOT_AI(player);
 
         if (playerAi)
         {

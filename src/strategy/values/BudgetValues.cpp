@@ -142,7 +142,7 @@ uint32 MoneyNeededForValue::Calculate()
 {
     NeedMoneyFor needMoneyFor = NeedMoneyFor(stoi(getQualifier()));
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     uint32 moneyWanted = 0;

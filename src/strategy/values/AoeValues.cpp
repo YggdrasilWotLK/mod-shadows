@@ -11,7 +11,7 @@
 
 GuidVector FindMaxDensity(Player* bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     GuidVector units = *botAI->GetAiObjectContext()->GetValue<GuidVector>("possible targets");
 
     std::map<ObjectGuid, GuidVector> groups;

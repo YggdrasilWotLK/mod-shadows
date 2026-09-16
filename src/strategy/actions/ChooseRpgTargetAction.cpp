@@ -31,7 +31,7 @@ bool ChooseRpgTargetAction::HasSameTarget(ObjectGuid guid, uint32 max, GuidVecto
         if (!player)
             continue;
 
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(player);
+        auto botAI = GET_PLAYERBOT_AI(player);
         if (!botAI)
             continue;
 
@@ -310,7 +310,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldObject* target)
 
 bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     Player* gmaster = botAI->GetGroupMaster();
     Player* realMaster = botAI->GetMaster();
     AiObjectContext* context = botAI->GetAiObjectContext();

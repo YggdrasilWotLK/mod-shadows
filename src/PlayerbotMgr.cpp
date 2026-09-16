@@ -119,7 +119,7 @@ void PlayerbotHolder::AddPlayerBot(ObjectGuid playerGuid, uint32 masterAccountId
     }
     if (masterAccountId && masterPlayer)
     {
-        PlayerbotMgr* mgr = GET_PLAYERBOT_MGR(masterPlayer);
+        auto mgr = GET_PLAYERBOT_MGR(masterPlayer);
         if (!mgr)
         {
             LOG_DEBUG("playerbots", "PlayerbotMgr not found for master player with GUID: {}", masterPlayer->GetGUID().GetRawValue());
@@ -207,7 +207,7 @@ void PlayerbotHolder::UpdateSessions()
         Player* const bot = itr->second;
         if (bot->IsBeingTeleported())
         {
-            PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+            auto botAI = GET_PLAYERBOT_AI(bot);
             if (botAI)
             {
                 botAI->HandleTeleportAck();
@@ -260,7 +260,7 @@ void PlayerbotHolder::LogoutAllBots()
         if (!bot)
             continue;
 
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (!botAI || botAI->IsRealPlayer())
             continue;
 
@@ -277,7 +277,7 @@ void PlayerbotMgr::CancelLogout()
     for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (!botAI || botAI->IsRealPlayer())
             continue;
 
@@ -293,7 +293,7 @@ void PlayerbotMgr::CancelLogout()
          it != sRandomPlayerbotMgr->GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (!botAI || botAI->IsRealPlayer())
             continue;
 
@@ -312,14 +312,14 @@ void PlayerbotHolder::LogoutPlayerBot(ObjectGuid guid)
 {
     if (Player* bot = GetPlayerBot(guid))
     {
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
-        if (!botAI)
+        auto botAI = GET_PLAYERBOT_AI(bot);
+        if (!botAI || !botAI->IsAlive())
             return;
 
         Group* group = bot->GetGroup();
         if (group && !bot->InBattleground() && !bot->InBattlegroundQueue() && botAI->HasActivePlayerMaster())
         {
-            sPlayerbotDbStore->Save(botAI);
+            sPlayerbotDbStore->Save(botAI.get());
         }
 
         LOG_DEBUG("playerbots", "Bot {} logging out", bot->GetName().c_str());
@@ -328,7 +328,7 @@ void PlayerbotHolder::LogoutPlayerBot(ObjectGuid guid)
         WorldSession* botWorldSessionPtr = bot->GetSession();
         WorldSession* masterWorldSessionPtr = nullptr;
 
-        if (botWorldSessionPtr->isLogingOut())
+        if (!botWorldSessionPtr || botWorldSessionPtr->isLogingOut())
             return;
 
         Player* master = botAI->GetMaster();
@@ -413,8 +413,8 @@ void PlayerbotHolder::DisablePlayerBot(ObjectGuid guid)
 {
     if (Player* bot = GetPlayerBot(guid))
     {
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
-        if (!botAI)
+        auto botAI = GET_PLAYERBOT_AI(bot);
+        if (!botAI || !botAI->IsAlive())
         {
             return;
         }
@@ -425,7 +425,7 @@ void PlayerbotHolder::DisablePlayerBot(ObjectGuid guid)
         Group* group = bot->GetGroup();
         if (group && !bot->InBattleground() && !bot->InBattlegroundQueue() && botAI->HasActivePlayerMaster())
         {
-            sPlayerbotDbStore->Save(botAI);
+            sPlayerbotDbStore->Save(botAI.get());
         }
 
         LOG_DEBUG("playerbots", "Bot {} logged out", bot->GetName().c_str());
@@ -441,7 +441,11 @@ void PlayerbotHolder::DisablePlayerBot(ObjectGuid guid)
 
         RemoveFromPlayerbotsMap(guid);  // deletes bot player ptr inside this WorldSession PlayerBotMap
 
-        delete botAI;
+        // Erase-then-release: dropping the map ref first makes the AI
+        // undiscoverable; the local ref keeps it alive until scope end.
+        // The destructor re-erases idempotently.
+        botAI->Invalidate();
+        sPlayerbotsMgr->RemovePlayerBotData(guid, true);
     }
 }
 
@@ -476,7 +480,7 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
 
     OnBotLoginInternal(bot);
 
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         // Log a warning here to indicate that the botAI is null
@@ -493,7 +497,7 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
             Player* currentLeader = ObjectAccessor::FindPlayer(master->GetGroup()->GetLeaderGUID());
             if (currentLeader)
             {
-                PlayerbotAI* leaderAI = GET_PLAYERBOT_AI(currentLeader);
+                auto leaderAI = GET_PLAYERBOT_AI(currentLeader);
                 if (leaderAI && !leaderAI->IsRealPlayer())
                 {
                     master->GetGroup()->ChangeLeader(masterGuid);
@@ -547,7 +551,7 @@ void PlayerbotHolder::OnBotLogin(Player* const bot)
     {
         botAI->ResetStrategies(!sRandomPlayerbotMgr->IsRandomBot(bot));
     }
-    sPlayerbotDbStore->Load(botAI);
+    sPlayerbotDbStore->Load(botAI.get());
 
     if (master && !master->HasUnitState(UNIT_STATE_IN_FLIGHT))
     {
@@ -887,7 +891,7 @@ bool PlayerbotMgr::HandlePlayerbotMgrCommand(ChatHandler* handler, char const* a
     }
 
     Player* player = m_session->GetPlayer();
-    PlayerbotMgr* mgr = GET_PLAYERBOT_MGR(player);
+    auto mgr = GET_PLAYERBOT_MGR(player);
     if (!mgr)
     {
         handler->PSendSysMessage("You cannot control bots yet");
@@ -1065,7 +1069,11 @@ std::vector<std::string> PlayerbotHolder::HandlePlayerbotCommand(char const* arg
         if (GET_PLAYERBOT_AI(master))
         {
             messages.push_back("Disable player botAI");
-            delete GET_PLAYERBOT_AI(master);
+            if (auto selfAI = GET_PLAYERBOT_AI(master))
+            {
+                selfAI->Invalidate();
+                sPlayerbotsMgr->RemovePlayerBotData(master->GetGUID(), true);
+            }
         }
         else if (sPlayerbotAIConfig->selfBotLevel == 0)
             messages.push_back("Self-bot is disabled");
@@ -1476,12 +1484,17 @@ uint32 PlayerbotHolder::GetPlayerbotsCountByClass(uint32 cls)
     return count;
 }
 
-PlayerbotMgr::PlayerbotMgr(Player* const master) : PlayerbotHolder(), master(master), lastErrorTell(0) {}
+PlayerbotMgr::PlayerbotMgr(Player* const master)
+    : PlayerbotHolder(), master(master), masterGuid(master ? master->GetGUID() : ObjectGuid::Empty), lastErrorTell(0)
+{
+}
 
 PlayerbotMgr::~PlayerbotMgr()
 {
-    if (master)
-        sPlayerbotsMgr->RemovePlayerBotData(master->GetGUID(), false);
+    // Never touch master here: this runs from OnDestructPlayer while master
+    // may be partially destructed (previous crash pattern: master->GetGUID()).
+    if (!masterGuid.IsEmpty())
+        sPlayerbotsMgr->RemovePlayerBotData(masterGuid, false);
 }
 
 void PlayerbotMgr::UpdateAIInternal(uint32 elapsed, bool /*minimal*/)
@@ -1511,7 +1524,7 @@ void PlayerbotMgr::HandleCommand(uint32 type, std::string const text)
     for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI)
             botAI->HandleCommand(type, text, master);
     }
@@ -1520,7 +1533,7 @@ void PlayerbotMgr::HandleCommand(uint32 type, std::string const text)
          it != sRandomPlayerbotMgr->GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI && botAI->GetMaster() == master)
             botAI->HandleCommand(type, text, master);
     }
@@ -1533,7 +1546,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(WorldPacket const& packet)
         Player* const bot = it->second;
         if (!bot)
             continue;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI)
             botAI->HandleMasterIncomingPacket(packet);
     }
@@ -1542,7 +1555,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(WorldPacket const& packet)
          it != sRandomPlayerbotMgr->GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI && botAI->GetMaster() == GetMaster())
             botAI->HandleMasterIncomingPacket(packet);
     }
@@ -1569,7 +1582,7 @@ void PlayerbotMgr::HandleMasterOutgoingPacket(WorldPacket const& packet)
     for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI)
             botAI->HandleMasterOutgoingPacket(packet);
     }
@@ -1578,7 +1591,7 @@ void PlayerbotMgr::HandleMasterOutgoingPacket(WorldPacket const& packet)
          it != sRandomPlayerbotMgr->GetPlayerBotsEnd(); ++it)
     {
         Player* const bot = it->second;
-        PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_PLAYERBOT_AI(bot);
         if (botAI && botAI->GetMaster() == GetMaster())
             botAI->HandleMasterOutgoingPacket(packet);
     }
@@ -1603,7 +1616,7 @@ void PlayerbotMgr::SaveToDB()
 
 void PlayerbotMgr::OnBotLoginInternal(Player* const bot)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_PLAYERBOT_AI(bot);
     if (!botAI)
     {
         return;
@@ -1698,82 +1711,84 @@ void PlayerbotsMgr::AddPlayerbotData(Player* player, bool isBotAI)
     {
         return;
     }
+    // Capture GUID while caller-owned player pointer is valid.
+    ObjectGuid const guid = player->GetGUID();
     // If the guid already exists in the map, remove it
 
     if (!isBotAI)
     {
-        std::unordered_map<ObjectGuid, PlayerbotAIBase*>::iterator itr = _playerbotsMgrMap.find(player->GetGUID());
-        if (itr != _playerbotsMgrMap.end())
+        auto playerbotMgr = std::make_shared<PlayerbotMgr>(player);
         {
-            _playerbotsMgrMap.erase(itr);
+            std::unique_lock<std::shared_mutex> lock(_mapsMutex);
+            _playerbotsMgrMap.erase(guid);
+            ASSERT(_playerbotsMgrMap.emplace(guid, playerbotMgr).second);
         }
-        PlayerbotMgr* playerbotMgr = new PlayerbotMgr(player);
-        ASSERT(_playerbotsMgrMap.emplace(player->GetGUID(), playerbotMgr).second);
 
         playerbotMgr->OnPlayerLogin(player);
     }
     else
     {
-        std::unordered_map<ObjectGuid, PlayerbotAIBase*>::iterator itr = _playerbotsAIMap.find(player->GetGUID());
-        if (itr != _playerbotsAIMap.end())
+        auto botAI = std::make_shared<PlayerbotAI>(player);
         {
-            _playerbotsAIMap.erase(itr);
+            std::unique_lock<std::shared_mutex> lock(_mapsMutex);
+            _playerbotsAIMap.erase(guid);
+            ASSERT(_playerbotsAIMap.emplace(guid, botAI).second);
         }
-        PlayerbotAI* botAI = new PlayerbotAI(player);
-        ASSERT(_playerbotsAIMap.emplace(player->GetGUID(), botAI).second);
     }
 }
 
 void PlayerbotsMgr::RemovePlayerBotData(ObjectGuid const& guid, bool is_AI)
 {
+    std::unique_lock<std::shared_mutex> lock(_mapsMutex);
     if (is_AI)
     {
-        std::unordered_map<ObjectGuid, PlayerbotAIBase*>::iterator itr = _playerbotsAIMap.find(guid);
-        if (itr != _playerbotsAIMap.end())
-        {
-            _playerbotsAIMap.erase(itr);
-        }
+        _playerbotsAIMap.erase(guid);
     }
     else
     {
-        std::unordered_map<ObjectGuid, PlayerbotAIBase*>::iterator itr = _playerbotsMgrMap.find(guid);
-        if (itr != _playerbotsMgrMap.end())
-        {
-            _playerbotsMgrMap.erase(itr);
-        }
+        _playerbotsMgrMap.erase(guid);
     }
 }
 
-PlayerbotAI* PlayerbotsMgr::GetPlayerbotAI(Player* player)
+std::shared_ptr<PlayerbotAI> PlayerbotsMgr::GetPlayerbotAI(Player* player)
 {
     if (!(sPlayerbotAIConfig->enabled) || !player)
     {
         return nullptr;
     }
-    // if (player->GetSession()->isLogingOut() || player->IsDuringRemoveFromWorld()) {
-    //     return nullptr;
-    // }
-    auto itr = _playerbotsAIMap.find(player->GetGUID());
-    if (itr != _playerbotsAIMap.end())
+    if (player->IsDuringRemoveFromWorld())
+    {
+        return nullptr;
+    }
+    ObjectGuid const guid = player->GetGUID();
+    std::shared_lock<std::shared_mutex> lock(_mapsMutex);
+    auto itr = _playerbotsAIMap.find(guid);
+    if (itr != _playerbotsAIMap.end() && itr->second && itr->second->IsAlive())
     {
         if (itr->second->IsBotAI())
-            return reinterpret_cast<PlayerbotAI*>(itr->second);
+            return std::static_pointer_cast<PlayerbotAI>(itr->second);
     }
 
     return nullptr;
 }
 
-PlayerbotMgr* PlayerbotsMgr::GetPlayerbotMgr(Player* player)
+std::shared_ptr<PlayerbotMgr> PlayerbotsMgr::GetPlayerbotMgr(Player* player)
 {
     if (!(sPlayerbotAIConfig->enabled) || !player)
     {
         return nullptr;
     }
-    auto itr = _playerbotsMgrMap.find(player->GetGUID());
-    if (itr != _playerbotsMgrMap.end())
+    if (player->IsDuringRemoveFromWorld())
+    {
+        return nullptr;
+    }
+    ObjectGuid const guid = player->GetGUID();
+    std::shared_lock<std::shared_mutex> lock(_mapsMutex);
+    auto itr = _playerbotsMgrMap.find(guid);
+    if (itr != _playerbotsMgrMap.end() && itr->second && itr->second->IsAlive())
     {
         if (!itr->second->IsBotAI())
-            return reinterpret_cast<PlayerbotMgr*>(itr->second);
+            return std::static_pointer_cast<PlayerbotMgr>(itr->second);
     }
 
     return nullptr;

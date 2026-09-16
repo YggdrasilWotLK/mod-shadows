@@ -502,7 +502,7 @@ uint32 ItemUsageValue::GetSmallestBagSize()
 
 bool ItemUsageValue::IsItemUsefulForQuest(Player* player, ItemTemplate const* proto)
 {
-    PlayerbotAI* botAI = GET_PLAYERBOT_AI(player);
+    auto botAI = GET_PLAYERBOT_AI(player);
     if (!botAI)
         return false;
 
