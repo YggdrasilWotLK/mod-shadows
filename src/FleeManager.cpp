@@ -66,7 +66,7 @@ void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
     float botPosY = startPosition.getY();
     float botPosZ = startPosition.getZ();
 
-    FleePoint start(botAI, botPosX, botPosY, botPosZ);
+    FleePoint start(botAI.get(), botPosX, botPosY, botPosZ);
     calculateDistanceToCreatures(&start);
 
     std::vector<float> enemyOri;
@@ -110,7 +110,7 @@ void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
                 if (!bot->IsWithinLOS(x, y, z) || (target && !target->IsWithinLOS(x, y, z)))
                     continue;
 
-                FleePoint* point = new FleePoint(botAI, x, y, z);
+                FleePoint* point = new FleePoint(botAI.get(), x, y, z);
                 calculateDistanceToCreatures(point);
 
                 if (sServerFacade->IsDistanceGreaterOrEqualThan(point->minDistance - start.minDistance,

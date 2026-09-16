@@ -124,7 +124,7 @@ bool LeaveFarAwayAction::isUseful()
     if (!master || (bot == master && !botAI->IsRealPlayer()))
         return false;
 
-    PlayerbotAI* masterBotAI = nullptr;
+    std::shared_ptr<PlayerbotAI> masterBotAI;
     if (master)
         masterBotAI = GET_PLAYERBOT_AI(master);
     if (master && !masterBotAI)
