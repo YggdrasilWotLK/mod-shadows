@@ -4165,15 +4165,18 @@ Player* PlayerbotAI::GetValidMaster()
     if (masterGuid.IsEmpty())
         return nullptr;
 
-    // Revalidate through the global registry instead of trusting the raw pointer.
-    // If the master logged out / was removed / relogged (new Player object),
-    // the stored pointer dangles and must never be dereferenced (it crashed in
-    // Object::GetGuidValue via GET_PLAYERBOT_AI(master)).
+    // Re-resolve the same character by GUID instead of trusting the raw pointer.
+    // If the object is still registered it is alive, so return it as-is even
+    // mid-teleport or map change (briefly not in world). Only "not registered
+    // anywhere" means the object is gone — the raw pointer then dangles and
+    // must never be dereferenced (it crashed in Object::GetGuidValue via
+    // GET_PLAYERBOT_AI(master)). Deletes only happen on the world thread while
+    // map workers are joined, so a found object cannot be freed under us.
     Player* live = ObjectAccessor::FindConnectedPlayer(masterGuid);
     if (!live)
         live = ObjectAccessor::FindPlayer(masterGuid);
 
-    if (!live || live->IsDuringRemoveFromWorld() || !live->IsInWorld() || !live->GetSession())
+    if (!live)
     {
         master = nullptr;
         masterGuid.Clear();
