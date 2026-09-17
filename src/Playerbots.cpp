@@ -162,6 +162,9 @@ public:
             {
                 if (auto botAI = GET_PLAYERBOT_AI(member))
                 {
+                    if (botAI->GetMaster() != player)
+                        continue;
+
                     botAI->HandleCommand(type, msg, player);
                 }
             }
