@@ -1072,9 +1072,13 @@ void PlayerbotAI::HandleBotOutgoingPacket(WorldPacket const& packet)
                     if (bot->InBattleground() && !(isMentioned || (msgtype != CHAT_MSG_CHANNEL && !isFromFreeBot)))
                         return;
 
-                    if (Player* validMaster = GetValidMaster())
+                    // Only our own master may command us. Fail closed: if the
+                    // master cannot be established right now, ignore strangers
+                    // rather than obeying them.
+                    if (HasRealPlayerMaster())
                     {
-                        if (HasRealPlayerMaster() && guid1 != validMaster->GetGUID())
+                        Player* validMaster = GetValidMaster();
+                        if (!validMaster || guid1 != validMaster->GetGUID())
                             return;
                     }
                     if (lang == LANG_ADDON)
