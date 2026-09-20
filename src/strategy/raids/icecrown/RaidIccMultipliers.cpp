@@ -405,6 +405,29 @@ float IccBpcAssistMultiplier::GetValue(Action* action)
             return 0.0f;
     }
 
+    // Kinetic bombs only bounce off direct damage (aura 72059 procs 72087 on
+    // direct taken-damage flags; periodic ticks never proc it). Suppress pure
+    // DoT/channeled casts on the bomb so bots juggle with direct damage.
+    // Only entry 38454 ever spawns. Spells with a direct-damage part
+    // (moonfire, devouring plague opener, immolate, pyroblast) are left alone.
+    if (Unit* target = AI_VALUE(Unit*, "current target"))
+    {
+        if (target->GetEntry() == NPC_KINETIC_BOMB1)
+        {
+            static const char* uselessOnBombs[] =
+            {
+                "mind flay", "shadow word: pain", "vampiric touch",
+                "drain soul", "drain life", "corruption", "unstable affliction",
+                "curse of agony", "curse of doom", "seed of corruption",
+                "serpent sting", "insect swarm", "living bomb"
+            };
+            std::string const& name = action->getName();
+            for (const char* spell : uselessOnBombs)
+                if (name == spell)
+                    return 0.0f;
+        }
+    }
+
     // For assist tank during BPC fight
     if (botAI->IsAssistTank(bot) && !(aura && aura->GetStackAmount() > 18))
     {
