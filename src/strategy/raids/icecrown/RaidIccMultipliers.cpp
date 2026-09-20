@@ -416,10 +416,17 @@ float IccBpcAssistMultiplier::GetValue(Action* action)
         {
             static const char* uselessOnBombs[] =
             {
-                "mind flay", "shadow word: pain", "vampiric touch",
-                "drain soul", "drain life", "corruption", "unstable affliction",
-                "curse of agony", "curse of doom", "seed of corruption",
-                "serpent sting", "insect swarm", "living bomb"
+                "mind flay",
+                "shadow word: pain", "shadow word: pain on attacker",
+                "vampiric touch", "vampiric touch on attacker",
+                "drain soul", "drain life",
+                "corruption", "corruption on attacker",
+                "unstable affliction", "unstable affliction on attacker",
+                "curse of agony", "curse of doom",
+                "seed of corruption", "seed of corruption on attacker",
+                "serpent sting", "serpent sting on attacker",
+                "insect swarm", "insect swarm on attacker",
+                "living bomb", "living bomb on attackers"
             };
             std::string const& name = action->getName();
             for (const char* spell : uselessOnBombs)
