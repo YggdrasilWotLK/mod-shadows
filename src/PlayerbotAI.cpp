@@ -427,6 +427,62 @@ bool PlayerbotAI::IsAirDismountFollow()
     return true;
 }
 
+float PlayerbotAI::GetFallJumpSpeed(float fromZ, float toZ) const
+{
+    if (bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW))
+        return 12.0f;
+    float zDiff = fromZ - toZ;
+    if (zDiff < 1.0f)
+        zDiff = 1.0f;
+    return std::min(zDiff, 70.0f);
+}
+
+uint32 PlayerbotAI::PredictFallDamage(float zDiff) const
+{
+    // Core parity: mirrors Player::HandleFall damage formula.
+    if (zDiff < 14.57f || !bot || bot->isDead() || bot->IsGameMaster() || bot->GetCommandStatus(CHEAT_GOD))
+        return 0;
+    if (bot->HasHoverAura() || bot->HasFeatherFallAura() || bot->HasFlyAura())
+        return 0;
+    int32 safeFall = bot->GetTotalAuraModifier(SPELL_AURA_SAFE_FALL);
+    float damagePerc = 0.018f * (zDiff - safeFall) - 0.2426f;
+    if (damagePerc <= 0.0f)
+        return 0;
+    if (bot->IsImmunedToDamageOrSchool(SPELL_SCHOOL_MASK_NORMAL))
+        return 0;
+    uint32 damage = uint32(damagePerc * bot->GetMaxHealth() * sWorld->getRate(RATE_DAMAGE_FALL));
+    if (bot->HasAura(43621)) // Gust of Wind, core parity
+        damage = bot->GetMaxHealth() / 2;
+    if (bot->HasAura(498)) // Divine Protection halves fall damage
+        damage /= 2;
+    return damage;
+}
+
+void PlayerbotAI::DoFallJump(float x, float y, float z)
+{
+    float fromZ = bot->GetPositionZ();
+    float jumpSpeed = GetFallJumpSpeed(fromZ, z);
+    float zDiff = fromZ - z;
+    uint32 predicted = PredictFallDamage(zDiff);
+    bot->GetMotionMaster()->Clear();
+    bot->GetMotionMaster()->MoveJump(x, y, z, jumpSpeed, 5.0f);
+    if (predicted == 0)
+        return;
+    int32 delayMs = bot->movespline ? bot->movespline->Duration() : 0;
+    if (delayMs <= 0)
+        delayMs = int32(std::max(1.0f, zDiff) / std::max(1.0f, jumpSpeed) * 1000.0f);
+    AddTimedEvent([this, fromZ]()
+    {
+        if (!bot || !bot->IsInWorld() || !bot->IsAlive())
+            return;
+        uint32 damage = PredictFallDamage(fromZ - bot->GetPositionZ());
+        if (damage == 0)
+            return;
+        damage = std::min(damage, bot->GetMaxHealth());
+        bot->EnvironmentalDamage(DAMAGE_FALL, damage);
+    }, uint32(delayMs + 100));
+}
+
 bool PlayerbotAI::DoAirDismountFollow()
 {
     if (!IsAirDismountFollow())
@@ -448,14 +504,14 @@ bool PlayerbotAI::DoAirDismountFollow()
     }
     // On station: dismount and jump to the extrapolated landing. Void below the
     // trajectory refuses: rule-3 fallback then drops straight down below the bot.
-    bot->Dismount();
     float lx, ly, lz;
     if (PredictMasterLanding(lx, ly, lz))
     {
-        bot->GetMotionMaster()->Clear();
-        float jumpSpeed = bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) ? 12.0f : 35.0f;
-        bot->GetMotionMaster()->MoveJump(lx, ly, lz, jumpSpeed, 5.0f);
+        bot->Dismount();
+        DoFallJump(lx, ly, lz);
     }
+    else
+        bot->Dismount();
     return true;
 }
 bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
@@ -628,9 +684,8 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
             float dx, dy, dz;
             if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) || dz >= botZ)
             {
-                bot->GetMotionMaster()->Clear();
-                float jumpSpeed = bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) ? 12.0f : 35.0f;
-                bot->GetMotionMaster()->MoveJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot, jumpSpeed, 5.0f);
+                // Already airborne: must land anyway, damage (if any) applied on landing.
+                DoFallJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot);
             }
         }
     }
