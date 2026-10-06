@@ -430,7 +430,7 @@ bool PlayerbotAI::IsAirDismountFollow()
 float PlayerbotAI::GetFallJumpSpeed(float fromZ, float toZ) const
 {
     if (bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW))
-        return 12.0f;
+        return 7.0f;
     float zDiff = fromZ - toZ;
     if (zDiff < 1.0f)
         zDiff = 1.0f;
@@ -706,7 +706,7 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
                 bot->GetExactDist(dx, dy, dz) / (remaining / 1000.0f) > 20.0f)
             {
                 bot->GetMotionMaster()->Clear();
-                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 12.0f, 5.0f);
+                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 7.0f, 5.0f);
             }
         }
     }
