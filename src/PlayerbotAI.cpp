@@ -453,7 +453,8 @@ bool PlayerbotAI::DoAirDismountFollow()
     if (PredictMasterLanding(lx, ly, lz))
     {
         bot->GetMotionMaster()->Clear();
-        bot->GetMotionMaster()->MoveJump(lx, ly, lz, 35.0f, 5.0f);
+        float jumpSpeed = bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) ? 12.0f : 35.0f;
+        bot->GetMotionMaster()->MoveJump(lx, ly, lz, jumpSpeed, 5.0f);
     }
     return true;
 }
@@ -628,7 +629,29 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
             if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) || dz >= botZ)
             {
                 bot->GetMotionMaster()->Clear();
-                bot->GetMotionMaster()->MoveJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot, 35.0f, 5.0f);
+                float jumpSpeed = bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) ? 12.0f : 35.0f;
+                bot->GetMotionMaster()->MoveJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot, jumpSpeed, 5.0f);
+            }
+        }
+    }
+
+    // Slow fall gained mid-descent (levitate/parachute/slow fall): the launched spline
+    // keeps its original fast timing, so relaunch the same descent slower. Stateless:
+    // only still-fast descents qualify (slow ones are left alone), so this runs once.
+    if (bot->IsAlive() && !bot->IsFlying() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported() &&
+        bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) &&
+        bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+    {
+        float dx, dy, dz;
+        if (bot->GetMotionMaster()->GetDestination(dx, dy, dz) && dz < bot->GetPositionZ())
+        {
+            int32 remaining = bot->movespline->Duration() - bot->movespline->timePassed();
+            if (remaining > 0 &&
+                bot->GetExactDist(dx, dy, dz) / (remaining / 1000.0f) > 20.0f)
+            {
+                bot->GetMotionMaster()->Clear();
+                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 12.0f, 5.0f);
             }
         }
     }
