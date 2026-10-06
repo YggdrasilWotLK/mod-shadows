@@ -7,6 +7,7 @@
 
 #include "Event.h"
 #include "LastMovementValue.h"
+#include "MotionMaster.h"
 #include "Playerbots.h"
 #include "PositionValue.h"
 
@@ -28,8 +29,10 @@ bool StayActionBase::Stay()
         context->GetValue<time_t>("stay time")->Set(stayTime);
     }
 
-    // Stop the bot from moving immediately when action is called
-    if (bot->isMoving())
+    // Stop the bot from moving immediately when action is called, but never kill
+    // controlled motion (jumps, knockbacks, charges) mid-flight.
+    if (bot->isMoving() &&
+        bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) == NULL_MOTION_TYPE)
     {
         bot->StopMoving();
         bot->ClearUnitState(UNIT_STATE_CHASE);

@@ -663,6 +663,7 @@ protected:
     // at the dismount instant. No shapeshift/pitch memory needed: descent rate is derived
     // live from snapshot vs current position.
     void TrackMasterMountState();
+    bool IsMasterAirDismountSuspect();
     bool PredictMasterLanding(float& x, float& y, float& z);
     float masterMountX = 0.0f;
     float masterMountY = 0.0f;

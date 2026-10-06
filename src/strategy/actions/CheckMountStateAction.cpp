@@ -159,7 +159,17 @@ bool CheckMountStateAction::Execute(Event /*event*/)
     if (botAI->DoAirDismountFollow())
         return true;
 
-    if (shouldDismount && bot->IsMounted())
+    // Combat dismount, but never mid-air into a flying fight: a flying bot stays
+    // mounted against airborne enemies (it can reposition; dismounting strands it),
+    // and only drops onto grounded ones.
+    bool targetGrounded = true;
+    if (currentTarget)
+    {
+        float tz = currentTarget->GetPositionZ();
+        float tg = currentTarget->GetMapHeight(currentTarget->GetPositionX(), currentTarget->GetPositionY(), tz);
+        targetGrounded = tg > INVALID_HEIGHT && tz - tg < 8.0f;
+    }
+    if (shouldDismount && bot->IsMounted() && (!botAirborneNow || !bot->IsFlying() || targetGrounded))
     {
         Dismount();
         return true;
@@ -173,7 +183,7 @@ bool CheckMountStateAction::Execute(Event /*event*/)
         if (ShouldFollowMasterMountState(master, noAttackers, shouldMount))
             return Mount();
 
-        else if (ShouldDismountForMaster(master) && bot->IsMounted() && !botAI->IsAirDismountFollow())
+        else if (ShouldDismountForMaster(master) && bot->IsMounted() && !botAI->IsAirDismountFollow() && !botAI->IsMasterAirDismountSuspect())
         {
             Dismount();
             return true;

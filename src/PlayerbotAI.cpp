@@ -393,8 +393,11 @@ void PlayerbotAI::TrackMasterMountState()
     masterMountTime = getMSTime();
 }
 
-bool PlayerbotAI::IsAirDismountFollow()
+bool PlayerbotAI::IsMasterAirDismountSuspect()
 {
+    // Fresh master dismount mid-air, before vertical speed confirms a plummet. Used to
+    // suppress instant dismounts during the confirmation window (they would strand the
+    // bot wherever it happens to be instead of at the dismount point).
     Player* targetMaster = GetMaster();
     if (!targetMaster || bot->GetMapId() != targetMaster->GetMapId())
         return false;
@@ -402,21 +405,24 @@ bool PlayerbotAI::IsAirDismountFollow()
         return false;
     if (masterMountTime == 0 || getMSTime() - masterMountTime > 30000)
         return false;
-    // Master must be airborne and plummeting (not parachuting/levitating down slowly).
     float masterZ = targetMaster->GetPositionZ();
     float masterGround = targetMaster->GetMapHeight(targetMaster->GetPositionX(), targetMaster->GetPositionY(), masterZ);
     if (masterGround <= INVALID_HEIGHT || masterZ - masterGround < 4.0f)
         return false;
-    float elapsed = (getMSTime() - masterMountTime) / 1000.0f;
-    if (elapsed < 0.3f)
-        return false;
-    // Instantaneous vertical speed assuming free fall from rest at dismount.
-    float verticalSpeed = 2.0f * (masterMountZ - masterZ) / elapsed;
-    if (verticalSpeed < 15.0f)
-        return false;
-    // Bot must be airborne on its mount to run the sequence.
     float botGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
     if (botGround <= INVALID_HEIGHT || bot->GetPositionZ() - botGround < 4.0f)
+        return false;
+    return true;
+}
+
+bool PlayerbotAI::IsAirDismountFollow()
+{
+    if (!IsMasterAirDismountSuspect())
+        return false;
+    Player* targetMaster = GetMaster();
+    // Confirmed freefall via the client's own falling flag (parachutes/levitate report
+    // slow-fall instead, so they correctly stay out of the sequence).
+    if (!targetMaster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
         return false;
     return true;
 }
