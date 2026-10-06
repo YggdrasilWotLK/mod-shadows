@@ -660,10 +660,10 @@ protected:
     uint32 nextTransportCheck = 0;
 
     // Master air-dismount tracking (dismount-follow sequence, see CheckMountStateAction).
-    // Snapshot is refreshed every tick while the master is flying-mounted, so it freezes
-    // at the dismount instant. No shapeshift/pitch memory needed: descent rate is derived
-    // live from snapshot vs current position.
+    // Mounted snapshot freezes at the dismount instant; fall velocity comes from
+    // decimated server-acked fall samples taken after the fall starts.
     void TrackMasterMountState();
+    bool FallSamplesReady() const;
     bool PredictMasterLanding(float& x, float& y, float& z);
     float GetFallJumpSpeed(float fromZ, float toZ) const;
     uint32 PredictFallDamage(float zDiff) const;
@@ -672,6 +672,12 @@ protected:
     float masterMountY = 0.0f;
     float masterMountZ = 0.0f;
     uint32 masterMountTime = 0;
+    float prevFallX = 0.0f;
+    float prevFallY = 0.0f;
+    uint32 prevFallT = 0;
+    float prevFall2X = 0.0f;
+    float prevFall2Y = 0.0f;
+    uint32 prevFall2T = 0;
 };
 
 #endif

@@ -380,15 +380,65 @@ static bool IsFlyingMounted(Player* p)
     return form == FORM_FLIGHT || form == FORM_FLIGHT_EPIC;
 }
 
+// Bots have no client to refresh movement flags: after dismount the FLYING flags
+// go stale and IsFlying() keeps reading true, so the airborne fallback never
+// launches and follow drags the bot through the air. Clean them when no flight
+// aura remains (flight-form bots keep real flight and are unaffected).
+static void ClearStaleFlightFlags(Player* bot)
+{
+    if (!bot)
+        return;
+    if (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || bot->HasAuraType(SPELL_AURA_FLY))
+        return;
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
+    bot->SendMovementFlagUpdate();
+}
+
 void PlayerbotAI::TrackMasterMountState()
 {
     Player* targetMaster = GetMaster();
-    if (!targetMaster || !IsFlyingMounted(targetMaster))
+    if (!targetMaster)
         return;
-    masterMountX = targetMaster->GetPositionX();
-    masterMountY = targetMaster->GetPositionY();
-    masterMountZ = targetMaster->GetPositionZ();
-    masterMountTime = getMSTime();
+    uint32 now = getMSTime();
+    if (IsFlyingMounted(targetMaster))
+    {
+        masterMountX = targetMaster->GetPositionX();
+        masterMountY = targetMaster->GetPositionY();
+        masterMountZ = targetMaster->GetPositionZ();
+        masterMountTime = now;
+        prevFallT = 0;
+        prevFall2T = 0;
+        return;
+    }
+    if (!targetMaster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
+    {
+        prevFallT = 0;
+        prevFall2T = 0;
+        return;
+    }
+    // Master in confirmed fall: decimated server-acked samples, stored only on
+    // movement so a packet stall keeps the last real motion instead of decaying
+    // the velocity toward zero.
+    float nowX = targetMaster->GetPositionX();
+    float nowY = targetMaster->GetPositionY();
+    if (prevFallT == 0 || (now - prevFallT >= 150 && (nowX != prevFallX || nowY != prevFallY)))
+    {
+        prevFall2X = prevFallX;
+        prevFall2Y = prevFallY;
+        prevFall2T = prevFallT;
+        prevFallX = nowX;
+        prevFallY = nowY;
+        prevFallT = now;
+    }
+}
+
+bool PlayerbotAI::FallSamplesReady() const
+{
+    if (prevFallT == 0 || prevFall2T == 0)
+        return false;
+    return (prevFallT - prevFall2T) / 1000.0f >= 0.25f;
 }
 
 bool PlayerbotAI::IsMasterAirDismountSuspect()
@@ -500,16 +550,29 @@ bool PlayerbotAI::DoAirDismountFollow()
         }
         return true;
     }
-    // On station: dismount and jump to the extrapolated landing. Void below the
-    // trajectory refuses: rule-3 fallback then drops straight down below the bot.
+    // On station: wait for warm fall samples, then jump to the extrapolated
+    // landing. Void below the trajectory refuses: plain dismount instead.
+    // (Holding here keeps the bot mounted so the sequence stays alive.)
+    if (!FallSamplesReady())
+    {
+        float waitElapsed = (getMSTime() - masterMountTime) / 1000.0f;
+        if (waitElapsed < 1.0f)
+            return true;
+        // else: no sample movement in 1s of falling means stationary —
+        // Predict takes the hover branch below.
+    }
     float lx, ly, lz;
     if (PredictMasterLanding(lx, ly, lz))
     {
         bot->Dismount();
+        ClearStaleFlightFlags(bot);
         DoFallJump(lx, ly, lz);
     }
     else
+    {
         bot->Dismount();
+        ClearStaleFlightFlags(bot);
+    }
     return true;
 }
 bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
@@ -523,14 +586,27 @@ bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
     float nowX = targetMaster->GetPositionX();
     float nowY = targetMaster->GetPositionY();
     float nowZ = targetMaster->GetPositionZ();
-    // Actual horizontal velocity since dismount: displacement over time, not facing
-    // (strafing decouples those) and not GetSpeed() (proto max, never ~0, which is
-    // why stationary dismounts yeeted off at full mount speed).
-    float dx = nowX - masterMountX;
-    float dy = nowY - masterMountY;
-    float horizDist = std::sqrt(dx * dx + dy * dy);
-    float horizSpeed = horizDist / elapsed;
-    if (horizSpeed < 1.0f)
+    // Horizontal velocity from server-acked fall samples taken after the fall
+    // started. Never proto max, never pre-dismount flight.
+    float hSpeed = 0.0f;
+    float dirX = 0.0f;
+    float dirY = 0.0f;
+    if (FallSamplesReady())
+    {
+        float dt = (prevFallT - prevFall2T) / 1000.0f;
+        float dx = prevFallX - prevFall2X;
+        float dy = prevFallY - prevFall2Y;
+        float dist = std::sqrt(dx * dx + dy * dy);
+        if (dist > 0.0f)
+        {
+            hSpeed = dist / dt;
+            dirX = dx / dist;
+            dirY = dy / dist;
+        }
+    }
+    else if (elapsed < 1.0f)
+        return false;  // samples not warm yet; caller holds without dismounting
+    if (hSpeed < 1.0f)
     {
         // Hover/stationary dismount: straight below the live position.
         x = nowX;
@@ -538,20 +614,18 @@ bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
         z = bot->GetMapHeight(nowX, nowY, nowZ);
         return z > INVALID_HEIGHT;
     }
-    // Ballistics from the dismount snapshot: constant actual horizontal velocity
-    // along the travelled direction, gravity from the liftoff velocity derived live.
+    // Ballistics from the live fall vector: constant measured horizontal velocity
+    // along the fall direction, gravity from the liftoff velocity derived live.
     // First VMap floor crossed (highest surface below the falling master) wins; void
     // or runaway refuses.
     constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
     float v0 = (masterMountZ - nowZ) / elapsed + float(kFallGravity) * 0.5f * elapsed;
-    float dirX = dx / horizDist;
-    float dirY = dy / horizDist;
     float t = 0.0f;
     for (uint32 i = 0; i < 80; ++i)
     {
         t += 0.25f;
-        float px = nowX + dirX * horizSpeed * t;
-        float py = nowY + dirY * horizSpeed * t;
+        float px = nowX + dirX * hSpeed * t;
+        float py = nowY + dirY * hSpeed * t;
         float pz = nowZ - v0 * t - float(kFallGravity) * 0.5f * t * t;
         float ground = bot->GetMapHeight(px, py, pz + 0.5f);
         if (ground > INVALID_HEIGHT && ground >= pz)

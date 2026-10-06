@@ -246,6 +246,22 @@ bool CheckMountStateAction::Mount()
     return false;
 }
 
+// Bots have no client to refresh movement flags: after dismount the FLYING flags
+// go stale and IsFlying() keeps reading true, so the airborne fallback never
+// launches and follow drags the bot through the air. Clean them when no flight
+// aura remains (flight-form bots keep real flight and are unaffected).
+static void ClearStaleFlightFlags(Player* bot)
+{
+    if (!bot)
+        return;
+    if (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || bot->HasAuraType(SPELL_AURA_FLY))
+        return;
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
+    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
+    bot->SendMovementFlagUpdate();
+}
+
 void CheckMountStateAction::Dismount()
 {
     if (bot->isMoving())
@@ -253,6 +269,7 @@ void CheckMountStateAction::Dismount()
 
     WorldPacket emptyPacket;
     bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
+    ClearStaleFlightFlags(bot);
 }
 
 bool CheckMountStateAction::TryForms(Player* master, int32 masterMountType, int32 masterSpeed) const
