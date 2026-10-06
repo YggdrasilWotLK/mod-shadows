@@ -369,6 +369,135 @@ void PlayerbotAI::UpdateAI(uint32 elapsed, bool minimal)
     YieldThread(GetReactDelay());
 }
 
+static bool IsFlyingMounted(Player* p)
+{
+    if (!p)
+        return false;
+    if (p->IsMounted() &&
+        (p->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || p->IsFlying()))
+        return true;
+    ShapeshiftForm form = p->GetShapeshiftForm();
+    return form == FORM_FLIGHT || form == FORM_FLIGHT_EPIC;
+}
+
+void PlayerbotAI::TrackMasterMountState()
+{
+    Player* targetMaster = GetMaster();
+    if (!targetMaster || !IsFlyingMounted(targetMaster))
+        return;
+    masterMountX = targetMaster->GetPositionX();
+    masterMountY = targetMaster->GetPositionY();
+    masterMountZ = targetMaster->GetPositionZ();
+    masterMountO = targetMaster->GetOrientation();
+    masterMountSpeed = targetMaster->GetSpeed(MOVE_FLIGHT);
+    masterMountTime = getMSTime();
+}
+
+bool PlayerbotAI::IsAirDismountFollow()
+{
+    Player* targetMaster = GetMaster();
+    if (!targetMaster || bot->GetMapId() != targetMaster->GetMapId())
+        return false;
+    if (IsFlyingMounted(targetMaster) || !bot->IsMounted())
+        return false;
+    if (masterMountTime == 0 || getMSTime() - masterMountTime > 30000)
+        return false;
+    // Master must be airborne and plummeting (not parachuting/levitating down slowly).
+    float masterZ = targetMaster->GetPositionZ();
+    float masterGround = targetMaster->GetMapHeight(targetMaster->GetPositionX(), targetMaster->GetPositionY(), masterZ);
+    if (masterGround <= INVALID_HEIGHT || masterZ - masterGround < 4.0f)
+        return false;
+    float elapsed = (getMSTime() - masterMountTime) / 1000.0f;
+    if (elapsed < 0.3f)
+        return false;
+    // Instantaneous vertical speed assuming free fall from rest at dismount.
+    float verticalSpeed = 2.0f * (masterMountZ - masterZ) / elapsed;
+    if (verticalSpeed < 15.0f)
+        return false;
+    // Bot must be airborne on its mount to run the sequence.
+    float botGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+    if (botGround <= INVALID_HEIGHT || bot->GetPositionZ() - botGround < 4.0f)
+        return false;
+    return true;
+}
+
+bool PlayerbotAI::DoAirDismountFollow()
+{
+    if (!IsAirDismountFollow())
+        return false;
+    // Fly to the dismount point first (skip while already going there).
+    float distToPoint = bot->GetExactDist(masterMountX, masterMountY, masterMountZ);
+    if (distToPoint > 8.0f)
+    {
+        float dx, dy, dz;
+        if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) ||
+            bot->GetExactDist(dx, dy, dz) > 0.01f || std::fabs(dx - masterMountX) > 5.0f ||
+            std::fabs(dy - masterMountY) > 5.0f || std::fabs(dz - masterMountZ) > 5.0f)
+        {
+            bot->GetMotionMaster()->Clear();
+            bot->GetMotionMaster()->MovePoint(0, masterMountX, masterMountY, masterMountZ, FORCED_MOVEMENT_NONE,
+                                              0.0f, 0.0f, false);
+        }
+        return true;
+    }
+    // On station: dismount and jump to the extrapolated landing. Void below the
+    // trajectory refuses: rule-3 fallback then drops straight down below the bot.
+    bot->Dismount();
+    float lx, ly, lz;
+    if (PredictMasterLanding(lx, ly, lz))
+    {
+        bot->GetMotionMaster()->Clear();
+        bot->GetMotionMaster()->MoveJump(lx, ly, lz, 35.0f, 5.0f);
+    }
+    return true;
+}
+bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
+{
+    Player* targetMaster = GetMaster();
+    if (!targetMaster)
+        return false;
+    float elapsed = (getMSTime() - masterMountTime) / 1000.0f;
+    if (elapsed < 0.3f)
+        return false;
+    if (masterMountSpeed < 1.0f)
+    {
+        // Hover dismount: straight below the dismount point.
+        x = masterMountX;
+        y = masterMountY;
+        z = bot->GetMapHeight(masterMountX, masterMountY, masterMountZ);
+        return z > INVALID_HEIGHT;
+    }
+    // Ballistics from the dismount snapshot: constant horizontal speed along dismount
+    // facing, gravity from the liftoff velocity derived live. First VMap floor crossed
+    // (highest surface below the falling master) wins; void or runaway refuses.
+    constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
+    float nowX = targetMaster->GetPositionX();
+    float nowY = targetMaster->GetPositionY();
+    float nowZ = targetMaster->GetPositionZ();
+    float v0 = (masterMountZ - nowZ) / elapsed + float(kFallGravity) * 0.5f * elapsed;
+    float dirX = std::cos(masterMountO);
+    float dirY = std::sin(masterMountO);
+    float t = 0.0f;
+    for (uint32 i = 0; i < 80; ++i)
+    {
+        t += 0.25f;
+        float px = nowX + dirX * masterMountSpeed * t;
+        float py = nowY + dirY * masterMountSpeed * t;
+        float pz = nowZ - v0 * t - float(kFallGravity) * 0.5f * t * t;
+        float ground = bot->GetMapHeight(px, py, pz + 0.5f);
+        if (ground > INVALID_HEIGHT && ground >= pz)
+        {
+            x = px;
+            y = py;
+            z = ground;
+            return true;
+        }
+        if (t > 20.0f || std::fabs(px - nowX) + std::fabs(py - nowY) > 600.0f)
+            break;
+    }
+    return false;
+}
+
 // Helper function for UpdateAI to check group membership and handle removal if necessary
 void PlayerbotAI::UpdateAIGroupMembership()
 {
@@ -473,6 +602,30 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
     botOutgoingPacketHandlers.Handle(helper);
     masterIncomingPacketHandlers.Handle(helper);
     masterOutgoingPacketHandlers.Handle(helper);
+
+    TrackMasterMountState();
+
+    // Airborne fallback: bot hanging in mid-air without flight (anything other than the
+    // dismount sequence, which owns its own motion). Jump straight down to the floor
+    // below. Never ascends, never follows sideways; refuses over void. Skips while a
+    // controlled effect or an already-descending spline owns motion.
+    if (bot->IsAlive() && !bot->IsFlying() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported() && !bot->isFrozen() && !bot->HasUnitState(UNIT_STATE_STUNNED) &&
+        !bot->HasRootAura() &&
+        bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) == NULL_MOTION_TYPE)
+    {
+        float botZ = bot->GetPositionZ();
+        float groundBelowBot = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+        if (groundBelowBot > INVALID_HEIGHT && botZ - groundBelowBot > 4.0f)
+        {
+            float dx, dy, dz;
+            if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) || dz >= botZ)
+            {
+                bot->GetMotionMaster()->Clear();
+                bot->GetMotionMaster()->MoveJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot, 35.0f, 5.0f);
+            }
+        }
+    }
 
     DoNextAction(minimal);
 

@@ -605,6 +605,8 @@ public:
     std::set<uint32> GetAllCurrentQuestIds();
     std::set<uint32> GetCurrentIncompleteQuestIds();
     void PetFollow();
+    bool IsAirDismountFollow();
+    bool DoAirDismountFollow();
     static float GetItemScoreMultiplier(ItemQualities quality);
     static bool IsHealingSpell(uint32 spellFamilyName, flag96 spelFalimyFlags);
     static SpellFamilyNames Class2SpellFamilyName(uint8 cls);
@@ -655,6 +657,19 @@ protected:
     BotCheatMask cheatMask = BotCheatMask::none;
     Position jumpDestination = Position();
     uint32 nextTransportCheck = 0;
+
+    // Master air-dismount tracking (dismount-follow sequence, see CheckMountStateAction).
+    // Snapshot is refreshed every tick while the master is flying-mounted, so it freezes
+    // at the dismount instant. No shapeshift/pitch memory needed: descent rate is derived
+    // live from snapshot vs current position.
+    void TrackMasterMountState();
+    bool PredictMasterLanding(float& x, float& y, float& z);
+    float masterMountX = 0.0f;
+    float masterMountY = 0.0f;
+    float masterMountZ = 0.0f;
+    float masterMountO = 0.0f;
+    float masterMountSpeed = 0.0f;
+    uint32 masterMountTime = 0;
 };
 
 #endif

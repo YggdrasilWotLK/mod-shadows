@@ -1325,6 +1325,11 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     // AI_VALUE(LastMovement&, "last movement").Set(target);
     ClearIdleState();
 
+    // Yield to controlled/descent motion (air-dismount jumps, knockbacks, charges):
+    // re-issuing follow against it fights the spline every think.
+    if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+        return false;
+
     if (bot->GetMotionMaster()->GetCurrentMovementGeneratorType() == FOLLOW_MOTION_TYPE)
     {
         Unit* currentTarget = sServerFacade->GetChaseTarget(bot);
