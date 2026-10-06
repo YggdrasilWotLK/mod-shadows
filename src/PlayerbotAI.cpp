@@ -510,25 +510,13 @@ void PlayerbotAI::DoFallJump(float x, float y, float z)
 {
     float fromZ = bot->GetPositionZ();
     float jumpSpeed = GetFallJumpSpeed(fromZ, z);
-    float zDiff = fromZ - z;
-    uint32 predicted = PredictFallDamage(zDiff);
     bot->GetMotionMaster()->Clear();
     bot->GetMotionMaster()->MoveJump(x, y, z, jumpSpeed, 5.0f);
-    if (predicted == 0)
-        return;
-    int32 delayMs = bot->movespline ? bot->movespline->Duration() : 0;
-    if (delayMs <= 0)
-        delayMs = int32(std::max(1.0f, zDiff) / std::max(1.0f, jumpSpeed) * 1000.0f);
-    AddTimedEvent([this, fromZ]()
-    {
-        if (!bot || !bot->IsInWorld() || !bot->IsAlive())
-            return;
-        uint32 damage = PredictFallDamage(fromZ - bot->GetPositionZ());
-        if (damage == 0)
-            return;
-        damage = std::min(damage, bot->GetMaxHealth());
-        bot->EnvironmentalDamage(DAMAGE_FALL, damage);
-    }, uint32(delayMs + 100));
+    // Damage is applied on touchdown (see UpdateAIInternal), never on a timer:
+    // timers fire early on long drops (terminal velocity) and double-fire when
+    // a second descent relaunches over a pending one.
+    pendingFallStartZ = fromZ;
+    pendingFallDamage = true;
 }
 
 bool PlayerbotAI::DoAirDismountFollow()
@@ -749,12 +737,17 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
     TrackMasterMountState();
 
     // Airborne fallback: bot hanging in mid-air without flight (anything other than the
-    // dismount sequence, which owns its own motion). Jump straight down to the floor
-    // below. Never ascends, never follows sideways; refuses over void. Skips while a
-    // controlled effect or an already-descending spline owns motion.
-    if (bot->IsAlive() && !bot->IsFlying() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
-        !bot->IsCharmed() && !bot->IsBeingTeleported() && !bot->isFrozen() && !bot->HasUnitState(UNIT_STATE_STUNNED) &&
-        !bot->HasRootAura() &&
+    // dismount sequence, which owns its own motion). Straight down to the floor
+    // below, or into the void rather than hanging forever. Never ascends, never
+    // follows sideways. Skips while a controlled effect or an already-descending
+    // spline owns motion. Stun/root/frost do not suspend gravity. Flight is aura-checked, not flag-checked: dismount
+    // clears CAN_FLY server-side but nothing on the player dismount path clears
+    // FLYING/DISABLE_GRAVITY (spline launch preserves flags too), and bots have no
+    // client sending fresh ones — so IsFlying() reads stale-true after dismount.
+    bool botFlying = bot->IsFlying() && (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) ||
+                                         bot->HasAuraType(SPELL_AURA_FLY));
+    if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported() &&
         bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) == NULL_MOTION_TYPE)
     {
         float botZ = bot->GetPositionZ();
@@ -768,12 +761,18 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
                 DoFallJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot);
             }
         }
+        else if (groundBelowBot <= INVALID_HEIGHT && !bot->GetTransport())
+        {
+            // Void below: drop anyway. A dead bot releases and rezzes; a hanging
+            // bot is stuck forever. Transports excluded (ships ride over void).
+            DoFallJump(bot->GetPositionX(), bot->GetPositionY(), botZ - 500.0f);
+        }
     }
 
     // Slow fall gained mid-descent (levitate/parachute/slow fall): the launched spline
     // keeps its original fast timing, so relaunch the same descent slower. Stateless:
     // only still-fast descents qualify (slow ones are left alone), so this runs once.
-    if (bot->IsAlive() && !bot->IsFlying() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+    if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
         !bot->IsCharmed() && !bot->IsBeingTeleported() &&
         bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) &&
         bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
@@ -787,6 +786,27 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
             {
                 bot->GetMotionMaster()->Clear();
                 bot->GetMotionMaster()->MoveJump(dx, dy, dz, 7.0f, 5.0f);
+            }
+        }
+    }
+
+    // Touchdown fall damage: the pending descent (if any) ended with motion done
+    // and ground underfoot. fromZ was captured at launch; the amount is evaluated
+    // now, against current auras, exactly once. Death/teleport invalidate it.
+    if (!bot->IsAlive() || bot->IsBeingTeleported())
+        pendingFallDamage = false;
+    else if (pendingFallDamage && bot->movespline->Finalized())
+    {
+        float botZ = bot->GetPositionZ();
+        float ground = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+        if (ground > INVALID_HEIGHT && botZ - ground < 2.0f)
+        {
+            uint32 damage = PredictFallDamage(pendingFallStartZ - botZ);
+            pendingFallDamage = false;
+            if (damage > 0)
+            {
+                damage = std::min(damage, bot->GetMaxHealth());
+                bot->EnvironmentalDamage(DAMAGE_FALL, damage);
             }
         }
     }
@@ -1649,6 +1669,48 @@ void PlayerbotAI::DoNextAction(bool min)
     {
         ChangeEngine(BOT_STATE_NON_COMBAT);
         return;
+    }
+
+    // Airborne without real flight: the engine stays out entirely AND a descent
+    // is guaranteed here — never idle-passive with no motion (the no-action
+    // hole). Fall management in UpdateAIInternal normally owns this already;
+    // this is the backstop. Touchdown first: core clears the falling flag only
+    // for creatures and bots send no land packet, so drop a stale flag once
+    // grounded with motion done (otherwise the checks below stick forever).
+    if (bot->HasUnitMovementFlag(MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR) && bot->movespline->Finalized())
+    {
+        float landedGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+        if (landedGround > INVALID_HEIGHT && bot->GetPositionZ() - landedGround < 1.0f)
+            bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR);
+    }
+    if (bot->IsAlive() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() && !bot->GetTransport() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported())
+    {
+        bool botFlying = bot->IsFlying() && (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) ||
+                                             bot->HasAuraType(SPELL_AURA_FLY));
+        if (!botFlying)
+        {
+            float botZ = bot->GetPositionZ();
+            float groundBelow = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+            bool hasFloor = groundBelow > INVALID_HEIGHT;
+            if (!hasFloor || botZ - groundBelow > 4.0f)
+            {
+                float dx, dy, dz;
+                bool descending = bot->movespline->Initialized() && !bot->movespline->Finalized() &&
+                                  bot->GetMotionMaster()->GetDestination(dx, dy, dz) && dz < botZ;
+                bool controlledBusy =
+                    bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE;
+                if (!descending && !controlledBusy)
+                {
+                    if (hasFloor)
+                        DoFallJump(bot->GetPositionX(), bot->GetPositionY(), groundBelow);
+                    else
+                        DoFallJump(bot->GetPositionX(), bot->GetPositionY(), botZ - 500.0f);
+                }
+                SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+                return;
+            }
+        }
     }
 
     // Clear targets if in combat but sticking with old data

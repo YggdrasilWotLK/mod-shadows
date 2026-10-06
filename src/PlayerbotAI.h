@@ -678,6 +678,8 @@ protected:
     float prevFall2X = 0.0f;
     float prevFall2Y = 0.0f;
     uint32 prevFall2T = 0;
+    float pendingFallStartZ = 0.0f;
+    bool pendingFallDamage = false;
 };
 
 #endif
