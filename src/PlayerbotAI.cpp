@@ -380,10 +380,7 @@ static bool IsFlyingMounted(Player* p)
     return form == FORM_FLIGHT || form == FORM_FLIGHT_EPIC;
 }
 
-// Bots have no client to refresh movement flags: after dismount the FLYING flags
-// go stale and IsFlying() keeps reading true, so the airborne fallback never
-// launches and follow drags the bot through the air. Clean them when no flight
-// aura remains (flight-form bots keep real flight and are unaffected).
+// Stale FLYING flags after dismount (no client refresh); clean when no flight aura remains.
 static void ClearStaleFlightFlags(Player* bot)
 {
     if (!bot)
@@ -418,9 +415,7 @@ void PlayerbotAI::TrackMasterMountState()
         prevFall2T = 0;
         return;
     }
-    // Master in confirmed fall: decimated server-acked samples, stored only on
-    // movement so a packet stall keeps the last real motion instead of decaying
-    // the velocity toward zero.
+    // Decimated fall samples, stored on movement only so stalls keep last real motion.
     float nowX = targetMaster->GetPositionX();
     float nowY = targetMaster->GetPositionY();
     if (prevFallT == 0 || (now - prevFallT >= 150 && (nowX != prevFallX || nowY != prevFallY)))
@@ -443,9 +438,7 @@ bool PlayerbotAI::FallSamplesReady() const
 
 bool PlayerbotAI::IsMasterAirDismountSuspect()
 {
-    // Fresh master dismount mid-air, before vertical speed confirms a plummet. Used to
-    // suppress instant dismounts during the confirmation window (they would strand the
-    // bot wherever it happens to be instead of at the dismount point).
+    // Fresh mid-air dismount; confirm before acting so bots aren't stranded.
     Player* targetMaster = GetMaster();
     if (!targetMaster || bot->GetMapId() != targetMaster->GetMapId())
         return false;
@@ -468,8 +461,7 @@ bool PlayerbotAI::IsAirDismountFollow()
     if (!IsMasterAirDismountSuspect())
         return false;
     Player* targetMaster = GetMaster();
-    // Confirmed freefall via the client's own falling flag (parachutes/levitate report
-    // slow-fall instead, so they correctly stay out of the sequence).
+    // Freefall only; slow-fall reports separately and stays out.
     if (!targetMaster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
         return false;
     return true;
@@ -512,9 +504,7 @@ void PlayerbotAI::DoFallJump(float x, float y, float z)
     float jumpSpeed = GetFallJumpSpeed(fromZ, z);
     bot->GetMotionMaster()->Clear();
     bot->GetMotionMaster()->MoveJump(x, y, z, jumpSpeed, 5.0f);
-    // Damage is applied on touchdown (see UpdateAIInternal), never on a timer:
-    // timers fire early on long drops (terminal velocity) and double-fire when
-    // a second descent relaunches over a pending one.
+    // Touchdown damage: evaluated once against current auras, never on a timer.
     pendingFallStartZ = fromZ;
     pendingFallDamage = true;
 }
@@ -538,16 +528,13 @@ bool PlayerbotAI::DoAirDismountFollow()
         }
         return true;
     }
-    // On station: wait for warm fall samples, then jump to the extrapolated
-    // landing. Void below the trajectory refuses: plain dismount instead.
-    // (Holding here keeps the bot mounted so the sequence stays alive.)
+    // On station: await warm samples, then jump to the landing (void: plain dismount, stay mounted meanwhile).
     if (!FallSamplesReady())
     {
         float waitElapsed = (getMSTime() - masterMountTime) / 1000.0f;
         if (waitElapsed < 1.0f)
             return true;
-        // else: no sample movement in 1s of falling means stationary —
-        // Predict takes the hover branch below.
+        // No sample movement in 1s means stationary; hover branch below.
     }
     float lx, ly, lz;
     if (PredictMasterLanding(lx, ly, lz))
@@ -574,8 +561,7 @@ bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
     float nowX = targetMaster->GetPositionX();
     float nowY = targetMaster->GetPositionY();
     float nowZ = targetMaster->GetPositionZ();
-    // Horizontal velocity from server-acked fall samples taken after the fall
-    // started. Never proto max, never pre-dismount flight.
+    // Horizontal velocity from post-fall server samples; never proto max.
     float hSpeed = 0.0f;
     float dirX = 0.0f;
     float dirY = 0.0f;
@@ -602,10 +588,7 @@ bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
         z = bot->GetMapHeight(nowX, nowY, nowZ);
         return z > INVALID_HEIGHT;
     }
-    // Ballistics from the live fall vector: constant measured horizontal velocity
-    // along the fall direction, gravity from the liftoff velocity derived live.
-    // First VMap floor crossed (highest surface below the falling master) wins; void
-    // or runaway refuses.
+    // Ballistic extrapolation; first VMap floor crossed wins, void/runaway refuses.
     constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
     float v0 = (masterMountZ - nowZ) / elapsed + float(kFallGravity) * 0.5f * elapsed;
     float t = 0.0f;
@@ -736,14 +719,7 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
 
     TrackMasterMountState();
 
-    // Airborne fallback: bot hanging in mid-air without flight (anything other than the
-    // dismount sequence, which owns its own motion). Straight down to the floor
-    // below, or into the void rather than hanging forever. Never ascends, never
-    // follows sideways. Skips while a controlled effect or an already-descending
-    // spline owns motion. Stun/root/frost do not suspend gravity. Flight is aura-checked, not flag-checked: dismount
-    // clears CAN_FLY server-side but nothing on the player dismount path clears
-    // FLYING/DISABLE_GRAVITY (spline launch preserves flags too), and bots have no
-    // client sending fresh ones — so IsFlying() reads stale-true after dismount.
+    // Airborne fallback: hanging bot without real flight must fall; stun/root don't suspend gravity.
     bool botFlying = bot->IsFlying() && (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) ||
                                          bot->HasAuraType(SPELL_AURA_FLY));
     if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
@@ -763,15 +739,12 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
         }
         else if (groundBelowBot <= INVALID_HEIGHT && !bot->GetTransport())
         {
-            // Void below: drop anyway. A dead bot releases and rezzes; a hanging
-            // bot is stuck forever. Transports excluded (ships ride over void).
+            // Void below: drop anyway; dead rezzes, hanging sticks forever (no transports).
             DoFallJump(bot->GetPositionX(), bot->GetPositionY(), botZ - 500.0f);
         }
     }
 
-    // Slow fall gained mid-descent (levitate/parachute/slow fall): the launched spline
-    // keeps its original fast timing, so relaunch the same descent slower. Stateless:
-    // only still-fast descents qualify (slow ones are left alone), so this runs once.
+    // Slow fall gained mid-descent: relaunch the same descent slower, once.
     if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
         !bot->IsCharmed() && !bot->IsBeingTeleported() &&
         bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) &&
@@ -790,9 +763,7 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
         }
     }
 
-    // Touchdown fall damage: the pending descent (if any) ended with motion done
-    // and ground underfoot. fromZ was captured at launch; the amount is evaluated
-    // now, against current auras, exactly once. Death/teleport invalidate it.
+    // Touchdown fall damage: pending descent ended, evaluate once against current auras.
     if (!bot->IsAlive() || bot->IsBeingTeleported())
         pendingFallDamage = false;
     else if (pendingFallDamage && bot->movespline->Finalized())
@@ -1671,12 +1642,7 @@ void PlayerbotAI::DoNextAction(bool min)
         return;
     }
 
-    // Airborne without real flight: the engine stays out entirely AND a descent
-    // is guaranteed here — never idle-passive with no motion (the no-action
-    // hole). Fall management in UpdateAIInternal normally owns this already;
-    // this is the backstop. Touchdown first: core clears the falling flag only
-    // for creatures and bots send no land packet, so drop a stale flag once
-    // grounded with motion done (otherwise the checks below stick forever).
+    // Airborne without real flight: no engine actions, descent guaranteed (no idle hang).
     if (bot->HasUnitMovementFlag(MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR) && bot->movespline->Finalized())
     {
         float landedGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());

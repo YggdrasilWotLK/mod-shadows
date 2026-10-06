@@ -1325,8 +1325,7 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     // AI_VALUE(LastMovement&, "last movement").Set(target);
     ClearIdleState();
 
-    // Yield to controlled/descent motion (air-dismount jumps, knockbacks, charges):
-    // re-issuing follow against it fights the spline every think.
+    // Yield to controlled motion; re-issuing follow fights the spline.
     if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
         return false;
 

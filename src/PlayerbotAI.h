@@ -659,9 +659,7 @@ protected:
     Position jumpDestination = Position();
     uint32 nextTransportCheck = 0;
 
-    // Master air-dismount tracking (dismount-follow sequence, see CheckMountStateAction).
-    // Mounted snapshot freezes at the dismount instant; fall velocity comes from
-    // decimated server-acked fall samples taken after the fall starts.
+    // Dismount snapshot plus post-fall velocity samples.
     void TrackMasterMountState();
     bool FallSamplesReady() const;
     bool PredictMasterLanding(float& x, float& y, float& z);

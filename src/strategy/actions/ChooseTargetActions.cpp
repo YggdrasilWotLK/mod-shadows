@@ -119,8 +119,7 @@ bool AttackAnythingAction::Execute(Event event)
             if (char const* grindName = grindTarget->GetName().c_str())
             {
                 context->GetValue<ObjectGuid>("pull target")->Set(grindTarget->GetGUID());
-                // Preserve MoveJump spline mid-air: clearing here snaps the client and the
-                // airborne fallback relaunches every tick (visual stutter). Combat still starts.
+                // Don't clear a live jump spline here; it snaps the client every tick.
                 if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != EFFECT_MOTION_TYPE)
                     bot->GetMotionMaster()->Clear();
                 // bot->StopMoving();

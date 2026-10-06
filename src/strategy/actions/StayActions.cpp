@@ -29,8 +29,7 @@ bool StayActionBase::Stay()
         context->GetValue<time_t>("stay time")->Set(stayTime);
     }
 
-    // Stop the bot from moving immediately when action is called, but never kill
-    // controlled motion (jumps, knockbacks, charges) mid-flight.
+    // Stop immediately, but never kill controlled motion mid-flight.
     if (bot->isMoving() &&
         bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) == NULL_MOTION_TYPE)
     {

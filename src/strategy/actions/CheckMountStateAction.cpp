@@ -141,8 +141,7 @@ bool CheckMountStateAction::Execute(Event /*event*/)
         shouldMount = true;
     }
 
-    // Bot airborne check for the flight-form handling below: unshifting mid-air hangs
-    // identically to dismounting, so a flying bot keeps its form and flies down itself.
+    // Airborne bots keep flight form; unshifting mid-air hangs like dismounting.
     float botZNow = bot->GetPositionZ();
     float botGroundNow = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZNow);
     bool botAirborneNow = botGroundNow > INVALID_HEIGHT && botZNow - botGroundNow > 4.0f;
@@ -154,14 +153,11 @@ bool CheckMountStateAction::Execute(Event /*event*/)
         (!botAirborneNow && masterInShapeshiftForm != FORM_FLIGHT_EPIC && botInShapeshiftForm == FORM_FLIGHT_EPIC && master && !master->IsMounted()))
         botAI->RemoveShapeshift();
 
-    // Air-dismount follow: master plummeted after dismounting mid-air. Fly to the
-    // dismount point, then jump to the extrapolated landing -- never dismount in place.
+    // Air-dismount follow: fly to the point, then jump to the landing.
     if (botAI->DoAirDismountFollow())
         return true;
 
-    // Combat dismount, but never mid-air into a flying fight: a flying bot stays
-    // mounted against airborne enemies (it can reposition; dismounting strands it),
-    // and only drops onto grounded ones.
+    // Combat dismount, but never stranded mid-air against airborne enemies.
     bool targetGrounded = true;
     if (currentTarget)
     {
@@ -246,10 +242,7 @@ bool CheckMountStateAction::Mount()
     return false;
 }
 
-// Bots have no client to refresh movement flags: after dismount the FLYING flags
-// go stale and IsFlying() keeps reading true, so the airborne fallback never
-// launches and follow drags the bot through the air. Clean them when no flight
-// aura remains (flight-form bots keep real flight and are unaffected).
+// Stale FLYING flags after dismount (no client refresh); clean when no flight aura remains.
 static void ClearStaleFlightFlags(Player* bot)
 {
     if (!bot)
