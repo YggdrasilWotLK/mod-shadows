@@ -671,8 +671,6 @@ protected:
     float masterMountX = 0.0f;
     float masterMountY = 0.0f;
     float masterMountZ = 0.0f;
-    float masterMountO = 0.0f;
-    float masterMountSpeed = 0.0f;
     uint32 masterMountTime = 0;
 };
 

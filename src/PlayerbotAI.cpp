@@ -388,8 +388,6 @@ void PlayerbotAI::TrackMasterMountState()
     masterMountX = targetMaster->GetPositionX();
     masterMountY = targetMaster->GetPositionY();
     masterMountZ = targetMaster->GetPositionZ();
-    masterMountO = targetMaster->GetOrientation();
-    masterMountSpeed = targetMaster->GetSpeed(MOVE_FLIGHT);
     masterMountTime = getMSTime();
 }
 
@@ -430,7 +428,7 @@ bool PlayerbotAI::IsAirDismountFollow()
 float PlayerbotAI::GetFallJumpSpeed(float fromZ, float toZ) const
 {
     if (bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW))
-        return 12.0f;
+        return 7.0f;
     float zDiff = fromZ - toZ;
     if (zDiff < 1.0f)
         zDiff = 1.0f;
@@ -522,30 +520,38 @@ bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
     float elapsed = (getMSTime() - masterMountTime) / 1000.0f;
     if (elapsed < 0.3f)
         return false;
-    if (masterMountSpeed < 1.0f)
-    {
-        // Hover dismount: straight below the dismount point.
-        x = masterMountX;
-        y = masterMountY;
-        z = bot->GetMapHeight(masterMountX, masterMountY, masterMountZ);
-        return z > INVALID_HEIGHT;
-    }
-    // Ballistics from the dismount snapshot: constant horizontal speed along dismount
-    // facing, gravity from the liftoff velocity derived live. First VMap floor crossed
-    // (highest surface below the falling master) wins; void or runaway refuses.
-    constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
     float nowX = targetMaster->GetPositionX();
     float nowY = targetMaster->GetPositionY();
     float nowZ = targetMaster->GetPositionZ();
+    // Actual horizontal velocity since dismount: displacement over time, not facing
+    // (strafing decouples those) and not GetSpeed() (proto max, never ~0, which is
+    // why stationary dismounts yeeted off at full mount speed).
+    float dx = nowX - masterMountX;
+    float dy = nowY - masterMountY;
+    float horizDist = std::sqrt(dx * dx + dy * dy);
+    float horizSpeed = horizDist / elapsed;
+    if (horizSpeed < 1.0f)
+    {
+        // Hover/stationary dismount: straight below the live position.
+        x = nowX;
+        y = nowY;
+        z = bot->GetMapHeight(nowX, nowY, nowZ);
+        return z > INVALID_HEIGHT;
+    }
+    // Ballistics from the dismount snapshot: constant actual horizontal velocity
+    // along the travelled direction, gravity from the liftoff velocity derived live.
+    // First VMap floor crossed (highest surface below the falling master) wins; void
+    // or runaway refuses.
+    constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
     float v0 = (masterMountZ - nowZ) / elapsed + float(kFallGravity) * 0.5f * elapsed;
-    float dirX = std::cos(masterMountO);
-    float dirY = std::sin(masterMountO);
+    float dirX = dx / horizDist;
+    float dirY = dy / horizDist;
     float t = 0.0f;
     for (uint32 i = 0; i < 80; ++i)
     {
         t += 0.25f;
-        float px = nowX + dirX * masterMountSpeed * t;
-        float py = nowY + dirY * masterMountSpeed * t;
+        float px = nowX + dirX * horizSpeed * t;
+        float py = nowY + dirY * horizSpeed * t;
         float pz = nowZ - v0 * t - float(kFallGravity) * 0.5f * t * t;
         float ground = bot->GetMapHeight(px, py, pz + 0.5f);
         if (ground > INVALID_HEIGHT && ground >= pz)
@@ -706,7 +712,7 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
                 bot->GetExactDist(dx, dy, dz) / (remaining / 1000.0f) > 20.0f)
             {
                 bot->GetMotionMaster()->Clear();
-                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 12.0f, 5.0f);
+                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 7.0f, 5.0f);
             }
         }
     }
