@@ -295,8 +295,25 @@ class PlayerbotsWorldScript : public WorldScript
 {
 public:
     PlayerbotsWorldScript() : WorldScript("PlayerbotsWorldScript", {
-        WORLDHOOK_ON_BEFORE_WORLD_INITIALIZED
+        WORLDHOOK_ON_BEFORE_WORLD_INITIALIZED,
+        WORLDHOOK_ON_SHUTDOWN,
+        WORLDHOOK_ON_AFTER_UNLOAD_ALL_MAPS
     }) {}
+
+    void OnShutdown() override
+    {
+        // Tear down AI/Mgr maps while the allocator is alive. Without this,
+        // leftover bots die in exit() static teardown (jemalloc extent 0x0
+        // SIGSEGV in NamedObjectContextList<Trigger>::~).
+        sPlayerbotsMgr->Shutdown();
+    }
+
+    void OnAfterUnloadAllMaps() override
+    {
+        // KickAll/UnloadAll path runs after OnShutdown; clear again in case
+        // bots were re-added or logout callbacks re-populated the maps.
+        sPlayerbotsMgr->Shutdown();
+    }
 
     void OnBeforeWorldInitialized() override
     {

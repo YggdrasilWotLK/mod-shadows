@@ -92,6 +92,10 @@ public:
     {
     }
 
+    // Owns created[] pointers: copies would double-delete. Disallow.
+    NamedObjectContext(const NamedObjectContext&) = delete;
+    NamedObjectContext& operator=(const NamedObjectContext&) = delete;
+
     virtual ~NamedObjectContext() { Clear(); }
 
     virtual T* create(std::string name, PlayerbotAI* botAI) override
@@ -166,6 +170,10 @@ public:
         : creators(shared.creators), contexts(shared.contexts)
     {
     }
+
+    // Owns created[] pointers: copies would double-delete. Disallow.
+    NamedObjectContextList(const NamedObjectContextList&) = delete;
+    NamedObjectContextList& operator=(const NamedObjectContextList&) = delete;
 
     ~NamedObjectContextList()
     {

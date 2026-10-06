@@ -1739,6 +1739,24 @@ void PlayerbotsMgr::AddPlayerbotData(Player* player, bool isBotAI)
     }
 }
 
+void PlayerbotsMgr::Shutdown()
+{
+    // Destroy all remaining AIs while jemalloc/TLS are alive. Any bot that
+    // outlives world shutdown would otherwise die in exit() static teardown
+    // (see NamedObjectContextList<Trigger>::~ SIGSEGV).
+    // Swap out first: ~PlayerbotAI re-enters RemovePlayerBotData (same
+    // mutex), so the actual destruction must happen without the lock held.
+    std::unordered_map<ObjectGuid, std::shared_ptr<PlayerbotAIBase>> aiMap;
+    std::unordered_map<ObjectGuid, std::shared_ptr<PlayerbotAIBase>> mgrMap;
+    {
+        std::unique_lock<std::shared_mutex> lock(_mapsMutex);
+        aiMap.swap(_playerbotsAIMap);
+        mgrMap.swap(_playerbotsMgrMap);
+    }
+    aiMap.clear();
+    mgrMap.clear();
+}
+
 void PlayerbotsMgr::RemovePlayerBotData(ObjectGuid const& guid, bool is_AI)
 {
     std::unique_lock<std::shared_mutex> lock(_mapsMutex);

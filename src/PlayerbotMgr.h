@@ -112,9 +112,17 @@ public:
 
     static PlayerbotsMgr* instance()
     {
-        static PlayerbotsMgr instance;
-        return &instance;
+        // Intentionally leaked: PlayerbotAI destruction must happen during
+        // world shutdown (see Shutdown()), never in exit() static teardown
+        // where jemalloc/TLS may already be gone (SIGSEGV in
+        // NamedObjectContextList<Trigger>::~).
+        static PlayerbotsMgr* instance = new PlayerbotsMgr();
+        return instance;
     }
+
+    // Called from world shutdown hooks while the allocator is still alive.
+    // Destroys all remaining PlayerbotAI/Mgr objects before exit().
+    void Shutdown();
 
     void AddPlayerbotData(Player* player, bool isBotAI);
     void RemovePlayerBotData(ObjectGuid const& guid, bool is_AI);
