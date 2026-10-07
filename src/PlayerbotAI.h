@@ -608,6 +608,7 @@ public:
     bool IsMasterAirDismountSuspect();
     bool IsAirDismountFollow();
     bool DoAirDismountFollow();
+    void DismountBotForFall();
     static float GetItemScoreMultiplier(ItemQualities quality);
     static bool IsHealingSpell(uint32 spellFamilyName, flag96 spelFalimyFlags);
     static SpellFamilyNames Class2SpellFamilyName(uint8 cls);
@@ -666,7 +667,6 @@ protected:
     float GetFallJumpSpeed(float fromZ, float toZ) const;
     uint32 PredictFallDamage(float zDiff) const;
     void DoFallJump(float x, float y, float z);
-    void DismountBotForFall();
     float masterMountX = 0.0f;
     float masterMountY = 0.0f;
     float masterMountZ = 0.0f;
