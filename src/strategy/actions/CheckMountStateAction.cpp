@@ -242,27 +242,12 @@ bool CheckMountStateAction::Mount()
     return false;
 }
 
-// Stale FLYING flags after dismount (no client refresh); clean when no flight aura remains.
-static void ClearStaleFlightFlags(Player* bot)
-{
-    if (!bot)
-        return;
-    if (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || bot->HasAuraType(SPELL_AURA_FLY))
-        return;
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
-    bot->SendMovementFlagUpdate();
-}
-
 void CheckMountStateAction::Dismount()
 {
     if (bot->isMoving())
         bot->StopMoving();
 
-    WorldPacket emptyPacket;
-    bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
-    ClearStaleFlightFlags(bot);
+    botAI->DismountBotForFall();
 }
 
 bool CheckMountStateAction::TryForms(Player* master, int32 masterMountType, int32 masterSpeed) const

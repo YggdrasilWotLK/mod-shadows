@@ -380,17 +380,23 @@ static bool IsFlyingMounted(Player* p)
     return form == FORM_FLIGHT || form == FORM_FLIGHT_EPIC;
 }
 
-// Stale FLYING flags after dismount (no client refresh); clean when no flight aura remains.
-static void ClearStaleFlightFlags(Player* bot)
+// Full bot dismount: cancel aura plus stale-flag cleanup (no client refreshes them).
+void PlayerbotAI::DismountBotForFall()
 {
     if (!bot)
         return;
-    if (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || bot->HasAuraType(SPELL_AURA_FLY))
-        return;
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
-    bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
-    bot->SendMovementFlagUpdate();
+    if (bot->IsMounted())
+    {
+        WorldPacket emptyPacket;
+        bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
+    }
+    if (!bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !bot->HasAuraType(SPELL_AURA_FLY))
+    {
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
+        bot->SendMovementFlagUpdate();
+    }
 }
 
 void PlayerbotAI::TrackMasterMountState()
@@ -539,14 +545,12 @@ bool PlayerbotAI::DoAirDismountFollow()
     float lx, ly, lz;
     if (PredictMasterLanding(lx, ly, lz))
     {
-        bot->Dismount();
-        ClearStaleFlightFlags(bot);
+        DismountBotForFall();
         DoFallJump(lx, ly, lz);
     }
     else
     {
-        bot->Dismount();
-        ClearStaleFlightFlags(bot);
+        DismountBotForFall();
     }
     return true;
 }
