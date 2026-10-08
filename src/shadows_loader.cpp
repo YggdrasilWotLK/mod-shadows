@@ -20,3 +20,6 @@ void AddShadowsScripts();
 
 // Add all
 void Addmod_shadowsScripts() { AddShadowsScripts(); }
+
+// Compat: old folder name modules/mod-playerbots
+void Addmod_playerbotsScripts() { AddShadowsScripts(); }
