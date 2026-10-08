@@ -936,7 +936,7 @@ void RandomPlayerbotFactory::CreateRandomGuilds()
         {
             LOG_ERROR("playerbots", "Error creating guild [ {} ] with leader [ {} ]", guildName.c_str(),
                     player->GetName().c_str());
-            delete guild;
+            sGuildMgr->DestroyGuild(guild);
             continue;
         }
 
