@@ -1,9 +1,7 @@
 name: macos-build
 on:
   push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
 
 concurrency:
   group: "macos-build-${{ github.event.pull_request.number }}"

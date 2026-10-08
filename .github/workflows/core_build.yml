@@ -2,9 +2,7 @@ name: ubuntu-build
 
 on:
   push:
-    branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
 
 concurrency:
   group: "core-build-${{ github.event.pull_request.number }}"
