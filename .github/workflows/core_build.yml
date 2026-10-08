@@ -35,11 +35,11 @@ jobs:
     name: ${{ matrix.os }}-${{ matrix.cpp_compiler }}
 
     steps:
-      - name: Checkout AzerothCore
+      - name: Checkout YggdrasilCore
         uses: actions/checkout@v3
         with:
-          repository: 'mod-playerbots/azerothcore-wotlk'
-          ref: 'Playerbot'
+          repository: 'YggdrasilWotLK/yggdrasilcore'
+          ref: 'master-shadows'
 
       - name: Set reusable strings
         id: strings
@@ -47,11 +47,11 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
           
-      - name: Checkout Playerbot Module
+      - name: Checkout Shadows Module
         uses: actions/checkout@v3
         with:
-          repository: 'mod-playerbots/mod-playerbots'
-          path: 'modules/mod-playerbots'
+          repository: 'YggdrasilWotLK/mod-shadows'
+          path: 'modules/mod-shadows'
       
       - name: Cache
         uses: actions/cache@v4
