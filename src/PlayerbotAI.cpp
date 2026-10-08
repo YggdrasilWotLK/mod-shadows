@@ -369,6 +369,253 @@ void PlayerbotAI::UpdateAI(uint32 elapsed, bool minimal)
     YieldThread(GetReactDelay());
 }
 
+static bool IsFlyingMounted(Player* p)
+{
+    if (!p)
+        return false;
+    if (p->IsMounted() &&
+        (p->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || p->IsFlying()))
+        return true;
+    ShapeshiftForm form = p->GetShapeshiftForm();
+    return form == FORM_FLIGHT || form == FORM_FLIGHT_EPIC;
+}
+
+// Full bot dismount: cancel aura plus stale-flag cleanup (no client refreshes them).
+void PlayerbotAI::DismountBotForFall()
+{
+    if (!bot)
+        return;
+    if (bot->IsMounted())
+    {
+        WorldPacket emptyPacket;
+        bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
+    }
+    if (!bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) && !bot->HasAuraType(SPELL_AURA_FLY))
+    {
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FLYING);
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
+        bot->RemoveUnitMovementFlag(MOVEMENTFLAG_CAN_FLY);
+        bot->SendMovementFlagUpdate();
+    }
+}
+
+void PlayerbotAI::TrackMasterMountState()
+{
+    Player* targetMaster = GetMaster();
+    if (!targetMaster)
+        return;
+    uint32 now = getMSTime();
+    if (IsFlyingMounted(targetMaster))
+    {
+        masterMountX = targetMaster->GetPositionX();
+        masterMountY = targetMaster->GetPositionY();
+        masterMountZ = targetMaster->GetPositionZ();
+        masterMountTime = now;
+        prevFallT = 0;
+        prevFall2T = 0;
+        return;
+    }
+    if (!targetMaster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
+    {
+        prevFallT = 0;
+        prevFall2T = 0;
+        return;
+    }
+    // Decimated fall samples, stored on movement only so stalls keep last real motion.
+    float nowX = targetMaster->GetPositionX();
+    float nowY = targetMaster->GetPositionY();
+    if (prevFallT == 0 || (now - prevFallT >= 150 && (nowX != prevFallX || nowY != prevFallY)))
+    {
+        prevFall2X = prevFallX;
+        prevFall2Y = prevFallY;
+        prevFall2T = prevFallT;
+        prevFallX = nowX;
+        prevFallY = nowY;
+        prevFallT = now;
+    }
+}
+
+bool PlayerbotAI::FallSamplesReady() const
+{
+    if (prevFallT == 0 || prevFall2T == 0)
+        return false;
+    return (prevFallT - prevFall2T) / 1000.0f >= 0.25f;
+}
+
+bool PlayerbotAI::IsMasterAirDismountSuspect()
+{
+    // Fresh mid-air dismount; confirm before acting so bots aren't stranded.
+    Player* targetMaster = GetMaster();
+    if (!targetMaster || bot->GetMapId() != targetMaster->GetMapId())
+        return false;
+    if (IsFlyingMounted(targetMaster) || !bot->IsMounted())
+        return false;
+    if (masterMountTime == 0 || getMSTime() - masterMountTime > 30000)
+        return false;
+    float masterZ = targetMaster->GetPositionZ();
+    float masterGround = targetMaster->GetMapHeight(targetMaster->GetPositionX(), targetMaster->GetPositionY(), masterZ);
+    if (masterGround <= INVALID_HEIGHT || masterZ - masterGround < 4.0f)
+        return false;
+    float botGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+    if (botGround <= INVALID_HEIGHT || bot->GetPositionZ() - botGround < 4.0f)
+        return false;
+    return true;
+}
+
+bool PlayerbotAI::IsAirDismountFollow()
+{
+    if (!IsMasterAirDismountSuspect())
+        return false;
+    Player* targetMaster = GetMaster();
+    // Freefall only; slow-fall reports separately and stays out.
+    if (!targetMaster->HasUnitMovementFlag(MOVEMENTFLAG_FALLING))
+        return false;
+    return true;
+}
+
+float PlayerbotAI::GetFallJumpSpeed(float fromZ, float toZ) const
+{
+    if (bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW))
+        return 7.0f;
+    float zDiff = fromZ - toZ;
+    if (zDiff < 1.0f)
+        zDiff = 1.0f;
+    return std::min(zDiff, 70.0f);
+}
+
+uint32 PlayerbotAI::PredictFallDamage(float zDiff) const
+{
+    // Core parity: mirrors Player::HandleFall damage formula.
+    if (zDiff < 14.57f || !bot || bot->isDead() || bot->IsGameMaster() || bot->GetCommandStatus(CHEAT_GOD))
+        return 0;
+    if (bot->HasHoverAura() || bot->HasFeatherFallAura() || bot->HasFlyAura())
+        return 0;
+    int32 safeFall = bot->GetTotalAuraModifier(SPELL_AURA_SAFE_FALL);
+    float damagePerc = 0.018f * (zDiff - safeFall) - 0.2426f;
+    if (damagePerc <= 0.0f)
+        return 0;
+    if (bot->IsImmunedToDamageOrSchool(SPELL_SCHOOL_MASK_NORMAL))
+        return 0;
+    uint32 damage = uint32(damagePerc * bot->GetMaxHealth() * sWorld->getRate(RATE_DAMAGE_FALL));
+    if (bot->HasAura(43621)) // Gust of Wind, core parity
+        damage = bot->GetMaxHealth() / 2;
+    if (bot->HasAura(498)) // Divine Protection halves fall damage
+        damage /= 2;
+    return damage;
+}
+
+void PlayerbotAI::DoFallJump(float x, float y, float z)
+{
+    float fromZ = bot->GetPositionZ();
+    float jumpSpeed = GetFallJumpSpeed(fromZ, z);
+    bot->GetMotionMaster()->Clear();
+    bot->GetMotionMaster()->MoveJump(x, y, z, jumpSpeed, 5.0f);
+    // Touchdown damage: evaluated once against current auras, never on a timer.
+    pendingFallStartZ = fromZ;
+    pendingFallDamage = true;
+}
+
+bool PlayerbotAI::DoAirDismountFollow()
+{
+    if (!IsAirDismountFollow())
+        return false;
+    // Fly to the dismount point first (skip while already going there).
+    float distToPoint = bot->GetExactDist(masterMountX, masterMountY, masterMountZ);
+    if (distToPoint > 8.0f)
+    {
+        float dx, dy, dz;
+        if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) ||
+            bot->GetExactDist(dx, dy, dz) > 0.01f || std::fabs(dx - masterMountX) > 5.0f ||
+            std::fabs(dy - masterMountY) > 5.0f || std::fabs(dz - masterMountZ) > 5.0f)
+        {
+            bot->GetMotionMaster()->Clear();
+            bot->GetMotionMaster()->MovePoint(0, masterMountX, masterMountY, masterMountZ, FORCED_MOVEMENT_NONE,
+                                              0.0f, 0.0f, false);
+        }
+        return true;
+    }
+    // On station: await warm samples, then jump to the landing (void: plain dismount, stay mounted meanwhile).
+    if (!FallSamplesReady())
+    {
+        float waitElapsed = (getMSTime() - masterMountTime) / 1000.0f;
+        if (waitElapsed < 1.0f)
+            return true;
+        // No sample movement in 1s means stationary; hover branch below.
+    }
+    float lx, ly, lz;
+    if (PredictMasterLanding(lx, ly, lz))
+    {
+        DismountBotForFall();
+        DoFallJump(lx, ly, lz);
+    }
+    else
+    {
+        DismountBotForFall();
+    }
+    return true;
+}
+bool PlayerbotAI::PredictMasterLanding(float& x, float& y, float& z)
+{
+    Player* targetMaster = GetMaster();
+    if (!targetMaster)
+        return false;
+    float elapsed = (getMSTime() - masterMountTime) / 1000.0f;
+    if (elapsed < 0.3f)
+        return false;
+    float nowX = targetMaster->GetPositionX();
+    float nowY = targetMaster->GetPositionY();
+    float nowZ = targetMaster->GetPositionZ();
+    // Horizontal velocity from post-fall server samples; never proto max.
+    float hSpeed = 0.0f;
+    float dirX = 0.0f;
+    float dirY = 0.0f;
+    if (FallSamplesReady())
+    {
+        float dt = (prevFallT - prevFall2T) / 1000.0f;
+        float dx = prevFallX - prevFall2X;
+        float dy = prevFallY - prevFall2Y;
+        float dist = std::sqrt(dx * dx + dy * dy);
+        if (dist > 0.0f)
+        {
+            hSpeed = dist / dt;
+            dirX = dx / dist;
+            dirY = dy / dist;
+        }
+    }
+    else if (elapsed < 1.0f)
+        return false;  // samples not warm yet; caller holds without dismounting
+    if (hSpeed < 1.0f)
+    {
+        // Hover/stationary dismount: straight below the live position.
+        x = nowX;
+        y = nowY;
+        z = bot->GetMapHeight(nowX, nowY, nowZ);
+        return z > INVALID_HEIGHT;
+    }
+    // Ballistic extrapolation; first VMap floor crossed wins, void/runaway refuses.
+    constexpr double kFallGravity = 19.29110527038574;  // Movement::gravity
+    float v0 = (masterMountZ - nowZ) / elapsed + float(kFallGravity) * 0.5f * elapsed;
+    float t = 0.0f;
+    for (uint32 i = 0; i < 80; ++i)
+    {
+        t += 0.25f;
+        float px = nowX + dirX * hSpeed * t;
+        float py = nowY + dirY * hSpeed * t;
+        float pz = nowZ - v0 * t - float(kFallGravity) * 0.5f * t * t;
+        float ground = bot->GetMapHeight(px, py, pz + 0.5f);
+        if (ground > INVALID_HEIGHT && ground >= pz)
+        {
+            x = px;
+            y = py;
+            z = ground;
+            return true;
+        }
+        if (t > 20.0f || std::fabs(px - nowX) + std::fabs(py - nowY) > 600.0f)
+            break;
+    }
+    return false;
+}
+
 // Helper function for UpdateAI to check group membership and handle removal if necessary
 void PlayerbotAI::UpdateAIGroupMembership()
 {
@@ -473,6 +720,71 @@ void PlayerbotAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal
     botOutgoingPacketHandlers.Handle(helper);
     masterIncomingPacketHandlers.Handle(helper);
     masterOutgoingPacketHandlers.Handle(helper);
+
+    TrackMasterMountState();
+
+    // Airborne fallback: hanging bot without real flight must fall; stun/root don't suspend gravity.
+    bool botFlying = bot->IsFlying() && (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) ||
+                                         bot->HasAuraType(SPELL_AURA_FLY));
+    if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported() &&
+        bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) == NULL_MOTION_TYPE)
+    {
+        float botZ = bot->GetPositionZ();
+        float groundBelowBot = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+        if (groundBelowBot > INVALID_HEIGHT && botZ - groundBelowBot > 4.0f)
+        {
+            float dx, dy, dz;
+            if (!bot->GetMotionMaster()->GetDestination(dx, dy, dz) || dz >= botZ)
+            {
+                // Already airborne: must land anyway, damage (if any) applied on landing.
+                DoFallJump(bot->GetPositionX(), bot->GetPositionY(), groundBelowBot);
+            }
+        }
+        else if (groundBelowBot <= INVALID_HEIGHT && !bot->GetTransport())
+        {
+            // Void below: drop anyway; dead rezzes, hanging sticks forever (no transports).
+            DoFallJump(bot->GetPositionX(), bot->GetPositionY(), botZ - 500.0f);
+        }
+    }
+
+    // Slow fall gained mid-descent: relaunch the same descent slower, once.
+    if (bot->IsAlive() && !botFlying && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported() &&
+        bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING_SLOW) &&
+        bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+    {
+        float dx, dy, dz;
+        if (bot->GetMotionMaster()->GetDestination(dx, dy, dz) && dz < bot->GetPositionZ())
+        {
+            int32 remaining = bot->movespline->Duration() - bot->movespline->timePassed();
+            if (remaining > 0 &&
+                bot->GetExactDist(dx, dy, dz) / (remaining / 1000.0f) > 20.0f)
+            {
+                bot->GetMotionMaster()->Clear();
+                bot->GetMotionMaster()->MoveJump(dx, dy, dz, 7.0f, 5.0f);
+            }
+        }
+    }
+
+    // Touchdown fall damage: pending descent ended, evaluate once against current auras.
+    if (!bot->IsAlive() || bot->IsBeingTeleported())
+        pendingFallDamage = false;
+    else if (pendingFallDamage && bot->movespline->Finalized())
+    {
+        float botZ = bot->GetPositionZ();
+        float ground = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+        if (ground > INVALID_HEIGHT && botZ - ground < 2.0f)
+        {
+            uint32 damage = PredictFallDamage(pendingFallStartZ - botZ);
+            pendingFallDamage = false;
+            if (damage > 0)
+            {
+                damage = std::min(damage, bot->GetMaxHealth());
+                bot->EnvironmentalDamage(DAMAGE_FALL, damage);
+            }
+        }
+    }
 
     DoNextAction(minimal);
 
@@ -1332,6 +1644,43 @@ void PlayerbotAI::DoNextAction(bool min)
     {
         ChangeEngine(BOT_STATE_NON_COMBAT);
         return;
+    }
+
+    // Airborne without real flight: no engine actions, descent guaranteed (no idle hang).
+    if (bot->HasUnitMovementFlag(MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR) && bot->movespline->Finalized())
+    {
+        float landedGround = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ());
+        if (landedGround > INVALID_HEIGHT && bot->GetPositionZ() - landedGround < 1.0f)
+            bot->RemoveUnitMovementFlag(MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR);
+    }
+    if (bot->IsAlive() && !bot->isSwimming() && !bot->IsInFlight() && !bot->GetVehicle() && !bot->GetTransport() &&
+        !bot->IsCharmed() && !bot->IsBeingTeleported())
+    {
+        bool botFlying = bot->IsFlying() && (bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) ||
+                                             bot->HasAuraType(SPELL_AURA_FLY));
+        if (!botFlying)
+        {
+            float botZ = bot->GetPositionZ();
+            float groundBelow = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZ);
+            bool hasFloor = groundBelow > INVALID_HEIGHT;
+            if (!hasFloor || botZ - groundBelow > 4.0f)
+            {
+                float dx, dy, dz;
+                bool descending = bot->movespline->Initialized() && !bot->movespline->Finalized() &&
+                                  bot->GetMotionMaster()->GetDestination(dx, dy, dz) && dz < botZ;
+                bool controlledBusy =
+                    bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE;
+                if (!descending && !controlledBusy)
+                {
+                    if (hasFloor)
+                        DoFallJump(bot->GetPositionX(), bot->GetPositionY(), groundBelow);
+                    else
+                        DoFallJump(bot->GetPositionX(), bot->GetPositionY(), botZ - 500.0f);
+                }
+                SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+                return;
+            }
+        }
     }
 
     // Clear targets if in combat but sticking with old data

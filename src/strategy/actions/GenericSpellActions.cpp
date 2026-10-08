@@ -105,7 +105,7 @@ bool CastSpellAction::isPossible()
         {
             LOG_DEBUG("playerbots", "Can cast spell failed. Mount. - bot name: {}", bot->GetName());
         }
-        bot->Dismount();
+        botAI->DismountBotForFall();
         return false;
     }
 
@@ -123,7 +123,7 @@ bool CastSpellAction::isUseful()
 
     if (spell == "mount" && bot->IsInCombat())
     {
-        bot->Dismount();
+        botAI->DismountBotForFall();
         return false;
     }
 

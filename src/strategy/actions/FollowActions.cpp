@@ -84,6 +84,10 @@ bool FollowAction::isUseful()
             return false;
     }
 
+    // Yield motion to the air-dismount sequence while it owns the bot's movement.
+    if (botAI->IsAirDismountFollow())
+        return false;
+
     float distance = 0.f;
     if (!target.empty())
     {

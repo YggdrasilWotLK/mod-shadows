@@ -119,7 +119,9 @@ bool AttackAnythingAction::Execute(Event event)
             if (char const* grindName = grindTarget->GetName().c_str())
             {
                 context->GetValue<ObjectGuid>("pull target")->Set(grindTarget->GetGUID());
-                bot->GetMotionMaster()->Clear();
+                // Don't clear a live jump spline here; it snaps the client every tick.
+                if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != EFFECT_MOTION_TYPE)
+                    bot->GetMotionMaster()->Clear();
                 // bot->StopMoving();
             }
         }

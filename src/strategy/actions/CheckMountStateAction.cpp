@@ -8,11 +8,15 @@
 #include "BattlegroundEY.h"
 #include "BattlegroundWS.h"
 #include "Event.h"
+#include "Map.h"
+#include "MotionMaster.h"
 #include "PlayerbotAI.h"
 #include "PlayerbotAIConfig.h"
 #include "Playerbots.h"
 #include "ServerFacade.h"
 #include "SpellAuraEffects.h"
+
+#include <cmath>
 
 // Define the static map / init bool for caching bot preferred mount data globally
 std::unordered_map<uint32, PreferredMountCache> CheckMountStateAction::mountCache;
@@ -137,14 +141,31 @@ bool CheckMountStateAction::Execute(Event /*event*/)
         shouldMount = true;
     }
 
+    // Airborne bots keep flight form; unshifting mid-air hangs like dismounting.
+    float botZNow = bot->GetPositionZ();
+    float botGroundNow = bot->GetMapHeight(bot->GetPositionX(), bot->GetPositionY(), botZNow);
+    bool botAirborneNow = botGroundNow > INVALID_HEIGHT && botZNow - botGroundNow > 4.0f;
+
     // If should dismount, or master (if any) is no longer in travel form, yet bot still is, remove the shapeshifts
     if (shouldDismount ||
         (masterInShapeshiftForm != FORM_TRAVEL && botInShapeshiftForm == FORM_TRAVEL) ||
-        (masterInShapeshiftForm != FORM_FLIGHT && botInShapeshiftForm == FORM_FLIGHT && master && !master->IsMounted()) ||
-        (masterInShapeshiftForm != FORM_FLIGHT_EPIC && botInShapeshiftForm == FORM_FLIGHT_EPIC && master && !master->IsMounted()))
+        (!botAirborneNow && masterInShapeshiftForm != FORM_FLIGHT && botInShapeshiftForm == FORM_FLIGHT && master && !master->IsMounted()) ||
+        (!botAirborneNow && masterInShapeshiftForm != FORM_FLIGHT_EPIC && botInShapeshiftForm == FORM_FLIGHT_EPIC && master && !master->IsMounted()))
         botAI->RemoveShapeshift();
 
-    if (shouldDismount && bot->IsMounted())
+    // Air-dismount follow: fly to the point, then jump to the landing.
+    if (botAI->DoAirDismountFollow())
+        return true;
+
+    // Combat dismount, but never stranded mid-air against airborne enemies.
+    bool targetGrounded = true;
+    if (currentTarget)
+    {
+        float tz = currentTarget->GetPositionZ();
+        float tg = currentTarget->GetMapHeight(currentTarget->GetPositionX(), currentTarget->GetPositionY(), tz);
+        targetGrounded = tg > INVALID_HEIGHT && tz - tg < 8.0f;
+    }
+    if (shouldDismount && bot->IsMounted() && (!botAirborneNow || !bot->IsFlying() || targetGrounded))
     {
         Dismount();
         return true;
@@ -158,7 +179,7 @@ bool CheckMountStateAction::Execute(Event /*event*/)
         if (ShouldFollowMasterMountState(master, noAttackers, shouldMount))
             return Mount();
 
-        else if (ShouldDismountForMaster(master) && bot->IsMounted())
+        else if (ShouldDismountForMaster(master) && bot->IsMounted() && !botAI->IsAirDismountFollow() && !botAI->IsMasterAirDismountSuspect())
         {
             Dismount();
             return true;
@@ -226,8 +247,7 @@ void CheckMountStateAction::Dismount()
     if (bot->isMoving())
         bot->StopMoving();
 
-    WorldPacket emptyPacket;
-    bot->GetSession()->HandleCancelMountAuraOpcode(emptyPacket);
+    botAI->DismountBotForFall();
 }
 
 bool CheckMountStateAction::TryForms(Player* master, int32 masterMountType, int32 masterSpeed) const
