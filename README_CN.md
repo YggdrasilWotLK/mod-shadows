@@ -8,16 +8,16 @@
 
 ## 安装
 
-请注意，此模块需要对AzerothCore进行特定的自定义更改。为了确保兼容性，您必须使用我fork的自定义分支来编译它，可以在这里找到：[mod-shadows/azerothcore-wotlk/tree/Shadow](https://github.com/mod-shadows/azerothcore-wotlk/tree/Shadow)。
+请注意，此模块需要对AzerothCore进行特定的自定义更改。为了确保兼容性，您必须使用我fork的自定义分支来编译它，可以在这里找到：[mod-shadows/azerothcore-wotlk/tree/master-shadows](https://github.com/YggdrasilWotLK/yggdrasilcore/tree/master-shadows)。
 
 要安装此模块，请参考AzerothCore Wiki的详细说明：[AzerothCore安装指南](https://www.azerothcore.org/wiki/installation)。
 
 我们提供了一个简单的方法来克隆该模块：
 
 ```bash
-git clone https://github.com/mod-shadows/azerothcore-wotlk.git --branch=Shadow
+git clone https://github.com/YggdrasilWotLK/yggdrasilcore.git --branch=master-shadows
 cd azerothcore-wotlk/modules
-git clone https://github.com/mod-shadows/mod-shadows.git --branch=master
+git clone https://github.com/YggdrasilWotLK/mod-shadows.git --branch=master
 ```
 
 ## 快速开始与文档
@@ -60,7 +60,7 @@ git clone https://github.com/mod-shadows/mod-shadows.git --branch=master
 
 - 我们支持Ubuntu、Windows和macOS。
 
-- 我们建立了持续集成工作流。您可以在[GitHub Actions](https://github.com/mod-shadows/mod-shadows/actions)中查看构建状态。
+- 我们建立了持续集成工作流。您可以在[GitHub Actions](https://github.com/YggdrasilWotLK/mod-shadows/actions)中查看构建状态。
 
 - 如果最新的构建状态失败，请恢复到上一个提交。我们将尽快解决此问题。
 
