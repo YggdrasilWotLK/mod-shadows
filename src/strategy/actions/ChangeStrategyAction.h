@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHANGESTRATEGYACTION_H
-#define _PLAYERBOT_CHANGESTRATEGYACTION_H
+#ifndef _SHADOW_CHANGESTRATEGYACTION_H
+#define _SHADOW_CHANGESTRATEGYACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ChangeCombatStrategyAction : public Action
 {
 public:
-    ChangeCombatStrategyAction(PlayerbotAI* botAI, std::string const name = "co") : Action(botAI, name) {}
+    ChangeCombatStrategyAction(ShadowAI* botAI, std::string const name = "co") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
 };
@@ -21,7 +21,7 @@ public:
 class ChangeNonCombatStrategyAction : public Action
 {
 public:
-    ChangeNonCombatStrategyAction(PlayerbotAI* botAI) : Action(botAI, "nc") {}
+    ChangeNonCombatStrategyAction(ShadowAI* botAI) : Action(botAI, "nc") {}
 
     bool Execute(Event event) override;
 };
@@ -29,7 +29,7 @@ public:
 class ChangeDeadStrategyAction : public Action
 {
 public:
-    ChangeDeadStrategyAction(PlayerbotAI* botAI) : Action(botAI, "de") {}
+    ChangeDeadStrategyAction(ShadowAI* botAI) : Action(botAI, "de") {}
 
     bool Execute(Event event) override;
 };

@@ -4,7 +4,7 @@
  */
 
 #include "GenericBuffUtils.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
 #include <map>
 
@@ -12,12 +12,12 @@
 #include "Group.h"
 #include "SpellMgr.h"
 #include "Chat.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "ServerFacade.h"
 #include "AiObjectContext.h"
 #include "Value.h"
 #include "Config.h"
-#include "PlayerbotTextMgr.h"
+#include "ShadowTextMgr.h"
 
 namespace ai::buff
 {
@@ -80,14 +80,14 @@ namespace ai::buff
 
     std::string UpgradeToGroupIfAppropriate(
         Player* bot,
-        PlayerbotAI* botAI,
+        ShadowAI* botAI,
         std::string const& baseName,
         bool announceOnMissing,
         std::function<void(std::string const&)> announce)
     {
         std::string castName = baseName;
         Group* g = bot->GetGroup();
-        if (!g || g->GetMembersCount() < static_cast<uint32>(sPlayerbotAIConfig->minBotsForGreaterBuff))
+        if (!g || g->GetMembersCount() < static_cast<uint32>(sShadowAIConfig->minBotsForGreaterBuff))
             return castName; // Group too small: stay in solo mode
 
         if (std::string const groupName = GroupVariantFor(baseName); !groupName.empty())
@@ -114,7 +114,7 @@ namespace ai::buff
                 time_t now = std::time(nullptr);
                 uint32 botLow = static_cast<uint32>(bot->GetGUID().GetCounter());
                 time_t& last = s_lastWarn[ std::make_pair(botLow, groupName) ];
-                if (!last || now - last >= sPlayerbotAIConfig->rpWarningCooldown) // Configurable anti-spam
+                if (!last || now - last >= sShadowAIConfig->rpWarningCooldown) // Configurable anti-spam
                 {
                     // DB Key choice in regard of the buff
                     std::string key;
@@ -132,7 +132,7 @@ namespace ai::buff
                     placeholders["%group_spell"] = groupName;
                     placeholders["%base_spell"] = baseName;
 
-                    std::string announceText = sPlayerbotTextMgr->GetBotTextOrDefault(key,
+                    std::string announceText = sShadowTextMgr->GetBotTextOrDefault(key,
                     "Out of components for %group_spell. Using %base_spell!", placeholders);
 
                     announce(announceText);

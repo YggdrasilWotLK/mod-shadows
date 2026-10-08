@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PASSIVEMULTIPLIER_H
-#define _PLAYERBOT_PASSIVEMULTIPLIER_H
+#ifndef _SHADOW_PASSIVEMULTIPLIER_H
+#define _SHADOW_PASSIVEMULTIPLIER_H
 
 #include <vector>
 
 #include "Multiplier.h"
 
 class Action;
-class PlayerbotAI;
+class ShadowAI;
 
 class PassiveMultiplier : public Multiplier
 {
 public:
-    PassiveMultiplier(PlayerbotAI* botAI);
+    PassiveMultiplier(ShadowAI* botAI);
 
     float GetValue(Action* action) override;
 

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SETHOMEACTION_H
-#define _PLAYERBOT_SETHOMEACTION_H
+#ifndef _SHADOW_SETHOMEACTION_H
+#define _SHADOW_SETHOMEACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SetHomeAction : public MovementAction
 {
 public:
-    SetHomeAction(PlayerbotAI* botAI) : MovementAction(botAI, "home") {}
+    SetHomeAction(ShadowAI* botAI) : MovementAction(botAI, "home") {}
 
     bool Execute(Event event) override;
 };

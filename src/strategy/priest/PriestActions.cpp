@@ -6,7 +6,7 @@
 #include "PriestActions.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CastRemoveShadowformAction::isUseful() { return botAI->HasAura("shadowform", AI_VALUE(Unit*, "self target")); }
 
@@ -32,11 +32,11 @@ Unit* CastPowerWordShieldOnAlmostFullHealthBelowAction::GetTarget()
         {
             continue;
         }
-        if (player->GetHealthPct() > sPlayerbotAIConfig->almostFullHealth)
+        if (player->GetHealthPct() > sShadowAIConfig->almostFullHealth)
         {
             continue;
         }
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
         {
             continue;
         }
@@ -63,11 +63,11 @@ bool CastPowerWordShieldOnAlmostFullHealthBelowAction::isUseful()
         {
             continue;
         }
-        if (player->GetHealthPct() > sPlayerbotAIConfig->almostFullHealth)
+        if (player->GetHealthPct() > sShadowAIConfig->almostFullHealth)
         {
             continue;
         }
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
         {
             continue;
         }
@@ -95,7 +95,7 @@ Unit* CastPowerWordShieldOnNotFullAction::GetTarget()
         {
             continue;
         }
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
         {
             continue;
         }
@@ -126,7 +126,7 @@ Unit* CastPowerWordShieldOnWeakenedSoulAction::GetTarget()
             continue;
         if (player->isDead())
             continue;
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
             continue;
         if (botAI->HasAnyAuraOf(player, "weakened soul", "power word: shield", nullptr))
             continue;

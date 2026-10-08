@@ -9,8 +9,8 @@
 #include "BudgetValues.h"
 #include "Event.h"
 #include "GuildMgr.h"
-#include "Playerbots.h"
-#include "RandomPlayerbotFactory.h"
+#include "Shadows.h"
+#include "RandomShadowFactory.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h" // GOLD
 
@@ -25,7 +25,7 @@ bool BuyPetitionAction::Execute(Event event)
         if (!pCreature)
             continue;
 
-        std::string const guildName = RandomPlayerbotFactory::CreateRandomGuildName();
+        std::string const guildName = RandomShadowFactory::CreateRandomGuildName();
         if (guildName.empty())
             continue;
 
@@ -72,7 +72,7 @@ bool BuyPetitionAction::canBuyPetition(Player* bot)
     if (bot->GetGuildIdInvited())
         return false;
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     if (AI_VALUE2(uint32, "item count", "Hitem:5863:"))
@@ -170,7 +170,7 @@ bool PetitionOfferNearbyAction::Execute(Event event)
         if (player->GetGuildIdInvited())
             continue;
 
-        auto botAI = GET_PLAYERBOT_AI(player);
+        auto botAI = GET_SHADOW_AI(player);
 
         if (botAI)
         {
@@ -184,11 +184,11 @@ bool PetitionOfferNearbyAction::Execute(Event event)
         }
         else
         {
-            if (!sPlayerbotAIConfig->randomBotGroupNearby)
+            if (!sShadowAIConfig->randomBotGroupNearby)
                 return false;
         }
 
-        if (sServerFacade->GetDistance2d(bot, player) > sPlayerbotAIConfig->sightDistance)
+        if (sServerFacade->GetDistance2d(bot, player) > sShadowAIConfig->sightDistance)
             continue;
 
         // Parse rpg target to quest action.

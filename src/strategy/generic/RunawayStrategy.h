@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RUNAWAYSTRATEGY_H
-#define _PLAYERBOT_RUNAWAYSTRATEGY_H
+#ifndef _SHADOW_RUNAWAYSTRATEGY_H
+#define _SHADOW_RUNAWAYSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RunawayStrategy : public NonCombatStrategy
 {
 public:
-    RunawayStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    RunawayStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "runaway"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

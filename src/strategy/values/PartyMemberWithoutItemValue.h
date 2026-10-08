@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PARTYMEMBERWITHOUTITEMVALUE_H
-#define _PLAYERBOT_PARTYMEMBERWITHOUTITEMVALUE_H
+#ifndef _SHADOW_PARTYMEMBERWITHOUTITEMVALUE_H
+#define _SHADOW_PARTYMEMBERWITHOUTITEMVALUE_H
 
 #include "NamedObjectContext.h"
 #include "PartyMemberValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class PartyMemberWithoutItemValue : public PartyMemberValue, public Qualified
 {
 public:
-    PartyMemberWithoutItemValue(PlayerbotAI* botAI, std::string const name = "party member without item",
-                                float range = sPlayerbotAIConfig->farDistance)
+    PartyMemberWithoutItemValue(ShadowAI* botAI, std::string const name = "party member without item",
+                                float range = sShadowAIConfig->farDistance)
         : PartyMemberValue(botAI, name)
     {
     }
@@ -30,7 +30,7 @@ protected:
 class PartyMemberWithoutFoodValue : public PartyMemberWithoutItemValue
 {
 public:
-    PartyMemberWithoutFoodValue(PlayerbotAI* botAI, std::string const name = "party member without food")
+    PartyMemberWithoutFoodValue(ShadowAI* botAI, std::string const name = "party member without food")
         : PartyMemberWithoutItemValue(botAI, name)
     {
     }
@@ -42,7 +42,7 @@ protected:
 class PartyMemberWithoutWaterValue : public PartyMemberWithoutItemValue
 {
 public:
-    PartyMemberWithoutWaterValue(PlayerbotAI* botAI, std::string const name = "party member without water")
+    PartyMemberWithoutWaterValue(ShadowAI* botAI, std::string const name = "party member without water")
         : PartyMemberWithoutItemValue(botAI, name)
     {
     }

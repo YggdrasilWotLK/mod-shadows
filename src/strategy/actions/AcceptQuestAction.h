@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ACCEPTQUESTACTION_H
-#define _PLAYERBOT_ACCEPTQUESTACTION_H
+#ifndef _SHADOW_ACCEPTQUESTACTION_H
+#define _SHADOW_ACCEPTQUESTACTION_H
 
 #include "QuestAction.h"
 
 class Quest;
-class PlayerbotAI;
+class ShadowAI;
 class WorldObject;
 
 class AcceptAllQuestsAction : public QuestAction
 {
 public:
-    AcceptAllQuestsAction(PlayerbotAI* botAI, std::string const name = "accept all quests") : QuestAction(botAI, name)
+    AcceptAllQuestsAction(ShadowAI* botAI, std::string const name = "accept all quests") : QuestAction(botAI, name)
     {
     }
 
@@ -26,20 +26,20 @@ protected:
 class AcceptQuestAction : public AcceptAllQuestsAction
 {
 public:
-    AcceptQuestAction(PlayerbotAI* botAI) : AcceptAllQuestsAction(botAI, "accept quest") {}
+    AcceptQuestAction(ShadowAI* botAI) : AcceptAllQuestsAction(botAI, "accept quest") {}
     bool Execute(Event event) override;
 };
 
 class AcceptQuestShareAction : public Action
 {
 public:
-    AcceptQuestShareAction(PlayerbotAI* botAI) : Action(botAI, "accept quest share") {}
+    AcceptQuestShareAction(ShadowAI* botAI) : Action(botAI, "accept quest share") {}
     bool Execute(Event event) override;
 };
 
 class ConfirmQuestAction : public Action {
 public:
-    ConfirmQuestAction(PlayerbotAI* ai) : Action(ai, "confirm quest") {}
+    ConfirmQuestAction(ShadowAI* ai) : Action(ai, "confirm quest") {}
     bool Execute(Event event);
 };
 

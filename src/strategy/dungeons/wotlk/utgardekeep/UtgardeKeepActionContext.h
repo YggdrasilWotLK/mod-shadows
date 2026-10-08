@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUKACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONUKACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONUKACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONUKACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -13,8 +13,8 @@ class WotlkDungeonUKActionContext : public NamedObjectContext<Action>
             creators["attack dalronn"] = &WotlkDungeonUKActionContext::attack_dalronn;
         }
     private:
-        static Action* attack_frost_tomb(PlayerbotAI* ai) { return new AttackFrostTombAction(ai); }
-        static Action* attack_dalronn(PlayerbotAI* ai) { return new AttackDalronnAction(ai); }
+        static Action* attack_frost_tomb(ShadowAI* ai) { return new AttackFrostTombAction(ai); }
+        static Action* attack_dalronn(ShadowAI* ai) { return new AttackDalronnAction(ai); }
 };
 
 #endif

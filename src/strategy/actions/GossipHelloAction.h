@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GOSSIPHELLOACTION_H
-#define _PLAYERBOT_GOSSIPHELLOACTION_H
+#ifndef _SHADOW_GOSSIPHELLOACTION_H
+#define _SHADOW_GOSSIPHELLOACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GossipHelloAction : public Action
 {
 public:
-    GossipHelloAction(PlayerbotAI* botAI) : Action(botAI, "gossip hello") {}
+    GossipHelloAction(ShadowAI* botAI) : Action(botAI, "gossip hello") {}
 
     bool Execute(Event event) override;
     // Overload for direct usage

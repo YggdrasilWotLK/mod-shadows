@@ -5,7 +5,7 @@
 
 #include "LfgTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool LfgProposalActiveTrigger::IsActive() { return AI_VALUE(uint32, "lfg proposal"); }
 

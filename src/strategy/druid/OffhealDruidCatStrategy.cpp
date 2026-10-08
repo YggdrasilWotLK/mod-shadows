@@ -5,7 +5,7 @@
 
  #include "OffhealDruidCatStrategy.h"
 
- #include "Playerbots.h"
+ #include "Shadows.h"
  #include "Strategy.h"
 
  class OffhealDruidCatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -27,7 +27,7 @@ public:
     }
 
 private:
-    static ActionNode* cat_form([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* cat_form([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cat form",
                               /*P*/ nullptr,
@@ -35,7 +35,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mangle_cat([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mangle_cat([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mangle (cat)",
                               /*P*/ nullptr,
@@ -43,7 +43,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* shred([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* shred([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("shred",
                               /*P*/ nullptr,
@@ -51,7 +51,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* rake([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rake([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rake",
                               /*P*/ nullptr,
@@ -59,7 +59,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* rip([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rip([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rip",
                               /*P*/ nullptr,
@@ -67,7 +67,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* ferocious_bite([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* ferocious_bite([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("ferocious bite",
                               /*P*/ nullptr,
@@ -75,7 +75,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* savage_roar([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* savage_roar([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("savage roar",
                               /*P*/ nullptr,
@@ -83,7 +83,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* faerie_fire_feral([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* faerie_fire_feral([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("faerie fire (feral)",
                               /*P*/ nullptr,
@@ -91,7 +91,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* healing_touch_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* healing_touch_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("healing touch on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -99,7 +99,7 @@ private:
                               /*C*/ NextAction::array(0, new NextAction("cat form"), nullptr));
     }
 
-    static ActionNode* regrowth_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* regrowth_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("regrowth on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -107,7 +107,7 @@ private:
                               /*C*/ NextAction::array(0, new NextAction("cat form"), nullptr));
     }
 
-    static ActionNode* rejuvenation_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rejuvenation_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rejuvenation on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -116,7 +116,7 @@ private:
     }
 };
 
-OffhealDruidCatStrategy::OffhealDruidCatStrategy(PlayerbotAI* botAI) : FeralDruidStrategy(botAI)
+OffhealDruidCatStrategy::OffhealDruidCatStrategy(ShadowAI* botAI) : FeralDruidStrategy(botAI)
 {
     actionNodeFactories.Add(new OffhealDruidCatStrategyActionNodeFactory());
 }

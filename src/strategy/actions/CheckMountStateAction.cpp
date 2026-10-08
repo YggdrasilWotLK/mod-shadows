@@ -10,9 +10,9 @@
 #include "Event.h"
 #include "Map.h"
 #include "MotionMaster.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SpellAuraEffects.h"
 
@@ -93,7 +93,7 @@ bool CheckMountStateAction::isUseful()
         return false;
 
     // Not useful when level lower than minimum required
-    if (bot->GetLevel() < sPlayerbotAIConfig->useGroundMountAtMinLevel)
+    if (bot->GetLevel() < sShadowAIConfig->useGroundMountAtMinLevel)
         return false;
 
     // Allow mounting while transformed only if the form allows it
@@ -305,15 +305,15 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
     if (!preferredMountTableChecked)
     {
         // Verify preferred mounts table existance in the database
-        QueryResult checkTable = PlayerbotsDatabase.Query(
-            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'acore_playerbots' AND table_name = 'playerbots_preferred_mounts')");
+        QueryResult checkTable = ShadowsDatabase.Query(
+            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'acore_shadows' AND table_name = 'shadows_preferred_mounts')");
 
         if (checkTable && checkTable->Fetch()[0].Get<uint32>() == 1)
         {
             preferredMountTableChecked = true;
 
             // Cache all mounts of both types globally, for all entries
-            QueryResult result = PlayerbotsDatabase.Query("SELECT guid, spellid, type FROM playerbots_preferred_mounts");
+            QueryResult result = ShadowsDatabase.Query("SELECT guid, spellid, type FROM shadows_preferred_mounts");
 
             if (result)
             {
@@ -334,14 +334,14 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
 
                     result->NextRow();
                 }
-                LOG_INFO("playerbots", "Preferred mounts initialized | Total records: {}", totalResults);
+                LOG_INFO("shadows", "Preferred mounts initialized | Total records: {}", totalResults);
             }
         }
         else // If the SQL table is missing, log an error and return false
         {
             preferredMountTableChecked = true;
 
-            LOG_DEBUG("playerbots", "Preferred mounts SQL table playerbots_preferred_mounts does not exist!");
+            LOG_DEBUG("shadows", "Preferred mounts SQL table shadows_preferred_mounts does not exist!");
 
             return false;
         }
@@ -369,7 +369,7 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
     // Check if spell exists
     if (!sSpellMgr->GetSpellInfo(chosenMountId))
     {
-        LOG_ERROR("playerbots", "Preferred mount failed: Invalid spell {} | Bot Guid: {}", chosenMountId, botGUID);
+        LOG_ERROR("shadows", "Preferred mount failed: Invalid spell {} | Bot Guid: {}", chosenMountId, botGUID);
         return false;
     }
 
@@ -384,7 +384,7 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
     return true;
     //}
 
-    LOG_DEBUG("playerbots", "Preferred mount failed! | Bot Guid: {}", botGUID);
+    LOG_DEBUG("shadows", "Preferred mount failed! | Bot Guid: {}", botGUID);
     return false;
 }
 
@@ -421,8 +421,8 @@ float CheckMountStateAction::CalculateDismountDistance() const
 {
     // Warrior bots should dismount far enough to charge (because it's important for generating some initial rage),
     // a real player would be riding toward enemy mashing the charge key but the bots won't cast charge while mounted.
-    bool isMelee = PlayerbotAI::IsMelee(bot);
-    float dismountDistance = isMelee ? sPlayerbotAIConfig->meleeDistance + 2.0f : sPlayerbotAIConfig->spellDistance + 2.0f;
+    bool isMelee = ShadowAI::IsMelee(bot);
+    float dismountDistance = isMelee ? sShadowAIConfig->meleeDistance + 2.0f : sShadowAIConfig->spellDistance + 2.0f;
     return bot->getClass() == CLASS_WARRIOR ? std::max(18.0f, dismountDistance) : dismountDistance;
 }
 
@@ -432,8 +432,8 @@ float CheckMountStateAction::CalculateMountDistance() const
     // to cast mount-spell than the time saved from the speed increase. At a distance of 21 both approaches take 3
     // seconds:
     // 21 / 7  =  21 / 14 + 1.5  =  3   (7 = dismounted speed  14 = epic-mount speed  1.5 = mount-spell cast time)
-    bool isMelee = PlayerbotAI::IsMelee(bot);
-    float baseDistance = isMelee ? sPlayerbotAIConfig->meleeDistance + 10.0f : sPlayerbotAIConfig->spellDistance + 10.0f;
+    bool isMelee = ShadowAI::IsMelee(bot);
+    float baseDistance = isMelee ? sShadowAIConfig->meleeDistance + 10.0f : sShadowAIConfig->spellDistance + 10.0f;
     return std::max(21.0f, baseDistance);
 }
 
@@ -460,7 +460,7 @@ int32 CheckMountStateAction::CalculateMasterMountSpeed(Player* master, const Mou
     int32 ridingSkill = bot->GetPureSkillValue(SKILL_RIDING);
     int32 botLevel = bot->GetLevel();
 
-    if (ridingSkill <= 75 && botLevel < static_cast<int32>(sPlayerbotAIConfig->useFastGroundMountAtMinLevel))
+    if (ridingSkill <= 75 && botLevel < static_cast<int32>(sShadowAIConfig->useFastGroundMountAtMinLevel))
         return 59;
 
     // If there is a master and bot not in BG, use master's aura effects.

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MANASAVELEVELVALUE_H
-#define _PLAYERBOT_MANASAVELEVELVALUE_H
+#ifndef _SHADOW_MANASAVELEVELVALUE_H
+#define _SHADOW_MANASAVELEVELVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ManaSaveLevelValue : public ManualSetValue<double>
 {
 public:
-    ManaSaveLevelValue(PlayerbotAI* botAI) : ManualSetValue<double>(botAI, 1.0, "mana save level") {}
+    ManaSaveLevelValue(ShadowAI* botAI) : ManualSetValue<double>(botAI, 1.0, "mana save level") {}
 
     std::string const Save()
     {

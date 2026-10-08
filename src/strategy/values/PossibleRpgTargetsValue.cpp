@@ -9,14 +9,14 @@
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "ObjectGuid.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 #include "NearestGameObjects.h"
 
 std::vector<uint32> PossibleRpgTargetsValue::allowedNpcFlags;
 
-PossibleRpgTargetsValue::PossibleRpgTargetsValue(PlayerbotAI* botAI, float range)
+PossibleRpgTargetsValue::PossibleRpgTargetsValue(ShadowAI* botAI, float range)
     : NearestUnitsValue(botAI, "possible rpg targets", range, true)
 {
     if (allowedNpcFlags.empty())
@@ -57,7 +57,7 @@ bool PossibleRpgTargetsValue::AcceptUnit(Unit* unit)
     if (unit->IsHostileTo(bot) || unit->GetTypeId() == TYPEID_PLAYER)
         return false;
 
-    if (sServerFacade->GetDistance2d(bot, unit) <= sPlayerbotAIConfig->tooCloseDistance)
+    if (sServerFacade->GetDistance2d(bot, unit) <= sShadowAIConfig->tooCloseDistance)
         return false;
 
     if (unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPIRITHEALER))
@@ -85,7 +85,7 @@ bool PossibleRpgTargetsValue::AcceptUnit(Unit* unit)
 
 std::vector<uint32> PossibleNewRpgTargetsValue::allowedNpcFlags;
 
-PossibleNewRpgTargetsValue::PossibleNewRpgTargetsValue(PlayerbotAI* botAI, float range)
+PossibleNewRpgTargetsValue::PossibleNewRpgTargetsValue(ShadowAI* botAI, float range)
     : NearestUnitsValue(botAI, "possible new rpg targets", range, true)
 {
     if (allowedNpcFlags.empty())

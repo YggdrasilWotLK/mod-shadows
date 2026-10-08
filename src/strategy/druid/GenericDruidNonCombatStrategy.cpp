@@ -5,7 +5,7 @@
 
 #include "GenericDruidNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "AiFactory.h"
 
 class GenericDruidNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    static ActionNode* thorns([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* thorns([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("thorns",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -34,7 +34,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* thorns_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* thorns_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("thorns on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -42,7 +42,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mark_of_the_wild([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mark_of_the_wild([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mark of the wild",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -50,49 +50,49 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mark_of_the_wild_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mark_of_the_wild_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mark of the wild on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* regrowth_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* regrowth_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("regrowth on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ NULL,
                               /*C*/ NULL);
     }
-    static ActionNode* rejuvenation_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rejuvenation_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rejuvenation on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ NULL,
                               /*C*/ NULL);
     }
-    static ActionNode* remove_curse_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* remove_curse_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("remove curse on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ NULL,
                               /*C*/ NULL);
     }
-    static ActionNode* abolish_poison_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* abolish_poison_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("abolish poison on party",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ NULL,
                               /*C*/ NULL);
     }
-    static ActionNode* revive([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* revive([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("revive",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
                               /*A*/ NULL,
                               /*C*/ NULL);
     }
-    // static ActionNode* innervate([[maybe_unused]] PlayerbotAI* botAI)
+    // static ActionNode* innervate([[maybe_unused]] ShadowAI* botAI)
     // {
     //     return new ActionNode ("innervate",
     //         /*P*/ nullptr,
@@ -101,7 +101,7 @@ private:
     // }
 };
 
-GenericDruidNonCombatStrategy::GenericDruidNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericDruidNonCombatStrategy::GenericDruidNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericDruidNonCombatStrategyActionNodeFactory());
 }
@@ -186,7 +186,7 @@ void GenericDruidNonCombatStrategy::InitTriggers(std::vector<TriggerNode*>& trig
 
 }
 
-GenericDruidBuffStrategy::GenericDruidBuffStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericDruidBuffStrategy::GenericDruidBuffStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericDruidNonCombatStrategyActionNodeFactory());
 }

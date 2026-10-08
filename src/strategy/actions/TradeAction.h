@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRADEACTION_H
-#define _PLAYERBOT_TRADEACTION_H
+#ifndef _SHADOW_TRADEACTION_H
+#define _SHADOW_TRADEACTION_H
 
 #include "InventoryAction.h"
 
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 
 class TradeAction : public InventoryAction
 {
 public:
-    TradeAction(PlayerbotAI* botAI) : InventoryAction(botAI, "trade") {}
+    TradeAction(ShadowAI* botAI) : InventoryAction(botAI, "trade") {}
 
     bool Execute(Event event) override;
 

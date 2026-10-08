@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RANDOMBOTUPDATEACTION_H
-#define _PLAYERBOT_RANDOMBOTUPDATEACTION_H
+#ifndef _SHADOW_RANDOMBOTUPDATEACTION_H
+#define _SHADOW_RANDOMBOTUPDATEACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RandomBotUpdateAction : public Action
 {
 public:
-    RandomBotUpdateAction(PlayerbotAI* botAI) : Action(botAI, "random bot update") {}
+    RandomBotUpdateAction(ShadowAI* botAI) : Action(botAI, "random bot update") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

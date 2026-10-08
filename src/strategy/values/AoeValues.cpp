@@ -5,13 +5,13 @@
 
 #include "AoeValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SpellAuraEffects.h"
 
 GuidVector FindMaxDensity(Player* bot)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     GuidVector units = *botAI->GetAiObjectContext()->GetValue<GuidVector>("possible targets");
 
     std::map<ObjectGuid, GuidVector> groups;
@@ -30,7 +30,7 @@ GuidVector FindMaxDensity(Player* bot)
                 continue;
 
             float d = sServerFacade->GetDistance2d(unit, other);
-            if (sServerFacade->IsDistanceLessOrEqualThan(d, sPlayerbotAIConfig->aoeRadius * 2))
+            if (sServerFacade->IsDistanceLessOrEqualThan(d, sShadowAIConfig->aoeRadius * 2))
                 groups[*i].push_back(*j);
         }
 

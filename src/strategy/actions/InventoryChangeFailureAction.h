@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_INVENTORYCHANGEFAILUREACTION_H
-#define _PLAYERBOT_INVENTORYCHANGEFAILUREACTION_H
+#ifndef _SHADOW_INVENTORYCHANGEFAILUREACTION_H
+#define _SHADOW_INVENTORYCHANGEFAILUREACTION_H
 
 #include "Action.h"
 #include "Item.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class InventoryChangeFailureAction : public Action
 {
 public:
-    InventoryChangeFailureAction(PlayerbotAI* botAI) : Action(botAI, "inventory change failure") {}
+    InventoryChangeFailureAction(ShadowAI* botAI) : Action(botAI, "inventory change failure") {}
 
     bool Execute(Event event) override;
 

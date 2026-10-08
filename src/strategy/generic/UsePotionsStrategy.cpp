@@ -5,7 +5,7 @@
 
 #include "UsePotionsStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class UsePotionsStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -13,7 +13,7 @@ public:
     UsePotionsStrategyActionNodeFactory() { creators["healthstone"] = &healthstone; }
 
 private:
-    static ActionNode* healthstone(PlayerbotAI* botAI)
+    static ActionNode* healthstone(ShadowAI* botAI)
     {
         return new ActionNode("healthstone",
                               /*P*/ nullptr,
@@ -22,7 +22,7 @@ private:
     }
 };
 
-UsePotionsStrategy::UsePotionsStrategy(PlayerbotAI* botAI) : Strategy(botAI)
+UsePotionsStrategy::UsePotionsStrategy(ShadowAI* botAI) : Strategy(botAI)
 {
     actionNodeFactories.Add(new UsePotionsStrategyActionNodeFactory());
 }

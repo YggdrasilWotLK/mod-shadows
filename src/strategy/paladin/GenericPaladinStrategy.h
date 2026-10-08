@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICPALADINSTRATEGY_H
-#define _PLAYERBOT_GENERICPALADINSTRATEGY_H
+#ifndef _SHADOW_GENERICPALADINSTRATEGY_H
+#define _SHADOW_GENERICPALADINSTRATEGY_H
 
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericPaladinStrategy : public CombatStrategy
 {
 public:
-    GenericPaladinStrategy(PlayerbotAI* botAI);
+    GenericPaladinStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "paladin"; }
@@ -22,7 +22,7 @@ public:
 class PaladinCureStrategy : public Strategy
 {
 public:
-    PaladinCureStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinCureStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cure"; }
@@ -31,7 +31,7 @@ public:
 class PaladinBoostStrategy : public Strategy
 {
 public:
-    PaladinBoostStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBoostStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "boost"; }
@@ -40,7 +40,7 @@ public:
 class PaladinCcStrategy : public Strategy
 {
 public:
-    PaladinCcStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinCcStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cc"; }
@@ -49,7 +49,7 @@ public:
 class PaladinHealerDpsStrategy : public Strategy
 {
 public:
-    PaladinHealerDpsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinHealerDpsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "healer dps"; }

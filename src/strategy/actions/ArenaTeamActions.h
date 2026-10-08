@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ARENATEAMACTION_H
-#define _PLAYERBOT_ARENATEAMACTION_H
+#ifndef _SHADOW_ARENATEAMACTION_H
+#define _SHADOW_ARENATEAMACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ArenaTeamAcceptAction : public Action
 {
 public:
-    ArenaTeamAcceptAction(PlayerbotAI* botAI) : Action(botAI, "arena team accept") {}
+    ArenaTeamAcceptAction(ShadowAI* botAI) : Action(botAI, "arena team accept") {}
 
     bool Execute(Event event) override;
 };

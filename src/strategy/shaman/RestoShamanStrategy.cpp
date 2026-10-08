@@ -5,7 +5,7 @@
 
 #include "RestoShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class RestoShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -33,33 +33,33 @@ public:
     }
 
 private:
-    static ActionNode* mana_tide_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mana_tide_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mana tide totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("mana potion"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* call_of_the_elements(PlayerbotAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
-    static ActionNode* stoneclaw_totem(PlayerbotAI*) { return new ActionNode("stoneclaw totem", nullptr, nullptr, nullptr); }
-    static ActionNode* riptide_on_party(PlayerbotAI*) { return new ActionNode("riptide on party", nullptr, nullptr, nullptr); }
-    static ActionNode* chain_heal_on_party(PlayerbotAI*) { return new ActionNode("chain heal on party", nullptr, nullptr, nullptr); }
-    static ActionNode* healing_wave_on_party(PlayerbotAI*) { return new ActionNode("healing wave on party", nullptr, nullptr, nullptr); }
-    static ActionNode* lesser_healing_wave_on_party(PlayerbotAI*) { return new ActionNode("lesser healing wave on party", nullptr, nullptr, nullptr); }
-    static ActionNode* earth_shield_on_main_tank(PlayerbotAI*) { return new ActionNode("earth shield on main tank", nullptr, nullptr, nullptr); }
-    static ActionNode* cleanse_spirit_poison_on_party(PlayerbotAI*) { return new ActionNode("cleanse spirit poison on party", nullptr, nullptr, nullptr); }
-    static ActionNode* cleanse_spirit_disease_on_party(PlayerbotAI*) { return new ActionNode("cleanse spirit disease on party", nullptr, nullptr, nullptr); }
-    static ActionNode* cleanse_spirit_curse_on_party(PlayerbotAI*) { return new ActionNode("cleanse spirit curse on party", nullptr, nullptr, nullptr); }
-    static ActionNode* cleansing_totem(PlayerbotAI*) { return new ActionNode("cleansing totem", nullptr, nullptr, nullptr); }
-    static ActionNode* water_shield(PlayerbotAI*) { return new ActionNode("water shield", nullptr, nullptr, nullptr); }
-    static ActionNode* flame_shock(PlayerbotAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
-    static ActionNode* lava_burst(PlayerbotAI*) { return new ActionNode("lava burst", nullptr, nullptr, nullptr); }
-    static ActionNode* lightning_bolt(PlayerbotAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* chain_lightning(PlayerbotAI*) { return new ActionNode("chain lightning", nullptr, nullptr, nullptr); }
+    static ActionNode* call_of_the_elements(ShadowAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
+    static ActionNode* stoneclaw_totem(ShadowAI*) { return new ActionNode("stoneclaw totem", nullptr, nullptr, nullptr); }
+    static ActionNode* riptide_on_party(ShadowAI*) { return new ActionNode("riptide on party", nullptr, nullptr, nullptr); }
+    static ActionNode* chain_heal_on_party(ShadowAI*) { return new ActionNode("chain heal on party", nullptr, nullptr, nullptr); }
+    static ActionNode* healing_wave_on_party(ShadowAI*) { return new ActionNode("healing wave on party", nullptr, nullptr, nullptr); }
+    static ActionNode* lesser_healing_wave_on_party(ShadowAI*) { return new ActionNode("lesser healing wave on party", nullptr, nullptr, nullptr); }
+    static ActionNode* earth_shield_on_main_tank(ShadowAI*) { return new ActionNode("earth shield on main tank", nullptr, nullptr, nullptr); }
+    static ActionNode* cleanse_spirit_poison_on_party(ShadowAI*) { return new ActionNode("cleanse spirit poison on party", nullptr, nullptr, nullptr); }
+    static ActionNode* cleanse_spirit_disease_on_party(ShadowAI*) { return new ActionNode("cleanse spirit disease on party", nullptr, nullptr, nullptr); }
+    static ActionNode* cleanse_spirit_curse_on_party(ShadowAI*) { return new ActionNode("cleanse spirit curse on party", nullptr, nullptr, nullptr); }
+    static ActionNode* cleansing_totem(ShadowAI*) { return new ActionNode("cleansing totem", nullptr, nullptr, nullptr); }
+    static ActionNode* water_shield(ShadowAI*) { return new ActionNode("water shield", nullptr, nullptr, nullptr); }
+    static ActionNode* flame_shock(ShadowAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
+    static ActionNode* lava_burst(ShadowAI*) { return new ActionNode("lava burst", nullptr, nullptr, nullptr); }
+    static ActionNode* lightning_bolt(ShadowAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* chain_lightning(ShadowAI*) { return new ActionNode("chain lightning", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-RestoShamanStrategy::RestoShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+RestoShamanStrategy::RestoShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new RestoShamanStrategyActionNodeFactory());
 }

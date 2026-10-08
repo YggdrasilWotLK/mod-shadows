@@ -8,21 +8,21 @@
 #include "ChatHelper.h"
 #include "Event.h"
 #include "Mail.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::map<std::string, MailProcessor*> MailAction::processors;
 
 class TellMailProcessor : public MailProcessor
 {
 public:
-    bool Before(PlayerbotAI* botAI) override
+    bool Before(ShadowAI* botAI) override
     {
         botAI->TellMaster("=== Mailbox ===");
         tells.clear();
         return true;
     }
 
-    bool Process(uint32 index, Mail* mail, PlayerbotAI* botAI) override
+    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
     {
         Player* bot = botAI->GetBot();
         time_t cur_time = time(nullptr);
@@ -61,7 +61,7 @@ public:
         return true;
     }
 
-    bool After(PlayerbotAI* botAI) override
+    bool After(ShadowAI* botAI) override
     {
         for (std::list<std::string>::iterator i = tells.begin(); i != tells.end(); ++i)
             botAI->TellMaster(*i);
@@ -78,7 +78,7 @@ private:
 class TakeMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, PlayerbotAI* botAI) override
+    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
     {
         Player* bot = botAI->GetBot();
         if (!CheckBagSpace(bot))
@@ -157,7 +157,7 @@ private:
 class DeleteMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, PlayerbotAI* botAI) override
+    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
     {
         std::ostringstream out;
         out << "|cffffffff" << mail->subject << "|cffff0000 deleted";
@@ -172,7 +172,7 @@ public:
 class ReadMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, PlayerbotAI* botAI) override
+    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
     {
         std::ostringstream out, body;
         out << "|cffffffff" << mail->subject;
@@ -322,7 +322,7 @@ void MailProcessor::RemoveMail(Player* bot, uint32 id, ObjectGuid mailbox)
     bot->GetSession()->HandleMailDelete(packet);
 }
 
-ObjectGuid MailProcessor::FindMailbox(PlayerbotAI* botAI)
+ObjectGuid MailProcessor::FindMailbox(ShadowAI* botAI)
 {
     GuidVector gos = *botAI->GetAiObjectContext()->GetValue<GuidVector>("nearest game objects");
     ObjectGuid mailbox;

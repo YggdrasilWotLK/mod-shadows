@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DPSASSISTSTRATEGY_H
-#define _PLAYERBOT_DPSASSISTSTRATEGY_H
+#ifndef _SHADOW_DPSASSISTSTRATEGY_H
+#define _SHADOW_DPSASSISTSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DpsAssistStrategy : public NonCombatStrategy
 {
 public:
-    DpsAssistStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    DpsAssistStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "dps assist"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -22,7 +22,7 @@ public:
 class DpsAoeStrategy : public NonCombatStrategy
 {
 public:
-    DpsAoeStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    DpsAoeStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "dps aoe"; }
     uint32 GetType() const override { return STRATEGY_TYPE_DPS; }

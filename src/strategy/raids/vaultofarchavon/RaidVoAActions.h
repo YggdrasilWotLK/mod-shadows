@@ -1,9 +1,9 @@
-#ifndef _PLAYERBOT_RAIDVOAACTIONS_H
-#define _PLAYERBOT_RAIDVOAACTIONS_H
+#ifndef _SHADOW_RAIDVOAACTIONS_H
+#define _SHADOW_RAIDVOAACTIONS_H
 
 #include "Action.h"
 #include "MovementActions.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Event.h"
 
 //
@@ -13,7 +13,7 @@
 class EmalonMarkBossAction : public MovementAction
 {
 public:
-    EmalonMarkBossAction(PlayerbotAI* botAI) : MovementAction(botAI, "emalon mark boss action") {}
+    EmalonMarkBossAction(ShadowAI* botAI) : MovementAction(botAI, "emalon mark boss action") {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };
@@ -21,7 +21,7 @@ public:
 class EmalonLightingNovaAction : public MovementAction
 {
 public:
-    EmalonLightingNovaAction(PlayerbotAI* botAI) : MovementAction(botAI, "emalon lighting nova action") {}
+    EmalonLightingNovaAction(ShadowAI* botAI) : MovementAction(botAI, "emalon lighting nova action") {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };
@@ -29,7 +29,7 @@ public:
 class EmalonOverchargeAction : public Action
 {
 public:
-    EmalonOverchargeAction(PlayerbotAI* botAI) : Action(botAI, "emalon overcharge action") {}
+    EmalonOverchargeAction(ShadowAI* botAI) : Action(botAI, "emalon overcharge action") {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };
@@ -37,7 +37,7 @@ public:
 class EmalonFallFromFloorAction : public Action
 {
 public:
-    EmalonFallFromFloorAction(PlayerbotAI* botAI) : Action(botAI, "emalon fall from floor action") {}
+    EmalonFallFromFloorAction(ShadowAI* botAI) : Action(botAI, "emalon fall from floor action") {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };

@@ -7,7 +7,7 @@
 
 #include "Duration.h"
 #include "GenericSpellActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SpellInfo.h"
 #include "SpellMgr.h"
 

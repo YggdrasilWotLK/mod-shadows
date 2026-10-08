@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHATHELPER_H
-#define _PLAYERBOT_CHATHELPER_H
+#ifndef _SHADOW_CHATHELPER_H
+#define _SHADOW_CHATHELPER_H
 
 #include <map>
 
 #include "Common.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 #include "SharedDefines.h"
 
 class GameObject;
 class Quest;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class SpellInfo;
 class WorldObject;
 
@@ -30,10 +30,10 @@ struct ItemWithRandomProperty {
     int32 randomPropertyId{0};
 };
 
-class ChatHelper : public PlayerbotAIAware
+class ChatHelper : public ShadowAIAware
 {
 public:
-    ChatHelper(PlayerbotAI* botAI);
+    ChatHelper(ShadowAI* botAI);
 
     static std::string const formatMoney(uint32 copper);
     static uint32 parseMoney(std::string const text);

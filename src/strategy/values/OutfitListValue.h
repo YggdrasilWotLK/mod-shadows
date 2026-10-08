@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_OUTFITLISTVALUE_H
-#define _PLAYERBOT_OUTFITLISTVALUE_H
+#ifndef _SHADOW_OUTFITLISTVALUE_H
+#define _SHADOW_OUTFITLISTVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 typedef std::vector<std::string> Outfit;
 
 class OutfitListValue : public ManualSetValue<Outfit&>
 {
 public:
-    OutfitListValue(PlayerbotAI* botAI, std::string const name = "outfit list")
+    OutfitListValue(ShadowAI* botAI, std::string const name = "outfit list")
         : ManualSetValue<Outfit&>(botAI, list, name)
     {
     }

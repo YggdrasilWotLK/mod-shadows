@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TOTEMSSHAMANSTRATEGY_H
-#define _PLAYERBOT_TOTEMSSHAMANSTRATEGY_H
+#ifndef _SHADOW_TOTEMSSHAMANSTRATEGY_H
+#define _SHADOW_TOTEMSSHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 #include <set>
@@ -219,13 +219,13 @@ static const uint32 GROUNDING_TOTEM[] = {
 };
 static const size_t GROUNDING_TOTEM_COUNT = sizeof(GROUNDING_TOTEM) / sizeof(uint32);
 
-class PlayerbotAI;
+class ShadowAI;
 
 // Earth Totem Strategies
 class StrengthOfEarthTotemStrategy : public GenericShamanStrategy
 {
 public:
-    StrengthOfEarthTotemStrategy(PlayerbotAI* botAI);
+    StrengthOfEarthTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "strength of earth"; }
 };
@@ -233,7 +233,7 @@ public:
 class StoneclawTotemStrategy : public GenericShamanStrategy
 {
 public:
-    StoneclawTotemStrategy(PlayerbotAI* botAI);
+    StoneclawTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "stoneskin"; }
 };
@@ -241,7 +241,7 @@ public:
 class EarthTotemStrategy : public GenericShamanStrategy
 {
 public:
-    EarthTotemStrategy(PlayerbotAI* botAI);
+    EarthTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "tremor"; }
 };
@@ -249,7 +249,7 @@ public:
 class EarthbindTotemStrategy : public GenericShamanStrategy
 {
 public:
-    EarthbindTotemStrategy(PlayerbotAI* botAI);
+    EarthbindTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "earthbind"; }
 };
@@ -258,7 +258,7 @@ public:
 class SearingTotemStrategy : public GenericShamanStrategy
 {
 public:
-    SearingTotemStrategy(PlayerbotAI* botAI);
+    SearingTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "searing"; }
 };
@@ -266,7 +266,7 @@ public:
 class MagmaTotemStrategy : public GenericShamanStrategy
 {
 public:
-    MagmaTotemStrategy(PlayerbotAI* botAI);
+    MagmaTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "magma"; }
 };
@@ -274,7 +274,7 @@ public:
 class FlametongueTotemStrategy : public GenericShamanStrategy
 {
 public:
-    FlametongueTotemStrategy(PlayerbotAI* botAI);
+    FlametongueTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "flametongue"; }
 };
@@ -282,7 +282,7 @@ public:
 class TotemOfWrathStrategy : public GenericShamanStrategy
 {
 public:
-    TotemOfWrathStrategy(PlayerbotAI* botAI);
+    TotemOfWrathStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "wrath"; }
 };
@@ -290,7 +290,7 @@ public:
 class FrostResistanceTotemStrategy : public GenericShamanStrategy
 {
 public:
-    FrostResistanceTotemStrategy(PlayerbotAI* botAI);
+    FrostResistanceTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "frost resistance"; }
 };
@@ -299,7 +299,7 @@ public:
 class HealingStreamTotemStrategy : public GenericShamanStrategy
 {
 public:
-    HealingStreamTotemStrategy(PlayerbotAI* botAI);
+    HealingStreamTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "healing stream"; }
 };
@@ -307,7 +307,7 @@ public:
 class ManaSpringTotemStrategy : public GenericShamanStrategy
 {
 public:
-    ManaSpringTotemStrategy(PlayerbotAI* botAI);
+    ManaSpringTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "mana spring"; }
 };
@@ -315,7 +315,7 @@ public:
 class CleansingTotemStrategy : public GenericShamanStrategy
 {
 public:
-    CleansingTotemStrategy(PlayerbotAI* botAI);
+    CleansingTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cleansing"; }
 };
@@ -323,7 +323,7 @@ public:
 class FireResistanceTotemStrategy : public GenericShamanStrategy
 {
 public:
-    FireResistanceTotemStrategy(PlayerbotAI* botAI);
+    FireResistanceTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "fire resistance"; }
 };
@@ -332,7 +332,7 @@ public:
 class WrathOfAirTotemStrategy : public GenericShamanStrategy
 {
 public:
-    WrathOfAirTotemStrategy(PlayerbotAI* botAI);
+    WrathOfAirTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "wrath of air"; }
 };
@@ -340,7 +340,7 @@ public:
 class WindfuryTotemStrategy : public GenericShamanStrategy
 {
 public:
-    WindfuryTotemStrategy(PlayerbotAI* botAI);
+    WindfuryTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "windfury"; }
 };
@@ -348,7 +348,7 @@ public:
 class NatureResistanceTotemStrategy : public GenericShamanStrategy
 {
 public:
-    NatureResistanceTotemStrategy(PlayerbotAI* botAI);
+    NatureResistanceTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "nature resistance"; }
 };
@@ -356,7 +356,7 @@ public:
 class GroundingTotemStrategy : public GenericShamanStrategy
 {
 public:
-    GroundingTotemStrategy(PlayerbotAI* botAI);
+    GroundingTotemStrategy(ShadowAI* botAI);
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "grounding"; }
 };

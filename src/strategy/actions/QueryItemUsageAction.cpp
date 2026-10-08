@@ -8,7 +8,7 @@
 #include "ChatHelper.h"
 #include "Event.h"
 #include "ItemUsageValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool QueryItemUsageAction::Execute(Event event)
 {
@@ -118,7 +118,7 @@ std::string const QueryItemUsageAction::QueryItemUsage(ItemTemplate const* item)
 
 std::string const QueryItemUsageAction::QueryItemPrice(ItemTemplate const* item)
 {
-    if (!sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sRandomShadowMgr->IsRandomBot(bot))
         return "";
 
     if (item->Bonding == BIND_WHEN_PICKED_UP)
@@ -133,7 +133,7 @@ std::string const QueryItemUsageAction::QueryItemPrice(ItemTemplate const* item)
         {
             Item* sell = *i;
             int32 price =
-                sell->GetCount() * sell->GetTemplate()->SellPrice * sRandomPlayerbotMgr->GetSellMultiplier(bot);
+                sell->GetCount() * sell->GetTemplate()->SellPrice * sRandomShadowMgr->GetSellMultiplier(bot);
             if (!sellPrice || sellPrice > price)
                 sellPrice = price;
         }
@@ -147,7 +147,7 @@ std::string const QueryItemUsageAction::QueryItemPrice(ItemTemplate const* item)
     if (usage == ITEM_USAGE_NONE)
         return msg.str();
 
-    int32 buyPrice = item->BuyPrice * sRandomPlayerbotMgr->GetBuyMultiplier(bot);
+    int32 buyPrice = item->BuyPrice * sRandomShadowMgr->GetBuyMultiplier(bot);
     if (buyPrice)
     {
         if (sellPrice)

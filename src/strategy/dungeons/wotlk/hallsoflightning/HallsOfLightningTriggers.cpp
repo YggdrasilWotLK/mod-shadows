@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "HallsOfLightningTriggers.h"
 #include "AiObject.h"
 #include "AiObjectContext.h"

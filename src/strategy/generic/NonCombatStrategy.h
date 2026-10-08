@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NONCOMBATSTRATEGY_H
-#define _PLAYERBOT_NONCOMBATSTRATEGY_H
+#ifndef _SHADOW_NONCOMBATSTRATEGY_H
+#define _SHADOW_NONCOMBATSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NonCombatStrategy : public Strategy
 {
 public:
-    NonCombatStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    NonCombatStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -22,7 +22,7 @@ public:
 class CollisionStrategy : public Strategy
 {
 public:
-    CollisionStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    CollisionStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -32,7 +32,7 @@ public:
 class MountStrategy : public Strategy
 {
 public:
-    MountStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    MountStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -42,7 +42,7 @@ public:
 class AttackTaggedStrategy : public Strategy
 {
 public:
-    AttackTaggedStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    AttackTaggedStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     std::string const getName() override { return "attack tagged"; }
@@ -51,7 +51,7 @@ public:
 class WorldBuffStrategy : public Strategy
 {
 public:
-    WorldBuffStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+    WorldBuffStrategy(ShadowAI* ai) : Strategy(ai) {}
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TELLREPUTATIONACTION_H
-#define _PLAYERBOT_TELLREPUTATIONACTION_H
+#ifndef _SHADOW_TELLREPUTATIONACTION_H
+#define _SHADOW_TELLREPUTATIONACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TellReputationAction : public Action
 {
 public:
-    TellReputationAction(PlayerbotAI* botAI) : Action(botAI, "reputation") {}
+    TellReputationAction(ShadowAI* botAI) : Action(botAI, "reputation") {}
 
     bool Execute(Event event) override;
 };

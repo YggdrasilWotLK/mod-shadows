@@ -5,7 +5,7 @@
 
 #include "RacialsStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class RacialsStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -13,7 +13,7 @@ public:
     RacialsStrategyActionNodeFactory() { creators["lifeblood"] = &lifeblood; }
 
 private:
-    static ActionNode* lifeblood(PlayerbotAI* botAI)
+    static ActionNode* lifeblood(ShadowAI* botAI)
     {
         return new ActionNode("lifeblood",
                               /*P*/ nullptr,
@@ -39,7 +39,7 @@ void RacialsStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 
 }
 
-RacialsStrategy::RacialsStrategy(PlayerbotAI* botAI) : Strategy(botAI)
+RacialsStrategy::RacialsStrategy(ShadowAI* botAI) : Strategy(botAI)
 {
     actionNodeFactories.Add(new RacialsStrategyActionNodeFactory());
 }

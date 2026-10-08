@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_STRATEGY_H
-#define _PLAYERBOT_STRATEGY_H
+#ifndef _SHADOW_STRATEGY_H
+#define _SHADOW_STRATEGY_H
 
 #include "Action.h"
 #include "Multiplier.h"
 #include "NamedObjectContext.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 #include "Trigger.h"
 
 enum StrategyType : uint32
@@ -54,10 +54,10 @@ static float ACTION_MEDIUM_HEAL = 20.0f;
 static float ACTION_CRITICAL_HEAL = 30.0f;
 static float ACTION_EMERGENCY = 90.0f;
 
-class Strategy : public PlayerbotAIAware
+class Strategy : public ShadowAIAware
 {
 public:
-    Strategy(PlayerbotAI* botAI);
+    Strategy(ShadowAI* botAI);
     virtual ~Strategy() {}
 
     virtual NextAction** getDefaultActions() { return nullptr; }

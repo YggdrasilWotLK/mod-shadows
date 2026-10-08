@@ -3,8 +3,8 @@
  * you may redistribute it and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_OPENITEMACTION_H
-#define _PLAYERBOT_OPENITEMACTION_H
+#ifndef _SHADOW_OPENITEMACTION_H
+#define _SHADOW_OPENITEMACTION_H
 
 #include "Action.h"
 
@@ -15,7 +15,7 @@ class Event;
 class OpenItemAction : public Action
 {
 public:
-    OpenItemAction(PlayerbotAI* botAI) : Action(botAI, "open item") { }
+    OpenItemAction(ShadowAI* botAI) : Action(botAI, "open item") { }
 
     // The main function that is executed when the action is triggered
     bool Execute(Event event) override;

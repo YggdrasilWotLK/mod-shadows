@@ -5,7 +5,7 @@
 
 #include "FleeManager.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 FleeManager::FleeManager(Player* bot, float maxAllowedDistance, float followAngle, bool forceMaxDistance,
@@ -22,7 +22,7 @@ void FleeManager::calculateDistanceToCreatures(FleePoint* point)
 {
     point->minDistance = -1.0f;
     point->sumDistance = 0.0f;
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return;
@@ -55,7 +55,7 @@ bool intersectsOri(float angle, std::vector<float>& angles, float angleIncrement
 
 void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return;
@@ -81,11 +81,11 @@ void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
         enemyOri.push_back(ori);
     }
 
-    float distIncrement = std::max(sPlayerbotAIConfig->followDistance,
-                                   (maxAllowedDistance - sPlayerbotAIConfig->tooCloseDistance) / 10.0f);
-    for (float dist = maxAllowedDistance; dist >= sPlayerbotAIConfig->tooCloseDistance; dist -= distIncrement)
+    float distIncrement = std::max(sShadowAIConfig->followDistance,
+                                   (maxAllowedDistance - sShadowAIConfig->tooCloseDistance) / 10.0f);
+    for (float dist = maxAllowedDistance; dist >= sShadowAIConfig->tooCloseDistance; dist -= distIncrement)
     {
-        float angleIncrement = std::max(M_PI / 20, M_PI / 4 / (1.0 + dist - sPlayerbotAIConfig->tooCloseDistance));
+        float angleIncrement = std::max(M_PI / 20, M_PI / 4 / (1.0 + dist - sShadowAIConfig->tooCloseDistance));
         for (float add = 0.0f; add < M_PI / 4 + angleIncrement; add += angleIncrement)
         {
             for (float angle = add; angle < add + 2 * static_cast<float>(M_PI) + angleIncrement;
@@ -98,7 +98,7 @@ void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
                       z = botPosZ + CONTACT_DISTANCE;
                 if (forceMaxDistance &&
                     sServerFacade->IsDistanceLessThan(sServerFacade->GetDistance2d(bot, x, y),
-                                                      maxAllowedDistance - sPlayerbotAIConfig->tooCloseDistance))
+                                                      maxAllowedDistance - sShadowAIConfig->tooCloseDistance))
                     continue;
 
                 bot->UpdateAllowedPositionZ(x, y, z);
@@ -114,7 +114,7 @@ void FleeManager::calculatePossibleDestinations(std::vector<FleePoint*>& points)
                 calculateDistanceToCreatures(point);
 
                 if (sServerFacade->IsDistanceGreaterOrEqualThan(point->minDistance - start.minDistance,
-                                                                sPlayerbotAIConfig->followDistance))
+                                                                sShadowAIConfig->followDistance))
                     points.push_back(point);
                 else
                     delete point;
@@ -173,7 +173,7 @@ bool FleeManager::CalculateDestination(float* rx, float* ry, float* rz)
 
 bool FleeManager::isUseful()
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return false;
@@ -190,7 +190,7 @@ bool FleeManager::isUseful()
             return true;
 
         // float d = sServerFacade->GetDistance2d(unit, bot);
-        // if (sServerFacade->IsDistanceLessThan(d, sPlayerbotAIConfig->aggroDistance)) return true;
+        // if (sServerFacade->IsDistanceLessThan(d, sShadowAIConfig->aggroDistance)) return true;
     }
 
     return false;

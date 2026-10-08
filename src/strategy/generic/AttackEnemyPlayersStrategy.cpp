@@ -5,7 +5,7 @@
 
 #include "AttackEnemyPlayersStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void AttackEnemyPlayersStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

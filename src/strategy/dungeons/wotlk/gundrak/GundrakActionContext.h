@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONGDACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONGDACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONGDACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONGDACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,9 +14,9 @@ class WotlkDungeonGDActionContext : public NamedObjectContext<Action>
             creators["avoid whirling slash"] = &WotlkDungeonGDActionContext::avoid_whirling_slash;
         }
     private:
-        static Action* avoid_poison_nova(PlayerbotAI* ai) { return new AvoidPoisonNovaAction(ai); }
-        static Action* attack_snake_wrap(PlayerbotAI* ai) { return new AttackSnakeWrapAction(ai); }
-        static Action* avoid_whirling_slash(PlayerbotAI* ai) { return new AvoidWhirlingSlashAction(ai); }
+        static Action* avoid_poison_nova(ShadowAI* ai) { return new AvoidPoisonNovaAction(ai); }
+        static Action* attack_snake_wrap(ShadowAI* ai) { return new AttackSnakeWrapAction(ai); }
+        static Action* avoid_whirling_slash(ShadowAI* ai) { return new AvoidWhirlingSlashAction(ai); }
 };
 
 #endif

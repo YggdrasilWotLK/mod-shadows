@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MAGEAIOBJECTCONTEXT_H
-#define _PLAYERBOT_MAGEAIOBJECTCONTEXT_H
+#ifndef _SHADOW_MAGEAIOBJECTCONTEXT_H
+#define _SHADOW_MAGEAIOBJECTCONTEXT_H
 
 #include "AiObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MageAiObjectContext : public AiObjectContext
 {
 public:
-    MageAiObjectContext(PlayerbotAI* botAI);
+    MageAiObjectContext(ShadowAI* botAI);
 
     static void BuildSharedContexts();
     static void BuildSharedStrategyContexts(SharedNamedObjectContextList<Strategy>& strategyContexts);

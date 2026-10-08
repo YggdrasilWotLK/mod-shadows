@@ -6,8 +6,8 @@
 #include "PaladinTriggers.h"
 
 #include "PaladinActions.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 bool SealTrigger::IsActive()
 {

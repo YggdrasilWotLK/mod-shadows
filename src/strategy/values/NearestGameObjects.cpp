@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SharedDefines.h"
 #include "SpellMgr.h"
 

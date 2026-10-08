@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DISTANCEVALUE_H
-#define _PLAYERBOT_DISTANCEVALUE_H
+#ifndef _SHADOW_DISTANCEVALUE_H
+#define _SHADOW_DISTANCEVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DistanceValue : public FloatCalculatedValue, public Qualified
 {
 public:
-    DistanceValue(PlayerbotAI* botAI, std::string const name = "distance") : FloatCalculatedValue(botAI, name) {}
+    DistanceValue(ShadowAI* botAI, std::string const name = "distance") : FloatCalculatedValue(botAI, name) {}
 
     float Calculate() override;
 };
@@ -22,7 +22,7 @@ public:
 class InsideTargetValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    InsideTargetValue(PlayerbotAI* botAI, std::string const name = "inside target") : BoolCalculatedValue(botAI, name)
+    InsideTargetValue(ShadowAI* botAI, std::string const name = "inside target") : BoolCalculatedValue(botAI, name)
     {
     }
 

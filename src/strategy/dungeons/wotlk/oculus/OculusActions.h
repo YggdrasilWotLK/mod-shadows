@@ -1,10 +1,10 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOCCACTIONS_H
-#define _PLAYERBOT_WOTLKDUNGEONOCCACTIONS_H
+#ifndef _SHADOW_WOTLKDUNGEONOCCACTIONS_H
+#define _SHADOW_WOTLKDUNGEONOCCACTIONS_H
 
 #include "Action.h"
 #include "AttackAction.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "OculusTriggers.h"
 #include "UseItemAction.h"
 #include "GenericSpellActions.h"
@@ -19,14 +19,14 @@ const Position uromSafePositions[3] =
 class AvoidUnstableSphereAction : public MovementAction
 {
 public:
-    AvoidUnstableSphereAction(PlayerbotAI* ai) : MovementAction(ai, "avoid unstable sphere") {}
+    AvoidUnstableSphereAction(ShadowAI* ai) : MovementAction(ai, "avoid unstable sphere") {}
     bool Execute(Event event) override;
 };
 
 class MountDrakeAction : public UseItemAction
 {
 public:
-    MountDrakeAction(PlayerbotAI* ai) : UseItemAction(ai, "mount drake") {}
+    MountDrakeAction(ShadowAI* ai) : UseItemAction(ai, "mount drake") {}
     bool Execute(Event event) override;
     bool isPossible() override;
 };
@@ -34,21 +34,21 @@ public:
 class DismountDrakeAction : public Action
 {
 public:
-    DismountDrakeAction(PlayerbotAI* ai) : Action(ai, "dismount drake") {}
+    DismountDrakeAction(ShadowAI* ai) : Action(ai, "dismount drake") {}
     bool Execute(Event event) override;
 };
 
 class OccFlyDrakeAction : public MovementAction
 {
 public:
-    OccFlyDrakeAction(PlayerbotAI* ai) : MovementAction(ai, "occ fly drake") {}
+    OccFlyDrakeAction(ShadowAI* ai) : MovementAction(ai, "occ fly drake") {}
     bool Execute(Event event) override;
 };
 
 class OccDrakeAttackAction : public Action
 {
 public:
-    OccDrakeAttackAction(PlayerbotAI* botAI) : Action(botAI, "occ drake attack") {}
+    OccDrakeAttackAction(ShadowAI* botAI) : Action(botAI, "occ drake attack") {}
     bool Execute(Event event) override;
 
 protected:
@@ -62,14 +62,14 @@ protected:
 class AvoidArcaneExplosionAction : public MovementAction
 {
 public:
-    AvoidArcaneExplosionAction(PlayerbotAI* ai) : MovementAction(ai, "avoid arcane explosion") {}
+    AvoidArcaneExplosionAction(ShadowAI* ai) : MovementAction(ai, "avoid arcane explosion") {}
     bool Execute(Event event) override;
 };
 
 class TimeBombSpreadAction : public MovementAction
 {
 public:
-    TimeBombSpreadAction(PlayerbotAI* ai) : MovementAction(ai, "time bomb spread") {}
+    TimeBombSpreadAction(ShadowAI* ai) : MovementAction(ai, "time bomb spread") {}
     bool Execute(Event event) override;
 };
 

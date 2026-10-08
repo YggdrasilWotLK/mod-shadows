@@ -8,14 +8,14 @@
 #include "Event.h"
 #include "ItemCountValue.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool TradeAction::Execute(Event event)
 {
     std::string const text = event.getParam();
 
     // If text starts with any excluded prefix, don't process it further.
-    for (const auto& prefix : sPlayerbotAIConfig->tradeActionExcludedPrefixes)
+    for (const auto& prefix : sShadowAIConfig->tradeActionExcludedPrefixes)
     {
         if (text.find(prefix) == 0)
             return false;

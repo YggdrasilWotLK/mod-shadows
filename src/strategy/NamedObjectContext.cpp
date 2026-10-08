@@ -5,7 +5,7 @@
 
 #include "NamedObjectContext.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void Qualified::Qualify(int qual)
 {

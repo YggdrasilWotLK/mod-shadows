@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOSTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONHOSTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONHOSTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONHOSTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -22,14 +22,14 @@ enum HallsOfStoneIDs
 class KrystallusGroundSlamTrigger : public Trigger
 {
 public:
-    KrystallusGroundSlamTrigger(PlayerbotAI* ai) : Trigger(ai, "krystallus ground slam") {}
+    KrystallusGroundSlamTrigger(ShadowAI* ai) : Trigger(ai, "krystallus ground slam") {}
     bool IsActive() override;
 };
 
 class SjonnirLightningRingTrigger : public Trigger
 {
 public:
-    SjonnirLightningRingTrigger(PlayerbotAI* ai) : Trigger(ai, "sjonnir lightning ring") {}
+    SjonnirLightningRingTrigger(ShadowAI* ai) : Trigger(ai, "sjonnir lightning ring") {}
     bool IsActive() override;
 };
 

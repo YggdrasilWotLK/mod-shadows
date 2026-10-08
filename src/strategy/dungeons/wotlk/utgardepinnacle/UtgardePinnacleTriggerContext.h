@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUPTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONUPTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONUPTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONUPTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -15,9 +15,9 @@ class WotlkDungeonUPTriggerContext : public NamedObjectContext<Trigger>
             creators["ymiron bane"] = &WotlkDungeonUPTriggerContext::bane;
         }
     private:
-        static Trigger* freezing_cloud(PlayerbotAI* ai) { return new SkadiFreezingCloudTrigger(ai); }
-        static Trigger* whirlwind(PlayerbotAI* ai) { return new SkadiWhirlwindTrigger(ai); }
-        static Trigger* bane(PlayerbotAI* ai) { return new YmironBaneTrigger(ai); }
+        static Trigger* freezing_cloud(ShadowAI* ai) { return new SkadiFreezingCloudTrigger(ai); }
+        static Trigger* whirlwind(ShadowAI* ai) { return new SkadiWhirlwindTrigger(ai); }
+        static Trigger* bane(ShadowAI* ai) { return new YmironBaneTrigger(ai); }
 };
 
 #endif

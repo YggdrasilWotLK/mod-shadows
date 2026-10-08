@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_AIOBJECT_H
-#define _PLAYERBOT_AIOBJECT_H
+#ifndef _SHADOW_AIOBJECT_H
+#define _SHADOW_AIOBJECT_H
 
 #include "Common.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 
 class AiObjectContext;
 class ChatHelper;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
-class AiObject : public PlayerbotAIAware
+class AiObject : public ShadowAIAware
 {
 public:
-    AiObject(PlayerbotAI* botAI);
+    AiObject(ShadowAI* botAI);
 
 protected:
     Player* bot;
@@ -29,7 +29,7 @@ protected:
 class AiNamedObject : public AiObject
 {
 public:
-    AiNamedObject(PlayerbotAI* botAI, std::string const name) : AiObject(botAI), name(name) {}
+    AiNamedObject(ShadowAI* botAI, std::string const name) : AiObject(botAI), name(name) {}
 
 public:
     virtual std::string const getName() { return name; }
@@ -49,7 +49,7 @@ protected:
     class clazz : public super                      \
     {                                               \
     public:                                         \
-        clazz(PlayerbotAI* botAI) : super(botAI) {} \
+        clazz(ShadowAI* botAI) : super(botAI) {} \
         bool IsActive() override;
 
 #define END_TRIGGER() \
@@ -60,14 +60,14 @@ protected:
     class clazz : public BuffTrigger                             \
     {                                                            \
     public:                                                      \
-        clazz(PlayerbotAI* botAI) : BuffTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BuffTrigger(botAI, spell) {} \
     }
 
 #define BUFF_TRIGGER_A(clazz, spell)                             \
     class clazz : public BuffTrigger                             \
     {                                                            \
     public:                                                      \
-        clazz(PlayerbotAI* botAI) : BuffTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BuffTrigger(botAI, spell) {} \
         bool IsActive() override;                                \
     }
 
@@ -75,14 +75,14 @@ protected:
     class clazz : public BuffOnPartyTrigger                             \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, spell) {} \
     }
 
 #define BUFF_PARTY_TRIGGER_A(clazz, spell)                              \
     class clazz : public BuffOnPartyTrigger                             \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, spell) {} \
         bool IsActive() override;                                       \
     }
 
@@ -90,21 +90,21 @@ protected:
     class clazz : public DebuffTrigger                             \
     {                                                              \
     public:                                                        \
-        clazz(PlayerbotAI* botAI) : DebuffTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : DebuffTrigger(botAI, spell) {} \
     }
 
 #define DEBUFF_CHECKISOWNER_TRIGGER(clazz, spell)                           \
     class clazz : public DebuffTrigger                                      \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : DebuffTrigger(botAI, spell, 1, true) {} \
+        clazz(ShadowAI* botAI) : DebuffTrigger(botAI, spell, 1, true) {} \
     }
 
 #define DEBUFF_TRIGGER_A(clazz, spell)                             \
     class clazz : public DebuffTrigger                             \
     {                                                              \
     public:                                                        \
-        clazz(PlayerbotAI* botAI) : DebuffTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : DebuffTrigger(botAI, spell) {} \
         bool IsActive() override;                                  \
     }
 
@@ -112,14 +112,14 @@ protected:
     class clazz : public DebuffOnAttackerTrigger                             \
     {                                                                        \
     public:                                                                  \
-        clazz(PlayerbotAI* botAI) : DebuffOnAttackerTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : DebuffOnAttackerTrigger(botAI, spell) {} \
     }
 
 #define DEBUFF_ENEMY_TRIGGER_A(clazz, spell)                                 \
     class clazz : public DebuffOnAttackerTrigger                             \
     {                                                                        \
     public:                                                                  \
-        clazz(PlayerbotAI* botAI) : DebuffOnAttackerTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : DebuffOnAttackerTrigger(botAI, spell) {} \
         bool IsActive() override;                                            \
     }
 
@@ -127,28 +127,28 @@ protected:
     class clazz : public NeedCureTrigger                                     \
     {                                                                        \
     public:                                                                  \
-        clazz(PlayerbotAI* botAI) : NeedCureTrigger(botAI, spell, dispel) {} \
+        clazz(ShadowAI* botAI) : NeedCureTrigger(botAI, spell, dispel) {} \
     }
 
 #define CURE_PARTY_TRIGGER(clazz, spell, dispel)                                        \
     class clazz : public PartyMemberNeedCureTrigger                                     \
     {                                                                                   \
     public:                                                                             \
-        clazz(PlayerbotAI* botAI) : PartyMemberNeedCureTrigger(botAI, spell, dispel) {} \
+        clazz(ShadowAI* botAI) : PartyMemberNeedCureTrigger(botAI, spell, dispel) {} \
     }
 
 #define CAN_CAST_TRIGGER(clazz, spell)                                     \
     class clazz : public SpellCanBeCastTrigger                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : SpellCanBeCastTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : SpellCanBeCastTrigger(botAI, spell) {} \
     }
 
 #define CAN_CAST_TRIGGER_A(clazz, spell)                                   \
     class clazz : public SpellCanBeCastTrigger                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : SpellCanBeCastTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : SpellCanBeCastTrigger(botAI, spell) {} \
         bool IsActive() override;                                          \
     }
 
@@ -156,21 +156,21 @@ protected:
     class clazz : public SpellNoCooldownTrigger                             \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : SpellNoCooldownTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : SpellNoCooldownTrigger(botAI, spell) {} \
     }
 
 #define INTERRUPT_TRIGGER(clazz, spell)                                    \
     class clazz : public InterruptSpellTrigger                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : InterruptSpellTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : InterruptSpellTrigger(botAI, spell) {} \
     }
 
 #define INTERRUPT_TRIGGER_A(clazz, spell)                                  \
     class clazz : public InterruptSpellTrigger                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : InterruptSpellTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : InterruptSpellTrigger(botAI, spell) {} \
         bool IsActive() override;                                          \
     }
 
@@ -178,14 +178,14 @@ protected:
     class clazz : public HasAuraTrigger                             \
     {                                                               \
     public:                                                         \
-        clazz(PlayerbotAI* botAI) : HasAuraTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : HasAuraTrigger(botAI, spell) {} \
     }
 
 #define HAS_AURA_TRIGGER_A(clazz, spell)                            \
     class clazz : public HasAuraTrigger                             \
     {                                                               \
     public:                                                         \
-        clazz(PlayerbotAI* botAI) : HasAuraTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : HasAuraTrigger(botAI, spell) {} \
         bool IsActive() override;                                   \
     }
 
@@ -193,14 +193,14 @@ protected:
     class clazz : public SnareTargetTrigger                             \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : SnareTargetTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : SnareTargetTrigger(botAI, spell) {} \
     }
 
 #define SNARE_TRIGGER_A(clazz, spell)                                   \
     class clazz : public SnareTargetTrigger                             \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : SnareTargetTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : SnareTargetTrigger(botAI, spell) {} \
         bool IsActive() override;                                       \
     }
 
@@ -208,28 +208,28 @@ protected:
     class clazz : public ProtectPartyMemberTrigger                      \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : ProtectPartyMemberTrigger(botAI) {} \
+        clazz(ShadowAI* botAI) : ProtectPartyMemberTrigger(botAI) {} \
     }
 
 #define DEFLECT_TRIGGER(clazz, spell)                                    \
     class clazz : public DeflectSpellTrigger                             \
     {                                                                    \
     public:                                                              \
-        clazz(PlayerbotAI* botAI) : DeflectSpellTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : DeflectSpellTrigger(botAI, spell) {} \
     }
 
 #define BOOST_TRIGGER(clazz, spell)                               \
     class clazz : public BoostTrigger                             \
     {                                                             \
     public:                                                       \
-        clazz(PlayerbotAI* botAI) : BoostTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BoostTrigger(botAI, spell) {} \
     }
 
 #define BOOST_TRIGGER_A(clazz, spell)                             \
     class clazz : public BoostTrigger                             \
     {                                                             \
     public:                                                       \
-        clazz(PlayerbotAI* botAI) : BoostTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BoostTrigger(botAI, spell) {} \
         bool IsActive() override;                                 \
     }
 
@@ -237,14 +237,14 @@ protected:
     class clazz : public InterruptEnemyHealerTrigger                             \
     {                                                                            \
     public:                                                                      \
-        clazz(PlayerbotAI* botAI) : InterruptEnemyHealerTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : InterruptEnemyHealerTrigger(botAI, spell) {} \
     }
 
 #define INTERRUPT_HEALER_TRIGGER_A(clazz, spell)                                 \
     class clazz : public InterruptEnemyHealerTrigger                             \
     {                                                                            \
     public:                                                                      \
-        clazz(PlayerbotAI* botAI) : InterruptEnemyHealerTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : InterruptEnemyHealerTrigger(botAI, spell) {} \
         bool IsActive() override;                                                \
     }
 
@@ -252,7 +252,7 @@ protected:
     class clazz : public HasCcTargetTrigger                             \
     {                                                                   \
     public:                                                             \
-        clazz(PlayerbotAI* botAI) : HasCcTargetTrigger(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : HasCcTargetTrigger(botAI, spell) {} \
     }
 
 //
@@ -263,14 +263,14 @@ protected:
     class clazz : public CastMeleeSpellAction                             \
     {                                                                     \
     public:                                                               \
-        clazz(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastMeleeSpellAction(botAI, spell) {} \
     }
 
 #define MELEE_ACTION_U(clazz, spell, useful)                              \
     class clazz : public CastMeleeSpellAction                             \
     {                                                                     \
     public:                                                               \
-        clazz(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastMeleeSpellAction(botAI, spell) {} \
         bool isUseful() override { return useful; }                       \
     }
 
@@ -278,14 +278,14 @@ protected:
     class clazz : public CastSpellAction                             \
     {                                                                \
     public:                                                          \
-        clazz(PlayerbotAI* botAI) : CastSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastSpellAction(botAI, spell) {} \
     }
 
 #define SPELL_ACTION_U(clazz, spell, useful)                         \
     class clazz : public CastSpellAction                             \
     {                                                                \
     public:                                                          \
-        clazz(PlayerbotAI* botAI) : CastSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastSpellAction(botAI, spell) {} \
         bool isUseful() override { return useful; }                  \
     }
 
@@ -293,14 +293,14 @@ protected:
     class clazz : public CastHealingSpellAction                             \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : CastHealingSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastHealingSpellAction(botAI, spell) {} \
     }
 
 #define HEAL_ACTION_U(clazz, spell, useful)                                 \
     class clazz : public CastHealingSpellAction                             \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : CastHealingSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastHealingSpellAction(botAI, spell) {} \
         bool isUseful() override { return useful; }                         \
     }
 
@@ -308,28 +308,28 @@ protected:
     class clazz : public HealPartyMemberAction                                                        \
     {                                                                                                 \
     public:                                                                                           \
-        clazz(PlayerbotAI* botAI) : HealPartyMemberAction(botAI, spell, estAmount, manaEfficiency) {} \
+        clazz(ShadowAI* botAI) : HealPartyMemberAction(botAI, spell, estAmount, manaEfficiency) {} \
     }
 
 #define AOE_HEAL_ACTION(clazz, spell, estAmount, manaEfficiency)            \
     class clazz : public CastAoeHealSpellAction                             \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : CastAoeHealSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastAoeHealSpellAction(botAI, spell) {} \
     }
 
 #define BUFF_ACTION(clazz, spell)                                        \
     class clazz : public CastBuffSpellAction                             \
     {                                                                    \
     public:                                                              \
-        clazz(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastBuffSpellAction(botAI, spell) {} \
     }
 
 #define BUFF_ACTION_U(clazz, spell, useful)                              \
     class clazz : public CastBuffSpellAction                             \
     {                                                                    \
     public:                                                              \
-        clazz(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastBuffSpellAction(botAI, spell) {} \
         bool isUseful() override { return useful; }                      \
     }
 
@@ -337,49 +337,49 @@ protected:
     class clazz : public BuffOnPartyAction                             \
     {                                                                  \
     public:                                                            \
-        clazz(PlayerbotAI* botAI) : BuffOnPartyAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : BuffOnPartyAction(botAI, spell) {} \
     }
 
 #define CURE_ACTION(clazz, spell)                                        \
     class clazz : public CastCureSpellAction                             \
     {                                                                    \
     public:                                                              \
-        clazz(PlayerbotAI* botAI) : CastCureSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastCureSpellAction(botAI, spell) {} \
     }
 
 #define CURE_PARTY_ACTION(clazz, spell, dispel)                                    \
     class clazz : public CurePartyMemberAction                                     \
     {                                                                              \
     public:                                                                        \
-        clazz(PlayerbotAI* botAI) : CurePartyMemberAction(botAI, spell, dispel) {} \
+        clazz(ShadowAI* botAI) : CurePartyMemberAction(botAI, spell, dispel) {} \
     }
 
 #define RESS_ACTION(clazz, spell)                                               \
     class clazz : public ResurrectPartyMemberAction                             \
     {                                                                           \
     public:                                                                     \
-        clazz(PlayerbotAI* botAI) : ResurrectPartyMemberAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : ResurrectPartyMemberAction(botAI, spell) {} \
     }
 
 #define DEBUFF_ACTION(clazz, spell)                                        \
     class clazz : public CastDebuffSpellAction                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastDebuffSpellAction(botAI, spell) {} \
     }
 
 #define DEBUFF_CHECKISOWNER_ACTION(clazz, spell)                                 \
     class clazz : public CastDebuffSpellAction                                   \
     {                                                                            \
     public:                                                                      \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, spell, true) {} \
+        clazz(ShadowAI* botAI) : CastDebuffSpellAction(botAI, spell, true) {} \
     }
 
 #define DEBUFF_ACTION_U(clazz, spell, useful)                              \
     class clazz : public CastDebuffSpellAction                             \
     {                                                                      \
     public:                                                                \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastDebuffSpellAction(botAI, spell) {} \
         bool isUseful() override { return useful; }                        \
     }
 
@@ -387,28 +387,28 @@ protected:
     class clazz : public CastDebuffSpellAction                                                \
     {                                                                                         \
     public:                                                                                   \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, spell) { range = distance; } \
+        clazz(ShadowAI* botAI) : CastDebuffSpellAction(botAI, spell) { range = distance; } \
     }
 
 #define DEBUFF_ENEMY_ACTION(clazz, spell)                                            \
     class clazz : public CastDebuffSpellOnAttackerAction                             \
     {                                                                                \
     public:                                                                          \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellOnAttackerAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastDebuffSpellOnAttackerAction(botAI, spell) {} \
     }
 
 #define REACH_ACTION(clazz, spell, range)                                              \
     class clazz : public CastReachTargetSpellAction                                    \
     {                                                                                  \
     public:                                                                            \
-        clazz(PlayerbotAI* botAI) : CastReachTargetSpellAction(botAI, spell, range) {} \
+        clazz(ShadowAI* botAI) : CastReachTargetSpellAction(botAI, spell, range) {} \
     }
 
 #define REACH_ACTION_U(clazz, spell, range, useful)                                    \
     class clazz : public CastReachTargetSpellAction                                    \
     {                                                                                  \
     public:                                                                            \
-        clazz(PlayerbotAI* botAI) : CastReachTargetSpellAction(botAI, spell, range) {} \
+        clazz(ShadowAI* botAI) : CastReachTargetSpellAction(botAI, spell, range) {} \
         bool isUseful() override { return useful; }                                    \
     }
 
@@ -416,28 +416,28 @@ protected:
     class clazz : public CastSpellOnEnemyHealerAction                             \
     {                                                                             \
     public:                                                                       \
-        clazz(PlayerbotAI* botAI) : CastSpellOnEnemyHealerAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastSpellOnEnemyHealerAction(botAI, spell) {} \
     }
 
 #define SNARE_ACTION(clazz, spell)                                        \
     class clazz : public CastSnareSpellAction                             \
     {                                                                     \
     public:                                                               \
-        clazz(PlayerbotAI* botAI) : CastSnareSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastSnareSpellAction(botAI, spell) {} \
     }
 
 #define CC_ACTION(clazz, spell)                                                  \
     class clazz : public CastCrowdControlSpellAction                             \
     {                                                                            \
     public:                                                                      \
-        clazz(PlayerbotAI* botAI) : CastCrowdControlSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastCrowdControlSpellAction(botAI, spell) {} \
     }
 
 #define PROTECT_ACTION(clazz, spell)                                        \
     class clazz : public CastProtectSpellAction                             \
     {                                                                       \
     public:                                                                 \
-        clazz(PlayerbotAI* botAI) : CastProtectSpellAction(botAI, spell) {} \
+        clazz(ShadowAI* botAI) : CastProtectSpellAction(botAI, spell) {} \
     }
 
 #define END_RANGED_SPELL_ACTION() \
@@ -448,7 +448,7 @@ protected:
     class clazz : public CastSpellAction \
     {                                    \
     public:                              \
-        clazz(PlayerbotAI* botAI) : CastSpellAction(botAI, name) {}
+        clazz(ShadowAI* botAI) : CastSpellAction(botAI, name) {}
 
 #define END_SPELL_ACTION() \
     }                      \
@@ -458,19 +458,19 @@ protected:
     class clazz : public CastDebuffSpellAction \
     {                                          \
     public:                                    \
-        clazz(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, name) {}
+        clazz(ShadowAI* botAI) : CastDebuffSpellAction(botAI, name) {}
 
 #define BEGIN_RANGED_SPELL_ACTION(clazz, name) \
     class clazz : public CastSpellAction       \
     {                                          \
     public:                                    \
-        clazz(PlayerbotAI* botAI) : CastSpellAction(botAI, name) {}
+        clazz(ShadowAI* botAI) : CastSpellAction(botAI, name) {}
 
 #define BEGIN_MELEE_SPELL_ACTION(clazz, name) \
     class clazz : public CastMeleeSpellAction \
     {                                         \
     public:                                   \
-        clazz(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, name) {}
+        clazz(ShadowAI* botAI) : CastMeleeSpellAction(botAI, name) {}
 
 #define END_RANGED_SPELL_ACTION() \
     }                             \
@@ -480,7 +480,7 @@ protected:
     class clazz : public BuffOnPartyAction      \
     {                                           \
     public:                                     \
-        clazz(PlayerbotAI* botAI) : BuffOnPartyAction(botAI, name) {}
+        clazz(ShadowAI* botAI) : BuffOnPartyAction(botAI, name) {}
 
 //
 // Action node
@@ -488,7 +488,7 @@ protected:
 
 // node_name , action, prerequisite
 #define ACTION_NODE_P(name, spell, pre)                                                                       \
-    static ActionNode* name([[maybe_unused]] PlayerbotAI* botAI)                                                               \
+    static ActionNode* name([[maybe_unused]] ShadowAI* botAI)                                                               \
     {                                                                                                         \
         return new ActionNode(spell, /*P*/ NextAction::array(0, new NextAction(pre), nullptr), /*A*/ nullptr, \
                               /*C*/ nullptr);                                                                 \
@@ -496,7 +496,7 @@ protected:
 
 // node_name , action, alternative
 #define ACTION_NODE_A(name, spell, alt)                                                                       \
-    static ActionNode* name([[maybe_unused]] PlayerbotAI* botAI)                                                               \
+    static ActionNode* name([[maybe_unused]] ShadowAI* botAI)                                                               \
     {                                                                                                         \
         return new ActionNode(spell, /*P*/ nullptr, /*A*/ NextAction::array(0, new NextAction(alt), nullptr), \
                               /*C*/ nullptr);                                                                 \
@@ -504,7 +504,7 @@ protected:
 
 // node_name , action, continuer
 #define ACTION_NODE_C(name, spell, con)                                                  \
-    static ActionNode* name([[maybe_unused]] PlayerbotAI* botAI)                                          \
+    static ActionNode* name([[maybe_unused]] ShadowAI* botAI)                                          \
     {                                                                                    \
         return new ActionNode(spell, /*P*/ nullptr, /*A*/ nullptr,                       \
                               /*C*/ NextAction::array(0, new NextAction(con), nullptr)); \

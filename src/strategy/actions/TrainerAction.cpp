@@ -7,12 +7,12 @@
 
 #include "BudgetValues.h"
 #include "Event.h"
-#include "PlayerbotFactory.h"
-#include "Playerbots.h"
+#include "ShadowFactory.h"
+#include "Shadows.h"
 
 void TrainerAction::Learn(uint32 cost, TrainerSpell const* tSpell, std::ostringstream& msg)
 {
-    if (sPlayerbotAIConfig->autoTrainSpells != "free" && !botAI->HasCheat(BotCheatMask::gold))
+    if (sShadowAIConfig->autoTrainSpells != "free" && !botAI->HasCheat(BotCheatMask::gold))
     {
         if (AI_VALUE2(uint32, "free money for", (uint32)NeedMoneyFor::spells) < cost)
         {
@@ -131,8 +131,8 @@ bool TrainerAction::Execute(Event event)
     if (spell)
         spells.insert(spell);
 
-    if (text.find("learn") != std::string::npos || sRandomPlayerbotMgr->IsRandomBot(bot) ||
-        (sPlayerbotAIConfig->autoTrainSpells != "no" &&
+    if (text.find("learn") != std::string::npos || sRandomShadowMgr->IsRandomBot(bot) ||
+        (sShadowAIConfig->autoTrainSpells != "no" &&
          (creature->GetCreatureTemplate()->trainer_type != TRAINER_TYPE_TRADESKILLS ||
           !botAI->HasActivePlayerMaster())))  // Todo rewrite to only exclude start primary profession skills and make
                                               // config dependent.
@@ -162,14 +162,14 @@ void TrainerAction::TellFooter(uint32 totalCost)
 
 bool MaintenanceAction::Execute(Event event)
 {
-    if (!sPlayerbotAIConfig->maintenanceCommand)
+    if (!sShadowAIConfig->maintenanceCommand)
     {
         botAI->TellError("maintenance command is not allowed, please check the configuration.");
         return false;
     }
 
     botAI->TellMaster("I'm maintaining");
-    PlayerbotFactory factory(bot, bot->GetLevel());
+    ShadowFactory factory(bot, bot->GetLevel());
 
     if (!botAI->IsAlt())
     {    
@@ -191,66 +191,66 @@ bool MaintenanceAction::Execute(Event event)
         factory.InitMounts();
         factory.InitGlyphs(false);
         factory.InitKeyring();
-        if (bot->GetLevel() >= sPlayerbotAIConfig->minEnchantingBotLevel)
+        if (bot->GetLevel() >= sShadowAIConfig->minEnchantingBotLevel)
             factory.ApplyEnchantAndGemsNew();
     }
     else 
     {
-        if (sPlayerbotAIConfig->altMaintenanceAttunementQs)
+        if (sShadowAIConfig->altMaintenanceAttunementQs)
             factory.InitAttunementQuests();
 
-        if (sPlayerbotAIConfig->altMaintenanceBags)
+        if (sShadowAIConfig->altMaintenanceBags)
             factory.InitBags(false);
 
-        if (sPlayerbotAIConfig->altMaintenanceAmmo)
+        if (sShadowAIConfig->altMaintenanceAmmo)
             factory.InitAmmo();
 
-        if (sPlayerbotAIConfig->altMaintenanceFood)
+        if (sShadowAIConfig->altMaintenanceFood)
             factory.InitFood();
 
-        if (sPlayerbotAIConfig->altMaintenanceReagents)
+        if (sShadowAIConfig->altMaintenanceReagents)
             factory.InitReagents();
 
-        if (sPlayerbotAIConfig->altMaintenanceConsumables)
+        if (sShadowAIConfig->altMaintenanceConsumables)
             factory.InitConsumables();
 
-        if (sPlayerbotAIConfig->altMaintenancePotions)
+        if (sShadowAIConfig->altMaintenancePotions)
             factory.InitPotions();
 
-        if (sPlayerbotAIConfig->altMaintenanceTalentTree)
+        if (sShadowAIConfig->altMaintenanceTalentTree)
             factory.InitTalentsTree(true);
 
-        if (sPlayerbotAIConfig->altMaintenancePet)
+        if (sShadowAIConfig->altMaintenancePet)
             factory.InitPet();
 
-        if (sPlayerbotAIConfig->altMaintenancePetTalents)
+        if (sShadowAIConfig->altMaintenancePetTalents)
             factory.InitPetTalents();
 
-        if (sPlayerbotAIConfig->altMaintenanceClassSpells)
+        if (sShadowAIConfig->altMaintenanceClassSpells)
             factory.InitClassSpells();
 
-        if (sPlayerbotAIConfig->altMaintenanceAvailableSpells)
+        if (sShadowAIConfig->altMaintenanceAvailableSpells)
             factory.InitAvailableSpells();
 
-        if (sPlayerbotAIConfig->altMaintenanceSkills)
+        if (sShadowAIConfig->altMaintenanceSkills)
             factory.InitSkills();
 
-        if (sPlayerbotAIConfig->altMaintenanceReputation)
+        if (sShadowAIConfig->altMaintenanceReputation)
             factory.InitReputation();
 
-        if (sPlayerbotAIConfig->altMaintenanceSpecialSpells)
+        if (sShadowAIConfig->altMaintenanceSpecialSpells)
             factory.InitSpecialSpells();
 
-        if (sPlayerbotAIConfig->altMaintenanceMounts)
+        if (sShadowAIConfig->altMaintenanceMounts)
             factory.InitMounts();
 
-        if (sPlayerbotAIConfig->altMaintenanceGlyphs)
+        if (sShadowAIConfig->altMaintenanceGlyphs)
             factory.InitGlyphs(false);
 
-        if (sPlayerbotAIConfig->altMaintenanceKeyring)
+        if (sShadowAIConfig->altMaintenanceKeyring)
             factory.InitKeyring();
 
-        if (sPlayerbotAIConfig->altMaintenanceGemsEnchants && bot->GetLevel() >= sPlayerbotAIConfig->minEnchantingBotLevel)
+        if (sShadowAIConfig->altMaintenanceGemsEnchants && bot->GetLevel() >= sShadowAIConfig->minEnchantingBotLevel)
             factory.ApplyEnchantAndGemsNew();
     }
 
@@ -272,28 +272,28 @@ bool RemoveGlyphAction::Execute(Event event)
 
 bool AutoGearAction::Execute(Event event)
 {
-    if (!sPlayerbotAIConfig->autoGearCommand)
+    if (!sShadowAIConfig->autoGearCommand)
     {
         botAI->TellError("autogear command is not allowed, please check the configuration.");
         return false;
     }
 
-    if (!sPlayerbotAIConfig->autoGearCommandAltBots &&
-        !sPlayerbotAIConfig->IsInRandomAccountList(bot->GetSession()->GetAccountId()))
+    if (!sShadowAIConfig->autoGearCommandAltBots &&
+        !sShadowAIConfig->IsInRandomAccountList(bot->GetSession()->GetAccountId()))
     {
         botAI->TellError("You cannot use autogear on alt bots.");
         return false;
     }
 
     botAI->TellMaster("I'm auto gearing");
-    uint32 gs = sPlayerbotAIConfig->autoGearScoreLimit == 0
+    uint32 gs = sShadowAIConfig->autoGearScoreLimit == 0
                     ? 0
-                    : PlayerbotFactory::CalcMixedGearScore(sPlayerbotAIConfig->autoGearScoreLimit,
-                                                           sPlayerbotAIConfig->autoGearQualityLimit);
-    PlayerbotFactory factory(bot, bot->GetLevel(), sPlayerbotAIConfig->autoGearQualityLimit, gs);
+                    : ShadowFactory::CalcMixedGearScore(sShadowAIConfig->autoGearScoreLimit,
+                                                           sShadowAIConfig->autoGearQualityLimit);
+    ShadowFactory factory(bot, bot->GetLevel(), sShadowAIConfig->autoGearQualityLimit, gs);
     factory.InitEquipment(true);
     factory.InitAmmo();
-    if (bot->GetLevel() >= sPlayerbotAIConfig->minEnchantingBotLevel)
+    if (bot->GetLevel() >= sShadowAIConfig->minEnchantingBotLevel)
     {
         factory.ApplyEnchantAndGemsNew();
     }

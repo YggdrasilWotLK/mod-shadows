@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ARROW_H
-#define _PLAYERBOT_ARROW_H
+#ifndef _SHADOW_ARROW_H
+#define _SHADOW_ARROW_H
 
 #include "Formations.h"
 #include "TravelMgr.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 class UnitPosition
 {
@@ -101,7 +101,7 @@ private:
 class ArrowFormation : public MoveAheadFormation
 {
 public:
-    ArrowFormation(PlayerbotAI* botAI)
+    ArrowFormation(ShadowAI* botAI)
         : MoveAheadFormation(botAI, "arrow"), built(false), masterUnit(nullptr), botUnit(nullptr)
     {
     }

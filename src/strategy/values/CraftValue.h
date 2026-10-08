@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CRAFTVALUE_H
-#define _PLAYERBOT_CRAFTVALUE_H
+#ifndef _SHADOW_CRAFTVALUE_H
+#define _SHADOW_CRAFTVALUE_H
 
 #include <map>
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CraftData
 {
@@ -63,7 +63,7 @@ public:
 class CraftValue : public ManualSetValue<CraftData&>
 {
 public:
-    CraftValue(PlayerbotAI* botAI, std::string const name = "craft") : ManualSetValue<CraftData&>(botAI, data, name) {}
+    CraftValue(ShadowAI* botAI, std::string const name = "craft") : ManualSetValue<CraftData&>(botAI, data, name) {}
 
 private:
     CraftData data;

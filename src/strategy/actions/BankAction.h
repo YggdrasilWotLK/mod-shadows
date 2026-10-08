@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BANKACTION_H
-#define _PLAYERBOT_BANKACTION_H
+#ifndef _SHADOW_BANKACTION_H
+#define _SHADOW_BANKACTION_H
 
 #include "InventoryAction.h"
 
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 
 class BankAction : public InventoryAction
 {
 public:
-    BankAction(PlayerbotAI* botAI) : InventoryAction(botAI, "bank") {}
+    BankAction(ShadowAI* botAI) : InventoryAction(botAI, "bank") {}
 
     bool Execute(Event event) override;
 

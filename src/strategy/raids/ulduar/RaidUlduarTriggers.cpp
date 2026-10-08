@@ -3,8 +3,8 @@
 #include "EventMap.h"
 #include "GameObject.h"
 #include "Object.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "RaidUlduarBossHelper.h"
 #include "RaidUlduarScripts.h"
 #include "ScriptedCreature.h"
@@ -1605,7 +1605,7 @@ bool VezaxCheatTrigger::IsActive()
         return false;
     }
 
-    return AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->lowMana;
+    return AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->lowMana;
 }
 
 bool VezaxShadowCrashTrigger::IsActive()

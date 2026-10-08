@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool TravelAction::Execute(Event event)
 {
@@ -21,9 +21,9 @@ bool TravelAction::Execute(Event event)
 
     Unit* newTarget = nullptr;
     std::list<Unit*> targets;
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, sPlayerbotAIConfig->sightDistance * 2);
+    Acore::AnyUnitInObjectRangeCheck u_check(bot, sShadowAIConfig->sightDistance * 2);
     Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
-    Cell::VisitObjects(bot, searcher, sPlayerbotAIConfig->sightDistance);
+    Cell::VisitObjects(bot, searcher, sShadowAIConfig->sightDistance);
 
     for (Unit* unit : targets)
     {
@@ -67,7 +67,7 @@ bool MoveToDarkPortalAction::Execute(Event event)
         if (bot->GetGroup()->GetLeaderGUID() != bot->GetGUID() && botAI)
         {
             Player* groupMaster = botAI->GetGroupMaster();
-            if (groupMaster && !GET_PLAYERBOT_AI(groupMaster))
+            if (groupMaster && !GET_SHADOW_AI(groupMaster))
                 return false;
         }
     }
@@ -82,7 +82,7 @@ bool MoveToDarkPortalAction::Execute(Event event)
                 if (bot->GetTeamId() == TEAM_ALLIANCE)
                 {
                     Quest const* quest = sObjectMgr->GetQuestTemplate(10119);
-                    CreatureData const* creatureData = sRandomPlayerbotMgr->GetCreatureDataByEntry(16841);
+                    CreatureData const* creatureData = sRandomShadowMgr->GetCreatureDataByEntry(16841);
                     if (quest && creatureData)
                     {
                         auto creatureBounds =
@@ -94,7 +94,7 @@ bool MoveToDarkPortalAction::Execute(Event event)
                 else
                 {
                     Quest const* quest = sObjectMgr->GetQuestTemplate(9407);
-                    CreatureData const* creatureData = sRandomPlayerbotMgr->GetCreatureDataByEntry(19254);
+                    CreatureData const* creatureData = sRandomShadowMgr->GetCreatureDataByEntry(19254);
                     if (quest && creatureData)
                     {
                         auto creatureBounds =
@@ -123,7 +123,7 @@ bool DarkPortalAzerothAction::Execute(Event event)
         WorldPacket packet(CMSG_AREATRIGGER);
         packet << 4354;
 
-        return GET_PLAYERBOT_AI(bot)->DoSpecificAction("reach area trigger", Event("travel action", packet));
+        return GET_SHADOW_AI(bot)->DoSpecificAction("reach area trigger", Event("travel action", packet));
     }
 
     return false;

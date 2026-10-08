@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTSCSTRATEGY_H
-#define _PLAYERBOT_RTSCSTRATEGY_H
+#ifndef _SHADOW_RTSCSTRATEGY_H
+#define _SHADOW_RTSCSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RTSCStrategy : public Strategy
 {
 public:
-    RTSCStrategy(PlayerbotAI* botAI);
+    RTSCStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "RTSC"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

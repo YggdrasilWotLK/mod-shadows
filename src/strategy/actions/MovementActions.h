@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MOVEMENTACTIONS_H
-#define _PLAYERBOT_MOVEMENTACTIONS_H
+#ifndef _SHADOW_MOVEMENTACTIONS_H
+#define _SHADOW_MOVEMENTACTIONS_H
 
 #include <cmath>
 
 #include "Action.h"
 #include "LastMovementValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 class WorldObject;
 class Position;
@@ -25,18 +25,18 @@ class Position;
 class MovementAction : public Action
 {
 public:
-    MovementAction(PlayerbotAI* botAI, std::string const name);
+    MovementAction(ShadowAI* botAI, std::string const name);
 
 protected:
     bool JumpTo(uint32 mapId, float x, float y, float z, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
-    bool MoveNear(uint32 mapId, float x, float y, float z, float distance = sPlayerbotAIConfig->contactDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
+    bool MoveNear(uint32 mapId, float x, float y, float z, float distance = sShadowAIConfig->contactDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
     bool MoveToLOS(WorldObject* target, bool ranged = false);
     bool MoveTo(uint32 mapId, float x, float y, float z, bool idle = false, bool react = false,
                 bool normal_only = false, bool exact_waypoint = false, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL, bool lessDelay = false, bool backwards = false);
     bool MoveTo(WorldObject* target, float distance = 0.0f, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
-    bool MoveNear(WorldObject* target, float distance = sPlayerbotAIConfig->contactDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
+    bool MoveNear(WorldObject* target, float distance = sShadowAIConfig->contactDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
     float GetFollowAngle();
-    bool Follow(Unit* target, float distance = sPlayerbotAIConfig->followDistance);
+    bool Follow(Unit* target, float distance = sShadowAIConfig->followDistance);
     bool Follow(Unit* target, float distance, float angle);
     bool ChaseTo(WorldObject* obj, float distance = 0.0f, float angle = 0.0f);
     bool ReachCombatTo(Unit* target, float distance = 0.0f);
@@ -51,10 +51,10 @@ protected:
     bool Flee(Unit* target);
     void ClearIdleState();
     void UpdateMovementState();
-    bool MoveAway(Unit* target, float distance = sPlayerbotAIConfig -> fleeDistance, bool backwards = false);
+    bool MoveAway(Unit* target, float distance = sShadowAIConfig -> fleeDistance, bool backwards = false);
     bool MoveFromGroup(float distance);
     bool Move(float angle, float distance);
-    bool MoveInside(uint32 mapId, float x, float y, float z, float distance = sPlayerbotAIConfig->followDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
+    bool MoveInside(uint32 mapId, float x, float y, float z, float distance = sShadowAIConfig->followDistance, MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
     void CreateWp(Player* wpOwner, float x, float y, float z, float o, uint32 entry, bool important = false);
     Position BestPositionForMeleeToFlee(Position pos, float radius);
     Position BestPositionForRangedToFlee(Position pos, float radius);
@@ -79,7 +79,7 @@ private:
 class FleeAction : public MovementAction
 {
 public:
-    FleeAction(PlayerbotAI* botAI, float distance = sPlayerbotAIConfig->spellDistance)
+    FleeAction(ShadowAI* botAI, float distance = sShadowAIConfig->spellDistance)
         : MovementAction(botAI, "flee"), distance(distance)
     {
     }
@@ -94,7 +94,7 @@ private:
 class FleeWithPetAction : public MovementAction
 {
 public:
-    FleeWithPetAction(PlayerbotAI* botAI) : MovementAction(botAI, "flee with pet") {}
+    FleeWithPetAction(ShadowAI* botAI) : MovementAction(botAI, "flee with pet") {}
 
     bool Execute(Event event) override;
 };
@@ -102,7 +102,7 @@ public:
 class AvoidAoeAction : public MovementAction
 {
 public:
-    AvoidAoeAction(PlayerbotAI* botAI, int moveInterval = 1000)
+    AvoidAoeAction(ShadowAI* botAI, int moveInterval = 1000)
         : MovementAction(botAI, "avoid aoe"), moveInterval(moveInterval)
     {
     }
@@ -123,7 +123,7 @@ protected:
 class CombatFormationMoveAction : public MovementAction
 {
 public:
-    CombatFormationMoveAction(PlayerbotAI* botAI, std::string name = "combat formation move", int moveInterval = 1000)
+    CombatFormationMoveAction(ShadowAI* botAI, std::string name = "combat formation move", int moveInterval = 1000)
         : MovementAction(botAI, name), moveInterval(moveInterval)
     {
     }
@@ -132,8 +132,8 @@ public:
     bool Execute(Event event) override;
 
 protected:
-    Position AverageGroupPos(float dis = sPlayerbotAIConfig->sightDistance, bool ranged = false, bool self = false);
-    Player* NearestGroupMember(float dis = sPlayerbotAIConfig->sightDistance);
+    Position AverageGroupPos(float dis = sShadowAIConfig->sightDistance, bool ranged = false, bool self = false);
+    Player* NearestGroupMember(float dis = sShadowAIConfig->sightDistance);
     float AverageGroupAngle(Unit* from, bool ranged = false, bool self = false);
     Position GetNearestPosition(const std::vector<Position>& positions);
     int lastMoveTimer = 0;
@@ -143,7 +143,7 @@ protected:
 class TankFaceAction : public CombatFormationMoveAction
 {
 public:
-    TankFaceAction(PlayerbotAI* botAI) : CombatFormationMoveAction(botAI, "tank face") {}
+    TankFaceAction(ShadowAI* botAI) : CombatFormationMoveAction(botAI, "tank face") {}
 
     bool Execute(Event event) override;
 };
@@ -154,7 +154,7 @@ class RearFlankAction : public MovementAction
 // 120 degree maximum angle leaves a 120 degree symmetrical cone at the tail end which is usually enough to avoid tail swipes.
 // Some dragons or mobs may have different danger zone angles, override if needed.
 public:
-    RearFlankAction(PlayerbotAI* botAI, float distance = 0.0f, float minAngle = ANGLE_90_DEG, float maxAngle = ANGLE_120_DEG)
+    RearFlankAction(ShadowAI* botAI, float distance = 0.0f, float minAngle = ANGLE_90_DEG, float maxAngle = ANGLE_120_DEG)
         : MovementAction(botAI, "rear flank")
         {
             this->distance = distance;
@@ -172,7 +172,7 @@ protected:
 class DisperseSetAction : public Action
 {
 public:
-    DisperseSetAction(PlayerbotAI* botAI, std::string const name = "disperse set") : Action(botAI, name) {}
+    DisperseSetAction(ShadowAI* botAI, std::string const name = "disperse set") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
     float DEFAULT_DISPERSE_DISTANCE_RANGED = 5.0f;
@@ -182,7 +182,7 @@ public:
 class RunAwayAction : public MovementAction
 {
 public:
-    RunAwayAction(PlayerbotAI* botAI) : MovementAction(botAI, "runaway") {}
+    RunAwayAction(ShadowAI* botAI) : MovementAction(botAI, "runaway") {}
 
     bool Execute(Event event) override;
 };
@@ -190,7 +190,7 @@ public:
 class MoveToLootAction : public MovementAction
 {
 public:
-    MoveToLootAction(PlayerbotAI* botAI) : MovementAction(botAI, "move to loot") {}
+    MoveToLootAction(ShadowAI* botAI) : MovementAction(botAI, "move to loot") {}
 
     bool Execute(Event event) override;
 };
@@ -198,7 +198,7 @@ public:
 class MoveOutOfEnemyContactAction : public MovementAction
 {
 public:
-    MoveOutOfEnemyContactAction(PlayerbotAI* botAI) : MovementAction(botAI, "move out of enemy contact") {}
+    MoveOutOfEnemyContactAction(ShadowAI* botAI) : MovementAction(botAI, "move out of enemy contact") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -207,7 +207,7 @@ public:
 class SetFacingTargetAction : public Action
 {
 public:
-    SetFacingTargetAction(PlayerbotAI* botAI) : Action(botAI, "set facing") {}
+    SetFacingTargetAction(ShadowAI* botAI) : Action(botAI, "set facing") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -217,7 +217,7 @@ public:
 class SetBehindTargetAction : public CombatFormationMoveAction
 {
 public:
-    SetBehindTargetAction(PlayerbotAI* botAI) : CombatFormationMoveAction(botAI, "set behind") {}
+    SetBehindTargetAction(ShadowAI* botAI) : CombatFormationMoveAction(botAI, "set behind") {}
 
     bool Execute(Event event) override;
 };
@@ -225,7 +225,7 @@ public:
 class MoveOutOfCollisionAction : public MovementAction
 {
 public:
-    MoveOutOfCollisionAction(PlayerbotAI* botAI) : MovementAction(botAI, "move out of collision") {}
+    MoveOutOfCollisionAction(ShadowAI* botAI) : MovementAction(botAI, "move out of collision") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -234,7 +234,7 @@ public:
 class MoveRandomAction : public MovementAction
 {
 public:
-    MoveRandomAction(PlayerbotAI* botAI) : MovementAction(botAI, "move random") {}
+    MoveRandomAction(ShadowAI* botAI) : MovementAction(botAI, "move random") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -243,7 +243,7 @@ public:
 class MoveInsideAction : public MovementAction
 {
 public:
-    MoveInsideAction(PlayerbotAI* ai, float x, float y, float distance = 5.0f) : MovementAction(ai, "move inside")
+    MoveInsideAction(ShadowAI* ai, float x, float y, float distance = 5.0f) : MovementAction(ai, "move inside")
     {
         this->x = x;
         this->y = y;
@@ -258,7 +258,7 @@ protected:
 class RotateAroundTheCenterPointAction : public MovementAction
 {
 public:
-    RotateAroundTheCenterPointAction(PlayerbotAI* ai, std::string name, float center_x, float center_y,
+    RotateAroundTheCenterPointAction(ShadowAI* ai, std::string name, float center_x, float center_y,
                                      float radius = 40.0f, uint32 intervals = 16, bool clockwise = true,
                                      float start_angle = 0)
         : MovementAction(ai, name)
@@ -289,7 +289,7 @@ protected:
 class MoveFromGroupAction : public MovementAction
 {
 public:
-    MoveFromGroupAction(PlayerbotAI* botAI, std::string const name = "move from group") : MovementAction(botAI, name) {}
+    MoveFromGroupAction(ShadowAI* botAI, std::string const name = "move from group") : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 };
@@ -297,7 +297,7 @@ public:
 class MoveAwayFromCreatureAction : public MovementAction
 {
 public:
-    MoveAwayFromCreatureAction(PlayerbotAI* botAI, std::string name, uint32 creatureId, float range, bool alive = true)
+    MoveAwayFromCreatureAction(ShadowAI* botAI, std::string name, uint32 creatureId, float range, bool alive = true)
         : MovementAction(botAI, name), creatureId(creatureId), range(range), alive(alive) {}
 
     bool Execute(Event event) override;
@@ -312,7 +312,7 @@ private:
 class MoveAwayFromPlayerWithDebuffAction : public MovementAction
 {
 public:
-    MoveAwayFromPlayerWithDebuffAction(PlayerbotAI* botAI, std::string name, uint32 spellId, float range)
+    MoveAwayFromPlayerWithDebuffAction(ShadowAI* botAI, std::string name, uint32 spellId, float range)
         : MovementAction(botAI, name), spellId(spellId), range(range) {}
 
     bool Execute(Event event) override;

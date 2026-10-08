@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GOACTION_H
-#define _PLAYERBOT_GOACTION_H
+#ifndef _SHADOW_GOACTION_H
+#define _SHADOW_GOACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class TravelDestination;
 class WorldPosition;
 
 class GoAction : public MovementAction
 {
 public:
-    GoAction(PlayerbotAI* botAI) : MovementAction(botAI, "Go") {}
+    GoAction(ShadowAI* botAI) : MovementAction(botAI, "Go") {}
 
     bool Execute(Event event) override;
 };

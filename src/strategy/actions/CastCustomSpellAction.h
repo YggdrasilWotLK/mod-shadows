@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CASTCUSTOMSPELLACTION_H
-#define _PLAYERBOT_CASTCUSTOMSPELLACTION_H
+#ifndef _SHADOW_CASTCUSTOMSPELLACTION_H
+#define _SHADOW_CASTCUSTOMSPELLACTION_H
 
 #include "ListSpellsAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class SpellInfo;
 class WorldObject;
 
 class CastCustomSpellAction : public InventoryAction
 {
 public:
-    CastCustomSpellAction(PlayerbotAI* botAI, std::string const name = "cast custom spell")
+    CastCustomSpellAction(ShadowAI* botAI, std::string const name = "cast custom spell")
         : InventoryAction(botAI, name)
     {
     }
@@ -30,7 +30,7 @@ protected:
 class CastCustomNcSpellAction : public CastCustomSpellAction
 {
 public:
-    CastCustomNcSpellAction(PlayerbotAI* botAI, std::string const name = "cast custom nc spell")
+    CastCustomNcSpellAction(ShadowAI* botAI, std::string const name = "cast custom nc spell")
         : CastCustomSpellAction(botAI, name)
     {
     }
@@ -42,7 +42,7 @@ public:
 class CastRandomSpellAction : public ListSpellsAction
 {
 public:
-    CastRandomSpellAction(PlayerbotAI* botAI, std::string const name = "cast random spell")
+    CastRandomSpellAction(ShadowAI* botAI, std::string const name = "cast random spell")
         : ListSpellsAction(botAI, name)
     {
     }
@@ -60,7 +60,7 @@ protected:
 class CraftRandomItemAction : public CastRandomSpellAction
 {
 public:
-    CraftRandomItemAction(PlayerbotAI* botAI) : CastRandomSpellAction(botAI, "craft random item") { MultiCast = true; }
+    CraftRandomItemAction(ShadowAI* botAI) : CastRandomSpellAction(botAI, "craft random item") { MultiCast = true; }
 
     bool AcceptSpell(SpellInfo const* spellInfo) override;
     uint32 GetSpellPriority(SpellInfo const* spellInfo) override;
@@ -69,7 +69,7 @@ public:
 class DisEnchantRandomItemAction : public CastCustomSpellAction
 {
 public:
-    DisEnchantRandomItemAction(PlayerbotAI* botAI) : CastCustomSpellAction(botAI, "disenchant random item") {}
+    DisEnchantRandomItemAction(ShadowAI* botAI) : CastCustomSpellAction(botAI, "disenchant random item") {}
 
     bool isUseful() override;
     bool Execute(Event event) override;
@@ -78,7 +78,7 @@ public:
 class EnchantRandomItemAction : public CastRandomSpellAction
 {
 public:
-    EnchantRandomItemAction(PlayerbotAI* botAI) : CastRandomSpellAction(botAI, "enchant random item") {}
+    EnchantRandomItemAction(ShadowAI* botAI) : CastRandomSpellAction(botAI, "enchant random item") {}
 
     bool isUseful() override;
     bool AcceptSpell(SpellInfo const* spellInfo) override;

@@ -9,8 +9,8 @@
 #include "Event.h"
 #include "LastMovementValue.h"
 #include "LootObjectStack.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 #include "Unit.h"
@@ -84,8 +84,8 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
         return false;
     }
 
-   if ((sPlayerbotAIConfig->IsInPvpProhibitedZone(bot->GetZoneId()) ||
-     sPlayerbotAIConfig->IsInPvpProhibitedArea(bot->GetAreaId()))
+   if ((sShadowAIConfig->IsInPvpProhibitedZone(bot->GetZoneId()) ||
+     sShadowAIConfig->IsInPvpProhibitedArea(bot->GetAreaId()))
         && (target->IsPlayer() || target->IsPet()))
     {
         if (verbose)

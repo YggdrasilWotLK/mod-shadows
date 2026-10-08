@@ -5,7 +5,7 @@
 
 #include "NewPlayerNearbyValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 ObjectGuid NewPlayerNearbyValue::Calculate()
 {

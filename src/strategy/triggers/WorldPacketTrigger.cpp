@@ -5,7 +5,7 @@
 
 #include "WorldPacketTrigger.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void WorldPacketTrigger::ExternalEvent(WorldPacket& revData, Player* eventOwner)
 {

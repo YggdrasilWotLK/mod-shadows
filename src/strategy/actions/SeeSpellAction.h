@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SEESPELLACTION_H
-#define _PLAYERBOT_SEESPELLACTION_H
+#ifndef _SHADOW_SEESPELLACTION_H
+#define _SHADOW_SEESPELLACTION_H
 
 #include "MovementActions.h"
 
 class Creature;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class WorldPosition;
 
 class SeeSpellAction : public MovementAction
 {
 public:
-    SeeSpellAction(PlayerbotAI* botAI, std::string const name = "see spell") : MovementAction(botAI, name) {}
+    SeeSpellAction(ShadowAI* botAI, std::string const name = "see spell") : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 

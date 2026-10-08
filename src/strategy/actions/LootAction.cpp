@@ -12,8 +12,8 @@
 #include "ItemUsageValue.h"
 #include "LootObjectStack.h"
 #include "LootStrategyValue.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "GuildMgr.h"
 #include "BroadcastHelper.h"
@@ -25,7 +25,7 @@
 static std::unordered_map<ObjectGuid, time_t> fullBagGatherAttempts;
 static const uint32 FULL_BAG_GATHER_BOUNCE_SECONDS = 60;
 
-static bool GatherThrottledByFullBags(PlayerbotAI* botAI, uint8 bagSpace, bool recordAttempt)
+static bool GatherThrottledByFullBags(ShadowAI* botAI, uint8 bagSpace, bool recordAttempt)
 {
     Player* bot = botAI ? botAI->GetBot() : nullptr;
     if (!bot || bagSpace < 100)
@@ -77,7 +77,7 @@ bool LootAction::Execute(Event /*event*/)
 
     LootObject prevLoot = AI_VALUE(LootObject, "loot target");
     LootObject const& lootObject =
-        AI_VALUE(LootObjectStack*, "available loot")->GetLoot(sPlayerbotAIConfig->lootDistance);
+        AI_VALUE(LootObjectStack*, "available loot")->GetLoot(sShadowAIConfig->lootDistance);
 
     if (!prevLoot.IsEmpty() && prevLoot.guid != lootObject.guid)
     {
@@ -89,7 +89,7 @@ bool LootAction::Execute(Event /*event*/)
 
     // Provide a system to check if the game object id is disallowed in the user configurable list or not.
     // Check if the game object id is disallowed in the user configurable list or not.
-    if (sPlayerbotAIConfig->disallowedGameObjects.find(lootObject.guid.GetEntry()) != sPlayerbotAIConfig->disallowedGameObjects.end())
+    if (sShadowAIConfig->disallowedGameObjects.find(lootObject.guid.GetEntry()) != sShadowAIConfig->disallowedGameObjects.end())
     {
         return false;  // Game object ID is disallowed, so do not proceed
     }
@@ -102,7 +102,7 @@ bool LootAction::Execute(Event /*event*/)
 
 bool LootAction::isUseful()
 {
-    return sPlayerbotAIConfig->freeMethodLoot || !bot->GetGroup() || bot->GetGroup()->GetLootMethod() != FREE_FOR_ALL;
+    return sShadowAIConfig->freeMethodLoot || !bot->GetGroup() || bot->GetGroup()->GetLootMethod() != FREE_FOR_ALL;
 }
 
 enum ProfessionSpells
@@ -150,7 +150,7 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
     if (bot->IsMounted())
     {
         botAI->DismountBotForFall();
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->lootDelay); // Small delay to avoid animation issues
+        botAI->SetNextCheckDelay(sShadowAIConfig->lootDelay); // Small delay to avoid animation issues
     }
 
     if (creature && creature->HasFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE))
@@ -159,7 +159,7 @@ bool OpenLootAction::DoLoot(LootObject& lootObject)
         *packet << lootObject.guid;
         bot->GetSession()->QueuePacket(packet);
         // bot->GetSession()->HandleLootOpcode(packet);
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->lootDelay);
+        botAI->SetNextCheckDelay(sShadowAIConfig->lootDelay);
         return true;
     }
 
@@ -257,7 +257,7 @@ uint32 OpenLootAction::GetOpeningSpell(LootObject& lootObject, GameObject* go)
             return spellId;
     }
 
-    return sPlayerbotAIConfig->openGoSpell;
+    return sShadowAIConfig->openGoSpell;
 }
 
 bool OpenLootAction::CanOpenLock(LootObject& /*lootObject*/, SpellInfo const* spellInfo, GameObject* go)
@@ -349,7 +349,7 @@ bool StoreLootAction::AuctionItem(uint32 itemId)
 
     AuctionHouseObject* auctionHouse = sAuctionMgr->GetAuctionsMap(ahEntry);
 
-    uint32 price = oldItem->GetCount() * proto->BuyPrice * sRandomPlayerbotMgr->GetBuyMultiplier(bot);
+    uint32 price = oldItem->GetCount() * proto->BuyPrice * sRandomShadowMgr->GetBuyMultiplier(bot);
 
 uint32 stackCount = urand(1, proto->GetMaxStackSize());
     if (!price || !stackCount)
@@ -393,7 +393,7 @@ uint32 stackCount = urand(1, proto->GetMaxStackSize());
     item->SaveToDB();
     auctionEntry->SaveToDB();
 
-    LOG_ERROR("playerbots", "AhBot {} added {} of {} to auction {} for {}..{}", bot->GetName().c_str(), stackCount,
+    LOG_ERROR("shadows", "AhBot {} added {} of {} to auction {} for {}..{}", bot->GetName().c_str(), stackCount,
 proto->Name1.c_str(), 1, bidPrice, buyoutPrice);
 
     if (oldItem->GetCount() > stackCount)
@@ -481,11 +481,11 @@ bool StoreLootAction::Execute(Event event)
         }
 
         Player* master = botAI->GetMaster();
-        if (sRandomPlayerbotMgr->IsRandomBot(bot) && master)
+        if (sRandomShadowMgr->IsRandomBot(bot) && master)
         {
-            uint32 price = itemcount * proto->BuyPrice * sRandomPlayerbotMgr->GetBuyMultiplier(bot) + gold;
+            uint32 price = itemcount * proto->BuyPrice * sRandomShadowMgr->GetBuyMultiplier(bot) + gold;
             if (price)
-                sRandomPlayerbotMgr->AddTradeDiscount(bot, master, price);
+                sRandomShadowMgr->AddTradeDiscount(bot, master, price);
 
             if (Group* group = bot->GetGroup())
                 for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
@@ -497,12 +497,12 @@ bool StoreLootAction::Execute(Event event)
         *packet << itemindex;
         bot->GetSession()->QueuePacket(packet);
         // bot->GetSession()->HandleAutostoreLootItemOpcode(packet);
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->lootDelay);
+        botAI->SetNextCheckDelay(sShadowAIConfig->lootDelay);
 
-        if (proto->Quality > ITEM_QUALITY_NORMAL && !urand(0, 50) && botAI->HasStrategy("emote", BOT_STATE_NON_COMBAT) && sPlayerbotAIConfig->randomBotEmote)
+        if (proto->Quality > ITEM_QUALITY_NORMAL && !urand(0, 50) && botAI->HasStrategy("emote", BOT_STATE_NON_COMBAT) && sShadowAIConfig->randomBotEmote)
             botAI->PlayEmote(TEXT_EMOTE_CHEER);
 
-        if (proto->Quality >= ITEM_QUALITY_RARE && !urand(0, 1) && botAI->HasStrategy("emote", BOT_STATE_NON_COMBAT) && sPlayerbotAIConfig->randomBotEmote)
+        if (proto->Quality >= ITEM_QUALITY_RARE && !urand(0, 1) && botAI->HasStrategy("emote", BOT_STATE_NON_COMBAT) && sShadowAIConfig->randomBotEmote)
             botAI->PlayEmote(TEXT_EMOTE_CHEER);
 
         BroadcastHelper::BroadcastLootingItem(botAI, bot, proto);
@@ -518,7 +518,7 @@ bool StoreLootAction::Execute(Event event)
     return true;
 }
 
-bool StoreLootAction::IsLootAllowed(uint32 itemid, PlayerbotAI* botAI)
+bool StoreLootAction::IsLootAllowed(uint32 itemid, ShadowAI* botAI)
 {
     AiObjectContext* context = botAI->GetAiObjectContext();
     LootStrategy* lootStrategy = AI_VALUE(LootStrategy*, "loot strategy");
@@ -553,7 +553,7 @@ bool StoreLootAction::IsLootAllowed(uint32 itemid, PlayerbotAI* botAI)
             {
                 // if (AI_VALUE2(uint32, "item count", proto->Name1) < quest->RequiredItemCount[i])
                 // {
-                //     if (botAI->GetMaster() && sPlayerbotAIConfig->syncQuestWithPlayer)
+                //     if (botAI->GetMaster() && sShadowAIConfig->syncQuestWithPlayer)
                 //         return false; //Quest is autocomplete for the bot so no item needed.
                 // }
 
@@ -569,7 +569,7 @@ bool StoreLootAction::IsLootAllowed(uint32 itemid, PlayerbotAI* botAI)
 
     bool canLoot = lootStrategy->CanLoot(proto, context);
     // if (canLoot && proto->Bonding == BIND_WHEN_PICKED_UP && botAI->HasActivePlayerMaster())
-    // canLoot = sPlayerbotAIConfig->IsInRandomAccountList(botAI->GetBot()->GetSession()->GetAccountId());
+    // canLoot = sShadowAIConfig->IsInRandomAccountList(botAI->GetBot()->GetSession()->GetAccountId());
 
     return canLoot;
 }

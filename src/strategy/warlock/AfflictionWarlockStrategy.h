@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_AFFLICTIONWARLOCKSTRATEGY_H
-#define _PLAYERBOT_AFFLICTIONWARLOCKSTRATEGY_H
+#ifndef _SHADOW_AFFLICTIONWARLOCKSTRATEGY_H
+#define _SHADOW_AFFLICTIONWARLOCKSTRATEGY_H
 
 #include "GenericWarlockStrategy.h"
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AfflictionWarlockStrategy : public GenericWarlockStrategy
 {
 public:
-    AfflictionWarlockStrategy(PlayerbotAI* botAI);
+    AfflictionWarlockStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "affli"; }

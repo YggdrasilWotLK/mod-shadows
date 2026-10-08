@@ -6,7 +6,7 @@
 #include "ReadyCheckAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::string const formatPercent(std::string const name, uint8 value, float percent)
 {
@@ -27,7 +27,7 @@ std::string const formatPercent(std::string const name, uint8 value, float perce
 class ReadyChecker
 {
 public:
-    virtual bool Check(PlayerbotAI* botAI, AiObjectContext* context) = 0;
+    virtual bool Check(ShadowAI* botAI, AiObjectContext* context) = 0;
     virtual std::string const getName() = 0;
     virtual bool PrintAlways() { return true; }
 
@@ -39,9 +39,9 @@ std::vector<ReadyChecker*> ReadyChecker::checkers;
 class HealthChecker : public ReadyChecker
 {
 public:
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
-        return AI_VALUE2(uint8, "health", "self target") > sPlayerbotAIConfig->almostFullHealth;
+        return AI_VALUE2(uint8, "health", "self target") > sShadowAIConfig->almostFullHealth;
     }
 
     std::string const getName() override { return "HP"; }
@@ -50,10 +50,10 @@ public:
 class ManaChecker : public ReadyChecker
 {
 public:
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
         return !AI_VALUE2(bool, "has mana", "self target") ||
-               AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig->mediumHealth;
+               AI_VALUE2(uint8, "mana", "self target") > sShadowAIConfig->mediumHealth;
     }
 
     std::string const getName() override { return "MP"; }
@@ -62,12 +62,12 @@ public:
 class DistanceChecker : public ReadyChecker
 {
 public:
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
         Player* bot = botAI->GetBot();
         if (Player* master = botAI->GetMaster())
         {
-            bool distance = bot->GetDistance(master) <= sPlayerbotAIConfig->sightDistance;
+            bool distance = bot->GetDistance(master) <= sShadowAIConfig->sightDistance;
             if (!distance)
             {
                 return false;
@@ -84,7 +84,7 @@ public:
 class HunterChecker : public ReadyChecker
 {
 public:
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
         Player* bot = botAI->GetBot();
         if (bot->getClass() == CLASS_HUNTER)
@@ -120,7 +120,7 @@ class ItemCountChecker : public ReadyChecker
 public:
     ItemCountChecker(std::string const item, std::string const name) : item(item), name(name) {}
 
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
         return AI_VALUE2(uint32, "item count", item) > 0;
     }
@@ -137,7 +137,7 @@ class ManaPotionChecker : public ItemCountChecker
 public:
     ManaPotionChecker(std::string const item, std::string const name) : ItemCountChecker(item, name) {}
 
-    bool Check(PlayerbotAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context) override
     {
         return !AI_VALUE2(bool, "has mana", "self target") || ItemCountChecker::Check(botAI, context);
     }

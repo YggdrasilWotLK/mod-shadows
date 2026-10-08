@@ -5,9 +5,9 @@
 
 #include "ShamanTriggers.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "ItemTemplate.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "TotemsShamanStrategy.h"
 #include "InstanceScript.h"
 #include "Creature.h"
@@ -99,7 +99,7 @@ bool ElementalMasteryTrigger::IsActive()
 
 // Checks if Sprit Wolves are out/if Spirit Walk buff is not on the bot/if the cooldown for Spirit Walk is ready.
 // There is custom code for the Spirit Walk cooldown (32 seconds), since no working
-// code exists in the AC/Playerbots repo for checking if a guardian's spell is on cooldown.
+// code exists in the AC/Shadows repo for checking if a guardian's spell is on cooldown.
 bool SpiritWalkTrigger::IsActive()
 {
     constexpr uint32 SPIRIT_WOLF = 29264u;
@@ -261,7 +261,7 @@ bool TotemicRecallTrigger::IsActive()
 }
 
 // Find the active totem strategy for this slot, and return the highest-rank spellId the bot knows for it
-static uint32 GetRequiredTotemSpellId(PlayerbotAI* ai, const char* strategies[], 
+static uint32 GetRequiredTotemSpellId(ShadowAI* ai, const char* strategies[], 
     const uint32* spellList[], const size_t spellCounts[], size_t numStrategies)
 {
     Player* bot = ai->GetBot();

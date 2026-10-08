@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUILDTRIGGER_H
-#define _PLAYERBOT_GUILDTRIGGER_H
+#ifndef _SHADOW_GUILDTRIGGER_H
+#define _SHADOW_GUILDTRIGGER_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PetitionTurnInTrigger : public Trigger
 {
 public:
-    PetitionTurnInTrigger(PlayerbotAI* botAI) : Trigger(botAI) {}
+    PetitionTurnInTrigger(ShadowAI* botAI) : Trigger(botAI) {}
 
     bool IsActive() override;
 };
@@ -21,7 +21,7 @@ public:
 class BuyTabardTrigger : public Trigger
 {
 public:
-    BuyTabardTrigger(PlayerbotAI* botAI) : Trigger(botAI) {}
+    BuyTabardTrigger(ShadowAI* botAI) : Trigger(botAI) {}
 
     bool IsActive() override;
 };
@@ -29,7 +29,7 @@ public:
 class LeaveLargeGuildTrigger : public Trigger
 {
 public:
-    LeaveLargeGuildTrigger(PlayerbotAI* botAI) : Trigger(botAI) {}
+    LeaveLargeGuildTrigger(ShadowAI* botAI) : Trigger(botAI) {}
 
     bool IsActive();
 };

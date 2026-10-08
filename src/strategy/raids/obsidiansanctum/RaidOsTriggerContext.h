@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDOSTRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDOSTRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDOSTRIGGERCONTEXT_H
+#define _SHADOW_RAIDOSTRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -20,13 +20,13 @@ public:
     }
 
 private:
-    static Trigger* sartharion_tank(PlayerbotAI* ai) { return new SartharionTankTrigger(ai); }
-    static Trigger* flame_tsunami(PlayerbotAI* ai) { return new FlameTsunamiTrigger(ai); }
-    static Trigger* twilight_fissure(PlayerbotAI* ai) { return new TwilightFissureTrigger(ai); }
-    static Trigger* sartharion_dps(PlayerbotAI* ai) { return new SartharionDpsTrigger(ai); }
-    static Trigger* sartharion_melee(PlayerbotAI* ai) { return new SartharionMeleePositioningTrigger(ai); }
-    static Trigger* twilight_portal_enter(PlayerbotAI* ai) { return new TwilightPortalEnterTrigger(ai); }
-    static Trigger* twilight_portal_exit(PlayerbotAI* ai) { return new TwilightPortalExitTrigger(ai); }
+    static Trigger* sartharion_tank(ShadowAI* ai) { return new SartharionTankTrigger(ai); }
+    static Trigger* flame_tsunami(ShadowAI* ai) { return new FlameTsunamiTrigger(ai); }
+    static Trigger* twilight_fissure(ShadowAI* ai) { return new TwilightFissureTrigger(ai); }
+    static Trigger* sartharion_dps(ShadowAI* ai) { return new SartharionDpsTrigger(ai); }
+    static Trigger* sartharion_melee(ShadowAI* ai) { return new SartharionMeleePositioningTrigger(ai); }
+    static Trigger* twilight_portal_enter(ShadowAI* ai) { return new TwilightPortalEnterTrigger(ai); }
+    static Trigger* twilight_portal_exit(ShadowAI* ai) { return new TwilightPortalExitTrigger(ai); }
 };
 
 #endif

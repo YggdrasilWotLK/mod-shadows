@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ARMSWARRIORSTRATEGY_H
-#define _PLAYERBOT_ARMSWARRIORSTRATEGY_H
+#ifndef _SHADOW_ARMSWARRIORSTRATEGY_H
+#define _SHADOW_ARMSWARRIORSTRATEGY_H
 
 #include "GenericWarriorStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ArmsWarriorStrategy : public GenericWarriorStrategy
 {
 public:
-    ArmsWarriorStrategy(PlayerbotAI* botAI);
+    ArmsWarriorStrategy(ShadowAI* botAI);
 
 public:
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

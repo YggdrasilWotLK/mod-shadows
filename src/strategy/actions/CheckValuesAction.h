@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHECKVALUESACTION_H
-#define _PLAYERBOT_CHECKVALUESACTION_H
+#ifndef _SHADOW_CHECKVALUESACTION_H
+#define _SHADOW_CHECKVALUESACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CheckValuesAction : public Action
 {
 public:
-    CheckValuesAction(PlayerbotAI* botAI);
+    CheckValuesAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };

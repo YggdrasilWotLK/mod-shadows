@@ -5,7 +5,7 @@
 
 #include "CurrentTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* CurrentTargetValue::Get()
 {

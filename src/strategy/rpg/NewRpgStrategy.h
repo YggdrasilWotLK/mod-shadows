@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEWRPGSTRATEGY_H
-#define _PLAYERBOT_NEWRPGSTRATEGY_H
+#ifndef _SHADOW_NEWRPGSTRATEGY_H
+#define _SHADOW_NEWRPGSTRATEGY_H
 
 #include "Strategy.h"
 #include "TravelMgr.h"
 #include "NewRpgInfo.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NewRpgStrategy : public Strategy
 {
 public:
-    NewRpgStrategy(PlayerbotAI* botAI);
+    NewRpgStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "new rpg"; }
     NextAction** getDefaultActions() override;

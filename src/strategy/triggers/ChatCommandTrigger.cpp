@@ -5,9 +5,9 @@
 
 #include "ChatCommandTrigger.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-ChatCommandTrigger::ChatCommandTrigger(PlayerbotAI* botAI, std::string const command)
+ChatCommandTrigger::ChatCommandTrigger(ShadowAI* botAI, std::string const command)
     : Trigger(botAI, command), triggered(false), owner(nullptr)
 {
 }

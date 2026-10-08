@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FROSTDKSTRATEGY_H
-#define _PLAYERBOT_FROSTDKSTRATEGY_H
+#ifndef _SHADOW_FROSTDKSTRATEGY_H
+#define _SHADOW_FROSTDKSTRATEGY_H
 
 #include "GenericDKStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FrostDKStrategy : public GenericDKStrategy
 {
 public:
-    FrostDKStrategy(PlayerbotAI* botAI);
+    FrostDKStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "frost"; }
@@ -24,7 +24,7 @@ public:
 class FrostDKAoeStrategy : public CombatStrategy
 {
 public:
-    FrostDKAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    FrostDKAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "frost aoe"; }

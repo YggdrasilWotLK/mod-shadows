@@ -3,12 +3,12 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOOTROLLACTION_H
-#define _PLAYERBOT_LOOTROLLACTION_H
+#ifndef _SHADOW_LOOTROLLACTION_H
+#define _SHADOW_LOOTROLLACTION_H
 
 #include "QueryItemUsageAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct ItemTemplate;
 
@@ -17,7 +17,7 @@ enum RollVote : uint8;
 class LootRollAction : public QueryItemUsageAction
 {
 public:
-    LootRollAction(PlayerbotAI* botAI, std::string const name = "loot roll") : QueryItemUsageAction(botAI, name) {}
+    LootRollAction(ShadowAI* botAI, std::string const name = "loot roll") : QueryItemUsageAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -31,7 +31,7 @@ bool RollUniqueCheck(ItemTemplate const* proto, Player* bot);
 class MasterLootRollAction : public LootRollAction
 {
 public:
-    MasterLootRollAction(PlayerbotAI* botAI) : LootRollAction(botAI, "master loot roll") {}
+    MasterLootRollAction(ShadowAI* botAI) : LootRollAction(botAI, "master loot roll") {}
 
     bool isUseful() override;
     bool Execute(Event event) override;
@@ -40,7 +40,7 @@ public:
 class RollAction : public Action
 {
 public:
-    RollAction(PlayerbotAI* botAI) : Action(botAI, "roll") {}
+    RollAction(ShadowAI* botAI) : Action(botAI, "roll") {}
 
     bool Execute(Event event) override;
 };

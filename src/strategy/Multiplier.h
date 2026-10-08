@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MULTIPLIER_H
-#define _PLAYERBOT_MULTIPLIER_H
+#ifndef _SHADOW_MULTIPLIER_H
+#define _SHADOW_MULTIPLIER_H
 
 #include "AiObject.h"
 
 class Action;
-class PlayerbotAI;
+class ShadowAI;
 
 class Multiplier : public AiNamedObject
 {
 public:
-    Multiplier(PlayerbotAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
+    Multiplier(ShadowAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
     virtual ~Multiplier() {}
 
     virtual float GetValue([[maybe_unused]] Action* action) { return 1.0f; }

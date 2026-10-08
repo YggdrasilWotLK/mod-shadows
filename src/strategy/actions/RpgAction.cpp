@@ -12,7 +12,7 @@
 #include "EmoteAction.h"
 #include "Event.h"
 #include "Formations.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "RpgSubActions.h"
 

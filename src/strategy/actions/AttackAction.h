@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ATTACKACTION_H
-#define _PLAYERBOT_ATTACKACTION_H
+#ifndef _SHADOW_ATTACKACTION_H
+#define _SHADOW_ATTACKACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AttackAction : public MovementAction
 {
 public:
-    AttackAction(PlayerbotAI* botAI, std::string const name) : MovementAction(botAI, name) {}
+    AttackAction(ShadowAI* botAI, std::string const name) : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -24,7 +24,7 @@ protected:
 class AttackMyTargetAction : public AttackAction
 {
 public:
-    AttackMyTargetAction(PlayerbotAI* botAI, std::string const name = "attack my target") : AttackAction(botAI, name) {}
+    AttackMyTargetAction(ShadowAI* botAI, std::string const name = "attack my target") : AttackAction(botAI, name) {}
 
     bool Execute(Event event) override;
 };
@@ -32,7 +32,7 @@ public:
 class AttackDuelOpponentAction : public AttackAction
 {
 public:
-    AttackDuelOpponentAction(PlayerbotAI* botAI, std::string const name = "attack duel opponent")
+    AttackDuelOpponentAction(ShadowAI* botAI, std::string const name = "attack duel opponent")
         : AttackAction(botAI, name)
     {
     }

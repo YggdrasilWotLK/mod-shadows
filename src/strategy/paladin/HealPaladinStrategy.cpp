@@ -5,7 +5,7 @@
 
 #include "HealPaladinStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 class HealPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -20,7 +20,7 @@ private:
     // ACTION_NODE_A(concentration_aura, "concentration aura", "devotion aura");
 };
 
-HealPaladinStrategy::HealPaladinStrategy(PlayerbotAI* botAI) : GenericPaladinStrategy(botAI)
+HealPaladinStrategy::HealPaladinStrategy(ShadowAI* botAI) : GenericPaladinStrategy(botAI)
 {
     actionNodeFactories.Add(new HealPaladinStrategyActionNodeFactory());
 }

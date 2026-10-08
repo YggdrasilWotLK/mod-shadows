@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TANKASSISTSTRATEGY_H
-#define _PLAYERBOT_TANKASSISTSTRATEGY_H
+#ifndef _SHADOW_TANKASSISTSTRATEGY_H
+#define _SHADOW_TANKASSISTSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TankAssistStrategy : public Strategy
 {
 public:
-    TankAssistStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    TankAssistStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     std::string const getName() override { return "tank assist"; }
     uint32 GetType() const override { return STRATEGY_TYPE_TANK; }

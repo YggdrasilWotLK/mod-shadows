@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ATTACKERCOUNTVALUES_H
-#define _PLAYERBOT_ATTACKERCOUNTVALUES_H
+#ifndef _SHADOW_ATTACKERCOUNTVALUES_H
+#define _SHADOW_ATTACKERCOUNTVALUES_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class AttackerCountValue : public Uint8CalculatedValue, public Qualified
 {
 public:
-    AttackerCountValue(PlayerbotAI* botAI, std::string const name = "attackers count")
+    AttackerCountValue(ShadowAI* botAI, std::string const name = "attackers count")
         : Uint8CalculatedValue(botAI, name)
     {
     }
@@ -27,7 +27,7 @@ public:
 class MyAttackerCountValue : public Uint8CalculatedValue, public Qualified
 {
 public:
-    MyAttackerCountValue(PlayerbotAI* botAI, std::string const name = "my attackers count")
+    MyAttackerCountValue(ShadowAI* botAI, std::string const name = "my attackers count")
         : Uint8CalculatedValue(botAI, name)
     {
     }
@@ -39,7 +39,7 @@ public:
 class HasAggroValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    HasAggroValue(PlayerbotAI* botAI, std::string const name = "has aggro") : BoolCalculatedValue(botAI, name) {}
+    HasAggroValue(ShadowAI* botAI, std::string const name = "has aggro") : BoolCalculatedValue(botAI, name) {}
 
     Unit* GetTarget();
     bool Calculate() override;
@@ -48,7 +48,7 @@ public:
 class BalancePercentValue : public Uint8CalculatedValue, public Qualified
 {
 public:
-    BalancePercentValue(PlayerbotAI* botAI, std::string const name = "balance percentage")
+    BalancePercentValue(ShadowAI* botAI, std::string const name = "balance percentage")
         : Uint8CalculatedValue(botAI, name)
     {
     }

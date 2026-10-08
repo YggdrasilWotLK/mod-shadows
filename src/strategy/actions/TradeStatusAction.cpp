@@ -10,10 +10,10 @@
 #include "GuildTaskMgr.h"
 #include "ItemUsageValue.h"
 #include "ItemVisitors.h"
-#include "PlayerbotMgr.h"
-#include "PlayerbotSecurity.h"
-#include "Playerbots.h"
-#include "RandomPlayerbotMgr.h"
+#include "ShadowMgr.h"
+#include "ShadowSecurity.h"
+#include "Shadows.h"
+#include "RandomShadowMgr.h"
 #include "SetCraftAction.h"
 
 bool TradeStatusAction::Execute(Event event)
@@ -23,7 +23,7 @@ bool TradeStatusAction::Execute(Event event)
     if (!trader)
         return false;
 
-    auto traderBotAI = GET_PLAYERBOT_AI(trader);
+    auto traderBotAI = GET_SHADOW_AI(trader);
 
     // Allow the master and group members to trade
     if (trader != master && !traderBotAI && (!bot->GetGroup() || !bot->GetGroup()->IsMember(trader->GetGUID())))
@@ -32,7 +32,7 @@ bool TradeStatusAction::Execute(Event event)
         return false;
     }
 
-    if (sPlayerbotAIConfig->enableRandomBotTrading == 0 && (sRandomPlayerbotMgr->IsRandomBot(bot)|| sRandomPlayerbotMgr->IsAddclassBot(bot)))
+    if (sShadowAIConfig->enableRandomBotTrading == 0 && (sRandomShadowMgr->IsRandomBot(bot)|| sRandomShadowMgr->IsAddclassBot(bot)))
     {
         bot->Whisper("Trading is disabled", LANG_UNIVERSAL, trader);
         return false;
@@ -40,7 +40,7 @@ bool TradeStatusAction::Execute(Event event)
 
     // Allow trades from group members or bots
     if ((!bot->GetGroup() || !bot->GetGroup()->IsMember(trader->GetGUID())) &&
-        (trader != master || !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_ALLOW_ALL, true, master)) &&
+        (trader != master || !botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_ALLOW_ALL, true, master)) &&
         !traderBotAI)
     {
         WorldPacket p;
@@ -61,7 +61,7 @@ bool TradeStatusAction::Execute(Event event)
         uint32 status = 0;
         p << status;
 
-        uint32 discount = sRandomPlayerbotMgr->GetTradeDiscount(bot, trader);
+        uint32 discount = sRandomShadowMgr->GetTradeDiscount(bot, trader);
         if (CheckTrade())
         {
             int32 botMoney = CalculateCost(bot, true);
@@ -81,7 +81,7 @@ bool TradeStatusAction::Execute(Event event)
             bot->GetSession()->HandleAcceptTradeOpcode(p);
             if (bot->GetTradeData())
             {
-                sRandomPlayerbotMgr->SetTradeDiscount(bot, trader, discount);
+                sRandomShadowMgr->SetTradeDiscount(bot, trader, discount);
                 return false;
             }
 
@@ -116,7 +116,7 @@ bool TradeStatusAction::Execute(Event event)
     }
     else if (status == TRADE_STATUS_BEGIN_TRADE)
     {
-        if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, trader, sPlayerbotAIConfig->sightDistance))
+        if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, trader, sShadowAIConfig->sightDistance))
             bot->SetFacingToObject(trader);
 
         BeginTrade();
@@ -129,7 +129,7 @@ bool TradeStatusAction::Execute(Event event)
 void TradeStatusAction::BeginTrade()
 {
     Player* trader = bot->GetTrader();
-    if (!trader || GET_PLAYERBOT_AI(bot->GetTrader()))
+    if (!trader || GET_SHADOW_AI(bot->GetTrader()))
         return;
 
     WorldPacket p;
@@ -141,9 +141,9 @@ void TradeStatusAction::BeginTrade()
     botAI->TellMaster("=== Inventory ===");
     TellItems(visitor.items, visitor.soulbound);
 
-    if (sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (sRandomShadowMgr->IsRandomBot(bot))
     {
-        uint32 discount = sRandomPlayerbotMgr->GetTradeDiscount(bot, botAI->GetMaster());
+        uint32 discount = sRandomShadowMgr->GetTradeDiscount(bot, botAI->GetMaster());
         if (discount)
         {
             std::ostringstream out;
@@ -159,7 +159,7 @@ bool TradeStatusAction::CheckTrade()
     if (!bot->GetTradeData() || !trader || !trader->GetTradeData())
         return false;
 
-    if (!botAI->HasActivePlayerMaster() && GET_PLAYERBOT_AI(bot->GetTrader()))
+    if (!botAI->HasActivePlayerMaster() && GET_SHADOW_AI(bot->GetTrader()))
     {
         bool isGivingItem = false;
         for (uint32 slot = 0; slot < TRADE_SLOT_TRADED_COUNT; ++slot)
@@ -198,7 +198,7 @@ bool TradeStatusAction::CheckTrade()
         return false;
     }
     uint32 accountId = bot->GetSession()->GetAccountId();
-    if (!sPlayerbotAIConfig->IsInRandomAccountList(accountId))
+    if (!sShadowAIConfig->IsInRandomAccountList(accountId))
     {
         int32 botItemsMoney = CalculateCost(bot, true);
         int32 botMoney = bot->GetTradeData()->GetMoney() + botItemsMoney;
@@ -214,12 +214,12 @@ bool TradeStatusAction::CheckTrade()
     int32 botMoney = bot->GetTradeData()->GetMoney() + botItemsMoney;
     int32 playerItemsMoney = CalculateCost(trader, false);
     int32 playerMoney = trader->GetTradeData()->GetMoney() + playerItemsMoney;
-    if (botItemsMoney > 0 && sPlayerbotAIConfig->enableRandomBotTrading == 2 && (sRandomPlayerbotMgr->IsRandomBot(bot)|| sRandomPlayerbotMgr->IsAddclassBot(bot)))
+    if (botItemsMoney > 0 && sShadowAIConfig->enableRandomBotTrading == 2 && (sRandomShadowMgr->IsRandomBot(bot)|| sRandomShadowMgr->IsAddclassBot(bot)))
     {
         bot->Whisper("Selling is disabled.", LANG_UNIVERSAL, trader);
         return false;
     }
-    if (playerItemsMoney && sPlayerbotAIConfig->enableRandomBotTrading == 3 && (sRandomPlayerbotMgr->IsRandomBot(bot)|| sRandomPlayerbotMgr->IsAddclassBot(bot)))
+    if (playerItemsMoney && sShadowAIConfig->enableRandomBotTrading == 3 && (sRandomShadowMgr->IsRandomBot(bot)|| sRandomShadowMgr->IsAddclassBot(bot)))
     {
         bot->Whisper("Buying is disabled.", LANG_UNIVERSAL, trader);
         return false;
@@ -262,7 +262,7 @@ bool TradeStatusAction::CheckTrade()
         return false;
     }
 
-    int32 discount = (int32)sRandomPlayerbotMgr->GetTradeDiscount(bot, trader);
+    int32 discount = (int32)sRandomShadowMgr->GetTradeDiscount(bot, trader);
     int32 delta = playerMoney - botMoney;
     int32 moneyDelta = (int32)trader->GetTradeData()->GetMoney() - (int32)bot->GetTradeData()->GetMoney();
     bool success = false;
@@ -287,7 +287,7 @@ bool TradeStatusAction::CheckTrade()
 
     if (success)
     {
-        sRandomPlayerbotMgr->AddTradeDiscount(bot, trader, delta);
+        sRandomShadowMgr->AddTradeDiscount(bot, trader, delta);
         switch (urand(0, 4))
         {
             case 0:
@@ -353,11 +353,11 @@ int32 TradeStatusAction::CalculateCost(Player* player, bool sell)
 
         if (sell)
         {
-            sum += item->GetCount() * proto->SellPrice * sRandomPlayerbotMgr->GetSellMultiplier(bot);
+            sum += item->GetCount() * proto->SellPrice * sRandomShadowMgr->GetSellMultiplier(bot);
         }
         else
         {
-            sum += item->GetCount() * proto->BuyPrice * sRandomPlayerbotMgr->GetBuyMultiplier(bot);
+            sum += item->GetCount() * proto->BuyPrice * sRandomShadowMgr->GetBuyMultiplier(bot);
         }
     }
 

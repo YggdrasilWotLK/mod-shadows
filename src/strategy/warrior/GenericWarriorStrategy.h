@@ -3,12 +3,12 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICWARRIORSTRATEGY_H
-#define _PLAYERBOT_GENERICWARRIORSTRATEGY_H
+#ifndef _SHADOW_GENERICWARRIORSTRATEGY_H
+#define _SHADOW_GENERICWARRIORSTRATEGY_H
 
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 // Stance requirements
 class WarriorStanceRequirementActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -66,7 +66,7 @@ private:
 class GenericWarriorStrategy : public CombatStrategy
 {
 public:
-    GenericWarriorStrategy(PlayerbotAI* botAI);
+    GenericWarriorStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "warrior"; }
@@ -75,7 +75,7 @@ public:
 class WarrirorAoeStrategy : public CombatStrategy
 {
 public:
-    WarrirorAoeStrategy(PlayerbotAI* botAI);
+    WarrirorAoeStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "aoe"; }

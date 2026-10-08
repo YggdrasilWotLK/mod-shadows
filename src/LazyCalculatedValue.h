@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LAZYCALCULATEDVALUE_H
-#define _PLAYERBOT_LAZYCALCULATEDVALUE_H
+#ifndef _SHADOW_LAZYCALCULATEDVALUE_H
+#define _SHADOW_LAZYCALCULATEDVALUE_H
 
 template <class TValue, class TOwner>
 class LazyCalculatedValue

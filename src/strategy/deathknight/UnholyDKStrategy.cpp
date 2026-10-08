@@ -7,7 +7,7 @@
 
 #include "UnholyDKStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class UnholyDKStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -35,21 +35,21 @@ public:
     }
 
 private:
-    static ActionNode* death_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* death_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("death strike",
                               /*P*/ NextAction::array(0, new NextAction("blood presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* ghoul_frenzy([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* ghoul_frenzy([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("ghoul frenzy",
                               /*P*/ NextAction::array(0, new NextAction("blood presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* corpse_explosion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* corpse_explosion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("corpse explosion",
                               /*P*/ NextAction::array(0, new NextAction("blood presence"), nullptr),
@@ -57,14 +57,14 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* scourge_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* scourge_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("scourge strike",
                               /*P*/ NextAction::array(0, new NextAction("blood presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* icy_touch([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* icy_touch([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("icy touch",
                               /*P*/ NextAction::array(0, new NextAction("blood presence"), nullptr),
@@ -73,7 +73,7 @@ private:
     }
 };
 
-UnholyDKStrategy::UnholyDKStrategy(PlayerbotAI* botAI) : GenericDKStrategy(botAI)
+UnholyDKStrategy::UnholyDKStrategy(ShadowAI* botAI) : GenericDKStrategy(botAI)
 {
     actionNodeFactories.Add(new UnholyDKStrategyActionNodeFactory());
 }

@@ -9,7 +9,7 @@
 #include <PaladinBuffStrategies.h>
 #include <Unit.h>
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool BossFireResistanceTrigger::IsActive()
 {

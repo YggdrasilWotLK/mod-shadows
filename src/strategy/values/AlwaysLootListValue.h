@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ALWAYSLOOTLISTVALUE_H
-#define _PLAYERBOT_ALWAYSLOOTLISTVALUE_H
+#ifndef _SHADOW_ALWAYSLOOTLISTVALUE_H
+#define _SHADOW_ALWAYSLOOTLISTVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AlwaysLootListValue : public ManualSetValue<std::set<uint32>&>
 {
 public:
-    AlwaysLootListValue(PlayerbotAI* botAI, std::string const name = "always loot list")
+    AlwaysLootListValue(ShadowAI* botAI, std::string const name = "always loot list")
         : ManualSetValue<std::set<uint32>&>(botAI, list, name)
     {
     }

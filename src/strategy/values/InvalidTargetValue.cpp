@@ -6,7 +6,7 @@
 #include "InvalidTargetValue.h"
 
 #include "AttackersValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Unit.h"
 
 bool InvalidTargetValue::Calculate()

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DRUIDSHAPESHIFTACTIONS_H
-#define _PLAYERBOT_DRUIDSHAPESHIFTACTIONS_H
+#ifndef _SHADOW_DRUIDSHAPESHIFTACTIONS_H
+#define _SHADOW_DRUIDSHAPESHIFTACTIONS_H
 
 #include "GenericSpellActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CastBearFormAction : public CastBuffSpellAction
 {
 public:
-    CastBearFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "bear form") {}
+    CastBearFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "bear form") {}
 
     bool isPossible() override;
     bool isUseful() override;
@@ -22,7 +22,7 @@ public:
 class CastDireBearFormAction : public CastBuffSpellAction
 {
 public:
-    CastDireBearFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "dire bear form") {}
+    CastDireBearFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "dire bear form") {}
 
     NextAction** getAlternatives() override;
 };
@@ -30,32 +30,32 @@ public:
 class CastCatFormAction : public CastBuffSpellAction
 {
 public:
-    CastCatFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "cat form") {}
+    CastCatFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "cat form") {}
 };
 
 class CastTreeFormAction : public CastBuffSpellAction
 {
 public:
-    CastTreeFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "tree of life") {}
+    CastTreeFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "tree of life") {}
     bool isUseful() override;
 };
 
 class CastMoonkinFormAction : public CastBuffSpellAction
 {
 public:
-    CastMoonkinFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "moonkin form") {}
+    CastMoonkinFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "moonkin form") {}
 };
 
 class CastAquaticFormAction : public CastBuffSpellAction
 {
 public:
-    CastAquaticFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "aquatic form") {}
+    CastAquaticFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "aquatic form") {}
 };
 
 class CastTravelFormAction : public CastBuffSpellAction
 {
 public:
-    CastTravelFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "travel form") {}
+    CastTravelFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "travel form") {}
 
     bool isUseful() override;
 };
@@ -63,7 +63,7 @@ public:
 class CastCasterFormAction : public CastBuffSpellAction
 {
 public:
-    CastCasterFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "caster form") {}
+    CastCasterFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "caster form") {}
 
     bool isUseful() override;
     bool isPossible() override { return true; }
@@ -73,7 +73,7 @@ public:
 class CastCancelTreeFormAction : public CastBuffSpellAction
 {
 public:
-    CastCancelTreeFormAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "cancel tree form") {}
+    CastCancelTreeFormAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "cancel tree form") {}
 
     bool isUseful() override;
     bool isPossible() override { return true; }

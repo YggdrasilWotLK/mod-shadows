@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOLTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONHOLTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONHOLTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONHOLTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -32,63 +32,63 @@ enum HallsOfLightningIDs
 class StormforgedLieutenantTrigger : public Trigger
 {
 public:
-    StormforgedLieutenantTrigger(PlayerbotAI* ai) : Trigger(ai, "stormforged lieutenant") {}
+    StormforgedLieutenantTrigger(ShadowAI* ai) : Trigger(ai, "stormforged lieutenant") {}
     bool IsActive() override;
 };
 
 class BjarngrimWhirlwindTrigger : public Trigger
 {
 public:
-    BjarngrimWhirlwindTrigger(PlayerbotAI* ai) : Trigger(ai, "bjarngrim whirlwind") {}
+    BjarngrimWhirlwindTrigger(ShadowAI* ai) : Trigger(ai, "bjarngrim whirlwind") {}
     bool IsActive() override;
 };
 
 class VolkhanTrigger : public Trigger
 {
 public:
-    VolkhanTrigger(PlayerbotAI* ai) : Trigger(ai, "volkhan") {}
+    VolkhanTrigger(ShadowAI* ai) : Trigger(ai, "volkhan") {}
     bool IsActive() override;
 };
 
 class IonarStaticOverloadTrigger : public Trigger
 {
 public:
-    IonarStaticOverloadTrigger(PlayerbotAI* ai) : Trigger(ai, "ionar static overload") {}
+    IonarStaticOverloadTrigger(ShadowAI* ai) : Trigger(ai, "ionar static overload") {}
     bool IsActive() override;
 };
 
 class IonarBallLightningTrigger : public Trigger
 {
 public:
-    IonarBallLightningTrigger(PlayerbotAI* ai) : Trigger(ai, "ionar ball lightning spread") {}
+    IonarBallLightningTrigger(ShadowAI* ai) : Trigger(ai, "ionar ball lightning spread") {}
     bool IsActive() override;
 };
 
 class IonarTankAggroTrigger : public Trigger
 {
 public:
-    IonarTankAggroTrigger(PlayerbotAI* ai) : Trigger(ai, "ionar tank aggro") {}
+    IonarTankAggroTrigger(ShadowAI* ai) : Trigger(ai, "ionar tank aggro") {}
     bool IsActive() override;
 };
 
 class IonarDisperseTrigger : public Trigger
 {
 public:
-    IonarDisperseTrigger(PlayerbotAI* ai) : Trigger(ai, "ionar disperse") {}
+    IonarDisperseTrigger(ShadowAI* ai) : Trigger(ai, "ionar disperse") {}
     bool IsActive() override;
 };
 
 class LokenRangedTrigger : public Trigger
 {
 public:
-    LokenRangedTrigger(PlayerbotAI* ai) : Trigger(ai, "loken ranged") {}
+    LokenRangedTrigger(ShadowAI* ai) : Trigger(ai, "loken ranged") {}
     bool IsActive() override;
 };
 
 class LokenLightningNovaTrigger : public Trigger
 {
 public:
-    LokenLightningNovaTrigger(PlayerbotAI* ai) : Trigger(ai, "lightning nova") {}
+    LokenLightningNovaTrigger(ShadowAI* ai) : Trigger(ai, "lightning nova") {}
     bool IsActive() override;
 };
 

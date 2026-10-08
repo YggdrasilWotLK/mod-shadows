@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RPGSTRATEGY_H
-#define _PLAYERBOT_RPGSTRATEGY_H
+#ifndef _SHADOW_RPGSTRATEGY_H
+#define _SHADOW_RPGSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RpgActionMultiplier : public Multiplier
 {
 public:
-    RpgActionMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "rpg action") {}
+    RpgActionMultiplier(ShadowAI* botAI) : Multiplier(botAI, "rpg action") {}
 
     float GetValue(Action* action) override;
 };
@@ -21,7 +21,7 @@ public:
 class RpgStrategy : public Strategy
 {
 public:
-    RpgStrategy(PlayerbotAI* botAI);
+    RpgStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "rpg"; }
     NextAction** getDefaultActions() override;

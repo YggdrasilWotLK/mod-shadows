@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_RAIDOSTRIGGERS_H
-#define _PLAYERBOT_RAIDOSTRIGGERS_H
+#ifndef _SHADOW_RAIDOSTRIGGERS_H
+#define _SHADOW_RAIDOSTRIGGERS_H
 
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "Trigger.h"
 
 enum ObsidianSanctumIDs
@@ -71,49 +71,49 @@ const uint32 OS_MAP_ID = 615;
 class SartharionTankTrigger : public Trigger
 {
 public:
-    SartharionTankTrigger(PlayerbotAI* botAI) : Trigger(botAI, "sartharion tank") {}
+    SartharionTankTrigger(ShadowAI* botAI) : Trigger(botAI, "sartharion tank") {}
     bool IsActive() override;
 };
 
 class FlameTsunamiTrigger : public Trigger
 {
 public:
-    FlameTsunamiTrigger(PlayerbotAI* botAI) : Trigger(botAI, "flame tsunami") {}
+    FlameTsunamiTrigger(ShadowAI* botAI) : Trigger(botAI, "flame tsunami") {}
     bool IsActive() override;
 };
 
 class TwilightFissureTrigger : public Trigger
 {
 public:
-    TwilightFissureTrigger(PlayerbotAI* botAI) : Trigger(botAI, "twilight fissure") {}
+    TwilightFissureTrigger(ShadowAI* botAI) : Trigger(botAI, "twilight fissure") {}
     bool IsActive() override;
 };
 
 class SartharionDpsTrigger : public Trigger
 {
 public:
-    SartharionDpsTrigger(PlayerbotAI* botAI) : Trigger(botAI, "sartharion dps") {}
+    SartharionDpsTrigger(ShadowAI* botAI) : Trigger(botAI, "sartharion dps") {}
     bool IsActive() override;
 };
 
 class SartharionMeleePositioningTrigger : public Trigger
 {
 public:
-    SartharionMeleePositioningTrigger(PlayerbotAI* botAI) : Trigger(botAI, "sartharion melee positioning") {}
+    SartharionMeleePositioningTrigger(ShadowAI* botAI) : Trigger(botAI, "sartharion melee positioning") {}
     bool IsActive() override;
 };
 
 class TwilightPortalEnterTrigger : public Trigger
 {
 public:
-    TwilightPortalEnterTrigger(PlayerbotAI* botAI) : Trigger(botAI, "twilight portal enter") {}
+    TwilightPortalEnterTrigger(ShadowAI* botAI) : Trigger(botAI, "twilight portal enter") {}
     bool IsActive() override;
 };
 
 class TwilightPortalExitTrigger : public Trigger
 {
 public:
-    TwilightPortalExitTrigger(PlayerbotAI* botAI) : Trigger(botAI, "twilight portal exit") {}
+    TwilightPortalExitTrigger(ShadowAI* botAI) : Trigger(botAI, "twilight portal exit") {}
     bool IsActive() override;
 };
 

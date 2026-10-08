@@ -5,7 +5,7 @@
 
 #include "GenericWarlockNonCombatStrategy.h"
 #include "AiFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericWarlockNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -25,7 +25,7 @@ public:
     // Pets are summoned based on the non-combat strategy you have active, the warlock's level, and if they have a soul shard available
 
 private:
-    static ActionNode* fel_armor([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* fel_armor([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("fel armor",
                               /*P*/ nullptr,
@@ -33,35 +33,35 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* demon_armor([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* demon_armor([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("demon armor",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("demon skin"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* summon_voidwalker([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* summon_voidwalker([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("summon voidwalker",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("summon imp"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* summon_succubus([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* summon_succubus([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("summon succubus",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("summon voidwalker"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* summon_felhunter([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* summon_felhunter([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("summon felhunter",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("summon succubus"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* summon_felguard([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* summon_felguard([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("summon felguard",
                               /*P*/ nullptr,
@@ -70,7 +70,7 @@ private:
     }
 };
 
-GenericWarlockNonCombatStrategy::GenericWarlockNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericWarlockNonCombatStrategy::GenericWarlockNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericWarlockNonCombatStrategyActionNodeFactory());
 }
@@ -94,7 +94,7 @@ void GenericWarlockNonCombatStrategy::InitTriggers(std::vector<TriggerNode*>& tr
 // Enabled by default for the Destruction spec
 // To enable, type "nc +imp"
 // To disable, type "nc -imp"
-SummonImpStrategy::SummonImpStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SummonImpStrategy::SummonImpStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SummonImpStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -106,7 +106,7 @@ void SummonImpStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +voidwalker"
 // To disable, type "nc -voidwalker"
-SummonVoidwalkerStrategy::SummonVoidwalkerStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SummonVoidwalkerStrategy::SummonVoidwalkerStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SummonVoidwalkerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -118,7 +118,7 @@ void SummonVoidwalkerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +succubus"
 // To disable, type "nc -succubus"
-SummonSuccubusStrategy::SummonSuccubusStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SummonSuccubusStrategy::SummonSuccubusStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SummonSuccubusStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -130,7 +130,7 @@ void SummonSuccubusStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Enabled by default for the Affliction spec
 // To enable, type "nc +felhunter"
 // To disable, type "nc -felhunter"
-SummonFelhunterStrategy::SummonFelhunterStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SummonFelhunterStrategy::SummonFelhunterStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SummonFelhunterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -142,7 +142,7 @@ void SummonFelhunterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Enabled by default for the Demonology spec
 // To enable, type "nc +felguard"
 // To disable, type "nc -felguard"
-SummonFelguardStrategy::SummonFelguardStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SummonFelguardStrategy::SummonFelguardStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SummonFelguardStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -154,7 +154,7 @@ void SummonFelguardStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +ss self"
 // To disable, type "nc -ss self"
-SoulstoneSelfStrategy::SoulstoneSelfStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SoulstoneSelfStrategy::SoulstoneSelfStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SoulstoneSelfStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -165,7 +165,7 @@ void SoulstoneSelfStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +ss master"
 // To disable, type "nc -ss master"
-SoulstoneMasterStrategy::SoulstoneMasterStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SoulstoneMasterStrategy::SoulstoneMasterStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SoulstoneMasterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -176,7 +176,7 @@ void SoulstoneMasterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +ss tank"
 // To disable, type "nc -ss tank"
-SoulstoneTankStrategy::SoulstoneTankStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SoulstoneTankStrategy::SoulstoneTankStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SoulstoneTankStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -187,7 +187,7 @@ void SoulstoneTankStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default
 // To enable, type "nc +ss healer"
 // To disable, type "nc -ss healer"
-SoulstoneHealerStrategy::SoulstoneHealerStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+SoulstoneHealerStrategy::SoulstoneHealerStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void SoulstoneHealerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -198,7 +198,7 @@ void SoulstoneHealerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Enabled by default for Affliction and Demonology specs
 // To enable, type "nc +spellstone"
 // To disable, type "nc -spellstone"
-UseSpellstoneStrategy::UseSpellstoneStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+UseSpellstoneStrategy::UseSpellstoneStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void UseSpellstoneStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -210,7 +210,7 @@ void UseSpellstoneStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Enabled by default for the Destruction spec
 // To enable, type "nc +firestone"
 // To disable, type "nc -firestone"
-UseFirestoneStrategy::UseFirestoneStrategy(PlayerbotAI* ai) : NonCombatStrategy(ai) {}
+UseFirestoneStrategy::UseFirestoneStrategy(ShadowAI* ai) : NonCombatStrategy(ai) {}
 
 void UseFirestoneStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

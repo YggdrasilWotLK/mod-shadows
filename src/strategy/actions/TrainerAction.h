@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRAINERACTION_H
-#define _PLAYERBOT_TRAINERACTION_H
+#ifndef _SHADOW_TRAINERACTION_H
+#define _SHADOW_TRAINERACTION_H
 
 #include "Action.h"
 #include "ChatHelper.h"
 
 class Creature;
-class PlayerbotAI;
+class ShadowAI;
 
 struct TrainerSpell;
 
 class TrainerAction : public Action
 {
 public:
-    TrainerAction(PlayerbotAI* botAI) : Action(botAI, "trainer") {}
+    TrainerAction(ShadowAI* botAI) : Action(botAI, "trainer") {}
 
     bool Execute(Event event) override;
 
@@ -32,21 +32,21 @@ private:
 class MaintenanceAction : public Action
 {
 public:
-    MaintenanceAction(PlayerbotAI* botAI) : Action(botAI, "maintenance") {}
+    MaintenanceAction(ShadowAI* botAI) : Action(botAI, "maintenance") {}
     bool Execute(Event event) override;
 };
 
 class RemoveGlyphAction : public Action
 {
 public:
-    RemoveGlyphAction(PlayerbotAI* botAI) : Action(botAI, "remove glyph") {}
+    RemoveGlyphAction(ShadowAI* botAI) : Action(botAI, "remove glyph") {}
     bool Execute(Event event) override;
 };
 
 class AutoGearAction : public Action
 {
 public:
-    AutoGearAction(PlayerbotAI* botAI) : Action(botAI, "autogear") {}
+    AutoGearAction(ShadowAI* botAI) : Action(botAI, "autogear") {}
     bool Execute(Event event) override;
 };
 

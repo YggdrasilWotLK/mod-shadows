@@ -5,7 +5,7 @@
 
 #include "RtscAction.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RTSCValues.h"
 
 bool RTSCAction::Execute(Event event)

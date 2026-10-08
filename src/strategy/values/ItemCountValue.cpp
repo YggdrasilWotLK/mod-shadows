@@ -5,7 +5,7 @@
 
 #include "ItemCountValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::vector<Item*> InventoryItemValueBase::Find(std::string const qualifier)
 {

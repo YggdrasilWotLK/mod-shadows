@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUKTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONUKTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONUKTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONUKTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -14,8 +14,8 @@ class WotlkDungeonUKTriggerContext : public NamedObjectContext<Trigger>
             creators["dalronn priority"] = &WotlkDungeonUKTriggerContext::dalronn_priority_target;
         }
     private:
-        static Trigger* keleseth_frost_tomb(PlayerbotAI* ai) { return new KelesethFrostTombTrigger(ai); }
-        static Trigger* dalronn_priority_target(PlayerbotAI* ai) { return new DalronnDpsTrigger(ai); }
+        static Trigger* keleseth_frost_tomb(ShadowAI* ai) { return new KelesethFrostTombTrigger(ai); }
+        static Trigger* dalronn_priority_target(ShadowAI* ai) { return new DalronnDpsTrigger(ai); }
 };
 
 #endif

@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOCCTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONOCCTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONOCCTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONOCCTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -73,56 +73,56 @@ const uint32 OCULUS_MAP_ID = 578;
 class DrakosUnstableSphereTrigger : public Trigger
 {
 public:
-    DrakosUnstableSphereTrigger(PlayerbotAI* ai) : Trigger(ai, "drakos unstable sphere") {}
+    DrakosUnstableSphereTrigger(ShadowAI* ai) : Trigger(ai, "drakos unstable sphere") {}
     bool IsActive() override;
 };
 
 class DrakeMountTrigger : public Trigger
 {
 public:
-    DrakeMountTrigger(PlayerbotAI* ai) : Trigger(ai, "drake mount") {}
+    DrakeMountTrigger(ShadowAI* ai) : Trigger(ai, "drake mount") {}
     bool IsActive() override;
 };
 
 class DrakeDismountTrigger : public Trigger
 {
 public:
-    DrakeDismountTrigger(PlayerbotAI* ai) : Trigger(ai, "drake dismount") {}
+    DrakeDismountTrigger(ShadowAI* ai) : Trigger(ai, "drake dismount") {}
     bool IsActive() override;
 };
 
 class GroupFlyingTrigger : public Trigger
 {
 public:
-    GroupFlyingTrigger(PlayerbotAI* ai) : Trigger(ai, "drake fly") {}
+    GroupFlyingTrigger(ShadowAI* ai) : Trigger(ai, "drake fly") {}
     bool IsActive() override;
 };
 
 class DrakeCombatTrigger : public Trigger
 {
 public:
-    DrakeCombatTrigger(PlayerbotAI* ai) : Trigger(ai, "drake combat") {}
+    DrakeCombatTrigger(ShadowAI* ai) : Trigger(ai, "drake combat") {}
     bool IsActive() override;
 };
 
 class VarosCloudstriderTrigger : public Trigger
 {
 public:
-    VarosCloudstriderTrigger(PlayerbotAI* ai) : Trigger(ai, "varos cloudstrider") {}
+    VarosCloudstriderTrigger(ShadowAI* ai) : Trigger(ai, "varos cloudstrider") {}
     bool IsActive() override;
 };
 
 class UromArcaneExplosionTrigger : public Trigger
 {
 public:
-    UromArcaneExplosionTrigger(PlayerbotAI* ai) : Trigger(ai, "urom arcane explosion") {}
+    UromArcaneExplosionTrigger(ShadowAI* ai) : Trigger(ai, "urom arcane explosion") {}
     bool IsActive() override;
 };
 
 class UromTimeBombTrigger : public Trigger
 {
 public:
-    UromTimeBombTrigger(PlayerbotAI* ai) : Trigger(ai, "urom time bomb") {}
+    UromTimeBombTrigger(ShadowAI* ai) : Trigger(ai, "urom time bomb") {}
     bool IsActive() override;
 };
 

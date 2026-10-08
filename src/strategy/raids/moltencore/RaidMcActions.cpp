@@ -1,6 +1,6 @@
 #include "RaidMcActions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool McCheckShouldMoveFromGroupAction::Execute(Event event)
 {

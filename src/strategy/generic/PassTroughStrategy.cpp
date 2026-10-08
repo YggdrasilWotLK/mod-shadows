@@ -5,7 +5,7 @@
 
 #include "PassTroughStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void PassTroughStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

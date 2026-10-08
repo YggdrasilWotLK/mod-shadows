@@ -5,7 +5,7 @@
 
 #include "ItemVisitors.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool FindUsableItemVisitor::Visit(Item* item)
 {
@@ -78,7 +78,7 @@ bool FindPetVisitor::Accept(ItemTemplate const* proto)
 
 FindItemUsageVisitor::FindItemUsageVisitor(Player* bot, ItemUsage usage) : FindUsableItemVisitor(bot), usage(usage)
 {
-    aiGuard = GET_PLAYERBOT_AI(bot);
+    aiGuard = GET_SHADOW_AI(bot);
     context = aiGuard ? aiGuard->GetAiObjectContext() : nullptr;
 };
 

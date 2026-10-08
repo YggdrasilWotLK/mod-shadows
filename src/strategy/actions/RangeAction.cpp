@@ -6,7 +6,7 @@
 #include "RangeAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool RangeAction::Execute(Event event)
 {

@@ -4,7 +4,7 @@
  */
 
 #include "GenericShamanStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 #include "AiFactory.h"
 
@@ -37,65 +37,65 @@ private:
     // Cleansing Totem -> Mana Spring Totem
     // Wrath of Air Totem -> Windfury Totem -> Grounding Totem
 
-    static ActionNode* totem_of_wrath([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* totem_of_wrath([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("totem of wrath",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("flametongue totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* flametongue_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* flametongue_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("flametongue totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("searing totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* magma_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* magma_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("magma totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("searing totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* searing_totem(PlayerbotAI*) { return new ActionNode("searing totem", nullptr, nullptr, nullptr); }
-    static ActionNode* strength_of_earth_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* searing_totem(ShadowAI*) { return new ActionNode("searing totem", nullptr, nullptr, nullptr); }
+    static ActionNode* strength_of_earth_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("strength of earth totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("stoneskin totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* stoneskin_totem(PlayerbotAI*) { return new ActionNode("stoneskin totem", nullptr, nullptr, nullptr); }
-    static ActionNode* cleansing_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* stoneskin_totem(ShadowAI*) { return new ActionNode("stoneskin totem", nullptr, nullptr, nullptr); }
+    static ActionNode* cleansing_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cleansing totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("mana spring totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* mana_spring_totem(PlayerbotAI*) { return new ActionNode("mana spring totem", nullptr, nullptr, nullptr); }
-    static ActionNode* healing_stream_totem(PlayerbotAI*) { return new ActionNode("healing stream totem", nullptr, nullptr, nullptr); }
-    static ActionNode* wrath_of_air_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mana_spring_totem(ShadowAI*) { return new ActionNode("mana spring totem", nullptr, nullptr, nullptr); }
+    static ActionNode* healing_stream_totem(ShadowAI*) { return new ActionNode("healing stream totem", nullptr, nullptr, nullptr); }
+    static ActionNode* wrath_of_air_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("wrath of air totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("windfury totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* windfury_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* windfury_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("windfury totem",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("grounding totem"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* grounding_totem(PlayerbotAI*) { return new ActionNode("grounding totem", nullptr, nullptr, nullptr); }
-    static ActionNode* wind_shear(PlayerbotAI*) { return new ActionNode("wind shear", nullptr, nullptr, nullptr); }
-    static ActionNode* purge(PlayerbotAI*) { return new ActionNode("purge", nullptr, nullptr, nullptr); }
+    static ActionNode* grounding_totem(ShadowAI*) { return new ActionNode("grounding totem", nullptr, nullptr, nullptr); }
+    static ActionNode* wind_shear(ShadowAI*) { return new ActionNode("wind shear", nullptr, nullptr, nullptr); }
+    static ActionNode* purge(ShadowAI*) { return new ActionNode("purge", nullptr, nullptr, nullptr); }
 };
 
-GenericShamanStrategy::GenericShamanStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericShamanStrategy::GenericShamanStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericShamanStrategyActionNodeFactory());
 }

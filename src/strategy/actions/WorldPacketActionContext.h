@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WORLDPACKETACTIONCONTEXT_H
-#define _PLAYERBOT_WORLDPACKETACTIONCONTEXT_H
+#ifndef _SHADOW_WORLDPACKETACTIONCONTEXT_H
+#define _SHADOW_WORLDPACKETACTIONCONTEXT_H
 
 #include "AcceptBattlegroundInvitationAction.h"
 #include "AcceptDuelAction.h"
@@ -43,7 +43,7 @@
 #include "ReleaseSpiritAction.h"
 #include "PetsAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class WorldPacketActionContext : public NamedObjectContext<Action>
 {
@@ -113,68 +113,68 @@ public:
     }
 
 private:
-    static Action* inventory_change_failure(PlayerbotAI* botAI) { return new InventoryChangeFailureAction(botAI); }
-    static Action* guild_accept(PlayerbotAI* botAI) { return new GuildAcceptAction(botAI); }
-    static Action* security_check(PlayerbotAI* botAI) { return new SecurityCheckAction(botAI); }
-    static Action* uninvite(PlayerbotAI* botAI) { return new UninviteAction(botAI); }
-    static Action* ready_check_finished(PlayerbotAI* botAI) { return new FinishReadyCheckAction(botAI); }
-    static Action* ready_check(PlayerbotAI* botAI) { return new ReadyCheckAction(botAI); }
-    static Action* accept_duel(PlayerbotAI* botAI) { return new AcceptDuelAction(botAI); }
-    static Action* tell_cast_failed(PlayerbotAI* botAI) { return new TellCastFailedAction(botAI); }
-    static Action* party_command(PlayerbotAI* botAI) { return new PartyCommandAction(botAI); }
-    static Action* store_loot(PlayerbotAI* botAI) { return new StoreLootAction(botAI); }
-    static Action* accept_trade(PlayerbotAI* botAI) { return new TradeStatusAction(botAI); }
-    static Action* trade_status_extended(PlayerbotAI* botAI) { return new TradeStatusExtendedAction(botAI); }
-    static Action* remember_taxi(PlayerbotAI* botAI) { return new RememberTaxiAction(botAI); }
-    static Action* check_mount_state(PlayerbotAI* botAI) { return new CheckMountStateAction(botAI); }
-    static Action* area_trigger(PlayerbotAI* botAI) { return new AreaTriggerAction(botAI); }
-    static Action* reach_area_trigger(PlayerbotAI* botAI) { return new ReachAreaTriggerAction(botAI); }
-    static Action* use_meeting_stone(PlayerbotAI* botAI) { return new UseMeetingStoneAction(botAI); }
-    static Action* accept_resurrect(PlayerbotAI* botAI) { return new AcceptResurrectAction(botAI); }
-    static Action* find_corpse(PlayerbotAI* botAI) { return new FindCorpseAction(botAI); }
-    static Action* auto_release(PlayerbotAI* botAI) { return new AutoReleaseSpiritAction(botAI); }
-    static Action* revive_from_corpse(PlayerbotAI* botAI) { return new ReviveFromCorpseAction(botAI); }
-    static Action* accept_invitation(PlayerbotAI* botAI) { return new AcceptInvitationAction(botAI); }
-    static Action* give_leader_in_dungeon(PlayerbotAI* botAI) { return new GiveLeaderAction(botAI, "I don't know this dungeon, lead the way!"); }
-    static Action* pass_leadership_to_master(PlayerbotAI* botAI) { return new PassLeadershipToMasterAction(botAI); }
-    static Action* tell_not_enough_money(PlayerbotAI* botAI) { return new TellMasterAction(botAI, "Not enough money"); }
-    static Action* tell_not_enough_reputation(PlayerbotAI* botAI) { return new TellMasterAction(botAI, "Not enough reputation"); }
-    static Action* tell_cannot_equip(PlayerbotAI* botAI) { return new InventoryChangeFailureAction(botAI); }
-    static Action* self_resurrect(PlayerbotAI* botAI) { return new SelfResurrectAction(botAI); }
-    static Action* pet(PlayerbotAI* botAI) { return new PetsAction(botAI); }
+    static Action* inventory_change_failure(ShadowAI* botAI) { return new InventoryChangeFailureAction(botAI); }
+    static Action* guild_accept(ShadowAI* botAI) { return new GuildAcceptAction(botAI); }
+    static Action* security_check(ShadowAI* botAI) { return new SecurityCheckAction(botAI); }
+    static Action* uninvite(ShadowAI* botAI) { return new UninviteAction(botAI); }
+    static Action* ready_check_finished(ShadowAI* botAI) { return new FinishReadyCheckAction(botAI); }
+    static Action* ready_check(ShadowAI* botAI) { return new ReadyCheckAction(botAI); }
+    static Action* accept_duel(ShadowAI* botAI) { return new AcceptDuelAction(botAI); }
+    static Action* tell_cast_failed(ShadowAI* botAI) { return new TellCastFailedAction(botAI); }
+    static Action* party_command(ShadowAI* botAI) { return new PartyCommandAction(botAI); }
+    static Action* store_loot(ShadowAI* botAI) { return new StoreLootAction(botAI); }
+    static Action* accept_trade(ShadowAI* botAI) { return new TradeStatusAction(botAI); }
+    static Action* trade_status_extended(ShadowAI* botAI) { return new TradeStatusExtendedAction(botAI); }
+    static Action* remember_taxi(ShadowAI* botAI) { return new RememberTaxiAction(botAI); }
+    static Action* check_mount_state(ShadowAI* botAI) { return new CheckMountStateAction(botAI); }
+    static Action* area_trigger(ShadowAI* botAI) { return new AreaTriggerAction(botAI); }
+    static Action* reach_area_trigger(ShadowAI* botAI) { return new ReachAreaTriggerAction(botAI); }
+    static Action* use_meeting_stone(ShadowAI* botAI) { return new UseMeetingStoneAction(botAI); }
+    static Action* accept_resurrect(ShadowAI* botAI) { return new AcceptResurrectAction(botAI); }
+    static Action* find_corpse(ShadowAI* botAI) { return new FindCorpseAction(botAI); }
+    static Action* auto_release(ShadowAI* botAI) { return new AutoReleaseSpiritAction(botAI); }
+    static Action* revive_from_corpse(ShadowAI* botAI) { return new ReviveFromCorpseAction(botAI); }
+    static Action* accept_invitation(ShadowAI* botAI) { return new AcceptInvitationAction(botAI); }
+    static Action* give_leader_in_dungeon(ShadowAI* botAI) { return new GiveLeaderAction(botAI, "I don't know this dungeon, lead the way!"); }
+    static Action* pass_leadership_to_master(ShadowAI* botAI) { return new PassLeadershipToMasterAction(botAI); }
+    static Action* tell_not_enough_money(ShadowAI* botAI) { return new TellMasterAction(botAI, "Not enough money"); }
+    static Action* tell_not_enough_reputation(ShadowAI* botAI) { return new TellMasterAction(botAI, "Not enough reputation"); }
+    static Action* tell_cannot_equip(ShadowAI* botAI) { return new InventoryChangeFailureAction(botAI); }
+    static Action* self_resurrect(ShadowAI* botAI) { return new SelfResurrectAction(botAI); }
+    static Action* pet(ShadowAI* botAI) { return new PetsAction(botAI); }
 
     // quest
-    static Action* quest_update_add_kill(PlayerbotAI* ai) { return new QuestUpdateAddKillAction(ai); }
-    static Action* quest_update_add_item(PlayerbotAI* ai) { return new QuestUpdateAddItemAction(ai); }
-    static Action* quest_update_failed(PlayerbotAI* ai) { return new QuestUpdateFailedAction(ai); }
-    static Action* quest_update_failed_timer(PlayerbotAI* ai) { return new QuestUpdateFailedTimerAction(ai); }
-    static Action* quest_update_complete(PlayerbotAI* botAI) { return new QuestUpdateCompleteAction(botAI); }
-    static Action* quest_item_push_result(PlayerbotAI* ai) { return new QuestItemPushResultAction(ai); }
+    static Action* quest_update_add_kill(ShadowAI* ai) { return new QuestUpdateAddKillAction(ai); }
+    static Action* quest_update_add_item(ShadowAI* ai) { return new QuestUpdateAddItemAction(ai); }
+    static Action* quest_update_failed(ShadowAI* ai) { return new QuestUpdateFailedAction(ai); }
+    static Action* quest_update_failed_timer(ShadowAI* ai) { return new QuestUpdateFailedTimerAction(ai); }
+    static Action* quest_update_complete(ShadowAI* botAI) { return new QuestUpdateCompleteAction(botAI); }
+    static Action* quest_item_push_result(ShadowAI* ai) { return new QuestItemPushResultAction(ai); }
 
-    static Action* turn_in_quest(PlayerbotAI* botAI) { return new TalkToQuestGiverAction(botAI); }
-    static Action* accept_quest(PlayerbotAI* botAI) { return new AcceptQuestAction(botAI); }
-    static Action* confirm_quest(PlayerbotAI* ai) { return new ConfirmQuestAction(ai); }
-    static Action* accept_all_quests(PlayerbotAI* botAI) { return new AcceptAllQuestsAction(botAI); }
-    static Action* accept_quest_share(PlayerbotAI* botAI) { return new AcceptQuestShareAction(botAI); }
-    static Action* turn_in_query_quest(PlayerbotAI* botAI) { return new TurnInQueryQuestAction(botAI); }
-    //static Action* quest_confirm_accept(PlayerbotAI* botAI) { return new QuestConfirmAcceptAction(botAI); }
+    static Action* turn_in_quest(ShadowAI* botAI) { return new TalkToQuestGiverAction(botAI); }
+    static Action* accept_quest(ShadowAI* botAI) { return new AcceptQuestAction(botAI); }
+    static Action* confirm_quest(ShadowAI* ai) { return new ConfirmQuestAction(ai); }
+    static Action* accept_all_quests(ShadowAI* botAI) { return new AcceptAllQuestsAction(botAI); }
+    static Action* accept_quest_share(ShadowAI* botAI) { return new AcceptQuestShareAction(botAI); }
+    static Action* turn_in_query_quest(ShadowAI* botAI) { return new TurnInQueryQuestAction(botAI); }
+    //static Action* quest_confirm_accept(ShadowAI* botAI) { return new QuestConfirmAcceptAction(botAI); }
 
-    static Action* loot_roll(PlayerbotAI* botAI) { return new LootRollAction(botAI); }
-    static Action* master_loot_roll(PlayerbotAI* botAI) { return new MasterLootRollAction(botAI); }
-    static Action* bg_join(PlayerbotAI* botAI) { return new BGJoinAction(botAI); }
-    static Action* bg_leave(PlayerbotAI* botAI) { return new BGLeaveAction(botAI); }
-    static Action* bg_status(PlayerbotAI* botAI) { return new BGStatusAction(botAI); }
-    static Action* bg_status_check(PlayerbotAI* botAI) { return new BGStatusCheckAction(botAI); }
-    static Action* bg_strategy_check(PlayerbotAI* botAI) { return new BGStrategyCheckAction(botAI); }
-    static Action* arena_tactics(PlayerbotAI* botAI) { return new ArenaTactics(botAI); }
-    static Action* petition_sign(PlayerbotAI* botAI) { return new PetitionSignAction(botAI); }
-    static Action* lfg_teleport(PlayerbotAI* botAI) { return new LfgTeleportAction(botAI); }
-    static Action* lfg_leave(PlayerbotAI* botAI) { return new LfgLeaveAction(botAI); }
-    static Action* lfg_accept(PlayerbotAI* botAI) { return new LfgAcceptAction(botAI); }
-    static Action* lfg_role_check(PlayerbotAI* botAI) { return new LfgRoleCheckAction(botAI); }
-    static Action* lfg_join(PlayerbotAI* botAI) { return new LfgJoinAction(botAI); }
-    static Action* see_spell(PlayerbotAI* botAI) { return new SeeSpellAction(botAI); }
-    static Action* arena_team_accept(PlayerbotAI* botAI) { return new ArenaTeamAcceptAction(botAI); }
+    static Action* loot_roll(ShadowAI* botAI) { return new LootRollAction(botAI); }
+    static Action* master_loot_roll(ShadowAI* botAI) { return new MasterLootRollAction(botAI); }
+    static Action* bg_join(ShadowAI* botAI) { return new BGJoinAction(botAI); }
+    static Action* bg_leave(ShadowAI* botAI) { return new BGLeaveAction(botAI); }
+    static Action* bg_status(ShadowAI* botAI) { return new BGStatusAction(botAI); }
+    static Action* bg_status_check(ShadowAI* botAI) { return new BGStatusCheckAction(botAI); }
+    static Action* bg_strategy_check(ShadowAI* botAI) { return new BGStrategyCheckAction(botAI); }
+    static Action* arena_tactics(ShadowAI* botAI) { return new ArenaTactics(botAI); }
+    static Action* petition_sign(ShadowAI* botAI) { return new PetitionSignAction(botAI); }
+    static Action* lfg_teleport(ShadowAI* botAI) { return new LfgTeleportAction(botAI); }
+    static Action* lfg_leave(ShadowAI* botAI) { return new LfgLeaveAction(botAI); }
+    static Action* lfg_accept(ShadowAI* botAI) { return new LfgAcceptAction(botAI); }
+    static Action* lfg_role_check(ShadowAI* botAI) { return new LfgRoleCheckAction(botAI); }
+    static Action* lfg_join(ShadowAI* botAI) { return new LfgJoinAction(botAI); }
+    static Action* see_spell(ShadowAI* botAI) { return new SeeSpellAction(botAI); }
+    static Action* arena_team_accept(ShadowAI* botAI) { return new ArenaTeamAcceptAction(botAI); }
 };
 
 #endif

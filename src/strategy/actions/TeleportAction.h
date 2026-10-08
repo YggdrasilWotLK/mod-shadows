@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TELEPORTACTION_H
-#define _PLAYERBOT_TELEPORTACTION_H
+#ifndef _SHADOW_TELEPORTACTION_H
+#define _SHADOW_TELEPORTACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TeleportAction : public Action
 {
 public:
-    TeleportAction(PlayerbotAI* botAI) : Action(botAI, "teleport") {}
+    TeleportAction(ShadowAI* botAI) : Action(botAI, "teleport") {}
 
     bool Execute(Event event) override;
 };

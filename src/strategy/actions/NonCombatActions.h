@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NONCOMBATACTIONS_H
-#define _PLAYERBOT_NONCOMBATACTIONS_H
+#ifndef _SHADOW_NONCOMBATACTIONS_H
+#define _SHADOW_NONCOMBATACTIONS_H
 
 #include "UseItemAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DrinkAction : public UseItemAction
 {
 public:
-    DrinkAction(PlayerbotAI* botAI) : UseItemAction(botAI, "drink") {}
+    DrinkAction(ShadowAI* botAI) : UseItemAction(botAI, "drink") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -23,7 +23,7 @@ public:
 class EatAction : public UseItemAction
 {
 public:
-    EatAction(PlayerbotAI* botAI) : UseItemAction(botAI, "food") {}
+    EatAction(ShadowAI* botAI) : UseItemAction(botAI, "food") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

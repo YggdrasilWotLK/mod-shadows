@@ -6,9 +6,9 @@
 #include "GreetAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-GreetAction::GreetAction(PlayerbotAI* botAI) : Action(botAI, "greet") {}
+GreetAction::GreetAction(ShadowAI* botAI) : Action(botAI, "greet") {}
 
 bool GreetAction::Execute(Event event)
 {
@@ -20,7 +20,7 @@ bool GreetAction::Execute(Event event)
     if (!player)
         return false;
 
-    if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, player, sPlayerbotAIConfig->sightDistance))
+    if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, player, sShadowAIConfig->sightDistance))
         bot->SetFacingToObject(player);
 
     ObjectGuid oldSel = bot->GetTarget();

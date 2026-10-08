@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FLEESTRATEGY_H
-#define _PLAYERBOT_FLEESTRATEGY_H
+#ifndef _SHADOW_FLEESTRATEGY_H
+#define _SHADOW_FLEESTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FleeStrategy : public Strategy
 {
 public:
-    FleeStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    FleeStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "flee"; };
@@ -22,7 +22,7 @@ public:
 class FleeFromAddsStrategy : public Strategy
 {
 public:
-    FleeFromAddsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    FleeFromAddsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "flee from adds"; };

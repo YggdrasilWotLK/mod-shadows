@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHADOWPRIESTSTRATEGYACTIONNODEFACTORY_H
-#define _PLAYERBOT_SHADOWPRIESTSTRATEGYACTIONNODEFACTORY_H
+#ifndef _SHADOW_SHADOWPRIESTSTRATEGYACTIONNODEFACTORY_H
+#define _SHADOW_SHADOWPRIESTSTRATEGYACTIONNODEFACTORY_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ShadowPriestStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -23,7 +23,7 @@ public:
     }
 
 private:
-    static ActionNode* mind_blast([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mind_blast([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mind blast",
                               /*P*/ nullptr,
@@ -31,7 +31,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mind_flay([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mind_flay([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mind flay",
                               /*P*/ nullptr,
@@ -39,7 +39,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* smite([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* smite([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("smite",
                               /*P*/ nullptr,
@@ -47,7 +47,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* dispersion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* dispersion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("dispersion",
                               /*P*/ nullptr,

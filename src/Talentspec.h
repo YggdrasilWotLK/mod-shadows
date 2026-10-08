@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TALENTSPEC_H
-#define _PLAYERBOT_TALENTSPEC_H
+#ifndef _SHADOW_TALENTSPEC_H
+#define _SHADOW_TALENTSPEC_H
 
 #include "Action.h"
 

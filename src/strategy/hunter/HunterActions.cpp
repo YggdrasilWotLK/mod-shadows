@@ -7,8 +7,8 @@
 
 #include "Event.h"
 #include "GenericSpellActions.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 
 bool CastViperStingAction::isUseful()
 {

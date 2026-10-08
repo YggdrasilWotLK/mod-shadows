@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICMAGESTRATEGY_H
-#define _PLAYERBOT_GENERICMAGESTRATEGY_H
+#ifndef _SHADOW_GENERICMAGESTRATEGY_H
+#define _SHADOW_GENERICMAGESTRATEGY_H
 
 #include "CombatStrategy.h"
 #include "RangedCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericMageStrategy : public RangedCombatStrategy
 {
 public:
-    GenericMageStrategy(PlayerbotAI* botAI);
+    GenericMageStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "mage"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -27,7 +27,7 @@ public:
 class MageCureStrategy : public Strategy
 {
 public:
-    MageCureStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageCureStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cure"; }
@@ -36,7 +36,7 @@ public:
 class MageBoostStrategy : public Strategy
 {
 public:
-    MageBoostStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageBoostStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "boost"; }
@@ -45,7 +45,7 @@ public:
 class MageCcStrategy : public Strategy
 {
 public:
-    MageCcStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageCcStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cc"; }
@@ -54,7 +54,7 @@ public:
 class MageAoeStrategy : public CombatStrategy
 {
 public:
-    MageAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    MageAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "aoe"; }

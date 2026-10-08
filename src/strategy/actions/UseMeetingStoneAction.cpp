@@ -9,8 +9,8 @@
 #include "Event.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "PositionValue.h"
 
 bool UseMeetingStoneAction::Execute(Event event)
@@ -108,9 +108,9 @@ bool SummonAction::Execute(Event event)
 bool SummonAction::SummonUsingGos(Player* summoner, Player* player)
 {
     std::list<GameObject*> targets;
-    AnyGameObjectInObjectRangeCheck u_check(summoner, sPlayerbotAIConfig->sightDistance);
+    AnyGameObjectInObjectRangeCheck u_check(summoner, sShadowAIConfig->sightDistance);
     Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(summoner, targets, u_check);
-    Cell::VisitObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
+    Cell::VisitObjects(summoner, searcher, sShadowAIConfig->sightDistance);
 
     for (GameObject* go : targets)
     {
@@ -124,13 +124,13 @@ bool SummonAction::SummonUsingGos(Player* summoner, Player* player)
 
 bool SummonAction::SummonUsingNpcs(Player* summoner, Player* player)
 {
-    if (!sPlayerbotAIConfig->summonAtInnkeepersEnabled)
+    if (!sShadowAIConfig->summonAtInnkeepersEnabled)
         return false;
 
     std::list<Unit*> targets;
-    Acore::AnyUnitInObjectRangeCheck u_check(summoner, sPlayerbotAIConfig->sightDistance);
+    Acore::AnyUnitInObjectRangeCheck u_check(summoner, sShadowAIConfig->sightDistance);
     Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(summoner, targets, u_check);
-    Cell::VisitObjects(summoner, searcher, sPlayerbotAIConfig->sightDistance);
+    Cell::VisitObjects(summoner, searcher, sShadowAIConfig->sightDistance);
 
     for (Unit* unit : targets)
     {
@@ -182,38 +182,38 @@ bool SummonAction::Teleport(Player* summoner, Player* player)
         for (float angle = followAngle - M_PI; angle <= followAngle + M_PI; angle += M_PI / 4)
         {
             uint32 mapId = summoner->GetMapId();
-            float x = summoner->GetPositionX() + cos(angle) * sPlayerbotAIConfig->followDistance;
-            float y = summoner->GetPositionY() + sin(angle) * sPlayerbotAIConfig->followDistance;
+            float x = summoner->GetPositionX() + cos(angle) * sShadowAIConfig->followDistance;
+            float y = summoner->GetPositionY() + sin(angle) * sShadowAIConfig->followDistance;
             float z = summoner->GetPositionZ();
 
             if (summoner->IsWithinLOS(x, y, z))
             {
-                if (sPlayerbotAIConfig
+                if (sShadowAIConfig
                         ->botRepairWhenSummon)  // .conf option to repair bot gear when summoned 0 = off, 1 = on
                     bot->DurabilityRepairAll(false, 1.0f, false);
 
-                if (summoner->IsInCombat() && !sPlayerbotAIConfig->allowSummonInCombat)
+                if (summoner->IsInCombat() && !sShadowAIConfig->allowSummonInCombat)
                 {
                     botAI->TellError("You cannot summon me while you're in combat");
                     return false;
                 }
 
-                if (!summoner->IsAlive() && !sPlayerbotAIConfig->allowSummonWhenMasterIsDead)
+                if (!summoner->IsAlive() && !sShadowAIConfig->allowSummonWhenMasterIsDead)
                 {
                     botAI->TellError("You cannot summon me while you're dead");
                     return false;
                 }
 
                 if (bot->isDead() && !bot->HasPlayerFlag(PLAYER_FLAGS_GHOST) &&
-                    !sPlayerbotAIConfig->allowSummonWhenBotIsDead)
+                    !sShadowAIConfig->allowSummonWhenBotIsDead)
                 {
                     botAI->TellError("You cannot summon me while I'm dead, you need to release my spirit first");
                     return false;
                 }
 
                 bool revive =
-                    sPlayerbotAIConfig->reviveBotWhenSummoned == 2 ||
-                    (sPlayerbotAIConfig->reviveBotWhenSummoned == 1 && !summoner->IsInCombat() && summoner->IsAlive());
+                    sShadowAIConfig->reviveBotWhenSummoned == 2 ||
+                    (sShadowAIConfig->reviveBotWhenSummoned == 1 && !summoner->IsInCombat() && summoner->IsAlive());
 
                 if (bot->isDead() && revive)
                 {

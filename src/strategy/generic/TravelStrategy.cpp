@@ -5,9 +5,9 @@
 
 #include "TravelStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-TravelStrategy::TravelStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+TravelStrategy::TravelStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 NextAction** TravelStrategy::getDefaultActions()
 {

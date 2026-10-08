@@ -13,7 +13,7 @@
 #include "PaladinActions.h"
 #include "PaladinBuffStrategies.h"
 #include "PaladinTriggers.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "TankPaladinStrategy.h"
 
 class PaladinStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -30,12 +30,12 @@ public:
     }
 
 private:
-    static Strategy* nc(PlayerbotAI* botAI) { return new GenericPaladinNonCombatStrategy(botAI); }
-    static Strategy* cure(PlayerbotAI* botAI) { return new PaladinCureStrategy(botAI); }
-    static Strategy* boost(PlayerbotAI* botAI) { return new PaladinBoostStrategy(botAI); }
-    static Strategy* cc(PlayerbotAI* botAI) { return new PaladinCcStrategy(botAI); }
-    static Strategy* bthreat(PlayerbotAI* botAI) { return new PaladinBuffThreatStrategy(botAI); }
-    static Strategy* healer_dps(PlayerbotAI* botAI) { return new PaladinHealerDpsStrategy(botAI); }
+    static Strategy* nc(ShadowAI* botAI) { return new GenericPaladinNonCombatStrategy(botAI); }
+    static Strategy* cure(ShadowAI* botAI) { return new PaladinCureStrategy(botAI); }
+    static Strategy* boost(ShadowAI* botAI) { return new PaladinBoostStrategy(botAI); }
+    static Strategy* cc(ShadowAI* botAI) { return new PaladinCcStrategy(botAI); }
+    static Strategy* bthreat(ShadowAI* botAI) { return new PaladinBuffThreatStrategy(botAI); }
+    static Strategy* healer_dps(ShadowAI* botAI) { return new PaladinHealerDpsStrategy(botAI); }
 };
 
 class PaladinResistanceStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -53,13 +53,13 @@ public:
     }
 
 private:
-    static Strategy* rshadow(PlayerbotAI* botAI) { return new PaladinShadowResistanceStrategy(botAI); }
-    static Strategy* rfrost(PlayerbotAI* botAI) { return new PaladinFrostResistanceStrategy(botAI); }
-    static Strategy* rfire(PlayerbotAI* botAI) { return new PaladinFireResistanceStrategy(botAI); }
-    static Strategy* baoe(PlayerbotAI* botAI) { return new PaladinBuffAoeStrategy(botAI); }
-    static Strategy* barmor(PlayerbotAI* botAI) { return new PaladinBuffArmorStrategy(botAI); }
-    static Strategy* bcast(PlayerbotAI* botAI) { return new PaladinBuffCastStrategy(botAI); }
-    static Strategy* bspeed(PlayerbotAI* botAI) { return new PaladinBuffSpeedStrategy(botAI); }
+    static Strategy* rshadow(ShadowAI* botAI) { return new PaladinShadowResistanceStrategy(botAI); }
+    static Strategy* rfrost(ShadowAI* botAI) { return new PaladinFrostResistanceStrategy(botAI); }
+    static Strategy* rfire(ShadowAI* botAI) { return new PaladinFireResistanceStrategy(botAI); }
+    static Strategy* baoe(ShadowAI* botAI) { return new PaladinBuffAoeStrategy(botAI); }
+    static Strategy* barmor(ShadowAI* botAI) { return new PaladinBuffArmorStrategy(botAI); }
+    static Strategy* bcast(ShadowAI* botAI) { return new PaladinBuffCastStrategy(botAI); }
+    static Strategy* bspeed(ShadowAI* botAI) { return new PaladinBuffSpeedStrategy(botAI); }
 };
 
 class PaladinBuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -74,10 +74,10 @@ public:
     }
 
 private:
-    static Strategy* bhealth(PlayerbotAI* botAI) { return new PaladinBuffHealthStrategy(botAI); }
-    static Strategy* bmana(PlayerbotAI* botAI) { return new PaladinBuffManaStrategy(botAI); }
-    static Strategy* bdps(PlayerbotAI* botAI) { return new PaladinBuffDpsStrategy(botAI); }
-    static Strategy* bstats(PlayerbotAI* botAI) { return new PaladinBuffStatsStrategy(botAI); }
+    static Strategy* bhealth(ShadowAI* botAI) { return new PaladinBuffHealthStrategy(botAI); }
+    static Strategy* bmana(ShadowAI* botAI) { return new PaladinBuffManaStrategy(botAI); }
+    static Strategy* bdps(ShadowAI* botAI) { return new PaladinBuffDpsStrategy(botAI); }
+    static Strategy* bstats(ShadowAI* botAI) { return new PaladinBuffStatsStrategy(botAI); }
 };
 
 class PaladinCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -92,10 +92,10 @@ public:
     }
 
 private:
-    static Strategy* tank(PlayerbotAI* botAI) { return new TankPaladinStrategy(botAI); }
-    static Strategy* dps(PlayerbotAI* botAI) { return new DpsPaladinStrategy(botAI); }
-    static Strategy* heal(PlayerbotAI* botAI) { return new HealPaladinStrategy(botAI); }
-    static Strategy* offheal(PlayerbotAI* botAI) { return new OffhealRetPaladinStrategy(botAI); }
+    static Strategy* tank(ShadowAI* botAI) { return new TankPaladinStrategy(botAI); }
+    static Strategy* dps(ShadowAI* botAI) { return new DpsPaladinStrategy(botAI); }
+    static Strategy* heal(ShadowAI* botAI) { return new HealPaladinStrategy(botAI); }
+    static Strategy* offheal(ShadowAI* botAI) { return new OffhealRetPaladinStrategy(botAI); }
 };
 
 class PaladinTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -152,74 +152,74 @@ public:
     }
 
 private:
-    static Trigger* turn_undead(PlayerbotAI* botAI) { return new TurnUndeadTrigger(botAI); }
-    static Trigger* divine_favor(PlayerbotAI* botAI) { return new DivineFavorTrigger(botAI); }
-    static Trigger* holy_shield(PlayerbotAI* botAI) { return new HolyShieldTrigger(botAI); }
-    static Trigger* righteous_fury(PlayerbotAI* botAI) { return new RighteousFuryTrigger(botAI); }
-    static Trigger* judgement(PlayerbotAI* botAI) { return new JudgementTrigger(botAI); }
-    static Trigger* judgement_of_wisdom(PlayerbotAI* botAI) { return new JudgementOfWisdomTrigger(botAI); }
-    static Trigger* judgement_of_light(PlayerbotAI* botAI) { return new JudgementOfLightTrigger(botAI); }
-    static Trigger* blessing(PlayerbotAI* botAI) { return new BlessingTrigger(botAI); }
-    static Trigger* seal(PlayerbotAI* botAI) { return new SealTrigger(botAI); }
-    static Trigger* art_of_war(PlayerbotAI* botAI) { return new ArtOfWarTrigger(botAI); }
-    static Trigger* blessing_on_party(PlayerbotAI* botAI) { return new BlessingOnPartyTrigger(botAI); }
-    static Trigger* crusader_aura(PlayerbotAI* botAI) { return new CrusaderAuraTrigger(botAI); }
-    static Trigger* retribution_aura(PlayerbotAI* botAI) { return new RetributionAuraTrigger(botAI); }
-    static Trigger* devotion_aura(PlayerbotAI* botAI) { return new DevotionAuraTrigger(botAI); }
-    static Trigger* sanctity_aura(PlayerbotAI* botAI) { return new SanctityAuraTrigger(botAI); }
-    static Trigger* concentration_aura(PlayerbotAI* botAI) { return new ConcentrationAuraTrigger(botAI); }
-    static Trigger* shadow_resistance_aura(PlayerbotAI* botAI) { return new ShadowResistanceAuraTrigger(botAI); }
-    static Trigger* frost_resistance_aura(PlayerbotAI* botAI) { return new FrostResistanceAuraTrigger(botAI); }
-    static Trigger* fire_resistance_aura(PlayerbotAI* botAI) { return new FireResistanceAuraTrigger(botAI); }
-    static Trigger* hammer_of_justice_snare(PlayerbotAI* botAI) { return new HammerOfJusticeSnareTrigger(botAI); }
-    static Trigger* hammer_of_justice_interrupt(PlayerbotAI* botAI)
+    static Trigger* turn_undead(ShadowAI* botAI) { return new TurnUndeadTrigger(botAI); }
+    static Trigger* divine_favor(ShadowAI* botAI) { return new DivineFavorTrigger(botAI); }
+    static Trigger* holy_shield(ShadowAI* botAI) { return new HolyShieldTrigger(botAI); }
+    static Trigger* righteous_fury(ShadowAI* botAI) { return new RighteousFuryTrigger(botAI); }
+    static Trigger* judgement(ShadowAI* botAI) { return new JudgementTrigger(botAI); }
+    static Trigger* judgement_of_wisdom(ShadowAI* botAI) { return new JudgementOfWisdomTrigger(botAI); }
+    static Trigger* judgement_of_light(ShadowAI* botAI) { return new JudgementOfLightTrigger(botAI); }
+    static Trigger* blessing(ShadowAI* botAI) { return new BlessingTrigger(botAI); }
+    static Trigger* seal(ShadowAI* botAI) { return new SealTrigger(botAI); }
+    static Trigger* art_of_war(ShadowAI* botAI) { return new ArtOfWarTrigger(botAI); }
+    static Trigger* blessing_on_party(ShadowAI* botAI) { return new BlessingOnPartyTrigger(botAI); }
+    static Trigger* crusader_aura(ShadowAI* botAI) { return new CrusaderAuraTrigger(botAI); }
+    static Trigger* retribution_aura(ShadowAI* botAI) { return new RetributionAuraTrigger(botAI); }
+    static Trigger* devotion_aura(ShadowAI* botAI) { return new DevotionAuraTrigger(botAI); }
+    static Trigger* sanctity_aura(ShadowAI* botAI) { return new SanctityAuraTrigger(botAI); }
+    static Trigger* concentration_aura(ShadowAI* botAI) { return new ConcentrationAuraTrigger(botAI); }
+    static Trigger* shadow_resistance_aura(ShadowAI* botAI) { return new ShadowResistanceAuraTrigger(botAI); }
+    static Trigger* frost_resistance_aura(ShadowAI* botAI) { return new FrostResistanceAuraTrigger(botAI); }
+    static Trigger* fire_resistance_aura(ShadowAI* botAI) { return new FireResistanceAuraTrigger(botAI); }
+    static Trigger* hammer_of_justice_snare(ShadowAI* botAI) { return new HammerOfJusticeSnareTrigger(botAI); }
+    static Trigger* hammer_of_justice_interrupt(ShadowAI* botAI)
     {
         return new HammerOfJusticeInterruptSpellTrigger(botAI);
     }
-    static Trigger* CleanseCureDisease(PlayerbotAI* botAI) { return new CleanseCureDiseaseTrigger(botAI); }
-    static Trigger* CleanseCurePartyMemberDisease(PlayerbotAI* botAI)
+    static Trigger* CleanseCureDisease(ShadowAI* botAI) { return new CleanseCureDiseaseTrigger(botAI); }
+    static Trigger* CleanseCurePartyMemberDisease(ShadowAI* botAI)
     {
         return new CleanseCurePartyMemberDiseaseTrigger(botAI);
     }
-    static Trigger* CleanseCurePoison(PlayerbotAI* botAI) { return new CleanseCurePoisonTrigger(botAI); }
-    static Trigger* CleanseCurePartyMemberPoison(PlayerbotAI* botAI)
+    static Trigger* CleanseCurePoison(ShadowAI* botAI) { return new CleanseCurePoisonTrigger(botAI); }
+    static Trigger* CleanseCurePartyMemberPoison(ShadowAI* botAI)
     {
         return new CleanseCurePartyMemberPoisonTrigger(botAI);
     }
-    static Trigger* CleanseCureMagic(PlayerbotAI* botAI) { return new CleanseCureMagicTrigger(botAI); }
-    static Trigger* CleanseCurePartyMemberMagic(PlayerbotAI* botAI)
+    static Trigger* CleanseCureMagic(ShadowAI* botAI) { return new CleanseCureMagicTrigger(botAI); }
+    static Trigger* CleanseCurePartyMemberMagic(ShadowAI* botAI)
     {
         return new CleanseCurePartyMemberMagicTrigger(botAI);
     }
-    static Trigger* hammer_of_justice_on_enemy_target(PlayerbotAI* botAI)
+    static Trigger* hammer_of_justice_on_enemy_target(ShadowAI* botAI)
     {
         return new HammerOfJusticeEnemyHealerTrigger(botAI);
     }
-    static Trigger* hammer_of_justice_on_snare_target(PlayerbotAI* botAI)
+    static Trigger* hammer_of_justice_on_snare_target(ShadowAI* botAI)
     {
         return new HammerOfJusticeSnareTrigger(botAI);
     }
-    static Trigger* avenger_shield(PlayerbotAI* botAI) { return new AvengerShieldTrigger(botAI); }
-    static Trigger* consecration(PlayerbotAI* botAI) { return new ConsecrationTrigger(botAI); }
-    static Trigger* repentance_on_enemy_healer(PlayerbotAI* botAI) { return new RepentanceOnHealerTrigger(botAI); }
-    static Trigger* repentance_on_snare_target(PlayerbotAI* botAI) { return new RepentanceSnareTrigger(botAI); }
-    static Trigger* repentance_interrupt(PlayerbotAI* botAI) { return new RepentanceInterruptTrigger(botAI); }
-    static Trigger* beacon_of_light_on_main_tank(PlayerbotAI* ai) { return new BeaconOfLightOnMainTankTrigger(ai); }
-    static Trigger* sacred_shield_on_main_tank(PlayerbotAI* ai) { return new SacredShieldOnMainTankTrigger(ai); }
+    static Trigger* avenger_shield(ShadowAI* botAI) { return new AvengerShieldTrigger(botAI); }
+    static Trigger* consecration(ShadowAI* botAI) { return new ConsecrationTrigger(botAI); }
+    static Trigger* repentance_on_enemy_healer(ShadowAI* botAI) { return new RepentanceOnHealerTrigger(botAI); }
+    static Trigger* repentance_on_snare_target(ShadowAI* botAI) { return new RepentanceSnareTrigger(botAI); }
+    static Trigger* repentance_interrupt(ShadowAI* botAI) { return new RepentanceInterruptTrigger(botAI); }
+    static Trigger* beacon_of_light_on_main_tank(ShadowAI* ai) { return new BeaconOfLightOnMainTankTrigger(ai); }
+    static Trigger* sacred_shield_on_main_tank(ShadowAI* ai) { return new SacredShieldOnMainTankTrigger(ai); }
 
-    static Trigger* blessing_of_kings_on_party(PlayerbotAI* botAI) { return new BlessingOfKingsOnPartyTrigger(botAI); }
-    static Trigger* blessing_of_wisdom_on_party(PlayerbotAI* botAI)
+    static Trigger* blessing_of_kings_on_party(ShadowAI* botAI) { return new BlessingOfKingsOnPartyTrigger(botAI); }
+    static Trigger* blessing_of_wisdom_on_party(ShadowAI* botAI)
     {
         return new BlessingOfWisdomOnPartyTrigger(botAI);
     }
-    static Trigger* blessing_of_might_on_party(PlayerbotAI* botAI) { return new BlessingOfMightOnPartyTrigger(botAI); }
-    static Trigger* blessing_of_sanctuary_on_party(PlayerbotAI* botAI)
+    static Trigger* blessing_of_might_on_party(ShadowAI* botAI) { return new BlessingOfMightOnPartyTrigger(botAI); }
+    static Trigger* blessing_of_sanctuary_on_party(ShadowAI* botAI)
     {
         return new BlessingOfSanctuaryOnPartyTrigger(botAI);
     }
 
-    static Trigger* avenging_wrath(PlayerbotAI* botAI) { return new AvengingWrathTrigger(botAI); }
-    static Trigger* self_sanctuary(PlayerbotAI* botAI) { return new SelfSanctuaryTrigger(botAI); }
+    static Trigger* avenging_wrath(ShadowAI* botAI) { return new AvengingWrathTrigger(botAI); }
+    static Trigger* self_sanctuary(ShadowAI* botAI) { return new SelfSanctuaryTrigger(botAI); }
 };
 
 class PaladinAiObjectContextInternal : public NamedObjectContext<Action>
@@ -310,108 +310,108 @@ public:
     }
 
 private:
-    static Action* blessing_of_protection_on_party(PlayerbotAI* botAI)
+    static Action* blessing_of_protection_on_party(ShadowAI* botAI)
     {
         return new CastBlessingOfProtectionProtectAction(botAI);
     }
-    static Action* turn_undead(PlayerbotAI* botAI) { return new CastTurnUndeadAction(botAI); }
-    static Action* divine_favor(PlayerbotAI* botAI) { return new CastDivineFavorAction(botAI); }
-    static Action* righteous_fury(PlayerbotAI* botAI) { return new CastRighteousFuryAction(botAI); }
-    static Action* seal_of_command(PlayerbotAI* botAI) { return new CastSealOfCommandAction(botAI); }
-    static Action* seal_of_vengeance(PlayerbotAI* botAI) { return new CastSealOfVengeanceAction(botAI); }
-    static Action* seal_of_corruption(PlayerbotAI* botAI) { return new CastSealOfCorruptionAction(botAI); }
-    static Action* blessing_of_sanctuary(PlayerbotAI* botAI) { return new CastBlessingOfSanctuaryAction(botAI); }
-    static Action* blessing_of_might(PlayerbotAI* botAI) { return new CastBlessingOfMightAction(botAI); }
-    static Action* blessing_of_wisdom(PlayerbotAI* botAI) { return new CastBlessingOfWisdomAction(botAI); }
-    static Action* blessing_of_kings(PlayerbotAI* botAI) { return new CastBlessingOfKingsAction(botAI); }
-    static Action* divine_storm(PlayerbotAI* botAI) { return new CastDivineStormAction(botAI); }
-    static Action* blessing_of_kings_on_party(PlayerbotAI* botAI)
+    static Action* turn_undead(ShadowAI* botAI) { return new CastTurnUndeadAction(botAI); }
+    static Action* divine_favor(ShadowAI* botAI) { return new CastDivineFavorAction(botAI); }
+    static Action* righteous_fury(ShadowAI* botAI) { return new CastRighteousFuryAction(botAI); }
+    static Action* seal_of_command(ShadowAI* botAI) { return new CastSealOfCommandAction(botAI); }
+    static Action* seal_of_vengeance(ShadowAI* botAI) { return new CastSealOfVengeanceAction(botAI); }
+    static Action* seal_of_corruption(ShadowAI* botAI) { return new CastSealOfCorruptionAction(botAI); }
+    static Action* blessing_of_sanctuary(ShadowAI* botAI) { return new CastBlessingOfSanctuaryAction(botAI); }
+    static Action* blessing_of_might(ShadowAI* botAI) { return new CastBlessingOfMightAction(botAI); }
+    static Action* blessing_of_wisdom(ShadowAI* botAI) { return new CastBlessingOfWisdomAction(botAI); }
+    static Action* blessing_of_kings(ShadowAI* botAI) { return new CastBlessingOfKingsAction(botAI); }
+    static Action* divine_storm(ShadowAI* botAI) { return new CastDivineStormAction(botAI); }
+    static Action* blessing_of_kings_on_party(ShadowAI* botAI)
     {
         return new CastBlessingOfKingsOnPartyAction(botAI);
     }
-    static Action* blessing_of_might_on_party(PlayerbotAI* botAI)
+    static Action* blessing_of_might_on_party(ShadowAI* botAI)
     {
         return new CastBlessingOfMightOnPartyAction(botAI);
     }
-    static Action* blessing_of_wisdom_on_party(PlayerbotAI* botAI)
+    static Action* blessing_of_wisdom_on_party(ShadowAI* botAI)
     {
         return new CastBlessingOfWisdomOnPartyAction(botAI);
     }
-    static Action* blessing_of_sanctuary_on_party(PlayerbotAI* botAI)
+    static Action* blessing_of_sanctuary_on_party(ShadowAI* botAI)
     {
         return new CastBlessingOfSanctuaryOnPartyAction(botAI);
     }
-    static Action* redemption(PlayerbotAI* botAI) { return new CastRedemptionAction(botAI); }
-    static Action* crusader_strike(PlayerbotAI* botAI) { return new CastCrusaderStrikeAction(botAI); }
-    static Action* crusader_aura(PlayerbotAI* botAI) { return new CastCrusaderAuraAction(botAI); }
-    static Action* seal_of_light(PlayerbotAI* botAI) { return new CastSealOfLightAction(botAI); }
-    static Action* devotion_aura(PlayerbotAI* botAI) { return new CastDevotionAuraAction(botAI); }
-    static Action* concentration_aura(PlayerbotAI* botAI) { return new CastConcentrationAuraAction(botAI); }
-    static Action* holy_wrath(PlayerbotAI* botAI) { return new CastHolyWrathAction(botAI); }
-    static Action* consecration(PlayerbotAI* botAI) { return new CastConsecrationAction(botAI); }
-    static Action* cleanse_poison(PlayerbotAI* botAI) { return new CastCleansePoisonAction(botAI); }
-    static Action* cleanse_disease(PlayerbotAI* botAI) { return new CastCleanseDiseaseAction(botAI); }
-    static Action* cleanse_magic(PlayerbotAI* botAI) { return new CastCleanseMagicAction(botAI); }
-    static Action* purify_poison(PlayerbotAI* botAI) { return new CastPurifyPoisonAction(botAI); }
-    static Action* purify_disease(PlayerbotAI* botAI) { return new CastPurifyDiseaseAction(botAI); }
-    static Action* cleanse_poison_on_party(PlayerbotAI* botAI) { return new CastCleansePoisonOnPartyAction(botAI); }
-    static Action* cleanse_disease_on_party(PlayerbotAI* botAI) { return new CastCleanseDiseaseOnPartyAction(botAI); }
-    static Action* cleanse_magic_on_party(PlayerbotAI* botAI) { return new CastCleanseMagicOnPartyAction(botAI); }
-    static Action* purify_poison_on_party(PlayerbotAI* botAI) { return new CastPurifyPoisonOnPartyAction(botAI); }
-    static Action* purify_disease_on_party(PlayerbotAI* botAI) { return new CastPurifyDiseaseOnPartyAction(botAI); }
-    static Action* seal_of_wisdom(PlayerbotAI* botAI) { return new CastSealOfWisdomAction(botAI); }
-    static Action* seal_of_justice(PlayerbotAI* botAI) { return new CastSealOfJusticeAction(botAI); }
-    static Action* seal_of_righteousness(PlayerbotAI* botAI) { return new CastSealOfRighteousnessAction(botAI); }
-    static Action* flash_of_light(PlayerbotAI* botAI) { return new CastFlashOfLightAction(botAI); }
-    static Action* hand_of_reckoning(PlayerbotAI* botAI) { return new CastHandOfReckoningAction(botAI); }
-    static Action* avengers_shield(PlayerbotAI* botAI) { return new CastAvengersShieldAction(botAI); }
-    static Action* exorcism(PlayerbotAI* botAI) { return new CastExorcismAction(botAI); }
-    static Action* judgement(PlayerbotAI* botAI) { return new CastJudgementAction(botAI); }
-    static Action* judgement_of_light(PlayerbotAI* botAI) { return new CastJudgementOfLightAction(botAI); }
-    static Action* judgement_of_wisdom(PlayerbotAI* botAI) { return new CastJudgementOfWisdomAction(botAI); }
-    static Action* divine_shield(PlayerbotAI* botAI) { return new CastDivineShieldAction(botAI); }
-    static Action* divine_protection(PlayerbotAI* botAI) { return new CastDivineProtectionAction(botAI); }
-    static Action* divine_protection_on_party(PlayerbotAI* botAI)
+    static Action* redemption(ShadowAI* botAI) { return new CastRedemptionAction(botAI); }
+    static Action* crusader_strike(ShadowAI* botAI) { return new CastCrusaderStrikeAction(botAI); }
+    static Action* crusader_aura(ShadowAI* botAI) { return new CastCrusaderAuraAction(botAI); }
+    static Action* seal_of_light(ShadowAI* botAI) { return new CastSealOfLightAction(botAI); }
+    static Action* devotion_aura(ShadowAI* botAI) { return new CastDevotionAuraAction(botAI); }
+    static Action* concentration_aura(ShadowAI* botAI) { return new CastConcentrationAuraAction(botAI); }
+    static Action* holy_wrath(ShadowAI* botAI) { return new CastHolyWrathAction(botAI); }
+    static Action* consecration(ShadowAI* botAI) { return new CastConsecrationAction(botAI); }
+    static Action* cleanse_poison(ShadowAI* botAI) { return new CastCleansePoisonAction(botAI); }
+    static Action* cleanse_disease(ShadowAI* botAI) { return new CastCleanseDiseaseAction(botAI); }
+    static Action* cleanse_magic(ShadowAI* botAI) { return new CastCleanseMagicAction(botAI); }
+    static Action* purify_poison(ShadowAI* botAI) { return new CastPurifyPoisonAction(botAI); }
+    static Action* purify_disease(ShadowAI* botAI) { return new CastPurifyDiseaseAction(botAI); }
+    static Action* cleanse_poison_on_party(ShadowAI* botAI) { return new CastCleansePoisonOnPartyAction(botAI); }
+    static Action* cleanse_disease_on_party(ShadowAI* botAI) { return new CastCleanseDiseaseOnPartyAction(botAI); }
+    static Action* cleanse_magic_on_party(ShadowAI* botAI) { return new CastCleanseMagicOnPartyAction(botAI); }
+    static Action* purify_poison_on_party(ShadowAI* botAI) { return new CastPurifyPoisonOnPartyAction(botAI); }
+    static Action* purify_disease_on_party(ShadowAI* botAI) { return new CastPurifyDiseaseOnPartyAction(botAI); }
+    static Action* seal_of_wisdom(ShadowAI* botAI) { return new CastSealOfWisdomAction(botAI); }
+    static Action* seal_of_justice(ShadowAI* botAI) { return new CastSealOfJusticeAction(botAI); }
+    static Action* seal_of_righteousness(ShadowAI* botAI) { return new CastSealOfRighteousnessAction(botAI); }
+    static Action* flash_of_light(ShadowAI* botAI) { return new CastFlashOfLightAction(botAI); }
+    static Action* hand_of_reckoning(ShadowAI* botAI) { return new CastHandOfReckoningAction(botAI); }
+    static Action* avengers_shield(ShadowAI* botAI) { return new CastAvengersShieldAction(botAI); }
+    static Action* exorcism(ShadowAI* botAI) { return new CastExorcismAction(botAI); }
+    static Action* judgement(ShadowAI* botAI) { return new CastJudgementAction(botAI); }
+    static Action* judgement_of_light(ShadowAI* botAI) { return new CastJudgementOfLightAction(botAI); }
+    static Action* judgement_of_wisdom(ShadowAI* botAI) { return new CastJudgementOfWisdomAction(botAI); }
+    static Action* divine_shield(ShadowAI* botAI) { return new CastDivineShieldAction(botAI); }
+    static Action* divine_protection(ShadowAI* botAI) { return new CastDivineProtectionAction(botAI); }
+    static Action* divine_protection_on_party(ShadowAI* botAI)
     {
         return new CastDivineProtectionOnPartyAction(botAI);
     }
-    static Action* hammer_of_justice(PlayerbotAI* botAI) { return new CastHammerOfJusticeAction(botAI); }
-    static Action* flash_of_light_on_party(PlayerbotAI* botAI) { return new CastFlashOfLightOnPartyAction(botAI); }
-    static Action* holy_light(PlayerbotAI* botAI) { return new CastHolyLightAction(botAI); }
-    static Action* holy_light_on_party(PlayerbotAI* botAI) { return new CastHolyLightOnPartyAction(botAI); }
-    static Action* lay_on_hands(PlayerbotAI* botAI) { return new CastLayOnHandsAction(botAI); }
-    static Action* lay_on_hands_on_party(PlayerbotAI* botAI) { return new CastLayOnHandsOnPartyAction(botAI); }
-    static Action* judgement_of_justice(PlayerbotAI* botAI) { return new CastJudgementOfJusticeAction(botAI); }
-    static Action* hammer_of_wrath(PlayerbotAI* botAI) { return new CastHammerOfWrathAction(botAI); }
-    static Action* holy_shield(PlayerbotAI* botAI) { return new CastHolyShieldAction(botAI); }
-    static Action* hammer_of_the_righteous(PlayerbotAI* botAI) { return new CastHammerOfTheRighteousAction(botAI); }
-    static Action* retribution_aura(PlayerbotAI* botAI) { return new CastRetributionAuraAction(botAI); }
-    static Action* shadow_resistance_aura(PlayerbotAI* botAI) { return new CastShadowResistanceAuraAction(botAI); }
-    static Action* frost_resistance_aura(PlayerbotAI* botAI) { return new CastFrostResistanceAuraAction(botAI); }
-    static Action* fire_resistance_aura(PlayerbotAI* botAI) { return new CastFireResistanceAuraAction(botAI); }
-    static Action* hammer_of_justice_on_enemy_healer(PlayerbotAI* botAI)
+    static Action* hammer_of_justice(ShadowAI* botAI) { return new CastHammerOfJusticeAction(botAI); }
+    static Action* flash_of_light_on_party(ShadowAI* botAI) { return new CastFlashOfLightOnPartyAction(botAI); }
+    static Action* holy_light(ShadowAI* botAI) { return new CastHolyLightAction(botAI); }
+    static Action* holy_light_on_party(ShadowAI* botAI) { return new CastHolyLightOnPartyAction(botAI); }
+    static Action* lay_on_hands(ShadowAI* botAI) { return new CastLayOnHandsAction(botAI); }
+    static Action* lay_on_hands_on_party(ShadowAI* botAI) { return new CastLayOnHandsOnPartyAction(botAI); }
+    static Action* judgement_of_justice(ShadowAI* botAI) { return new CastJudgementOfJusticeAction(botAI); }
+    static Action* hammer_of_wrath(ShadowAI* botAI) { return new CastHammerOfWrathAction(botAI); }
+    static Action* holy_shield(ShadowAI* botAI) { return new CastHolyShieldAction(botAI); }
+    static Action* hammer_of_the_righteous(ShadowAI* botAI) { return new CastHammerOfTheRighteousAction(botAI); }
+    static Action* retribution_aura(ShadowAI* botAI) { return new CastRetributionAuraAction(botAI); }
+    static Action* shadow_resistance_aura(ShadowAI* botAI) { return new CastShadowResistanceAuraAction(botAI); }
+    static Action* frost_resistance_aura(ShadowAI* botAI) { return new CastFrostResistanceAuraAction(botAI); }
+    static Action* fire_resistance_aura(ShadowAI* botAI) { return new CastFireResistanceAuraAction(botAI); }
+    static Action* hammer_of_justice_on_enemy_healer(ShadowAI* botAI)
     {
         return new CastHammerOfJusticeOnEnemyHealerAction(botAI);
     }
-    static Action* hammer_of_justice_on_snare_target(PlayerbotAI* botAI)
+    static Action* hammer_of_justice_on_snare_target(ShadowAI* botAI)
     {
         return new CastHammerOfJusticeSnareAction(botAI);
     }
-    static Action* righteous_defense(PlayerbotAI* botAI) { return new CastRighteousDefenseAction(botAI); }
-    static Action* repentance(PlayerbotAI* botAI) { return new CastRepentanceAction(botAI); }
-    static Action* repentance_on_snare_target(PlayerbotAI* botAI) { return new CastRepentanceSnareAction(botAI); }
-    static Action* repentance_on_enemy_healer(PlayerbotAI* botAI) { return new CastRepentanceOnHealerAction(botAI); }
-    static Action* sanctity_aura(PlayerbotAI* botAI) { return new CastSanctityAuraAction(botAI); }
-    static Action* holy_shock(PlayerbotAI* botAI) { return new CastHolyShockAction(botAI); }
-    static Action* holy_shock_on_party(PlayerbotAI* botAI) { return new CastHolyShockOnPartyAction(botAI); }
-    static Action* divine_plea(PlayerbotAI* ai) { return new CastDivinePleaAction(ai); }
-    static Action* shield_of_righteousness(PlayerbotAI* ai) { return new ShieldOfRighteousnessAction(ai); }
-    static Action* beacon_of_light_on_main_tank(PlayerbotAI* ai) { return new CastBeaconOfLightOnMainTankAction(ai); }
-    static Action* sacred_shield_on_main_tank(PlayerbotAI* ai) { return new CastSacredShieldOnMainTankAction(ai); }
-    static Action* avenging_wrath(PlayerbotAI* ai) { return new CastAvengingWrathAction(ai); }
-    static Action* divine_illumination(PlayerbotAI* ai) { return new CastDivineIlluminationAction(ai); }
-    static Action* divine_sacrifice(PlayerbotAI* ai) { return new CastDivineSacrificeAction(ai); }
-    static Action* cancel_divine_sacrifice(PlayerbotAI* ai) { return new CastCancelDivineSacrificeAction(ai); }
+    static Action* righteous_defense(ShadowAI* botAI) { return new CastRighteousDefenseAction(botAI); }
+    static Action* repentance(ShadowAI* botAI) { return new CastRepentanceAction(botAI); }
+    static Action* repentance_on_snare_target(ShadowAI* botAI) { return new CastRepentanceSnareAction(botAI); }
+    static Action* repentance_on_enemy_healer(ShadowAI* botAI) { return new CastRepentanceOnHealerAction(botAI); }
+    static Action* sanctity_aura(ShadowAI* botAI) { return new CastSanctityAuraAction(botAI); }
+    static Action* holy_shock(ShadowAI* botAI) { return new CastHolyShockAction(botAI); }
+    static Action* holy_shock_on_party(ShadowAI* botAI) { return new CastHolyShockOnPartyAction(botAI); }
+    static Action* divine_plea(ShadowAI* ai) { return new CastDivinePleaAction(ai); }
+    static Action* shield_of_righteousness(ShadowAI* ai) { return new ShieldOfRighteousnessAction(ai); }
+    static Action* beacon_of_light_on_main_tank(ShadowAI* ai) { return new CastBeaconOfLightOnMainTankAction(ai); }
+    static Action* sacred_shield_on_main_tank(ShadowAI* ai) { return new CastSacredShieldOnMainTankAction(ai); }
+    static Action* avenging_wrath(ShadowAI* ai) { return new CastAvengingWrathAction(ai); }
+    static Action* divine_illumination(ShadowAI* ai) { return new CastDivineIlluminationAction(ai); }
+    static Action* divine_sacrifice(ShadowAI* ai) { return new CastDivineSacrificeAction(ai); }
+    static Action* cancel_divine_sacrifice(ShadowAI* ai) { return new CastCancelDivineSacrificeAction(ai); }
 };
 
 SharedNamedObjectContextList<Strategy> PaladinAiObjectContext::sharedStrategyContexts;
@@ -419,7 +419,7 @@ SharedNamedObjectContextList<Action> PaladinAiObjectContext::sharedActionContext
 SharedNamedObjectContextList<Trigger> PaladinAiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> PaladinAiObjectContext::sharedValueContexts;
 
-PaladinAiObjectContext::PaladinAiObjectContext(PlayerbotAI* botAI)
+PaladinAiObjectContext::PaladinAiObjectContext(ShadowAI* botAI)
     : AiObjectContext(botAI, sharedStrategyContexts, sharedActionContexts, sharedTriggerContexts, sharedValueContexts)
 {
 }

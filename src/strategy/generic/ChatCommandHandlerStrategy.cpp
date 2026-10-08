@@ -5,7 +5,7 @@
 
 #include "ChatCommandHandlerStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class ChatCommandActionNodeFactoryInternal : public NamedObjectFactory<ActionNode>
 {
@@ -13,7 +13,7 @@ public:
     ChatCommandActionNodeFactoryInternal() { creators["tank attack chat shortcut"] = &tank_attack_chat_shortcut; }
 
 private:
-    static ActionNode* tank_attack_chat_shortcut(PlayerbotAI* botAI)
+    static ActionNode* tank_attack_chat_shortcut(ShadowAI* botAI)
     {
         return new ActionNode("tank attack chat shortcut",
                               /*P*/ nullptr,
@@ -110,7 +110,7 @@ void ChatCommandHandlerStrategy::InitTriggers(std::vector<TriggerNode*>& trigger
     triggers.push_back(new TriggerNode("roll", NextAction::array(0, new NextAction("roll", relevance), nullptr)));
 }
 
-ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI)
+ChatCommandHandlerStrategy::ChatCommandHandlerStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI)
 {
     actionNodeFactories.Add(new ChatCommandActionNodeFactoryInternal());
 

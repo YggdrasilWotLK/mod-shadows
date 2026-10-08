@@ -5,7 +5,7 @@
 
 #include "NearestUnitsValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 GuidVector NearestUnitsValue::Calculate()
 {

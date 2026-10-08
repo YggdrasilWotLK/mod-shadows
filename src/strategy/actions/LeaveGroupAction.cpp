@@ -6,8 +6,8 @@
 #include "LeaveGroupAction.h"
 
 #include "Event.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 bool LeaveGroupAction::Execute(Event event)
 {
@@ -75,16 +75,16 @@ bool LeaveGroupAction::Leave(Player* player)
     if (!botAI)
         return false;
 
-    if (player && !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, player))
+    if (player && !botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, false, player))
         return false;
 
     bool aiMaster = false;
     if (Player* leaveMaster = botAI->GetMaster())
-        aiMaster = (GET_PLAYERBOT_AI(leaveMaster) != nullptr);
+        aiMaster = (GET_SHADOW_AI(leaveMaster) != nullptr);
 
-    botAI->TellMaster("Goodbye!", PLAYERBOT_SECURITY_TALK);
+    botAI->TellMaster("Goodbye!", SHADOW_SECURITY_TALK);
 
-    bool randomBot = sRandomPlayerbotMgr->IsRandomBot(bot);
+    bool randomBot = sRandomShadowMgr->IsRandomBot(bot);
     bool shouldStay = randomBot && bot->GetGroup() && player == bot;
     if (!shouldStay)
     {
@@ -93,7 +93,7 @@ bool LeaveGroupAction::Leave(Player* player)
 
     if (randomBot)
     {
-        if (auto leaveBotAI = GET_PLAYERBOT_AI(bot))
+        if (auto leaveBotAI = GET_SHADOW_AI(bot))
             leaveBotAI->SetMaster(nullptr);
     }
 
@@ -127,13 +127,13 @@ bool LeaveFarAwayAction::isUseful()
     if (!master || (bot == master && !botAI->IsRealPlayer()))
         return false;
 
-    std::shared_ptr<PlayerbotAI> masterBotAI;
+    std::shared_ptr<ShadowAI> masterBotAI;
     if (master)
-        masterBotAI = GET_PLAYERBOT_AI(master);
+        masterBotAI = GET_SHADOW_AI(master);
     if (master && !masterBotAI)
         return false;
 
-    if (trueMaster && !GET_PLAYERBOT_AI(trueMaster))
+    if (trueMaster && !GET_SHADOW_AI(trueMaster))
         return false;
 
     if (botAI->IsAlt() &&
@@ -163,7 +163,7 @@ bool LeaveFarAwayAction::isUseful()
     if (abs(int32(master->GetLevel() - bot->GetLevel())) > 4)
         return true;
 
-    if (bot->GetMapId() != master->GetMapId() || bot->GetDistance2d(master) >= 2 * sPlayerbotAIConfig->rpgDistance)
+    if (bot->GetMapId() != master->GetMapId() || bot->GetDistance2d(master) >= 2 * sShadowAIConfig->rpgDistance)
     {
         return true;
     }

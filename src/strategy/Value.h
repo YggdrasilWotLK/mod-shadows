@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_VALUE_H
-#define _PLAYERBOT_VALUE_H
+#ifndef _SHADOW_VALUE_H
+#define _SHADOW_VALUE_H
 
 #include <time.h>
 
@@ -14,7 +14,7 @@
 #include "Timer.h"
 #include "Unit.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class FleeInfo
@@ -32,7 +32,7 @@ struct CreatureData;
 class UntypedValue : public AiNamedObject
 {
 public:
-    UntypedValue(PlayerbotAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
+    UntypedValue(ShadowAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
     virtual ~UntypedValue() {}
     virtual void Update() {}
     virtual void Reset() {}
@@ -58,7 +58,7 @@ template <class T>
 class CalculatedValue : public UntypedValue, public Value<T>
 {
 public:
-    CalculatedValue(PlayerbotAI* botAI, std::string const name = "value", uint32 checkInterval = 1)
+    CalculatedValue(ShadowAI* botAI, std::string const name = "value", uint32 checkInterval = 1)
         : UntypedValue(botAI, name),
           checkInterval(
               checkInterval == 1 ? 1 : (checkInterval < 100 ? checkInterval * 1000 : checkInterval)) /*turn s -> ms?*/,
@@ -142,7 +142,7 @@ template <class T>
 class SingleCalculatedValue : public CalculatedValue<T>
 {
 public:
-    SingleCalculatedValue(PlayerbotAI* botAI, std::string const name = "value") : CalculatedValue<T>(botAI, name)
+    SingleCalculatedValue(ShadowAI* botAI, std::string const name = "value") : CalculatedValue<T>(botAI, name)
     {
         this->Reset();
     }
@@ -169,7 +169,7 @@ template <class T>
 class MemoryCalculatedValue : public CalculatedValue<T>
 {
 public:
-    MemoryCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1)
+    MemoryCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1)
         : CalculatedValue<T>(botAI, name, checkInterval)
     {
         lastChangeTime = time(0);
@@ -228,7 +228,7 @@ template <class T>
 class LogCalculatedValue : public MemoryCalculatedValue<T>
 {
 public:
-    LogCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1)
+    LogCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1)
         : MemoryCalculatedValue<T>(botAI, name, checkInterval)
     {
     }
@@ -261,7 +261,7 @@ protected:
 class Uint8CalculatedValue : public CalculatedValue<uint8>
 {
 public:
-    Uint8CalculatedValue(PlayerbotAI* botAI, std::string const name = "value", uint32 checkInterval = 1)
+    Uint8CalculatedValue(ShadowAI* botAI, std::string const name = "value", uint32 checkInterval = 1)
         : CalculatedValue<uint8>(botAI, name, checkInterval)
     {
     }
@@ -272,7 +272,7 @@ public:
 class Uint32CalculatedValue : public CalculatedValue<uint32>
 {
 public:
-    Uint32CalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int checkInterval = 1)
+    Uint32CalculatedValue(ShadowAI* botAI, std::string const name = "value", int checkInterval = 1)
         : CalculatedValue<uint32>(botAI, name, checkInterval)
     {
     }
@@ -283,7 +283,7 @@ public:
 class FloatCalculatedValue : public CalculatedValue<float>
 {
 public:
-    FloatCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int checkInterval = 1)
+    FloatCalculatedValue(ShadowAI* botAI, std::string const name = "value", int checkInterval = 1)
         : CalculatedValue<float>(botAI, name, checkInterval)
     {
     }
@@ -294,7 +294,7 @@ public:
 class BoolCalculatedValue : public CalculatedValue<bool>
 {
 public:
-    BoolCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int checkInterval = 1)
+    BoolCalculatedValue(ShadowAI* botAI, std::string const name = "value", int checkInterval = 1)
         : CalculatedValue<bool>(botAI, name, checkInterval)
     {
     }
@@ -305,7 +305,7 @@ public:
 class UnitCalculatedValue : public CalculatedValue<Unit*>
 {
 public:
-    UnitCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1);
+    UnitCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1);
 
     std::string const Format() override;
     Unit* Get() override;
@@ -314,7 +314,7 @@ public:
 class CDPairCalculatedValue : public CalculatedValue<CreatureData const*>
 {
 public:
-    CDPairCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1);
+    CDPairCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1);
 
     std::string const Format() override;
 };
@@ -322,7 +322,7 @@ public:
 class CDPairListCalculatedValue : public CalculatedValue<std::vector<CreatureData const*>>
 {
 public:
-    CDPairListCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1);
+    CDPairListCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1);
 
     std::string const Format() override;
 };
@@ -330,7 +330,7 @@ public:
 class ObjectGuidCalculatedValue : public CalculatedValue<ObjectGuid>
 {
 public:
-    ObjectGuidCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1);
+    ObjectGuidCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1);
 
     std::string const Format() override;
 };
@@ -338,7 +338,7 @@ public:
 class ObjectGuidListCalculatedValue : public CalculatedValue<GuidVector>
 {
 public:
-    ObjectGuidListCalculatedValue(PlayerbotAI* botAI, std::string const name = "value", int32 checkInterval = 1);
+    ObjectGuidListCalculatedValue(ShadowAI* botAI, std::string const name = "value", int32 checkInterval = 1);
 
     std::string const Format() override;
 };
@@ -347,7 +347,7 @@ template <class T>
 class ManualSetValue : public UntypedValue, public Value<T>
 {
 public:
-    ManualSetValue(PlayerbotAI* botAI, T defaultValue, std::string const name = "value")
+    ManualSetValue(ShadowAI* botAI, T defaultValue, std::string const name = "value")
         : UntypedValue(botAI, name), value(defaultValue), defaultValue(defaultValue)
     {
     }
@@ -369,7 +369,7 @@ protected:
 class UnitManualSetValue : public ManualSetValue<Unit*>
 {
 public:
-    UnitManualSetValue(PlayerbotAI* botAI, Unit* defaultValue, std::string const name = "value")
+    UnitManualSetValue(ShadowAI* botAI, Unit* defaultValue, std::string const name = "value")
         : ManualSetValue<Unit*>(botAI, defaultValue, name)
     {
     }
@@ -381,7 +381,7 @@ public:
 class DisperseDistanceValue : public ManualSetValue<float>
 {
 public:
-    DisperseDistanceValue(PlayerbotAI* botAI, float defaultValue = -1.0f, std::string const name = "disperse distance")
+    DisperseDistanceValue(ShadowAI* botAI, float defaultValue = -1.0f, std::string const name = "disperse distance")
         : ManualSetValue<float>(botAI, defaultValue, name)
     {
     }
@@ -390,7 +390,7 @@ public:
 class LastFleeAngleValue : public ManualSetValue<float>
 {
 public:
-    LastFleeAngleValue(PlayerbotAI* botAI, float defaultValue = 0.0f, std::string const name = "last flee angle")
+    LastFleeAngleValue(ShadowAI* botAI, float defaultValue = 0.0f, std::string const name = "last flee angle")
         : ManualSetValue<float>(botAI, defaultValue, name)
     {
     }
@@ -399,7 +399,7 @@ public:
 class LastFleeTimestampValue : public ManualSetValue<uint32>
 {
 public:
-    LastFleeTimestampValue(PlayerbotAI* botAI, uint32 defaultValue = 0, std::string const name = "last flee timestamp")
+    LastFleeTimestampValue(ShadowAI* botAI, uint32 defaultValue = 0, std::string const name = "last flee timestamp")
         : ManualSetValue<uint32>(botAI, defaultValue, name)
     {
     }
@@ -408,7 +408,7 @@ public:
 class RecentlyFleeInfo : public ManualSetValue<std::list<FleeInfo>&>
 {
 public:
-    RecentlyFleeInfo(PlayerbotAI* botAI, std::string const name = "recently flee info")
+    RecentlyFleeInfo(ShadowAI* botAI, std::string const name = "recently flee info")
         : ManualSetValue<std::list<FleeInfo>&>(botAI, data, name)
     {
     }

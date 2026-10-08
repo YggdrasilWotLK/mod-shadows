@@ -7,14 +7,14 @@
 
 #include "Event.h"
 #include "ItemCountValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class FindBuffVisitor : public IterateItemsVisitor
 {
 public:
     FindBuffVisitor(Player* bot) : IterateItemsVisitor(), bot(bot)
     {
-        aiGuard = GET_PLAYERBOT_AI(bot);
+        aiGuard = GET_SHADOW_AI(bot);
         context = aiGuard ? aiGuard->GetAiObjectContext() : nullptr;
     }
 
@@ -65,7 +65,7 @@ public:
 private:
     Player* bot;
     // Keeps the bot AI alive for the visitor's lifetime (logout/destruct race).
-    std::shared_ptr<PlayerbotAI> aiGuard;
+    std::shared_ptr<ShadowAI> aiGuard;
     AiObjectContext* context;
 };
 

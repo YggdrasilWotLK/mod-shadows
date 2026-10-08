@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_UNEQUIPACTION_H
-#define _PLAYERBOT_UNEQUIPACTION_H
+#ifndef _SHADOW_UNEQUIPACTION_H
+#define _SHADOW_UNEQUIPACTION_H
 
 #include "InventoryAction.h"
 
 class FindItemVisitor;
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 
 class UnequipAction : public InventoryAction
 {
 public:
-    UnequipAction(PlayerbotAI* botAI) : InventoryAction(botAI, "unequip") {}
+    UnequipAction(ShadowAI* botAI) : InventoryAction(botAI, "unequip") {}
 
     bool Execute(Event event) override;
 

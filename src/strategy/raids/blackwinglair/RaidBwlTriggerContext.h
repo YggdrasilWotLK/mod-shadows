@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDBWLTRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDBWLTRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDBWLTRIGGERCONTEXT_H
+#define _SHADOW_RAIDBWLTRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -15,8 +15,8 @@ public:
     }
 
 private:
-    static Trigger* bwl_suppression_device(PlayerbotAI* ai) { return new BwlSuppressionDeviceTrigger(ai); }
-    static Trigger* bwl_affliction_bronze(PlayerbotAI* ai) { return new BwlAfflictionBronzeTrigger(ai); }
+    static Trigger* bwl_suppression_device(ShadowAI* ai) { return new BwlSuppressionDeviceTrigger(ai); }
+    static Trigger* bwl_affliction_bronze(ShadowAI* ai) { return new BwlAfflictionBronzeTrigger(ai); }
 };
 
 #endif

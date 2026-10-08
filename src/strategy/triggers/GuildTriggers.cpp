@@ -6,7 +6,7 @@
 #include "GuildTriggers.h"
 
 #include "GuildMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool PetitionTurnInTrigger::IsActive()
 {
@@ -43,7 +43,7 @@ bool LeaveLargeGuildTrigger::IsActive()
     if (!leader)
         return false;
 
-    auto leaderBotAI = GET_PLAYERBOT_AI(leader);
+    auto leaderBotAI = GET_SHADOW_AI(leader);
     if (!leaderBotAI || leaderBotAI->IsRealPlayer())
         return false;
 

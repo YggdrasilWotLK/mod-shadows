@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "LootAction.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::map<InventoryResult, std::string> InventoryChangeFailureAction::messages;
 

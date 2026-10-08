@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MOVEFROMGROUPSTRATEGY_H
-#define _PLAYERBOT_MOVEFROMGROUPSTRATEGY_H
+#ifndef _SHADOW_MOVEFROMGROUPSTRATEGY_H
+#define _SHADOW_MOVEFROMGROUPSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MoveFromGroupStrategy : public Strategy
 {
 public:
-    MoveFromGroupStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MoveFromGroupStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     std::string const getName() override { return "move from group"; }
     NextAction** getDefaultActions() override;

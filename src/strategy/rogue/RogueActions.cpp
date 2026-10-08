@@ -8,13 +8,13 @@
 #include "Event.h"
 #include "ObjectGuid.h"
 #include "Player.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 bool CastStealthAction::isUseful()
 {
     Unit* target = AI_VALUE(Unit*, "current target");
-    if (target && bot->GetDistance(target) >= sPlayerbotAIConfig->spellDistance)
+    if (target && bot->GetDistance(target) >= sShadowAIConfig->spellDistance)
         return false;
     return true;
 }

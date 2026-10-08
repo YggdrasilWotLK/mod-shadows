@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REMOVEAURAACTION_H
-#define _PLAYERBOT_REMOVEAURAACTION_H
+#ifndef _SHADOW_REMOVEAURAACTION_H
+#define _SHADOW_REMOVEAURAACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RemoveAuraAction : public Action
 {
 public:
-    RemoveAuraAction(PlayerbotAI* botAI);
+    RemoveAuraAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };

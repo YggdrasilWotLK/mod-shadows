@@ -7,7 +7,7 @@
 
 #include "BudgetValues.h"
 #include "ItemUsageValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CanMoveAroundValue::Calculate()
 {

@@ -10,7 +10,7 @@
 #include "ItemCountValue.h"
 #include "ItemUsageValue.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "StatsWeightCalculator.h"
 #include "ItemPackets.h"
 
@@ -312,7 +312,7 @@ void EquipAction::EquipItem(Item* item)
 
 bool EquipUpgradesAction::Execute(Event event)
 {
-    if (!sPlayerbotAIConfig->autoEquipUpgradeLoot && !sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sShadowAIConfig->autoEquipUpgradeLoot && !sRandomShadowMgr->IsRandomBot(bot))
         return false;
 
     if (event.GetSource() == "trade status")

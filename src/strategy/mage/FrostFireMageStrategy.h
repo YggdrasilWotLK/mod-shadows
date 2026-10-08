@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FROSTFIREMAGESTRATEGY_H
-#define _PLAYERBOT_FROSTFIREMAGESTRATEGY_H
+#ifndef _SHADOW_FROSTFIREMAGESTRATEGY_H
+#define _SHADOW_FROSTFIREMAGESTRATEGY_H
 
 #include "GenericMageStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FrostFireMageStrategy : public GenericMageStrategy
 {
 public:
-    FrostFireMageStrategy(PlayerbotAI* botAI);
+    FrostFireMageStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "frostfire"; }

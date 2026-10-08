@@ -15,8 +15,8 @@
 #include "ObjectMgr.h"
 #include "Pet.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotFactory.h"
+#include "ShadowAI.h"
+#include "ShadowFactory.h"
 #include "SpellMgr.h"
 #include "WorldSession.h"
 
@@ -153,7 +153,7 @@ bool TameAction::Execute(Event event)
     if (mode != "rename")
     {
         Player* bot = botAI->GetBot();
-        PlayerbotFactory factory(bot, bot->GetLevel());
+        ShadowFactory factory(bot, bot->GetLevel());
         factory.InitPet();
         factory.InitPetTalents();
 

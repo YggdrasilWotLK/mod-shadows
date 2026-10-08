@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONNEXTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONNEXTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONNEXTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONNEXTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -33,56 +33,56 @@ enum NexusIDs
 class FactionCommanderWhirlwindTrigger : public Trigger
 {
 public:
-    FactionCommanderWhirlwindTrigger(PlayerbotAI* ai) : Trigger(ai, "faction commander whirlwind") {}
+    FactionCommanderWhirlwindTrigger(ShadowAI* ai) : Trigger(ai, "faction commander whirlwind") {}
     bool IsActive() override;
 };
 
 class TelestraFirebombTrigger : public Trigger
 {
 public:
-    TelestraFirebombTrigger(PlayerbotAI* ai) : Trigger(ai, "telestra firebomb spread") {}
+    TelestraFirebombTrigger(ShadowAI* ai) : Trigger(ai, "telestra firebomb spread") {}
     bool IsActive() override;
 };
 
 class TelestraSplitPhaseTrigger : public Trigger
 {
 public:
-    TelestraSplitPhaseTrigger(PlayerbotAI* ai) : Trigger(ai, "telestra split phase") {}
+    TelestraSplitPhaseTrigger(ShadowAI* ai) : Trigger(ai, "telestra split phase") {}
     bool IsActive() override;
 };
 
 class ChaoticRiftTrigger : public Trigger
 {
 public:
-    ChaoticRiftTrigger(PlayerbotAI* ai) : Trigger(ai, "chaotic rift") {}
+    ChaoticRiftTrigger(ShadowAI* ai) : Trigger(ai, "chaotic rift") {}
     bool IsActive() override;
 };
 
 class OrmorokSpikesTrigger : public Trigger
 {
 public:
-    OrmorokSpikesTrigger(PlayerbotAI* ai) : Trigger(ai, "ormorok spikes") {}
+    OrmorokSpikesTrigger(ShadowAI* ai) : Trigger(ai, "ormorok spikes") {}
     bool IsActive() override;
 };
 
 class OrmorokStackTrigger : public Trigger
 {
 public:
-    OrmorokStackTrigger(PlayerbotAI* ai) : Trigger(ai, "ormorok stack") {}
+    OrmorokStackTrigger(ShadowAI* ai) : Trigger(ai, "ormorok stack") {}
     bool IsActive() override;
 };
 
 class IntenseColdTrigger : public Trigger
 {
 public:
-    IntenseColdTrigger(PlayerbotAI* ai) : Trigger(ai, "intense cold") {}
+    IntenseColdTrigger(ShadowAI* ai) : Trigger(ai, "intense cold") {}
     bool IsActive() override;
 };
 
 class KeristraszaPositioningTrigger : public Trigger
 {
 public:
-    KeristraszaPositioningTrigger(PlayerbotAI* ai) : Trigger(ai, "keristrasza positioning") {}
+    KeristraszaPositioningTrigger(ShadowAI* ai) : Trigger(ai, "keristrasza positioning") {}
     bool IsActive() override;
 };
 

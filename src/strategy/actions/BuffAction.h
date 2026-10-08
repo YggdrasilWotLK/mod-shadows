@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BUFFACTION_H
-#define _PLAYERBOT_BUFFACTION_H
+#ifndef _SHADOW_BUFFACTION_H
+#define _SHADOW_BUFFACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class BuffAction : public InventoryAction
 {
 public:
-    BuffAction(PlayerbotAI* botAI) : InventoryAction(botAI, "buff") {}
+    BuffAction(ShadowAI* botAI) : InventoryAction(botAI, "buff") {}
 
     bool Execute(Event event) override;
 

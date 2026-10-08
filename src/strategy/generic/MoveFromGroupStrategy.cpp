@@ -5,7 +5,7 @@
 
 #include "MoveFromGroupStrategy.h"
 #include "PassiveMultiplier.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 NextAction** MoveFromGroupStrategy::getDefaultActions()
 {

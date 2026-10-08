@@ -5,7 +5,7 @@
 
 #include "LfgStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void LfgStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -16,4 +16,4 @@ void LfgStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         "unknown dungeon", NextAction::array(0, new NextAction("give leader in dungeon", relevance), nullptr)));
 }
 
-LfgStrategy::LfgStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) {}
+LfgStrategy::LfgStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) {}

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GRINDINGSTRATEGY_H
-#define _PLAYERBOT_GRINDINGSTRATEGY_H
+#ifndef _SHADOW_GRINDINGSTRATEGY_H
+#define _SHADOW_GRINDINGSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GrindingStrategy : public NonCombatStrategy
 {
 public:
-    GrindingStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    GrindingStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "grind"; }
     uint32 GetType() const override { return STRATEGY_TYPE_DPS; }
@@ -24,7 +24,7 @@ public:
 class MoveRandomStrategy : public NonCombatStrategy
 {
 public:
-    MoveRandomStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    MoveRandomStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
     std::string const getName() override { return "move random"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
 };

@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BATTLEGROUNDSTRATEGY_H
-#define _PLAYERBOT_BATTLEGROUNDSTRATEGY_H
+#ifndef _SHADOW_BATTLEGROUNDSTRATEGY_H
+#define _SHADOW_BATTLEGROUNDSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
 class BGStrategy : public PassTroughStrategy
 {
 public:
-    BGStrategy(PlayerbotAI* botAI);
+    BGStrategy(ShadowAI* botAI);
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -21,7 +21,7 @@ public:
 class BattlegroundStrategy : public Strategy
 {
 public:
-    BattlegroundStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    BattlegroundStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -31,7 +31,7 @@ public:
 class WarsongStrategy : public Strategy
 {
 public:
-    WarsongStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    WarsongStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -41,7 +41,7 @@ public:
 class AlteracStrategy : public Strategy
 {
 public:
-    AlteracStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    AlteracStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -51,7 +51,7 @@ public:
 class ArathiStrategy : public Strategy
 {
 public:
-    ArathiStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    ArathiStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -61,7 +61,7 @@ public:
 class EyeStrategy : public Strategy
 {
 public:
-    EyeStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    EyeStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -71,7 +71,7 @@ public:
 class IsleStrategy : public Strategy
 {
 public:
-    IsleStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    IsleStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -81,7 +81,7 @@ public:
 class ArenaStrategy : public Strategy
 {
 public:
-    ArenaStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    ArenaStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     uint32 GetType() const override { return STRATEGY_TYPE_GENERIC; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

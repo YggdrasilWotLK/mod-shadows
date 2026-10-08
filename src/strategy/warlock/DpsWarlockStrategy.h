@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DPSWARLOCKSTRATEGY_H
-#define _PLAYERBOT_DPSWARLOCKSTRATEGY_H
+#ifndef _SHADOW_DPSWARLOCKSTRATEGY_H
+#define _SHADOW_DPSWARLOCKSTRATEGY_H
 
 #include "GenericWarlockStrategy.h"
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DpsWarlockStrategy : public GenericWarlockStrategy
 {
 public:
-    DpsWarlockStrategy(PlayerbotAI* botAI);
+    DpsWarlockStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "dps"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -25,7 +25,7 @@ public:
 class DpsAoeWarlockStrategy : public CombatStrategy
 {
 public:
-    DpsAoeWarlockStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    DpsAoeWarlockStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "aoe"; }
@@ -34,7 +34,7 @@ public:
 class DpsWarlockDebuffStrategy : public CombatStrategy
 {
 public:
-    DpsWarlockDebuffStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    DpsWarlockDebuffStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "dps debuff"; }

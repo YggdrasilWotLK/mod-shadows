@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_STATSACTION_H
-#define _PLAYERBOT_STATSACTION_H
+#ifndef _SHADOW_STATSACTION_H
+#define _SHADOW_STATSACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class StatsAction : public Action
 {
 public:
-    StatsAction(PlayerbotAI* botAI) : Action(botAI, "stats") {}
+    StatsAction(ShadowAI* botAI) : Action(botAI, "stats") {}
 
     bool Execute(Event event) override;
 

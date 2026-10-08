@@ -5,8 +5,8 @@
 #include "Group.h"
 #include "ScriptedCreature.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "World.h"
 
 // Prevent harpoon spam

@@ -6,7 +6,7 @@
 #include "TellTargetAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ThreatMgr.h"
 
 bool TellTargetAction::Execute(Event event)

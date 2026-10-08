@@ -11,7 +11,7 @@
 #include "GenericTriggers.h"
 #include "GenericWarlockNonCombatStrategy.h"
 #include "NamedObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PullStrategy.h"
 #include "Strategy.h"
 #include "TankWarlockStrategy.h"
@@ -35,14 +35,14 @@ public:
     }
 
 private:
-    static Strategy* nc(PlayerbotAI* botAI) { return new GenericWarlockNonCombatStrategy(botAI); }
-    static Strategy* pull(PlayerbotAI* botAI) { return new PullStrategy(botAI, "shoot"); }
-    static Strategy* boost(PlayerbotAI* botAI) { return new WarlockBoostStrategy(botAI); }
-    static Strategy* cc(PlayerbotAI* botAI) { return new WarlockCcStrategy(botAI); }
-    static Strategy* pet(PlayerbotAI* botAI) { return new WarlockPetStrategy(botAI); }
-    static Strategy* meta_melee_aoe(PlayerbotAI* botAI) { return new MetaMeleeAoeStrategy(botAI); }
-    static Strategy* tank(PlayerbotAI* botAI) { return new TankWarlockStrategy(botAI); }
-    static Strategy* aoe(PlayerbotAI* botAI) { return new AoEWarlockStrategy(botAI); }
+    static Strategy* nc(ShadowAI* botAI) { return new GenericWarlockNonCombatStrategy(botAI); }
+    static Strategy* pull(ShadowAI* botAI) { return new PullStrategy(botAI, "shoot"); }
+    static Strategy* boost(ShadowAI* botAI) { return new WarlockBoostStrategy(botAI); }
+    static Strategy* cc(ShadowAI* botAI) { return new WarlockCcStrategy(botAI); }
+    static Strategy* pet(ShadowAI* botAI) { return new WarlockPetStrategy(botAI); }
+    static Strategy* meta_melee_aoe(ShadowAI* botAI) { return new MetaMeleeAoeStrategy(botAI); }
+    static Strategy* tank(ShadowAI* botAI) { return new TankWarlockStrategy(botAI); }
+    static Strategy* aoe(ShadowAI* botAI) { return new AoEWarlockStrategy(botAI); }
 };
 
 class WarlockCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -56,9 +56,9 @@ public:
     }
 
 private:
-    static Strategy* affliction(PlayerbotAI* botAI) { return new AfflictionWarlockStrategy(botAI); }
-    static Strategy* demonology(PlayerbotAI* botAI) { return new DemonologyWarlockStrategy(botAI); }
-    static Strategy* destruction(PlayerbotAI* botAI) { return new DestructionWarlockStrategy(botAI); }
+    static Strategy* affliction(ShadowAI* botAI) { return new AfflictionWarlockStrategy(botAI); }
+    static Strategy* demonology(ShadowAI* botAI) { return new DemonologyWarlockStrategy(botAI); }
+    static Strategy* destruction(ShadowAI* botAI) { return new DestructionWarlockStrategy(botAI); }
 };
 
 class WarlockPetStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -74,11 +74,11 @@ public:
     }
 
 private:
-    static Strategy* imp(PlayerbotAI* ai) { return new SummonImpStrategy(ai); }
-    static Strategy* voidwalker(PlayerbotAI* ai) { return new SummonVoidwalkerStrategy(ai); }
-    static Strategy* succubus(PlayerbotAI* ai) { return new SummonSuccubusStrategy(ai); }
-    static Strategy* felhunter(PlayerbotAI* ai) { return new SummonFelhunterStrategy(ai); }
-    static Strategy* felguard(PlayerbotAI* ai) { return new SummonFelguardStrategy(ai); }
+    static Strategy* imp(ShadowAI* ai) { return new SummonImpStrategy(ai); }
+    static Strategy* voidwalker(ShadowAI* ai) { return new SummonVoidwalkerStrategy(ai); }
+    static Strategy* succubus(ShadowAI* ai) { return new SummonSuccubusStrategy(ai); }
+    static Strategy* felhunter(ShadowAI* ai) { return new SummonFelhunterStrategy(ai); }
+    static Strategy* felguard(ShadowAI* ai) { return new SummonFelguardStrategy(ai); }
 };
 
 class WarlockSoulstoneStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -93,10 +93,10 @@ public:
     }
 
 private:
-    static Strategy* soulstone_self(PlayerbotAI* ai) { return new SoulstoneSelfStrategy(ai); }
-    static Strategy* soulstone_master(PlayerbotAI* ai) { return new SoulstoneMasterStrategy(ai); }
-    static Strategy* soulstone_tank(PlayerbotAI* ai) { return new SoulstoneTankStrategy(ai); }
-    static Strategy* soulstone_healer(PlayerbotAI* ai) { return new SoulstoneHealerStrategy(ai); }
+    static Strategy* soulstone_self(ShadowAI* ai) { return new SoulstoneSelfStrategy(ai); }
+    static Strategy* soulstone_master(ShadowAI* ai) { return new SoulstoneMasterStrategy(ai); }
+    static Strategy* soulstone_tank(ShadowAI* ai) { return new SoulstoneTankStrategy(ai); }
+    static Strategy* soulstone_healer(ShadowAI* ai) { return new SoulstoneHealerStrategy(ai); }
 };
 
 class WarlockCurseStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -113,12 +113,12 @@ public:
     }
 
 private:
-    static Strategy* curse_of_agony(PlayerbotAI* botAI) { return new WarlockCurseOfAgonyStrategy(botAI); }
-    static Strategy* curse_of_elements(PlayerbotAI* botAI) { return new WarlockCurseOfTheElementsStrategy(botAI); }
-    static Strategy* curse_of_doom(PlayerbotAI* botAI) { return new WarlockCurseOfDoomStrategy(botAI); }
-    static Strategy* curse_of_exhaustion(PlayerbotAI* botAI) { return new WarlockCurseOfExhaustionStrategy(botAI); }
-    static Strategy* curse_of_tongues(PlayerbotAI* botAI) { return new WarlockCurseOfTonguesStrategy(botAI); }
-    static Strategy* curse_of_weakness(PlayerbotAI* botAI) { return new WarlockCurseOfWeaknessStrategy(botAI); }
+    static Strategy* curse_of_agony(ShadowAI* botAI) { return new WarlockCurseOfAgonyStrategy(botAI); }
+    static Strategy* curse_of_elements(ShadowAI* botAI) { return new WarlockCurseOfTheElementsStrategy(botAI); }
+    static Strategy* curse_of_doom(ShadowAI* botAI) { return new WarlockCurseOfDoomStrategy(botAI); }
+    static Strategy* curse_of_exhaustion(ShadowAI* botAI) { return new WarlockCurseOfExhaustionStrategy(botAI); }
+    static Strategy* curse_of_tongues(ShadowAI* botAI) { return new WarlockCurseOfTonguesStrategy(botAI); }
+    static Strategy* curse_of_weakness(ShadowAI* botAI) { return new WarlockCurseOfWeaknessStrategy(botAI); }
 };
 
 class WarlockWeaponStoneStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -131,8 +131,8 @@ public:
     }
 
 private:
-    static Strategy* firestone(PlayerbotAI* ai) { return new UseFirestoneStrategy(ai); }
-    static Strategy* spellstone(PlayerbotAI* ai) { return new UseSpellstoneStrategy(ai); }
+    static Strategy* firestone(ShadowAI* ai) { return new UseFirestoneStrategy(ai); }
+    static Strategy* spellstone(ShadowAI* ai) { return new UseSpellstoneStrategy(ai); }
 };
 
 class WarlockTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -186,49 +186,49 @@ public:
     }
 
 private:
-    static Trigger* shadow_trance(PlayerbotAI* botAI) { return new ShadowTranceTrigger(botAI); }
-    static Trigger* demon_armor(PlayerbotAI* botAI) { return new DemonArmorTrigger(botAI); }
-    static Trigger* soul_link(PlayerbotAI* botAI) { return new SoulLinkTrigger(botAI); }
-    static Trigger* no_soul_shard(PlayerbotAI* botAI) { return new OutOfSoulShardsTrigger(botAI); }
-    static Trigger* too_many_soul_shards(PlayerbotAI* botAI) { return new TooManySoulShardsTrigger(botAI); }
-    static Trigger* HasHealthstone(PlayerbotAI* botAI) { return new HasHealthstoneTrigger(botAI); }
-    static Trigger* HasFirestone(PlayerbotAI* botAI) { return new HasFirestoneTrigger(botAI); }
-    static Trigger* HasSpellstone(PlayerbotAI* botAI) { return new HasSpellstoneTrigger(botAI); }
-    static Trigger* OutOfSoulstone(PlayerbotAI* botAI) { return new OutOfSoulstoneTrigger(botAI); }
-    static Trigger* firestone(PlayerbotAI* botAI) { return new FirestoneTrigger(botAI); }
-    static Trigger* spellstone(PlayerbotAI* botAI) { return new SpellstoneTrigger(botAI); }
-    static Trigger* soulstone(PlayerbotAI* botAI) { return new SoulstoneTrigger(botAI); }
-    static Trigger* corruption(PlayerbotAI* botAI) { return new CorruptionTrigger(botAI); }
-    static Trigger* corruption_on_attacker(PlayerbotAI* botAI) { return new CorruptionOnAttackerTrigger(botAI); }
-    static Trigger* banish(PlayerbotAI* botAI) { return new BanishTrigger(botAI); }
-    static Trigger* fear(PlayerbotAI* botAI) { return new FearTrigger(botAI); }
-    static Trigger* spell_lock(PlayerbotAI* botAI) { return new SpellLockInterruptSpellTrigger(botAI); }
-    static Trigger* devour_magic_purge(PlayerbotAI* botAI) { return new DevourMagicPurgeTrigger(botAI); }
-    static Trigger* devour_magic_cleanse(PlayerbotAI* botAI) { return new DevourMagicCleanseTrigger(botAI); }
-    static Trigger* backlash(PlayerbotAI* botAI) { return new BacklashTrigger(botAI); }
-    static Trigger* immolate(PlayerbotAI* botAI) { return new ImmolateTrigger(botAI); }
-    static Trigger* immolate_on_attacker(PlayerbotAI* ai) { return new ImmolateOnAttackerTrigger(ai); }
-    static Trigger* unstable_affliction(PlayerbotAI* ai) { return new UnstableAfflictionTrigger(ai); }
-    static Trigger* unstable_affliction_on_attacker(PlayerbotAI* ai) { return new UnstableAfflictionOnAttackerTrigger(ai); }
-    static Trigger* haunt(PlayerbotAI* ai) { return new HauntTrigger(ai); }
-    static Trigger* decimation(PlayerbotAI* ai) { return new DecimationTrigger(ai); }
-    static Trigger* life_tap(PlayerbotAI* ai) { return new LifeTapTrigger(ai); }
-    static Trigger* life_tap_glyph_buff(PlayerbotAI* ai) { return new LifeTapGlyphBuffTrigger(ai); }
-    static Trigger* molten_core(PlayerbotAI* ai) { return new MoltenCoreTrigger(ai); }
-    static Trigger* metamorphosis(PlayerbotAI* ai) { return new MetamorphosisTrigger(ai); }
-    static Trigger* demonic_empowerment(PlayerbotAI* ai) { return new DemonicEmpowermentTrigger(ai); }
-    static Trigger* immolation_aura_active(PlayerbotAI* ai) { return new ImmolationAuraActiveTrigger(ai); }
-    static Trigger* metamorphosis_not_active(PlayerbotAI* ai) { return new MetamorphosisNotActiveTrigger(ai); }
-    static Trigger* meta_melee_flee_check(PlayerbotAI* ai) { return new MetaMeleeEnemyTooCloseForSpellTrigger(ai); }
-    static Trigger* curse_of_agony(PlayerbotAI* botAI) { return new CurseOfAgonyTrigger(botAI); }
-    static Trigger* curse_of_agony_on_attacker(PlayerbotAI* botAI) { return new CurseOfAgonyOnAttackerTrigger(botAI); }
-    static Trigger* curse_of_the_elements(PlayerbotAI* ai) { return new CurseOfTheElementsTrigger(ai); }
-    static Trigger* curse_of_doom(PlayerbotAI* ai) { return new CurseOfDoomTrigger(ai); }
-    static Trigger* curse_of_exhaustion(PlayerbotAI* ai) { return new CurseOfExhaustionTrigger(ai); }
-    static Trigger* curse_of_tongues(PlayerbotAI* ai) { return new CurseOfTonguesTrigger(ai); }
-    static Trigger* curse_of_weakness(PlayerbotAI* ai) { return new CurseOfWeaknessTrigger(ai); }
-    static Trigger* wrong_pet(PlayerbotAI* ai) { return new WrongPetTrigger(ai); }
-    static Trigger* rain_of_fire_channel_check(PlayerbotAI* ai) { return new RainOfFireChannelCheckTrigger(ai); }
+    static Trigger* shadow_trance(ShadowAI* botAI) { return new ShadowTranceTrigger(botAI); }
+    static Trigger* demon_armor(ShadowAI* botAI) { return new DemonArmorTrigger(botAI); }
+    static Trigger* soul_link(ShadowAI* botAI) { return new SoulLinkTrigger(botAI); }
+    static Trigger* no_soul_shard(ShadowAI* botAI) { return new OutOfSoulShardsTrigger(botAI); }
+    static Trigger* too_many_soul_shards(ShadowAI* botAI) { return new TooManySoulShardsTrigger(botAI); }
+    static Trigger* HasHealthstone(ShadowAI* botAI) { return new HasHealthstoneTrigger(botAI); }
+    static Trigger* HasFirestone(ShadowAI* botAI) { return new HasFirestoneTrigger(botAI); }
+    static Trigger* HasSpellstone(ShadowAI* botAI) { return new HasSpellstoneTrigger(botAI); }
+    static Trigger* OutOfSoulstone(ShadowAI* botAI) { return new OutOfSoulstoneTrigger(botAI); }
+    static Trigger* firestone(ShadowAI* botAI) { return new FirestoneTrigger(botAI); }
+    static Trigger* spellstone(ShadowAI* botAI) { return new SpellstoneTrigger(botAI); }
+    static Trigger* soulstone(ShadowAI* botAI) { return new SoulstoneTrigger(botAI); }
+    static Trigger* corruption(ShadowAI* botAI) { return new CorruptionTrigger(botAI); }
+    static Trigger* corruption_on_attacker(ShadowAI* botAI) { return new CorruptionOnAttackerTrigger(botAI); }
+    static Trigger* banish(ShadowAI* botAI) { return new BanishTrigger(botAI); }
+    static Trigger* fear(ShadowAI* botAI) { return new FearTrigger(botAI); }
+    static Trigger* spell_lock(ShadowAI* botAI) { return new SpellLockInterruptSpellTrigger(botAI); }
+    static Trigger* devour_magic_purge(ShadowAI* botAI) { return new DevourMagicPurgeTrigger(botAI); }
+    static Trigger* devour_magic_cleanse(ShadowAI* botAI) { return new DevourMagicCleanseTrigger(botAI); }
+    static Trigger* backlash(ShadowAI* botAI) { return new BacklashTrigger(botAI); }
+    static Trigger* immolate(ShadowAI* botAI) { return new ImmolateTrigger(botAI); }
+    static Trigger* immolate_on_attacker(ShadowAI* ai) { return new ImmolateOnAttackerTrigger(ai); }
+    static Trigger* unstable_affliction(ShadowAI* ai) { return new UnstableAfflictionTrigger(ai); }
+    static Trigger* unstable_affliction_on_attacker(ShadowAI* ai) { return new UnstableAfflictionOnAttackerTrigger(ai); }
+    static Trigger* haunt(ShadowAI* ai) { return new HauntTrigger(ai); }
+    static Trigger* decimation(ShadowAI* ai) { return new DecimationTrigger(ai); }
+    static Trigger* life_tap(ShadowAI* ai) { return new LifeTapTrigger(ai); }
+    static Trigger* life_tap_glyph_buff(ShadowAI* ai) { return new LifeTapGlyphBuffTrigger(ai); }
+    static Trigger* molten_core(ShadowAI* ai) { return new MoltenCoreTrigger(ai); }
+    static Trigger* metamorphosis(ShadowAI* ai) { return new MetamorphosisTrigger(ai); }
+    static Trigger* demonic_empowerment(ShadowAI* ai) { return new DemonicEmpowermentTrigger(ai); }
+    static Trigger* immolation_aura_active(ShadowAI* ai) { return new ImmolationAuraActiveTrigger(ai); }
+    static Trigger* metamorphosis_not_active(ShadowAI* ai) { return new MetamorphosisNotActiveTrigger(ai); }
+    static Trigger* meta_melee_flee_check(ShadowAI* ai) { return new MetaMeleeEnemyTooCloseForSpellTrigger(ai); }
+    static Trigger* curse_of_agony(ShadowAI* botAI) { return new CurseOfAgonyTrigger(botAI); }
+    static Trigger* curse_of_agony_on_attacker(ShadowAI* botAI) { return new CurseOfAgonyOnAttackerTrigger(botAI); }
+    static Trigger* curse_of_the_elements(ShadowAI* ai) { return new CurseOfTheElementsTrigger(ai); }
+    static Trigger* curse_of_doom(ShadowAI* ai) { return new CurseOfDoomTrigger(ai); }
+    static Trigger* curse_of_exhaustion(ShadowAI* ai) { return new CurseOfExhaustionTrigger(ai); }
+    static Trigger* curse_of_tongues(ShadowAI* ai) { return new CurseOfTonguesTrigger(ai); }
+    static Trigger* curse_of_weakness(ShadowAI* ai) { return new CurseOfWeaknessTrigger(ai); }
+    static Trigger* wrong_pet(ShadowAI* ai) { return new WrongPetTrigger(ai); }
+    static Trigger* rain_of_fire_channel_check(ShadowAI* ai) { return new RainOfFireChannelCheckTrigger(ai); }
 };
 
 class WarlockAiObjectContextInternal : public NamedObjectContext<Action>
@@ -305,71 +305,71 @@ public:
     }
 
 private:
-    static Action* conflagrate(PlayerbotAI* botAI) { return new CastConflagrateAction(botAI); }
-    static Action* incinerate(PlayerbotAI* botAI) { return new CastIncinerateAction(botAI); }
-    static Action* immolate(PlayerbotAI* botAI) { return new CastImmolateAction(botAI); }
-    static Action* immolate_on_attacker(PlayerbotAI* botAI) { return new CastImmolateOnAttackerAction(botAI); }
-    static Action* fel_armor(PlayerbotAI* botAI) { return new CastFelArmorAction(botAI); }
-    static Action* demon_armor(PlayerbotAI* botAI) { return new CastDemonArmorAction(botAI); }
-    static Action* demon_skin(PlayerbotAI* botAI) { return new CastDemonSkinAction(botAI); }
-    static Action* soul_link(PlayerbotAI* botAI) { return new CastSoulLinkAction(botAI); }
-    static Action* create_soul_shard(PlayerbotAI* botAI) { return new CreateSoulShardAction(botAI); }
-    static Action* destroy_soul_shard(PlayerbotAI* botAI) { return new DestroySoulShardAction(botAI); }
-    static Action* create_healthstone(PlayerbotAI* botAI) { return new CastCreateHealthstoneAction(botAI); }
-    static Action* create_firestone(PlayerbotAI* botAI) { return new CastCreateFirestoneAction(botAI); }
-    static Action* create_spellstone(PlayerbotAI* botAI) { return new CastCreateSpellstoneAction(botAI); }
-    static Action* create_soulstone(PlayerbotAI* botAI) { return new CastCreateSoulstoneAction(botAI); }
-    static Action* firestone(PlayerbotAI* botAI) { return new UseSpellItemAction(botAI, "firestone", true); }
-    static Action* spellstone(PlayerbotAI* botAI) { return new UseSpellItemAction(botAI, "spellstone", true); }
-    static Action* soulstone_self(PlayerbotAI* botAI) { return new UseSoulstoneSelfAction(botAI); }
-    static Action* soulstone_master(PlayerbotAI* botAI) { return new UseSoulstoneMasterAction(botAI); }
-    static Action* soulstone_tank(PlayerbotAI* botAI) { return new UseSoulstoneTankAction(botAI); }
-    static Action* soulstone_healer(PlayerbotAI* botAI) { return new UseSoulstoneHealerAction(botAI); }
-    static Action* summon_voidwalker(PlayerbotAI* botAI) { return new CastSummonVoidwalkerAction(botAI); }
-    static Action* summon_felguard(PlayerbotAI* botAI) { return new CastSummonFelguardAction(botAI); }
-    static Action* summon_felhunter(PlayerbotAI* botAI) { return new CastSummonFelhunterAction(botAI); }
-    static Action* summon_imp(PlayerbotAI* botAI) { return new CastSummonImpAction(botAI); }
-    static Action* summon_succubus(PlayerbotAI* botAI) { return new CastSummonSuccubusAction(botAI); }
-    static Action* fel_domination(PlayerbotAI* botAI) { return new CastFelDominationAction(botAI); }
-    static Action* corruption(PlayerbotAI* botAI) { return new CastCorruptionAction(botAI); }
-    static Action* corruption_on_attacker(PlayerbotAI* botAI) { return new CastCorruptionOnAttackerAction(botAI); }
-    static Action* shadow_bolt(PlayerbotAI* botAI) { return new CastShadowBoltAction(botAI); }
-    static Action* drain_soul(PlayerbotAI* botAI) { return new CastDrainSoulAction(botAI); }
-    static Action* drain_mana(PlayerbotAI* botAI) { return new CastDrainManaAction(botAI); }
-    static Action* drain_life(PlayerbotAI* botAI) { return new CastDrainLifeAction(botAI); }
-    static Action* banish_on_cc(PlayerbotAI* botAI) { return new CastBanishOnCcAction(botAI); }
-    static Action* fear_on_cc(PlayerbotAI* botAI) { return new CastFearOnCcAction(botAI); }
-    static Action* spell_lock(PlayerbotAI* botAI) { return new CastSpellLockAction(botAI); }
-    static Action* devour_magic_purge(PlayerbotAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
-    static Action* devour_magic_cleanse(PlayerbotAI* botAI) { return new CastDevourMagicCleanseAction(botAI); }
-    static Action* seed_of_corruption(PlayerbotAI* botAI) { return new CastSeedOfCorruptionAction(botAI); }
-    static Action* seed_of_corruption_on_attacker(PlayerbotAI* botAI) { return new CastSeedOfCorruptionOnAttackerAction(botAI); }
-    static Action* rain_of_fire(PlayerbotAI* botAI) { return new CastRainOfFireAction(botAI); }
-    static Action* hellfire(PlayerbotAI* botAI) { return new CastHellfireAction(botAI); }
-    static Action* shadowfury(PlayerbotAI* botAI) { return new CastShadowfuryAction(botAI); }
-    static Action* life_tap(PlayerbotAI* botAI) { return new CastLifeTapAction(botAI); }
-    static Action* unstable_affliction(PlayerbotAI* ai) { return new CastUnstableAfflictionAction(ai); }
-    static Action* unstable_affliction_on_attacker(PlayerbotAI* ai) { return new CastUnstableAfflictionOnAttackerAction(ai); }
-    static Action* haunt(PlayerbotAI* ai) { return new CastHauntAction(ai); }
-    static Action* demonic_empowerment(PlayerbotAI* ai) { return new CastDemonicEmpowermentAction(ai); }
-    static Action* metamorphosis(PlayerbotAI* ai) { return new CastMetamorphosisAction(ai); }
-    static Action* soul_fire(PlayerbotAI* ai) { return new CastSoulFireAction(ai); }
-    static Action* demon_charge(PlayerbotAI* ai) { return new DemonChargeAction(ai); }
-    static Action* shadow_cleave(PlayerbotAI* ai) { return new ShadowCleaveAction(ai); }
-    static Action* shadowburn(PlayerbotAI* ai) { return new CastShadowburnAction(ai); }
-    static Action* shadowflame(PlayerbotAI* botAI) { return new CastShadowflameAction(botAI); }
-    static Action* immolation_aura(PlayerbotAI* botAI) { return new CastImmolationAuraAction(botAI); }
-    static Action* chaos_bolt(PlayerbotAI* botAI) { return new CastChaosBoltAction(botAI); }
-    static Action* soulshatter(PlayerbotAI* botAI) { return new CastSoulshatterAction(botAI); }
-    static Action* searing_pain(PlayerbotAI* botAI) { return new CastSearingPainAction(botAI); }
-    static Action* shadow_ward(PlayerbotAI* botAI) { return new CastShadowWardAction(botAI); }
-    static Action* curse_of_agony(PlayerbotAI* botAI) { return new CastCurseOfAgonyAction(botAI); }
-    static Action* curse_of_agony_on_attacker(PlayerbotAI* botAI) { return new CastCurseOfAgonyOnAttackerAction(botAI); }
-    static Action* curse_of_the_elements(PlayerbotAI* ai) { return new CastCurseOfTheElementsAction(ai); }
-    static Action* curse_of_doom(PlayerbotAI* ai) { return new CastCurseOfDoomAction(ai); }
-    static Action* curse_of_exhaustion(PlayerbotAI* ai) { return new CastCurseOfExhaustionAction(ai); }
-    static Action* curse_of_tongues(PlayerbotAI* ai) { return new CastCurseOfTonguesAction(ai); }
-    static Action* curse_of_weakness(PlayerbotAI* ai) { return new CastCurseOfWeaknessAction(ai); }
+    static Action* conflagrate(ShadowAI* botAI) { return new CastConflagrateAction(botAI); }
+    static Action* incinerate(ShadowAI* botAI) { return new CastIncinerateAction(botAI); }
+    static Action* immolate(ShadowAI* botAI) { return new CastImmolateAction(botAI); }
+    static Action* immolate_on_attacker(ShadowAI* botAI) { return new CastImmolateOnAttackerAction(botAI); }
+    static Action* fel_armor(ShadowAI* botAI) { return new CastFelArmorAction(botAI); }
+    static Action* demon_armor(ShadowAI* botAI) { return new CastDemonArmorAction(botAI); }
+    static Action* demon_skin(ShadowAI* botAI) { return new CastDemonSkinAction(botAI); }
+    static Action* soul_link(ShadowAI* botAI) { return new CastSoulLinkAction(botAI); }
+    static Action* create_soul_shard(ShadowAI* botAI) { return new CreateSoulShardAction(botAI); }
+    static Action* destroy_soul_shard(ShadowAI* botAI) { return new DestroySoulShardAction(botAI); }
+    static Action* create_healthstone(ShadowAI* botAI) { return new CastCreateHealthstoneAction(botAI); }
+    static Action* create_firestone(ShadowAI* botAI) { return new CastCreateFirestoneAction(botAI); }
+    static Action* create_spellstone(ShadowAI* botAI) { return new CastCreateSpellstoneAction(botAI); }
+    static Action* create_soulstone(ShadowAI* botAI) { return new CastCreateSoulstoneAction(botAI); }
+    static Action* firestone(ShadowAI* botAI) { return new UseSpellItemAction(botAI, "firestone", true); }
+    static Action* spellstone(ShadowAI* botAI) { return new UseSpellItemAction(botAI, "spellstone", true); }
+    static Action* soulstone_self(ShadowAI* botAI) { return new UseSoulstoneSelfAction(botAI); }
+    static Action* soulstone_master(ShadowAI* botAI) { return new UseSoulstoneMasterAction(botAI); }
+    static Action* soulstone_tank(ShadowAI* botAI) { return new UseSoulstoneTankAction(botAI); }
+    static Action* soulstone_healer(ShadowAI* botAI) { return new UseSoulstoneHealerAction(botAI); }
+    static Action* summon_voidwalker(ShadowAI* botAI) { return new CastSummonVoidwalkerAction(botAI); }
+    static Action* summon_felguard(ShadowAI* botAI) { return new CastSummonFelguardAction(botAI); }
+    static Action* summon_felhunter(ShadowAI* botAI) { return new CastSummonFelhunterAction(botAI); }
+    static Action* summon_imp(ShadowAI* botAI) { return new CastSummonImpAction(botAI); }
+    static Action* summon_succubus(ShadowAI* botAI) { return new CastSummonSuccubusAction(botAI); }
+    static Action* fel_domination(ShadowAI* botAI) { return new CastFelDominationAction(botAI); }
+    static Action* corruption(ShadowAI* botAI) { return new CastCorruptionAction(botAI); }
+    static Action* corruption_on_attacker(ShadowAI* botAI) { return new CastCorruptionOnAttackerAction(botAI); }
+    static Action* shadow_bolt(ShadowAI* botAI) { return new CastShadowBoltAction(botAI); }
+    static Action* drain_soul(ShadowAI* botAI) { return new CastDrainSoulAction(botAI); }
+    static Action* drain_mana(ShadowAI* botAI) { return new CastDrainManaAction(botAI); }
+    static Action* drain_life(ShadowAI* botAI) { return new CastDrainLifeAction(botAI); }
+    static Action* banish_on_cc(ShadowAI* botAI) { return new CastBanishOnCcAction(botAI); }
+    static Action* fear_on_cc(ShadowAI* botAI) { return new CastFearOnCcAction(botAI); }
+    static Action* spell_lock(ShadowAI* botAI) { return new CastSpellLockAction(botAI); }
+    static Action* devour_magic_purge(ShadowAI* botAI) { return new CastDevourMagicPurgeAction(botAI); }
+    static Action* devour_magic_cleanse(ShadowAI* botAI) { return new CastDevourMagicCleanseAction(botAI); }
+    static Action* seed_of_corruption(ShadowAI* botAI) { return new CastSeedOfCorruptionAction(botAI); }
+    static Action* seed_of_corruption_on_attacker(ShadowAI* botAI) { return new CastSeedOfCorruptionOnAttackerAction(botAI); }
+    static Action* rain_of_fire(ShadowAI* botAI) { return new CastRainOfFireAction(botAI); }
+    static Action* hellfire(ShadowAI* botAI) { return new CastHellfireAction(botAI); }
+    static Action* shadowfury(ShadowAI* botAI) { return new CastShadowfuryAction(botAI); }
+    static Action* life_tap(ShadowAI* botAI) { return new CastLifeTapAction(botAI); }
+    static Action* unstable_affliction(ShadowAI* ai) { return new CastUnstableAfflictionAction(ai); }
+    static Action* unstable_affliction_on_attacker(ShadowAI* ai) { return new CastUnstableAfflictionOnAttackerAction(ai); }
+    static Action* haunt(ShadowAI* ai) { return new CastHauntAction(ai); }
+    static Action* demonic_empowerment(ShadowAI* ai) { return new CastDemonicEmpowermentAction(ai); }
+    static Action* metamorphosis(ShadowAI* ai) { return new CastMetamorphosisAction(ai); }
+    static Action* soul_fire(ShadowAI* ai) { return new CastSoulFireAction(ai); }
+    static Action* demon_charge(ShadowAI* ai) { return new DemonChargeAction(ai); }
+    static Action* shadow_cleave(ShadowAI* ai) { return new ShadowCleaveAction(ai); }
+    static Action* shadowburn(ShadowAI* ai) { return new CastShadowburnAction(ai); }
+    static Action* shadowflame(ShadowAI* botAI) { return new CastShadowflameAction(botAI); }
+    static Action* immolation_aura(ShadowAI* botAI) { return new CastImmolationAuraAction(botAI); }
+    static Action* chaos_bolt(ShadowAI* botAI) { return new CastChaosBoltAction(botAI); }
+    static Action* soulshatter(ShadowAI* botAI) { return new CastSoulshatterAction(botAI); }
+    static Action* searing_pain(ShadowAI* botAI) { return new CastSearingPainAction(botAI); }
+    static Action* shadow_ward(ShadowAI* botAI) { return new CastShadowWardAction(botAI); }
+    static Action* curse_of_agony(ShadowAI* botAI) { return new CastCurseOfAgonyAction(botAI); }
+    static Action* curse_of_agony_on_attacker(ShadowAI* botAI) { return new CastCurseOfAgonyOnAttackerAction(botAI); }
+    static Action* curse_of_the_elements(ShadowAI* ai) { return new CastCurseOfTheElementsAction(ai); }
+    static Action* curse_of_doom(ShadowAI* ai) { return new CastCurseOfDoomAction(ai); }
+    static Action* curse_of_exhaustion(ShadowAI* ai) { return new CastCurseOfExhaustionAction(ai); }
+    static Action* curse_of_tongues(ShadowAI* ai) { return new CastCurseOfTonguesAction(ai); }
+    static Action* curse_of_weakness(ShadowAI* ai) { return new CastCurseOfWeaknessAction(ai); }
 };
 
 SharedNamedObjectContextList<Strategy> WarlockAiObjectContext::sharedStrategyContexts;
@@ -377,7 +377,7 @@ SharedNamedObjectContextList<Action> WarlockAiObjectContext::sharedActionContext
 SharedNamedObjectContextList<Trigger> WarlockAiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> WarlockAiObjectContext::sharedValueContexts;
 
-WarlockAiObjectContext::WarlockAiObjectContext(PlayerbotAI* botAI)
+WarlockAiObjectContext::WarlockAiObjectContext(ShadowAI* botAI)
     : AiObjectContext(botAI, sharedStrategyContexts, sharedActionContexts, sharedTriggerContexts, sharedValueContexts)
 {
 }

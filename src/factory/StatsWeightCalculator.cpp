@@ -12,8 +12,8 @@
 #include "ItemEnchantmentMgr.h"
 #include "ItemTemplate.h"
 #include "ObjectMgr.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotFactory.h"
+#include "ShadowAI.h"
+#include "ShadowFactory.h"
 #include "SharedDefines.h"
 #include "SpellAuraDefines.h"
 #include "SpellMgr.h"
@@ -22,13 +22,13 @@
 
 StatsWeightCalculator::StatsWeightCalculator(Player* player) : player_(player)
 {
-    if (PlayerbotAI::IsHeal(player))
+    if (ShadowAI::IsHeal(player))
         type_ = CollectorType::SPELL_HEAL;
-    else if (PlayerbotAI::IsCaster(player))
+    else if (ShadowAI::IsCaster(player))
         type_ = CollectorType::SPELL_DMG;
-    else if (PlayerbotAI::IsTank(player))
+    else if (ShadowAI::IsTank(player))
         type_ = CollectorType::MELEE_TANK;
-    else if (PlayerbotAI::IsMelee(player))
+    else if (ShadowAI::IsMelee(player))
         type_ = CollectorType::MELEE_DMG;
     else
         type_ = CollectorType::RANGED;
@@ -97,9 +97,9 @@ float StatsWeightCalculator::CalculateItem(uint32 itemId, int32 randomPropertyId
         // Use player level as effective item level for heirlooms - Quality EPIC
         // Else - Blend with item quality and level for normal items
         if (proto->Quality == ITEM_QUALITY_HEIRLOOM)
-            weight_ *= PlayerbotFactory::CalcMixedGearScore(lvl, ITEM_QUALITY_EPIC); 
+            weight_ *= ShadowFactory::CalcMixedGearScore(lvl, ITEM_QUALITY_EPIC); 
         else
-            weight_ *= PlayerbotFactory::CalcMixedGearScore(proto->ItemLevel, proto->Quality);
+            weight_ *= ShadowFactory::CalcMixedGearScore(proto->ItemLevel, proto->Quality);
 
         return weight_;
     }
@@ -225,7 +225,7 @@ void StatsWeightCalculator::GenerateBasicWeights(Player* player)
         stats_weights_[STATS_TYPE_EXPERTISE] += 2.0f;
         stats_weights_[STATS_TYPE_MELEE_DPS] += 7.0f;
     }
-    else if (cls == CLASS_DRUID && tab == DRUID_TAB_FERAL && !PlayerbotAI::IsTank(player))
+    else if (cls == CLASS_DRUID && tab == DRUID_TAB_FERAL && !ShadowAI::IsTank(player))
     {
         stats_weights_[STATS_TYPE_AGILITY] += 2.2f;
         stats_weights_[STATS_TYPE_STRENGTH] += 2.4f;

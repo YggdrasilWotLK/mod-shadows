@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_STAYACTIONS_H
-#define _PLAYERBOT_STAYACTIONS_H
+#ifndef _SHADOW_STAYACTIONS_H
+#define _SHADOW_STAYACTIONS_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class StayActionBase : public MovementAction
 {
 public:
-    StayActionBase(PlayerbotAI* botAI, std::string const name) : MovementAction(botAI, name) {}
+    StayActionBase(ShadowAI* botAI, std::string const name) : MovementAction(botAI, name) {}
 
 protected:
     bool Stay();
@@ -22,7 +22,7 @@ protected:
 class StayAction : public StayActionBase
 {
 public:
-    StayAction(PlayerbotAI* botAI) : StayActionBase(botAI, "stay") {}
+    StayAction(ShadowAI* botAI) : StayActionBase(botAI, "stay") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -31,7 +31,7 @@ public:
 class SitAction : public StayActionBase
 {
 public:
-    SitAction(PlayerbotAI* botAI) : StayActionBase(botAI, "sit") {}
+    SitAction(ShadowAI* botAI) : StayActionBase(botAI, "sit") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

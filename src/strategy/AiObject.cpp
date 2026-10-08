@@ -5,10 +5,10 @@
 
 #include "AiObject.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-AiObject::AiObject(PlayerbotAI* botAI)
-    : PlayerbotAIAware(botAI), bot(botAI->GetBot()), context(botAI->GetAiObjectContext()), chat(botAI->GetChatHelper())
+AiObject::AiObject(ShadowAI* botAI)
+    : ShadowAIAware(botAI), bot(botAI->GetBot()), context(botAI->GetAiObjectContext()), chat(botAI->GetChatHelper())
 {
 }
 

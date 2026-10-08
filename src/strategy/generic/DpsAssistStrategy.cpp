@@ -5,7 +5,7 @@
 
 #include "DpsAssistStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void DpsAssistStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

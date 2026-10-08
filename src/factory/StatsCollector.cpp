@@ -6,8 +6,8 @@
 #include "ItemEnchantmentMgr.h"
 #include "ItemTemplate.h"
 #include "ObjectMgr.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAI.h"
+#include "ShadowAIAware.h"
 #include "SharedDefines.h"
 #include "SpellAuraDefines.h"
 #include "SpellInfo.h"
@@ -770,10 +770,10 @@ float StatsCollector::AverageValue(const SpellEffectInfo& effectInfo)
 
 bool StatsCollector::CheckSpellValidation(uint32 spellFamilyName, flag96 spelFalimyFlags, bool strict)
 {
-    if (PlayerbotAI::Class2SpellFamilyName(cls_) != spellFamilyName)
+    if (ShadowAI::Class2SpellFamilyName(cls_) != spellFamilyName)
         return false;
 
-    bool isHealingSpell = PlayerbotAI::IsHealingSpell(spellFamilyName, spelFalimyFlags);
+    bool isHealingSpell = ShadowAI::IsHealingSpell(spellFamilyName, spelFalimyFlags);
     // strict to healer
     if (strict && (type_ & CollectorType::SPELL_HEAL))
     {

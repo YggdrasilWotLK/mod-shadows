@@ -1,9 +1,9 @@
 
-#ifndef _PLAYERBOT_RAIDVOASTRATEGY_H
-#define _PLAYERBOT_RAIDVOASTRATEGY_H
+#ifndef _SHADOW_RAIDVOASTRATEGY_H
+#define _SHADOW_RAIDVOASTRATEGY_H
 
 #include "Strategy.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "string"
 #include "Trigger.h"
 #include "vector"
@@ -11,7 +11,7 @@
 class RaidVoAStrategy : public Strategy
 {
 public:
-    RaidVoAStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+    RaidVoAStrategy(ShadowAI* ai) : Strategy(ai) {}
     virtual std::string const getName() override { return "voa"; }
     virtual void InitTriggers(std::vector<TriggerNode*>& triggers) override;
 };

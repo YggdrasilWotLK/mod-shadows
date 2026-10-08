@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "DrakTharonKeepActions.h"
 #include "DrakTharonKeepStrategy.h"
 

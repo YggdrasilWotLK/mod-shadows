@@ -3,8 +3,8 @@
 
 #include "LastMovementValue.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "RaidNaxxBossHelper.h"
 #include "RaidNaxxStrategy.h"
 #include "ScriptedCreature.h"
@@ -182,7 +182,7 @@ bool ThaddiusMoveToPlatformAction::Execute(Event event)
             if (!MoveTo(bot->GetMapId(), position[0].first, position[0].second, high_z, false, false, false, false, MovementPriority::MOVEMENT_COMBAT))
             {
                 float distance = bot->GetExactDist2d(position[0].first, position[0].second);
-                if (distance < sPlayerbotAIConfig->contactDistance)
+                if (distance < sShadowAIConfig->contactDistance)
                     JumpTo(bot->GetMapId(), position[2].first, position[2].second, low_z, MovementPriority::MOVEMENT_COMBAT);
                     // bot->TeleportTo(bot->GetMapId(), position[2].first, position[2].second, low_z, bot->GetOrientation());
             }
@@ -192,7 +192,7 @@ bool ThaddiusMoveToPlatformAction::Execute(Event event)
             if (!MoveTo(bot->GetMapId(), position[1].first, position[1].second, high_z, false, false, false, false, MovementPriority::MOVEMENT_COMBAT))
             {
                 float distance = bot->GetExactDist2d(position[1].first, position[1].second);
-                if (distance < sPlayerbotAIConfig->contactDistance)
+                if (distance < sShadowAIConfig->contactDistance)
                     JumpTo(bot->GetMapId(), position[3].first, position[3].second, low_z, MovementPriority::MOVEMENT_COMBAT);
                     // bot->TeleportTo(bot->GetMapId(), position[3].first, position[3].second, low_z, bot->GetOrientation());
             }
@@ -365,9 +365,9 @@ bool RazuviousUseObedienceCrystalAction::Execute(Event event)
             }
             if (target)
             {
-                if (bot->GetDistance2d(target) > sPlayerbotAIConfig->spellDistance)
+                if (bot->GetDistance2d(target) > sShadowAIConfig->spellDistance)
                 {
-                    return MoveNear(target, sPlayerbotAIConfig->spellDistance, MovementPriority::MOVEMENT_COMBAT);
+                    return MoveNear(target, sShadowAIConfig->spellDistance, MovementPriority::MOVEMENT_COMBAT);
                 }
                 else
                 {
@@ -615,7 +615,7 @@ bool KelthuzadChooseTargetAction::Execute(Event event)
         {
             continue;
         }
-        if (bot->GetDistance2d(unit) > sPlayerbotAIConfig->spellDistance)
+        if (bot->GetDistance2d(unit) > sShadowAIConfig->spellDistance)
         {
             continue;
         }
@@ -919,7 +919,7 @@ bool GluthChooseTargetAction::Execute(Event event)
         for (Unit* t : target_zombies)
         {
             if (t->GetHealthPct() > helper.decimatedZombiePct && t->GetVictim() == target_boss &&
-                t->GetDistance2d(bot) <= sPlayerbotAIConfig->spellDistance)
+                t->GetDistance2d(bot) <= sShadowAIConfig->spellDistance)
             {
                 if (!target || t->GetDistance2d(bot) < target->GetDistance2d(bot))
                 {

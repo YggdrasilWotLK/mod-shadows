@@ -6,7 +6,7 @@
 #include "RtiAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RtiTargetValue.h"
 
 bool RtiAction::Execute(Event event)

@@ -6,20 +6,20 @@
 #include "SpellIdValue.h"
 
 #include "ChatHelper.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Vehicle.h"
 #include "World.h"
 
-SpellIdValue::SpellIdValue(PlayerbotAI* botAI) : CalculatedValue<uint32>(botAI, "spell id", 20 * 1000) {}
+SpellIdValue::SpellIdValue(ShadowAI* botAI) : CalculatedValue<uint32>(botAI, "spell id", 20 * 1000) {}
 
-VehicleSpellIdValue::VehicleSpellIdValue(PlayerbotAI* botAI) : CalculatedValue<uint32>(botAI, "vehicle spell id") {}
+VehicleSpellIdValue::VehicleSpellIdValue(ShadowAI* botAI) : CalculatedValue<uint32>(botAI, "vehicle spell id") {}
 
 uint32 SpellIdValue::Calculate()
 {
     std::string namepart = qualifier;
     ItemIds itemIds = ChatHelper::parseItems(namepart);
 
-    PlayerbotChatHandler handler(bot);
+    ShadowChatHandler handler(bot);
     uint32 extractedSpellId = handler.extractSpellId(namepart);
     if (extractedSpellId)
         if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(extractedSpellId))
@@ -181,7 +181,7 @@ uint32 VehicleSpellIdValue::Calculate()
 
     std::string namepart = qualifier;
 
-    PlayerbotChatHandler handler(bot);
+    ShadowChatHandler handler(bot);
     uint32 extractedSpellId = handler.extractSpellId(namepart);
     if (extractedSpellId)
         if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(extractedSpellId))

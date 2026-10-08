@@ -3,115 +3,115 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DRUIDCATACTIONS_H
-#define _PLAYERBOT_DRUIDCATACTIONS_H
+#ifndef _SHADOW_DRUIDCATACTIONS_H
+#define _SHADOW_DRUIDCATACTIONS_H
 
 #include "GenericSpellActions.h"
 #include "ReachTargetActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CastFeralChargeCatAction : public CastReachTargetSpellAction
 {
 public:
-    CastFeralChargeCatAction(PlayerbotAI* botAI) : CastReachTargetSpellAction(botAI, "feral charge - cat", 1.5f) {}
+    CastFeralChargeCatAction(ShadowAI* botAI) : CastReachTargetSpellAction(botAI, "feral charge - cat", 1.5f) {}
 };
 
 class CastCowerAction : public CastBuffSpellAction
 {
 public:
-    CastCowerAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "cower") {}
+    CastCowerAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "cower") {}
 };
 
 class CastBerserkAction : public CastBuffSpellAction
 {
 public:
-    CastBerserkAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "berserk") {}
+    CastBerserkAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "berserk") {}
 };
 
 class CastTigersFuryAction : public CastBuffSpellAction
 {
 public:
-    CastTigersFuryAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "tiger's fury") {}
+    CastTigersFuryAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "tiger's fury") {}
 };
 
 class CastSavageRoarAction : public CastBuffSpellAction
 {
 public:
-    CastSavageRoarAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "savage roar") {}
+    CastSavageRoarAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "savage roar") {}
     std::string const GetTargetName() override { return "current target"; }
 };
 
 class CastRakeAction : public CastDebuffSpellAction
 {
 public:
-    CastRakeAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "rake", true, 6.0f) {}
+    CastRakeAction(ShadowAI* botAI) : CastDebuffSpellAction(botAI, "rake", true, 6.0f) {}
 };
 
 class CastRakeOnMeleeAttackersAction : public CastDebuffSpellOnMeleeAttackerAction
 {
 public:
-    CastRakeOnMeleeAttackersAction(PlayerbotAI* botAI) : CastDebuffSpellOnMeleeAttackerAction(botAI, "rake", true, 6.0f) {}
+    CastRakeOnMeleeAttackersAction(ShadowAI* botAI) : CastDebuffSpellOnMeleeAttackerAction(botAI, "rake", true, 6.0f) {}
 };
 
 class CastClawAction : public CastMeleeSpellAction
 {
 public:
-    CastClawAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "claw") {}
+    CastClawAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "claw") {}
 };
 
 class CastMangleCatAction : public CastMeleeSpellAction
 {
 public:
-    CastMangleCatAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "mangle (cat)") {}
+    CastMangleCatAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "mangle (cat)") {}
 };
 
 class CastSwipeCatAction : public CastMeleeSpellAction
 {
 public:
-    CastSwipeCatAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "swipe (cat)") {}
+    CastSwipeCatAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "swipe (cat)") {}
 };
 
 class CastFerociousBiteAction : public CastMeleeSpellAction
 {
 public:
-    CastFerociousBiteAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "ferocious bite") {}
+    CastFerociousBiteAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "ferocious bite") {}
 };
 
 class CastRipAction : public CastMeleeDebuffSpellAction
 {
 public:
-    CastRipAction(PlayerbotAI* botAI) : CastMeleeDebuffSpellAction(botAI, "rip", true, 12.0f) {}
+    CastRipAction(ShadowAI* botAI) : CastMeleeDebuffSpellAction(botAI, "rip", true, 12.0f) {}
 };
 
 class CastShredAction : public CastMeleeSpellAction
 {
 public:
-    CastShredAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "shred") {}
+    CastShredAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "shred") {}
 };
 
 class CastProwlAction : public CastBuffSpellAction
 {
 public:
-    CastProwlAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "prowl") {}
+    CastProwlAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "prowl") {}
 };
 
 class CastDashAction : public CastBuffSpellAction
 {
 public:
-    CastDashAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "dash") {}
+    CastDashAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "dash") {}
 };
 
 class CastRavageAction : public CastMeleeSpellAction
 {
 public:
-    CastRavageAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "ravage") {}
+    CastRavageAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "ravage") {}
 };
 
 class CastPounceAction : public CastMeleeSpellAction
 {
 public:
-    CastPounceAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "pounce") {}
+    CastPounceAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "pounce") {}
 };
 
 #endif

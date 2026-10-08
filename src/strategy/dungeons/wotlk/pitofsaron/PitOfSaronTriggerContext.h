@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONPOSTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONPOSTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONPOSTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONPOSTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -15,8 +15,8 @@ public:
     }
 
 private:
-    static Trigger* ick_and_krick(PlayerbotAI* ai) { return new IckAndKrickTrigger(ai); }
-    static Trigger* tyrannus(PlayerbotAI* ai) { return new TyrannusTrigger(ai); }
+    static Trigger* ick_and_krick(ShadowAI* ai) { return new IckAndKrickTrigger(ai); }
+    static Trigger* tyrannus(ShadowAI* ai) { return new TyrannusTrigger(ai); }
 };
 
 #endif

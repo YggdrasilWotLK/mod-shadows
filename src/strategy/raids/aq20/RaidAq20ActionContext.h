@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDAQ20ACTIONCONTEXT_H
-#define _PLAYERBOT_RAIDAQ20ACTIONCONTEXT_H
+#ifndef _SHADOW_RAIDAQ20ACTIONCONTEXT_H
+#define _SHADOW_RAIDAQ20ACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,7 +14,7 @@ public:
     }
 
 private:
-    static Action* use_crystal(PlayerbotAI* ai) { return new Aq20UseCrystalAction(ai); }
+    static Action* use_crystal(ShadowAI* ai) { return new Aq20UseCrystalAction(ai); }
 };
 
 #endif

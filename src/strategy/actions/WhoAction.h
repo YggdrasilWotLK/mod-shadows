@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WHOACTION_H
-#define _PLAYERBOT_WHOACTION_H
+#ifndef _SHADOW_WHOACTION_H
+#define _SHADOW_WHOACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class WhoAction : public InventoryAction
 {
 public:
-    WhoAction(PlayerbotAI* botAI) : InventoryAction(botAI, "who") {}
+    WhoAction(ShadowAI* botAI) : InventoryAction(botAI, "who") {}
 
     bool Execute(Event event) override;
 

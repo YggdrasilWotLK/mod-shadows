@@ -13,7 +13,7 @@
 #include "MMapFactory.h"
 #include "MapMgr.h"
 #include "PathGenerator.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "StrategyContext.h"
 #include "TransportMgr.h"
 #include "VMapFactory.h"
@@ -625,14 +625,14 @@ void WorldPosition::loadMapAndVMap(uint32 mapId, uint8 x, uint8 y)
     if (isOverworld() && false || false)
     {
         if (!MMAP::MMapFactory::createOrGetMMapMgr()->loadMap(mapId, x, y))
-            if (sPlayerbotAIConfig->hasLog(fileName))
+            if (sShadowAIConfig->hasLog(fileName))
             {
                 std::ostringstream out;
-                out << sPlayerbotAIConfig->GetTimestampStr();
+                out << sShadowAIConfig->GetTimestampStr();
                 out << "+00,\"mmap\", " << x << "," << y << "," << (sTravelMgr->isBadMmap(mapId, x, y) ? "0" : "1")
                     << ",";
                 printWKT(fromGridCoord(GridCoord(x, y)), out, 1, true);
-                sPlayerbotAIConfig->log(fileName, out.str().c_str());
+                sShadowAIConfig->log(fileName, out.str().c_str());
             }
     }
     else
@@ -651,29 +651,29 @@ void WorldPosition::loadMapAndVMap(uint32 mapId, uint8 x, uint8 y)
                 switch (vmapLoadResult)
                 {
                     case VMAP::VMAP_LOAD_RESULT_OK:
-                        // LOG_ERROR("playerbots", "VMAP loaded name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{}, y:{})",
+                        // LOG_ERROR("shadows", "VMAP loaded name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{}, y:{})",
                         // mapName, mapId, x, y, x, y);
                         break;
                     case VMAP::VMAP_LOAD_RESULT_ERROR:
-                        // LOG_ERROR("playerbots", "Could not load VMAP name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{},
+                        // LOG_ERROR("shadows", "Could not load VMAP name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{},
                         // y:{})", mapName, mapId, x, y, x, y);
                         sTravelMgr->addBadVmap(mapId, x, y);
                         break;
                     case VMAP::VMAP_LOAD_RESULT_IGNORED:
                         sTravelMgr->addBadVmap(mapId, x, y);
-                        // LOG_INFO("playerbots", "Ignored VMAP name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{}, y:{})",
+                        // LOG_INFO("shadows", "Ignored VMAP name:{}, id:{}, x:{}, y:{} (vmap rep.: x:{}, y:{})",
                         // mapName, mapId, x, y, x, y);
                         break;
                 }
 
-                if (sPlayerbotAIConfig->hasLog(fileName))
+                if (sShadowAIConfig->hasLog(fileName))
                 {
                     std::ostringstream out;
-                    out << sPlayerbotAIConfig->GetTimestampStr();
+                    out << sShadowAIConfig->GetTimestampStr();
                     out << "+00,\"vmap\", " << x << "," << y << ", " << (sTravelMgr->isBadVmap(mapId, x, y) ? "0" : "1")
                         << ",";
                     printWKT(frommGridCoord(mGridCoord(x, y)), out, 1, true);
-                    sPlayerbotAIConfig->log(fileName, out.str().c_str());
+                    sShadowAIConfig->log(fileName, out.str().c_str());
                 }
             }
 
@@ -683,14 +683,14 @@ void WorldPosition::loadMapAndVMap(uint32 mapId, uint8 x, uint8 y)
             if (!MMAP::MMapFactory::createOrGetMMapMgr()->loadMap(mapId, x, y))
                 sTravelMgr->addBadMmap(mapId, x, y);
 
-            if (sPlayerbotAIConfig->hasLog(fileName))
+            if (sShadowAIConfig->hasLog(fileName))
             {
                 std::ostringstream out;
-                out << sPlayerbotAIConfig->GetTimestampStr();
+                out << sShadowAIConfig->GetTimestampStr();
                 out << "+00,\"mmap\", " << x << "," << y << "," << (sTravelMgr->isBadMmap(mapId, x, y) ? "0" : "1")
                     << ",";
                 printWKT(fromGridCoord(GridCoord(x, y)), out, 1, true);
-                sPlayerbotAIConfig->log(fileName, out.str().c_str());
+                sShadowAIConfig->log(fileName, out.str().c_str());
             }
         }
     }
@@ -728,21 +728,21 @@ std::vector<WorldPosition> WorldPosition::getPathStepFrom(WorldPosition startPos
     Movement::PointsArray points = path.GetPath();
     PathType type = path.GetPathType();
 
-    if (sPlayerbotAIConfig->hasLog("pathfind_attempt_point.csv"))
+    if (sShadowAIConfig->hasLog("pathfind_attempt_point.csv"))
     {
         std::ostringstream out;
         out << std::fixed << std::setprecision(1);
         printWKT({startPos, *this}, out);
-        sPlayerbotAIConfig->log("pathfind_attempt_point.csv", out.str().c_str());
+        sShadowAIConfig->log("pathfind_attempt_point.csv", out.str().c_str());
     }
 
-    if (sPlayerbotAIConfig->hasLog("pathfind_attempt.csv") && (type == PATHFIND_INCOMPLETE || type == PATHFIND_NORMAL))
+    if (sShadowAIConfig->hasLog("pathfind_attempt.csv") && (type == PATHFIND_INCOMPLETE || type == PATHFIND_NORMAL))
     {
         std::ostringstream out;
-        out << sPlayerbotAIConfig->GetTimestampStr() << "+00,";
+        out << sShadowAIConfig->GetTimestampStr() << "+00,";
         out << std::fixed << std::setprecision(1) << type << ",";
         printWKT(fromPointsArray(points), out, 1);
-        sPlayerbotAIConfig->log("pathfind_attempt.csv", out.str().c_str());
+        sShadowAIConfig->log("pathfind_attempt.csv", out.str().c_str());
     }
 
     if (type == PATHFIND_INCOMPLETE || type == PATHFIND_NORMAL)
@@ -791,7 +791,7 @@ std::vector<WorldPosition> WorldPosition::getPathFromPath(std::vector<WorldPosit
         subPath = getPathStepFrom(currentPos, bot);
 
         // If we could not find a path return what we have now.
-        if (subPath.empty() || currentPos.distance(&subPath.back()) < sPlayerbotAIConfig->targetPosRecalcDistance)
+        if (subPath.empty() || currentPos.distance(&subPath.back()) < sShadowAIConfig->targetPosRecalcDistance)
             break;
 
         // Append the path excluding the start (this should be the same as the end of the startPath)
@@ -1085,7 +1085,7 @@ std::string const QuestTravelDestination::getTitle() { return ChatHelper::Format
 
 bool QuestRelationTravelDestination::isActive(Player* bot)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI || !botAI->IsAlive())
         return false;
 
@@ -1167,7 +1167,7 @@ bool QuestObjectiveTravelDestination::isActive(Player* bot)
     if (questTemplate->GetQuestLevel() > bot->GetLevel() + 1)
         return false;
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI || !botAI->IsAlive())
         return false;
 
@@ -1235,7 +1235,7 @@ std::string const QuestObjectiveTravelDestination::getTitle()
 
 bool RpgTravelDestination::isActive(Player* bot)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI || !botAI->IsAlive())
         return false;
 
@@ -1314,7 +1314,7 @@ bool ExploreTravelDestination::isActive(Player* bot)
 
 bool GrindTravelDestination::isActive(Player* bot)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI || !botAI->IsAlive())
         return false;
 
@@ -1371,7 +1371,7 @@ std::string const GrindTravelDestination::getTitle()
 
 bool BossTravelDestination::isActive(Player* bot)
 {
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI || !botAI->IsAlive())
         return false;
 
@@ -1519,7 +1519,7 @@ void TravelTarget::setStatus(TravelStatus status)
             statusTime = 1;
             break;
         case TRAVEL_STATUS_TRAVEL:
-            statusTime = getMaxTravelTime() * 2 + sPlayerbotAIConfig->maxWaitForMove;
+            statusTime = getMaxTravelTime() * 2 + sShadowAIConfig->maxWaitForMove;
             break;
         case TRAVEL_STATUS_WORK:
             statusTime = tDestination->getExpireDelay();
@@ -1733,44 +1733,44 @@ void TravelMgr::logQuestError(uint32 errorNr, Quest* quest, uint32 objective, ui
 
     if (errorNr == 1)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] has {} {} [{}] but none is found in the world.",
+        LOG_ERROR("shadows", "Quest {} [{}] has {} {} [{}] but none is found in the world.",
                   quest->GetTitle().c_str(), quest->GetQuestId(), objective == 0 ? "quest giver" : "quest taker",
                   unitName.c_str(), unitId);
     }
     else if (errorNr == 2)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] needs {} [{}] for objective {} but none is found in the world.",
+        LOG_ERROR("shadows", "Quest {} [{}] needs {} [{}] for objective {} but none is found in the world.",
                   quest->GetTitle().c_str(), quest->GetQuestId(), unitName.c_str(), unitId, objective);
     }
     else if (errorNr == 3)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] needs itemId {} but no such item exists.", quest->GetTitle().c_str(),
+        LOG_ERROR("shadows", "Quest {} [{}] needs itemId {} but no such item exists.", quest->GetTitle().c_str(),
                   quest->GetQuestId(), itemId);
     }
     else if (errorNr == 4)
     {
         LOG_ERROR(
-            "playerbots",
+            "shadows",
             "Quest {} [{}] needs {} [{}] for loot of item {} [{}] for objective {} but none is found in the world.",
             quest->GetTitle().c_str(), quest->GetQuestId(), unitName.c_str(), unitId, proto->Name1.c_str(), itemId,
             objective);
     }
     else if (errorNr == 5)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] needs item {} [{}] for objective {} but none is found in the world.",
+        LOG_ERROR("shadows", "Quest {} [{}] needs item {} [{}] for objective {} but none is found in the world.",
                   quest->GetTitle().c_str(), quest->GetQuestId(), proto->Name1.c_str(), itemId, objective);
     }
     else if (errorNr == 6)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] has no quest giver.", quest->GetTitle().c_str(), quest->GetQuestId());
+        LOG_ERROR("shadows", "Quest {} [{}] has no quest giver.", quest->GetTitle().c_str(), quest->GetQuestId());
     }
     else if (errorNr == 7)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] has no quest taker.", quest->GetTitle().c_str(), quest->GetQuestId());
+        LOG_ERROR("shadows", "Quest {} [{}] has no quest taker.", quest->GetTitle().c_str(), quest->GetQuestId());
     }
     else if (errorNr == 8)
     {
-        LOG_ERROR("playerbots", "Quest {} [{}] has no quest viable quest objective.", quest->GetTitle().c_str(),
+        LOG_ERROR("shadows", "Quest {} [{}] has no quest viable quest objective.", quest->GetTitle().c_str(),
                   quest->GetQuestId());
     }
 }
@@ -1788,15 +1788,15 @@ void TravelMgr::LoadQuestTravelTable()
 
     for (auto cQuest : cQuestMap)
     {
-        LOG_INFO("playerbots", "[Quest id: {}]", cQuest.first);
+        LOG_INFO("shadows", "[Quest id: {}]", cQuest.first);
 
         for (auto cObj : cQuest.second)
         {
-            LOG_INFO("playerbots", " [Objective type: {}]", cObj.first);
+            LOG_INFO("shadows", " [Objective type: {}]", cObj.first);
 
             for (auto cCre : cObj.second)
             {
-                LOG_INFO("playerbots", " {} {}", cCre.GetTypeName().c_str(), cCre.GetEntry());
+                LOG_INFO("shadows", " {} {}", cCre.GetTypeName().c_str(), cCre.GetEntry());
             }
         }
     }
@@ -1841,7 +1841,7 @@ void TravelMgr::LoadQuestTravelTable()
 
     sort(questIds.begin(), questIds.end());
 
-    LOG_INFO("playerbots", "Loading units locations.");
+    LOG_INFO("shadows", "Loading units locations.");
     for (auto& creatureData : WorldPosition().getCreaturesNear())
     {
         t_unit.type = 0;
@@ -1862,7 +1862,7 @@ void TravelMgr::LoadQuestTravelTable()
         unit.c = entryCount[unit.entry];
     }
 
-    LOG_INFO("playerbots", "Loading game object locations.");
+    LOG_INFO("shadows", "Loading game object locations.");
     for (auto& gameobjectData : WorldPosition().getGameObjectsNear())
     {
         t_unit.type = 1;
@@ -1905,11 +1905,11 @@ void TravelMgr::LoadQuestTravelTable()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", ">> Loaded {} units locations.", units.size());
+        LOG_INFO("shadows", ">> Loaded {} units locations.", units.size());
     }
     else
     {
-        LOG_ERROR("playerbots", ">> Error loading units locations.");
+        LOG_ERROR("shadows", ">> Error loading units locations.");
     }
 
     query = "SELECT 0, 0, id, quest FROM creature_queststarter UNION ALL SELECT 0, 1, id, quest FROM creature_questender
@@ -1931,11 +1931,11 @@ void TravelMgr::LoadQuestTravelTable()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", ">> Loaded {} relations.", relations.size());
+        LOG_INFO("shadows", ">> Loaded {} relations.", relations.size());
     }
     else
     {
-        LOG_ERROR("playerbots", ">> Error loading relations.");
+        LOG_ERROR("shadows", ">> Error loading relations.");
     }
 
     query = "SELECT 0, ct.entry, item FROM creature_template ct JOIN creature_loot_template clt ON (ct.lootid =
@@ -1957,15 +1957,15 @@ void TravelMgr::LoadQuestTravelTable()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", ">> Loaded {} loot lists.", loots.size());
+        LOG_INFO("shadows", ">> Loaded {} loot lists.", loots.size());
     }
     else
     {
-        LOG_ERROR("playerbots", ">> Error loading loot lists.");
+        LOG_ERROR("shadows", ">> Error loading loot lists.");
     }
     */
 
-    LOG_INFO("playerbots", "Loading quest data.");
+    LOG_INFO("shadows", "Loading quest data.");
 
     bool loadQuestData = true;
     if (loadQuestData)
@@ -1992,7 +1992,7 @@ void TravelMgr::LoadQuestTravelTable()
                     if (flag & (uint32)QuestRelationFlag::questGiver)
                     {
                         loc = new QuestRelationTravelDestination(
-                            questId, entry, 0, sPlayerbotAIConfig->tooCloseDistance, sPlayerbotAIConfig->sightDistance);
+                            questId, entry, 0, sShadowAIConfig->tooCloseDistance, sShadowAIConfig->sightDistance);
                         loc->setExpireDelay(5 * 60 * 1000);
                         loc->setMaxVisitors(15, 0);
                         container->questGivers.push_back(loc);
@@ -2001,7 +2001,7 @@ void TravelMgr::LoadQuestTravelTable()
                     if (flag & (uint32)QuestRelationFlag::questTaker)
                     {
                         loc = new QuestRelationTravelDestination(
-                            questId, entry, 1, sPlayerbotAIConfig->tooCloseDistance, sPlayerbotAIConfig->sightDistance);
+                            questId, entry, 1, sShadowAIConfig->tooCloseDistance, sShadowAIConfig->sightDistance);
                         loc->setExpireDelay(5 * 60 * 1000);
                         loc->setMaxVisitors(15, 0);
                         container->questTakers.push_back(loc);
@@ -2020,8 +2020,8 @@ void TravelMgr::LoadQuestTravelTable()
                             objective = 3;
 
                         loc = new QuestObjectiveTravelDestination(questId, entry, objective,
-                                                                  sPlayerbotAIConfig->tooCloseDistance,
-                                                                  sPlayerbotAIConfig->sightDistance);
+                                                                  sShadowAIConfig->tooCloseDistance,
+                                                                  sShadowAIConfig->sightDistance);
                         loc->setExpireDelay(1 * 60 * 1000);
                         loc->setMaxVisitors(100, 1);
                         container->questObjectives.push_back(loc);
@@ -2070,8 +2070,8 @@ void TravelMgr::LoadQuestTravelTable()
 
                 int32 entry = r.type == 0 ? r.entry : r.entry * -1;
 
-                loc = new QuestRelationTravelDestination(r.questId, entry, r.role, sPlayerbotAIConfig->tooCloseDistance,
-    sPlayerbotAIConfig->sightDistance); loc->setExpireDelay(5 * 60 * 1000); loc->setMaxVisitors(15, 0);
+                loc = new QuestRelationTravelDestination(r.questId, entry, r.role, sShadowAIConfig->tooCloseDistance,
+    sShadowAIConfig->sightDistance); loc->setExpireDelay(5 * 60 * 1000); loc->setMaxVisitors(15, 0);
 
                 for (auto& u : units)
                 {
@@ -2109,8 +2109,8 @@ void TravelMgr::LoadQuestTravelTable()
 
                 uint32 reqEntry = quest->RequiredNpcOrGo[i];
 
-                loc = new QuestObjectiveTravelDestination(questId, reqEntry, i, sPlayerbotAIConfig->tooCloseDistance,
-    sPlayerbotAIConfig->sightDistance); loc->setExpireDelay(1 * 60 * 1000); loc->setMaxVisitors(100, 1);
+                loc = new QuestObjectiveTravelDestination(questId, reqEntry, i, sShadowAIConfig->tooCloseDistance,
+    sShadowAIConfig->sightDistance); loc->setExpireDelay(1 * 60 * 1000); loc->setMaxVisitors(100, 1);
 
                 for (auto& u : units)
                 {
@@ -2160,8 +2160,8 @@ void TravelMgr::LoadQuestTravelTable()
 
                     int32 entry = l.type == 0 ? l.entry : l.entry * -1;
 
-                    loc = new QuestObjectiveTravelDestination(questId, entry, i, sPlayerbotAIConfig->tooCloseDistance,
-    sPlayerbotAIConfig->sightDistance, l.item); loc->setExpireDelay(1 * 60 * 1000); loc->setMaxVisitors(100, 1);
+                    loc = new QuestObjectiveTravelDestination(questId, entry, i, sShadowAIConfig->tooCloseDistance,
+    sShadowAIConfig->sightDistance, l.item); loc->setExpireDelay(1 * 60 * 1000); loc->setMaxVisitors(100, 1);
 
                     for (auto& u : units)
                     {
@@ -2205,13 +2205,13 @@ void TravelMgr::LoadQuestTravelTable()
             }
         }
 
-        LOG_INFO("playerbots", ">> Loaded {} quest details.", questIds.size());
+        LOG_INFO("shadows", ">> Loaded {} quest details.", questIds.size());
     }
     */
 
     WorldPosition point;
 
-    LOG_INFO("playerbots", "Loading Rpg, Grind and Boss locations.");
+    LOG_INFO("shadows", "Loading Rpg, Grind and Boss locations.");
 
     // Rpg locations
     for (auto& u : units)
@@ -2249,8 +2249,8 @@ void TravelMgr::LoadQuestTravelTable()
         {
             if ((cInfo->npcflag & *i) != 0)
             {
-                rLoc = new RpgTravelDestination(u.entry, sPlayerbotAIConfig->tooCloseDistance,
-                                                sPlayerbotAIConfig->sightDistance);
+                rLoc = new RpgTravelDestination(u.entry, sShadowAIConfig->tooCloseDistance,
+                                                sShadowAIConfig->sightDistance);
                 rLoc->setExpireDelay(5 * 60 * 1000);
                 rLoc->setMaxVisitors(15, 0);
 
@@ -2262,8 +2262,8 @@ void TravelMgr::LoadQuestTravelTable()
 
         if (cInfo->mingold > 0)
         {
-            gLoc = new GrindTravelDestination(u.entry, sPlayerbotAIConfig->tooCloseDistance,
-                                              sPlayerbotAIConfig->sightDistance);
+            gLoc = new GrindTravelDestination(u.entry, sShadowAIConfig->tooCloseDistance,
+                                              sShadowAIConfig->sightDistance);
             gLoc->setExpireDelay(5 * 60 * 1000);
             gLoc->setMaxVisitors(100, 0);
 
@@ -2276,8 +2276,8 @@ void TravelMgr::LoadQuestTravelTable()
         {
             std::string const nodeName = cInfo->Name;
 
-            bLoc = new BossTravelDestination(u.entry, sPlayerbotAIConfig->tooCloseDistance,
-                                             sPlayerbotAIConfig->sightDistance);
+            bLoc = new BossTravelDestination(u.entry, sShadowAIConfig->tooCloseDistance,
+                                             sShadowAIConfig->sightDistance);
             bLoc->setExpireDelay(5 * 60 * 1000);
             bLoc->setMaxVisitors(0, 0);
 
@@ -2286,7 +2286,7 @@ void TravelMgr::LoadQuestTravelTable()
         }
     }
 
-    LOG_INFO("playerbots", "Loading Explore locations.");
+    LOG_INFO("shadows", "Loading Explore locations.");
 
     // Explore points
     for (auto& u : units)
@@ -2309,8 +2309,8 @@ void TravelMgr::LoadQuestTravelTable()
 
         if (iloc == exploreLocs.end())
         {
-            loc = new ExploreTravelDestination(area->ID, sPlayerbotAIConfig->tooCloseDistance,
-                                               sPlayerbotAIConfig->sightDistance);
+            loc = new ExploreTravelDestination(area->ID, sShadowAIConfig->tooCloseDistance,
+                                               sShadowAIConfig->sightDistance);
             loc->setMaxVisitors(1000, 0);
             loc->setCooldownDelay(1000);
             loc->setExpireDelay(1000);
@@ -2326,19 +2326,19 @@ void TravelMgr::LoadQuestTravelTable()
     }
 
     // Clear these logs files
-    sPlayerbotAIConfig->openLog("zones.csv", "w");
-    sPlayerbotAIConfig->openLog("creatures.csv", "w");
-    sPlayerbotAIConfig->openLog("gos.csv", "w");
-    sPlayerbotAIConfig->openLog("bot_movement.csv", "w");
-    sPlayerbotAIConfig->openLog("bot_pathfinding.csv", "w");
-    sPlayerbotAIConfig->openLog("pathfind_attempt.csv", "w");
-    sPlayerbotAIConfig->openLog("pathfind_attempt_point.csv", "w");
-    sPlayerbotAIConfig->openLog("pathfind_result.csv", "w");
-    sPlayerbotAIConfig->openLog("load_map_grid.csv", "w");
-    sPlayerbotAIConfig->openLog("strategy.csv", "w");
+    sShadowAIConfig->openLog("zones.csv", "w");
+    sShadowAIConfig->openLog("creatures.csv", "w");
+    sShadowAIConfig->openLog("gos.csv", "w");
+    sShadowAIConfig->openLog("bot_movement.csv", "w");
+    sShadowAIConfig->openLog("bot_pathfinding.csv", "w");
+    sShadowAIConfig->openLog("pathfind_attempt.csv", "w");
+    sShadowAIConfig->openLog("pathfind_attempt_point.csv", "w");
+    sShadowAIConfig->openLog("pathfind_result.csv", "w");
+    sShadowAIConfig->openLog("load_map_grid.csv", "w");
+    sShadowAIConfig->openLog("strategy.csv", "w");
 
-    sPlayerbotAIConfig->openLog("unload_grid.csv", "w");
-    sPlayerbotAIConfig->openLog("unload_obj.csv", "w");
+    sShadowAIConfig->openLog("unload_grid.csv", "w");
+    sShadowAIConfig->openLog("unload_obj.csv", "w");
 
     sTravelNodeMap->loadNodeStore();
 
@@ -2362,7 +2362,7 @@ void TravelMgr::LoadQuestTravelTable()
 
     if (reloadNavigationPoints)
     {
-        LOG_INFO("playerbots", "Loading navigation points");
+        LOG_INFO("shadows", "Loading navigation points");
 
         //Npc nodes
 
@@ -2681,7 +2681,7 @@ void TravelMgr::LoadQuestTravelTable()
             TravelNode* node = sTravelNodeMap->addNode(&pos, pos.getAreaName(), true, true, false);
         }
 
-        LOG_INFO("playerbots", ">> Loaded {} navigation points.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Loaded {} navigation points.", sTravelNodeMap->getNodes().size());
     }
 
     sTravelNodeMap->calcMapOffset();
@@ -2756,7 +2756,7 @@ void TravelMgr::LoadQuestTravelTable()
             sTravelNodeMap->printMap();
         }
 
-        LOG_INFO("playerbots", ">> Loaded paths for {} nodes.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Loaded paths for {} nodes.", sTravelNodeMap->getNodes().size());
     }
 
     bool removeLowLinkNodes = false || fullNavPointReload || storeNavPointReload;
@@ -2787,7 +2787,7 @@ void TravelMgr::LoadQuestTravelTable()
         for (auto& node : remNodes)
             sTravelNodeMap->removeNode(node);
 
-        LOG_INFO("playerbots", ">> Checked {} nodes.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Checked {} nodes.", sTravelNodeMap->getNodes().size());
     }
 
     bool cleanUpNodeLinks = false || fullNavPointReload || storeNavPointReload;
@@ -2812,7 +2812,7 @@ void TravelMgr::LoadQuestTravelTable()
              }
         }
 
-        LOG_INFO("playerbots", ">> Cleaned paths for {} nodes.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Cleaned paths for {} nodes.", sTravelNodeMap->getNodes().size());
     }
 
     bool reCalculateCost = false || fullNavPointReload || storeNavPointReload;
@@ -2836,7 +2836,7 @@ void TravelMgr::LoadQuestTravelTable()
             }
         }
 
-        LOG_INFO("playerbots", ">> Calculated pathcost for {} nodes.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Calculated pathcost for {} nodes.", sTravelNodeMap->getNodes().size());
     }
 
     bool mirrorMissingPaths = true || fullNavPointReload || storeNavPointReload;
@@ -2866,7 +2866,7 @@ void TravelMgr::LoadQuestTravelTable()
             }
         }
 
-        LOG_INFO("playerbots", ">> Reversed missing paths for {} nodes.", sTravelNodeMap->getNodes().size());
+        LOG_INFO("shadows", ">> Reversed missing paths for {} nodes.", sTravelNodeMap->getNodes().size());
     }
     */
 
@@ -2875,7 +2875,7 @@ void TravelMgr::LoadQuestTravelTable()
     sTravelNodeMap->saveNodeStore();
 
     // Creature/gos/zone export.
-    if (sPlayerbotAIConfig->hasLog("creatures.csv"))
+    if (sShadowAIConfig->hasLog("creatures.csv"))
     {
         for (CreatureData const* cData : WorldPosition().getCreaturesNear())
         {
@@ -2900,11 +2900,11 @@ void TravelMgr::LoadQuestTravelTable()
             out << point.getAreaName() << ",";
             out << std::fixed;
 
-            sPlayerbotAIConfig->log("creatures.csv", out.str().c_str());
+            sShadowAIConfig->log("creatures.csv", out.str().c_str());
         }
     }
 
-    if (sPlayerbotAIConfig->hasLog("vmangoslines.csv"))
+    if (sShadowAIConfig->hasLog("vmangoslines.csv"))
     {
         uint32 mapId = 0;
         std::vector<WorldPosition> pos;
@@ -2935,7 +2935,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const ironforgeAreaSouthLimit[] = {
             -7491.33f, 3093.740f, -7472.04f, -391.880f, -6366.68f, -730.100f, -6063.96f, -1411.76f,
@@ -2962,7 +2962,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const stormwindAreaNorthLimit[] = {
             -8004.250f, 3714.110f, -8075.000f, -179.000f, -8638.000f, 169.0000f, -9044.000f, 35.00000f,
@@ -2990,7 +2990,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const stormwindAreaSouthLimit[] = {
             -8725.3378910f, 3535.62402300f, -9525.6992190f, 910.13256800f, -9796.9531250f, 839.06958000f,
@@ -3021,7 +3021,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         mapId = 1;
 
@@ -3055,7 +3055,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const durotarSouthLimit[] = {
             2755.0f, -3766.f, 2225.0f, -3596.f, 1762.0f, -3746.f, 1564.0f, -3943.f, 1184.0f, -3915.f, 737.00f,
@@ -3083,7 +3083,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const valleyoftrialsSouthLimit[] = {-324.f,  -3869.f, -774.f,  -3992.f, -965.f,  -4290.f, -932.f,
                                                          -4349.f, -828.f,  -4414.f, -661.f,  -4541.f, -521.f,  -4582.f};
@@ -3108,7 +3108,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const middleToSouthLimit[] = {
             -2402.010000f, 4255.7000000f, -2475.933105f, 3199.5683590f,  // Desolace
@@ -3140,7 +3140,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const orgrimmarSouthLimit[] = {
             2132.5076f, -3912.2478f, 1944.4298f, -3855.2583f, 1735.6906f, -3834.2417f, 1654.3671f, -3380.9902f,
@@ -3168,7 +3168,7 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
 
         static float const feralasThousandNeedlesSouthLimit[] = {
             -6495.4995f, -4711.9810f, -6674.9995f, -4515.0019f, -6769.5717f, -4122.4272f, -6838.2651f, -3874.2792f,
@@ -3198,10 +3198,10 @@ void TravelMgr::LoadQuestTravelTable()
         WorldPosition().printWKT(pos, out, 1);
         out << std::fixed;
 
-        sPlayerbotAIConfig->log("vmangoslines.csv", out.str().c_str());
+        sShadowAIConfig->log("vmangoslines.csv", out.str().c_str());
     }
 
-    if (sPlayerbotAIConfig->hasLog("gos.csv"))
+    if (sShadowAIConfig->hasLog("gos.csv"))
     {
         for (GameObjectData const* gData : WorldPosition().getGameObjectsNear())
         {
@@ -3223,11 +3223,11 @@ void TravelMgr::LoadQuestTravelTable()
             out << point.getAreaName() << ",";
             out << std::fixed;
 
-            sPlayerbotAIConfig->log("gos.csv", out.str().c_str());
+            sShadowAIConfig->log("gos.csv", out.str().c_str());
         }
     }
 
-    if (sPlayerbotAIConfig->hasLog("zones.csv"))
+    if (sShadowAIConfig->hasLog("zones.csv"))
     {
         std::unordered_map<std::string, std::vector<WorldPosition>> zoneLocs;
 
@@ -3277,13 +3277,13 @@ void TravelMgr::LoadQuestTravelTable()
 
             point.printWKT(points, out, 0);
 
-            sPlayerbotAIConfig->log("zones.csv", out.str().c_str());
+            sShadowAIConfig->log("zones.csv", out.str().c_str());
         }
     }
 
     bool printStrategyMap = false;
 
-    if (printStrategyMap && sPlayerbotAIConfig->hasLog("strategy.csv"))
+    if (printStrategyMap && sShadowAIConfig->hasLog("strategy.csv"))
     {
         static std::map<uint8, std::string> classes;
         static std::map<uint8, std::map<uint8, std::string>> specs;
@@ -3339,7 +3339,7 @@ void TravelMgr::LoadQuestTravelTable()
 
         // Use randombot 0.
         std::ostringstream cout;
-        cout << sPlayerbotAIConfig->randomBotAccountPrefix << 0;
+        cout << sShadowAIConfig->randomBotAccountPrefix << 0;
         std::string const accountName = cout.str();
 
         LoginDatabasePreparedStatement* stmt = LoginDatabase.GetPreparedStatement(LOGIN_GET_ACCOUNT_ID_BY_USERNAME);
@@ -3389,7 +3389,7 @@ void TravelMgr::LoadQuestTravelTable()
                                     std::ostringstream tout;
                                     newSpec.ApplyTalents(player, &tout);
 
-                                    PlayerbotAI* botAI = new PlayerbotAI(player);
+                                    ShadowAI* botAI = new ShadowAI(player);
 
                                     botAI->ResetStrategies(false);
 
@@ -3515,7 +3515,7 @@ void TravelMgr::LoadQuestTravelTable()
                           return false;
                       });
 
-            sPlayerbotAIConfig->log("strategy.csv", "relevance, action, trigger, strategy, classes");
+            sShadowAIConfig->log("strategy.csv", "relevance, action, trigger, strategy, classes");
 
             for (auto& actionkey : actionKeys)
             {
@@ -3620,13 +3620,13 @@ void TravelMgr::LoadQuestTravelTable()
                     out << actionkey << "\n";
             }
 
-            sPlayerbotAIConfig->log("strategy.csv", out.str().c_str());
+            sShadowAIConfig->log("strategy.csv", out.str().c_str());
         }
     }
 
     /*
 
-    sPlayerbotAIConfig->openLog(7, "w");
+    sShadowAIConfig->openLog(7, "w");
 
     //Zone area map REMOVE!
     uint32 k = 0;
@@ -3655,7 +3655,7 @@ void TravelMgr::LoadQuestTravelTable()
 
                 std::ostringstream out;
                 out << std::fixed << area << "," << npos.getDisplayX() << "," << npos.getDisplayY();
-                sPlayerbotAIConfig->log(7, out.str().c_str());
+                sShadowAIConfig->log(7, out.str().c_str());
             }
         }
         k++;
@@ -3666,7 +3666,7 @@ void TravelMgr::LoadQuestTravelTable()
 
     //Explore map output (REMOVE!)
 
-    sPlayerbotAIConfig->openLog(5, "w");
+    sShadowAIConfig->openLog(5, "w");
     for (auto i : exploreLocs)
     {
         for (auto j : i.second->getPoints())
@@ -3675,7 +3675,7 @@ void TravelMgr::LoadQuestTravelTable()
             std::string const name = i.second->getTitle();
             name.erase(remove(name.begin(), name.end(), '\"'), name.end());
             out << std::fixed << std::setprecision(2) << name.c_str() << "," << i.first << "," << j->getDisplayX() <<
-    "," << j->getDisplayY() << "," << j->getX() << "," << j->getY() << "," << j->getZ(); sPlayerbotAIConfig->log(5,
+    "," << j->getDisplayY() << "," << j->getX() << "," << j->getY() << "," << j->getZ(); sShadowAIConfig->log(5,
     out.str().c_str());
         }
     }
@@ -4103,11 +4103,11 @@ void TravelMgr::setNullTravelTarget(Player* player)
     if (!player)
         return;
 
-    auto playerBotAI = GET_PLAYERBOT_AI(player);
-    if (!playerBotAI)
+    auto shadowAI = GET_SHADOW_AI(player);
+    if (!shadowAI)
         return;
 
-    TravelTarget* target = playerBotAI->GetAiObjectContext()->GetValue<TravelTarget*>("travel target")->Get();
+    TravelTarget* target = shadowAI->GetAiObjectContext()->GetValue<TravelTarget*>("travel target")->Get();
 
     if (target)
         target->setTarget(sTravelMgr->nullTravelDestination, sTravelMgr->nullWorldPosition, true);
@@ -4246,15 +4246,15 @@ void TravelMgr::printGrid(uint32 mapId, int x, int y, std::string const type)
 {
     std::string const fileName = "unload_grid.csv";
 
-    if (sPlayerbotAIConfig->hasLog(fileName))
+    if (sShadowAIConfig->hasLog(fileName))
     {
         WorldPosition p = WorldPosition(mapId, 0, 0, 0, 0);
 
         std::ostringstream out;
-        out << sPlayerbotAIConfig->GetTimestampStr();
+        out << sShadowAIConfig->GetTimestampStr();
         out << "+00, " << 0 << 0 << x << "," << y << ", " << type << ",";
         p.printWKT(p.fromGridCoord(GridCoord(x, y)), out, 1, true);
-        sPlayerbotAIConfig->log(fileName, out.str().c_str());
+        sShadowAIConfig->log(fileName, out.str().c_str());
     }
 }
 
@@ -4262,7 +4262,7 @@ void TravelMgr::printObj(WorldObject* obj, std::string const type)
 {
     std::string fileName = "unload_grid.csv";
 
-    if (sPlayerbotAIConfig->hasLog(fileName))
+    if (sShadowAIConfig->hasLog(fileName))
     {
         WorldPosition p = WorldPosition(obj);
 
@@ -4274,40 +4274,40 @@ void TravelMgr::printObj(WorldObject* obj, std::string const type)
 
         {
             std::ostringstream out;
-            out << sPlayerbotAIConfig->GetTimestampStr();
+            out << sShadowAIConfig->GetTimestampStr();
             out << "+00, " << obj->GetGUID().GetEntry() << "," << obj->GetGUID().GetCounter() << "," << cell.GridX()
                 << "," << cell.GridY() << ", " << type << ",";
 
             p.printWKT(vcell, out, 1, true);
-            sPlayerbotAIConfig->log(fileName, out.str().c_str());
+            sShadowAIConfig->log(fileName, out.str().c_str());
         }
 
         {
             std::ostringstream out;
-            out << sPlayerbotAIConfig->GetTimestampStr();
+            out << sShadowAIConfig->GetTimestampStr();
             out << "+00, " << obj->GetGUID().GetEntry() << "," << obj->GetGUID().GetCounter() << "," << cell.GridX()
                 << "," << cell.GridY() << ", " << type << ",";
 
             p.printWKT(vgrid, out, 1, true);
-            sPlayerbotAIConfig->log(fileName, out.str().c_str());
+            sShadowAIConfig->log(fileName, out.str().c_str());
         }
     }
 
     fileName = "unload_obj.csv";
 
-    if (sPlayerbotAIConfig->hasLog(fileName))
+    if (sShadowAIConfig->hasLog(fileName))
     {
         WorldPosition p = WorldPosition(obj);
 
         Cell cell(obj->GetPositionX(), obj->GetPositionY());
         {
             std::ostringstream out;
-            out << sPlayerbotAIConfig->GetTimestampStr();
+            out << sShadowAIConfig->GetTimestampStr();
             out << "+00, " << obj->GetGUID().GetEntry() << "," << obj->GetGUID().GetCounter() << "," << cell.GridX()
                 << "," << cell.GridY() << ", " << type << ",";
 
             p.printWKT({p}, out, 0);
-            sPlayerbotAIConfig->log(fileName, out.str().c_str());
+            sShadowAIConfig->log(fileName, out.str().c_str());
         }
     }
 }

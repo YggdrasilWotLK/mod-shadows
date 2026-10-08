@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHOOSETRAVELTARGETACTION_H
-#define _PLAYERBOT_CHOOSETRAVELTARGETACTION_H
+#ifndef _SHADOW_CHOOSETRAVELTARGETACTION_H
+#define _SHADOW_CHOOSETRAVELTARGETACTION_H
 
 #include "MovementActions.h"
 #include "TravelMgr.h"
 
 class Quest;
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 struct QuestStatusData;
@@ -18,7 +18,7 @@ struct QuestStatusData;
 class ChooseTravelTargetAction : public MovementAction
 {
 public:
-    ChooseTravelTargetAction(PlayerbotAI* botAI, std::string const name = "choose travel target")
+    ChooseTravelTargetAction(ShadowAI* botAI, std::string const name = "choose travel target")
         : MovementAction(botAI, name)
     {
     }

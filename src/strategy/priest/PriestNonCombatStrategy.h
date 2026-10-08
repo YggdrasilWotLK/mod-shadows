@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PRIESTNONCOMBATSTRATEGY_H
-#define _PLAYERBOT_PRIESTNONCOMBATSTRATEGY_H
+#ifndef _SHADOW_PRIESTNONCOMBATSTRATEGY_H
+#define _SHADOW_PRIESTNONCOMBATSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PriestNonCombatStrategy : public NonCombatStrategy
 {
 public:
-    PriestNonCombatStrategy(PlayerbotAI* botAI);
+    PriestNonCombatStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "nc"; }
@@ -22,7 +22,7 @@ public:
 class PriestBuffStrategy : public NonCombatStrategy
 {
 public:
-    PriestBuffStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    PriestBuffStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "buff"; }
@@ -31,7 +31,7 @@ public:
 class PriestShadowResistanceStrategy : public NonCombatStrategy
 {
 public:
-    PriestShadowResistanceStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    PriestShadowResistanceStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "rshadow"; }

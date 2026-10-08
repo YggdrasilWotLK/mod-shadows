@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CASTERDRUIDSTRATEGY_H
-#define _PLAYERBOT_CASTERDRUIDSTRATEGY_H
+#ifndef _SHADOW_CASTERDRUIDSTRATEGY_H
+#define _SHADOW_CASTERDRUIDSTRATEGY_H
 
 #include "GenericDruidStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CasterDruidStrategy : public GenericDruidStrategy
 {
 public:
-    CasterDruidStrategy(PlayerbotAI* botAI);
+    CasterDruidStrategy(ShadowAI* botAI);
 
 public:
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -25,7 +25,7 @@ public:
 class CasterDruidAoeStrategy : public CombatStrategy
 {
 public:
-    CasterDruidAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    CasterDruidAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 public:
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -35,7 +35,7 @@ public:
 class CasterDruidDebuffStrategy : public CombatStrategy
 {
 public:
-    CasterDruidDebuffStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    CasterDruidDebuffStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 public:
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

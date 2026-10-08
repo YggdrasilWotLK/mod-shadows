@@ -1,13 +1,13 @@
 
-#ifndef _PLAYERBOT_ASSASSINATIONROGUESTRATEGY_H
-#define _PLAYERBOT_ASSASSINATIONROGUESTRATEGY_H
+#ifndef _SHADOW_ASSASSINATIONROGUESTRATEGY_H
+#define _SHADOW_ASSASSINATIONROGUESTRATEGY_H
 
 #include "MeleeCombatStrategy.h"
 
 class AssassinationRogueStrategy : public MeleeCombatStrategy
 {
 public:
-    AssassinationRogueStrategy(PlayerbotAI* ai);
+    AssassinationRogueStrategy(ShadowAI* ai);
 
 public:
     virtual void InitTriggers(std::vector<TriggerNode*>& triggers) override;

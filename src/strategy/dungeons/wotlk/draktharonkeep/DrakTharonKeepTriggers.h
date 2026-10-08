@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONDTKTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONDTKTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONDTKTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONDTKTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -26,28 +26,28 @@ enum DrakTharonIDs
 class CorpseExplodeTrigger : public Trigger
 {
 public:
-    CorpseExplodeTrigger(PlayerbotAI* ai) : Trigger(ai, "corpse explode") {}
+    CorpseExplodeTrigger(ShadowAI* ai) : Trigger(ai, "corpse explode") {}
     bool IsActive() override;
 };
 
 class ArcaneFieldTrigger : public Trigger
 {
 public:
-    ArcaneFieldTrigger(PlayerbotAI* ai) : Trigger(ai, "arcane field") {}
+    ArcaneFieldTrigger(ShadowAI* ai) : Trigger(ai, "arcane field") {}
     bool IsActive() override;
 };
 
 // class CrystalHandlerTrigger : public Trigger
 // {
 // public:
-//     CrystalHandlerTrigger(PlayerbotAI* ai) : Trigger(ai, "crystal handler") {}
+//     CrystalHandlerTrigger(ShadowAI* ai) : Trigger(ai, "crystal handler") {}
 //     bool IsActive() override;
 // };
 
 class GiftOfTharonjaTrigger : public Trigger
 {
 public:
-    GiftOfTharonjaTrigger(PlayerbotAI* ai) : Trigger(ai, "gift of tharon'ja") {}
+    GiftOfTharonjaTrigger(ShadowAI* ai) : Trigger(ai, "gift of tharon'ja") {}
     bool IsActive() override;
 };
 

@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONTOCTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONTOCTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONTOCTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONTOCTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -90,35 +90,35 @@ const std::vector<uint32> availableTargets = {
 class ToCLanceTrigger : public Trigger
 {
 public:
-    ToCLanceTrigger(PlayerbotAI* ai) : Trigger(ai, "toc lance") {}
+    ToCLanceTrigger(ShadowAI* ai) : Trigger(ai, "toc lance") {}
     bool IsActive() override;
 };
 
 class ToCUELanceTrigger : public Trigger
 {
 public:
-    ToCUELanceTrigger(PlayerbotAI* ai) : Trigger(ai, "toc ue lance") {}
+    ToCUELanceTrigger(ShadowAI* ai) : Trigger(ai, "toc ue lance") {}
     bool IsActive() override;
 };
 
 class ToCMountedTrigger : public Trigger
 {
 public:
-    ToCMountedTrigger(PlayerbotAI* botAI) : Trigger(botAI, "toc mounted") {}
+    ToCMountedTrigger(ShadowAI* botAI) : Trigger(botAI, "toc mounted") {}
     bool IsActive() override;
 };
 
 class ToCMountNearTrigger : public Trigger
 {
 public:
-    ToCMountNearTrigger(PlayerbotAI* botAI) : Trigger(botAI, "toc mount near") {}
+    ToCMountNearTrigger(ShadowAI* botAI) : Trigger(botAI, "toc mount near") {}
     bool IsActive() override;
 };
 
 class ToCEadricTrigger : public Trigger
 {
 public:
-    ToCEadricTrigger(PlayerbotAI* botAI) : Trigger(botAI, "toc eadric") {}
+    ToCEadricTrigger(ShadowAI* botAI) : Trigger(botAI, "toc eadric") {}
     bool IsActive() override;
 };
 

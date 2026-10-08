@@ -5,7 +5,7 @@
 
 #include "HunterBuffStrategies.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class BuffHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -13,7 +13,7 @@ public:
     BuffHunterStrategyActionNodeFactory() { creators["aspect of the hawk"] = &aspect_of_the_hawk; }
 
 private:
-    static ActionNode* aspect_of_the_hawk([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* aspect_of_the_hawk([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("aspect of the hawk",
                               /*P*/ nullptr,
@@ -22,7 +22,7 @@ private:
     }
 };
 
-HunterBuffDpsStrategy::HunterBuffDpsStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+HunterBuffDpsStrategy::HunterBuffDpsStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new BuffHunterStrategyActionNodeFactory());
 }

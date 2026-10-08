@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRADESTATUSACTION_H
-#define _PLAYERBOT_TRADESTATUSACTION_H
+#ifndef _SHADOW_TRADESTATUSACTION_H
+#define _SHADOW_TRADESTATUSACTION_H
 
 #include "QueryItemUsageAction.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 class TradeStatusAction : public QueryItemUsageAction
 {
 public:
-    TradeStatusAction(PlayerbotAI* botAI) : QueryItemUsageAction(botAI, "accept trade") {}
+    TradeStatusAction(ShadowAI* botAI) : QueryItemUsageAction(botAI, "accept trade") {}
 
     bool Execute(Event event) override;
 

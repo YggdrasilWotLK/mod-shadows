@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHANGETALENTSACTION_H
-#define _PLAYERBOT_CHANGETALENTSACTION_H
+#ifndef _SHADOW_CHANGETALENTSACTION_H
+#define _SHADOW_CHANGETALENTSACTION_H
 
 #include "Action.h"
 #include "Talentspec.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ChangeTalentsAction : public Action
 {
 public:
-    ChangeTalentsAction(PlayerbotAI* botAI, std::string const name = "talents") : Action(botAI, name) {}
+    ChangeTalentsAction(ShadowAI* botAI, std::string const name = "talents") : Action(botAI, name) {}
 
     bool Execute(Event event);
     // bool AutoSelectTalents(std::ostringstream* out);
@@ -35,7 +35,7 @@ private:
 class AutoSetTalentsAction : public ChangeTalentsAction
 {
 public:
-    AutoSetTalentsAction(PlayerbotAI* botAI) : ChangeTalentsAction(botAI, "auto talents") {}
+    AutoSetTalentsAction(ShadowAI* botAI) : ChangeTalentsAction(botAI, "auto talents") {}
 
     bool Execute(Event event) override;
 };

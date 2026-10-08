@@ -8,7 +8,7 @@
 #include "ChatHelper.h"
 #include "Event.h"
 #include "ItemUsageValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ItemPackets.h"
 
 bool UseItemAction::Execute(Event event)
@@ -187,7 +187,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     if (bot->isMoving())
     {
         bot->StopMoving();
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
         return false;
     }
 
@@ -229,7 +229,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
                 out << " on " << chat->FormatItem(itemForSpell->GetTemplate());
             }
             uint32 castTime = spellInfo->CalcCastTime();
-            botAI->SetNextCheckDelay(castTime + sPlayerbotAIConfig->reactDelay);
+            botAI->SetNextCheckDelay(castTime + sShadowAIConfig->reactDelay);
         }
 
         break;
@@ -305,7 +305,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     if (!spellId)
         return false;
 
-    // botAI->SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+    // botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
     botAI->TellMasterNoFacing(out.str());
     bot->GetSession()->HandleUseItemOpcode(packet);
     return true;
@@ -484,7 +484,7 @@ bool UseRandomQuestItem::Execute(Event event)
 
     bool used = UseItem(item, goTarget, nullptr, unitTarget);
     if (used)
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
 
     return used;
 }

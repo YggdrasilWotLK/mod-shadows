@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDNAXXBOSSHELPER_H
-#define _PLAYERBOT_RAIDNAXXBOSSHELPER_H
+#ifndef _SHADOW_RAIDNAXXBOSSHELPER_H
+#define _SHADOW_RAIDNAXXBOSSHELPER_H
 
 #include <string>
 
@@ -10,8 +10,8 @@
 #include "NamedObjectContext.h"
 #include "ObjectGuid.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "RaidNaxxScripts.h"
 #include "ScriptedCreature.h"
 #include "SharedDefines.h"
@@ -22,7 +22,7 @@ template <class BossAiType>
 class GenericBossHelper : public AiObject
 {
 public:
-    GenericBossHelper(PlayerbotAI* botAI, std::string name) : AiObject(botAI), _name(name) {}
+    GenericBossHelper(ShadowAI* botAI, std::string name) : AiObject(botAI), _name(name) {}
     virtual bool UpdateBossAI()
     {
         if (!bot->IsInCombat())
@@ -84,7 +84,7 @@ protected:
 class KelthuzadBossHelper : public GenericBossHelper<Kelthuzad::boss_kelthuzad::boss_kelthuzadAI>
 {
 public:
-    KelthuzadBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "kel'thuzad") {}
+    KelthuzadBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "kel'thuzad") {}
     const std::pair<float, float> center = {3716.19f, -5106.58f};
     const std::pair<float, float> tank_pos = {3709.19f, -5104.86f};
     const std::pair<float, float> assist_tank_pos = {3746.05f, -5112.74f};
@@ -111,7 +111,7 @@ public:
 class RazuviousBossHelper : public GenericBossHelper<Razuvious::boss_razuvious::boss_razuviousAI>
 {
 public:
-    RazuviousBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "instructor razuvious") {}
+    RazuviousBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "instructor razuvious") {}
 };
 
 class SapphironBossHelper : public GenericBossHelper<Sapphiron::boss_sapphiron::boss_sapphironAI>
@@ -120,7 +120,7 @@ public:
     const std::pair<float, float> mainTankPos = {3512.07f, -5274.06f};
     const std::pair<float, float> center = {3517.31f, -5253.74f};
     const float GENERIC_HEIGHT = 137.29f;
-    SapphironBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "sapphiron") {}
+    SapphironBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "sapphiron") {}
     bool UpdateBossAI() override
     {
         if (!GenericBossHelper::UpdateBossAI())
@@ -217,7 +217,7 @@ public:
     const std::pair<float, float> healPos = {3303.09f, -3135.24f};
 
     const float decimatedZombiePct = 10.0f;
-    GluthBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "gluth") {}
+    GluthBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "gluth") {}
     bool BeforeDecimate()
     {
         uint32 decimate = _event_map->GetNextEventTime(Gluth::EVENT_DECIMATE);
@@ -231,7 +231,7 @@ class LoathebBossHelper : public GenericBossHelper<Loatheb::boss_loatheb::boss_l
 public:
     const std::pair<float, float> mainTankPos = {2877.57f, -3967.00f};
     const std::pair<float, float> rangePos = {2896.96f, -3980.61f};
-    LoathebBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "loatheb") {}
+    LoathebBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "loatheb") {}
 };
 
 class FourhorsemanBossHelper : public GenericBossHelper<FourHorsemen::boss_four_horsemen::boss_four_horsemenAI>
@@ -240,7 +240,7 @@ public:
     const float posZ = 241.27f;
     const std::pair<float, float> attractPos[2] = {{2502.03f, -2910.90f},
                                                    {2484.61f, -2947.07f}};  // left (sir zeliek), right (lady blaumeux)
-    FourhorsemanBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "sir zeliek") {}
+    FourhorsemanBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "sir zeliek") {}
     bool UpdateBossAI() override
     {
         if (!GenericBossHelper::UpdateBossAI())
@@ -360,7 +360,7 @@ public:
     const std::pair<float, float> rangedPosFeugen = {3500.45f, -2997.92f};
     const std::pair<float, float> rangedPosStalagg = {3441.01f, -2942.04f};
     const float tankPosZ = 312.61f;
-    ThaddiusBossHelper(PlayerbotAI* botAI) : GenericBossHelper(botAI, "thaddius") {}
+    ThaddiusBossHelper(ShadowAI* botAI) : GenericBossHelper(botAI, "thaddius") {}
     bool UpdateBossAI() override
     {
         if (!GenericBossHelper::UpdateBossAI())

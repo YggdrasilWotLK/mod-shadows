@@ -8,12 +8,12 @@
 #include "Action.h"
 #include "Event.h"
 #include "PerformanceMonitor.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Queue.h"
 #include "Strategy.h"
 #include "Timer.h"
 
-Engine::Engine(PlayerbotAI* botAI, AiObjectContext* factory) : PlayerbotAIAware(botAI), aiObjectContext(factory)
+Engine::Engine(ShadowAI* botAI, AiObjectContext* factory) : ShadowAIAware(botAI), aiObjectContext(factory)
 {
     lastRelevance = 0.0f;
     testMode = false;
@@ -141,7 +141,7 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
 {
     LogAction("--- AI Tick ---");
 
-    if (sPlayerbotAIConfig->logValuesPerTick)
+    if (sShadowAIConfig->logValuesPerTick)
         LogValues();
 
     bool actionExecuted = false;
@@ -153,7 +153,7 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
     PushDefaultActions();
 
     uint32 iterations = 0;
-    uint32 iterationsPerTick = queue.Size() * (minimal ? 2 : sPlayerbotAIConfig->iterationsPerTick);
+    uint32 iterationsPerTick = queue.Size() * (minimal ? 2 : sShadowAIConfig->iterationsPerTick);
 
     while (++iterations <= iterationsPerTick)
     {
@@ -601,7 +601,7 @@ void Engine::LogAction(char const* format, ...)
     if (!bot || !format)
         return;
 
-    if (sPlayerbotAIConfig->logInGroupOnly && (!bot->GetGroup() || !botAI->HasRealPlayerMaster()) && !testMode)
+    if (sShadowAIConfig->logInGroupOnly && (!bot->GetGroup() || !botAI->HasRealPlayerMaster()) && !testMode)
         return;
 
     char buf[1024];
@@ -630,7 +630,7 @@ void Engine::LogAction(char const* format, ...)
     }
     else
     {
-        LOG_DEBUG("playerbots", "{} {}", bot->GetName().c_str(), buf);
+        LOG_DEBUG("shadows", "{} {}", bot->GetName().c_str(), buf);
     }
 }
 
@@ -664,9 +664,9 @@ void Engine::LogValues()
         return;
 
     Player* bot = botAI->GetBot();
-    if (sPlayerbotAIConfig->logInGroupOnly && (!bot->GetGroup() || !botAI->HasRealPlayerMaster()))
+    if (sShadowAIConfig->logInGroupOnly && (!bot->GetGroup() || !botAI->HasRealPlayerMaster()))
         return;
 
     std::string const text = botAI->GetAiObjectContext()->FormatValues();
-    LOG_DEBUG("playerbots", "Values for {}: {}", bot->GetName().c_str(), text.c_str());
+    LOG_DEBUG("shadows", "Values for {}: {}", bot->GetName().c_str(), text.c_str());
 }

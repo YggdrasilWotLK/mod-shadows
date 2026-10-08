@@ -10,7 +10,7 @@
 #include "NearestNpcsValue.h"
 #include "ObjectDefines.h"
 #include "ObjectGuid.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "Corpse.h"
 #include "Log.h"
@@ -58,7 +58,7 @@ void ReleaseSpiritAction::IncrementDeathCount() const
 {
     // Death Count to prevent skeleton piles
     Player* master = botAI->GetMaster();
-    if (!master || GET_PLAYERBOT_AI(master))
+    if (!master || GET_SHADOW_AI(master))
     {
         uint32 deathCount = AI_VALUE(uint32, "death count");
         context->GetValue<uint32>("death count")->Set(deathCount + 1);
@@ -69,7 +69,7 @@ void ReleaseSpiritAction::LogRelease(const std::string& releaseMsg, bool isAutoR
 {
     const std::string teamPrefix = bot->GetTeamId() == TEAM_ALLIANCE ? "A" : "H";
 
-    LOG_DEBUG("playerbots", "Bot {} {}:{} <{}> {}",
+    LOG_DEBUG("shadows", "Bot {} {}:{} <{}> {}",
         bot->GetGUID().ToString().c_str(),
         teamPrefix,
         bot->GetLevel(),
@@ -185,7 +185,7 @@ bool AutoReleaseSpiritAction::ShouldAutoRelease() const
 
     return sServerFacade->IsDistanceGreaterThan(
         AI_VALUE2(float, "distance", "master target"),
-        sPlayerbotAIConfig->sightDistance);
+        sShadowAIConfig->sightDistance);
 }
 
 bool AutoReleaseSpiritAction::ShouldDelayBattlegroundRelease() const

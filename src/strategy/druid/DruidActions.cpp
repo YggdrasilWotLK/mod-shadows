@@ -6,7 +6,7 @@
 #include "DruidActions.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 NextAction** CastAbolishPoisonAction::getAlternatives()
 {
@@ -46,7 +46,7 @@ NextAction** CastRebirthAction::getPrerequisites()
 bool CastRebirthAction::isUseful()
 {
     return CastSpellAction::isUseful() &&
-           AI_VALUE2(float, "distance", GetTargetName()) <= sPlayerbotAIConfig->spellDistance;
+           AI_VALUE2(float, "distance", GetTargetName()) <= sShadowAIConfig->spellDistance;
 }
 
 Unit* CastRegrowthOnPartyAction::GetTarget()
@@ -62,7 +62,7 @@ Unit* CastRegrowthOnPartyAction::GetTarget()
             continue;
         if (player->isDead() || player->IsFullHealth())
             continue;
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
             continue;
         if (botAI->HasAura("regrowth", player))
             continue;
@@ -91,7 +91,7 @@ Unit* CastRejuvenationOnNotFullAction::GetTarget()
         {
             continue;
         }
-        if (player->GetDistance2d(bot) > sPlayerbotAIConfig->spellDistance)
+        if (player->GetDistance2d(bot) > sShadowAIConfig->spellDistance)
         {
             continue;
         }

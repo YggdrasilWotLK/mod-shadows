@@ -6,7 +6,7 @@
 #include "GuildBankAction.h"
 
 #include "GuildMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool GuildBankAction::Execute(Event event)
 {

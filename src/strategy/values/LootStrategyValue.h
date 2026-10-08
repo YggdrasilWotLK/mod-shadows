@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOOTSTRATEGYVALUE_H
-#define _PLAYERBOT_LOOTSTRATEGYVALUE_H
+#ifndef _SHADOW_LOOTSTRATEGYVALUE_H
+#define _SHADOW_LOOTSTRATEGYVALUE_H
 
 #include "Value.h"
 
 class LootStrategy;
-class PlayerbotAI;
+class ShadowAI;
 
 class LootStrategyValue : public ManualSetValue<LootStrategy*>
 {
 public:
-    LootStrategyValue(PlayerbotAI* botAI, std::string const name = "loot strategy")
+    LootStrategyValue(ShadowAI* botAI, std::string const name = "loot strategy")
         : ManualSetValue<LootStrategy*>(botAI, normal, name)
     {
     }

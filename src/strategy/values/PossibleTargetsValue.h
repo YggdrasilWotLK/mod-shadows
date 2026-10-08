@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_POSSIBLETARGETSVALUE_H
-#define _PLAYERBOT_POSSIBLETARGETSVALUE_H
+#ifndef _SHADOW_POSSIBLETARGETSVALUE_H
+#define _SHADOW_POSSIBLETARGETSVALUE_H
 
 #include "NearestUnitsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PossibleTargetsValue : public NearestUnitsValue
 {
 public:
-    PossibleTargetsValue(PlayerbotAI* botAI, std::string const name = "possible targets",
-                         float range = sPlayerbotAIConfig->sightDistance, bool ignoreLos = false)
+    PossibleTargetsValue(ShadowAI* botAI, std::string const name = "possible targets",
+                         float range = sShadowAIConfig->sightDistance, bool ignoreLos = false)
         : NearestUnitsValue(botAI, name, range, ignoreLos)
     {
     }
@@ -28,7 +28,7 @@ protected:
 class AllTargetsValue : public PossibleTargetsValue
 {
 public:
-    AllTargetsValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    AllTargetsValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : PossibleTargetsValue(botAI, "all targets", range, true)
     {
     }
@@ -37,7 +37,7 @@ public:
 class PossibleTriggersValue : public NearestUnitsValue
 {
 public:
-    PossibleTriggersValue(PlayerbotAI* botAI, std::string const name = "possible triggers", float range = 15.0f,
+    PossibleTriggersValue(ShadowAI* botAI, std::string const name = "possible triggers", float range = 15.0f,
                           bool ignoreLos = true)
         : NearestUnitsValue(botAI, name, range, ignoreLos, 1 * 1000)
     {

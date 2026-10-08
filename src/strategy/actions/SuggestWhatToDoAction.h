@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SUGGESTWHATTODOACTION_H
-#define _PLAYERBOT_SUGGESTWHATTODOACTION_H
+#ifndef _SHADOW_SUGGESTWHATTODOACTION_H
+#define _SHADOW_SUGGESTWHATTODOACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SuggestWhatToDoAction : public InventoryAction
 {
 public:
-    SuggestWhatToDoAction(PlayerbotAI* botAI, std::string const name = "suggest what to do");
+    SuggestWhatToDoAction(ShadowAI* botAI, std::string const name = "suggest what to do");
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -39,14 +39,14 @@ private:
 class SuggestTradeAction : public SuggestWhatToDoAction
 {
 public:
-    SuggestTradeAction(PlayerbotAI* botAI);
+    SuggestTradeAction(ShadowAI* botAI);
     bool Execute(Event event) override;
 };
 
 class SuggestDungeonAction : public SuggestWhatToDoAction
 {
 public:
-    SuggestDungeonAction(PlayerbotAI* botAI);
+    SuggestDungeonAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 private:

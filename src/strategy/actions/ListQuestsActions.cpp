@@ -6,7 +6,7 @@
 #include "ListQuestsActions.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool ListQuestsAction::Execute(Event event)
 {

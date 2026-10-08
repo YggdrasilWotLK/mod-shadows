@@ -5,7 +5,7 @@
 
 #include "BudgetValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 uint32 MaxGearRepairCostValue::Calculate()
 {
@@ -142,7 +142,7 @@ uint32 MoneyNeededForValue::Calculate()
 {
     NeedMoneyFor needMoneyFor = NeedMoneyFor(stoi(getQualifier()));
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     AiObjectContext* context = botAI->GetAiObjectContext();
 
     uint32 moneyWanted = 0;

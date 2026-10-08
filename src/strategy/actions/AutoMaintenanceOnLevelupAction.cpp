@@ -1,10 +1,10 @@
 #include "AutoMaintenanceOnLevelupAction.h"
 
 #include "GuildMgr.h"
-#include "PlayerbotAIConfig.h"
-#include "PlayerbotFactory.h"
-#include "Playerbots.h"
-#include "RandomPlayerbotMgr.h"
+#include "ShadowAIConfig.h"
+#include "ShadowFactory.h"
+#include "Shadows.h"
+#include "RandomShadowMgr.h"
 #include "SharedDefines.h"
 #include "BroadcastHelper.h"
 
@@ -19,7 +19,7 @@ bool AutoMaintenanceOnLevelupAction::Execute(Event event)
 
 void AutoMaintenanceOnLevelupAction::AutoTeleportForLevel()
 {
-    if (!sPlayerbotAIConfig->autoTeleportForLevel || !sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sShadowAIConfig->autoTeleportForLevel || !sRandomShadowMgr->IsRandomBot(bot))
     {
         return;
     }
@@ -27,19 +27,19 @@ void AutoMaintenanceOnLevelupAction::AutoTeleportForLevel()
     {
         return;
     }
-    sRandomPlayerbotMgr->RandomTeleportForLevel(bot);
+    sRandomShadowMgr->RandomTeleportForLevel(bot);
     return;
 }
 
 void AutoMaintenanceOnLevelupAction::AutoPickTalents()
 {
-    if (!sPlayerbotAIConfig->autoPickTalents || !sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sShadowAIConfig->autoPickTalents || !sRandomShadowMgr->IsRandomBot(bot))
         return;
 
     if (bot->GetFreeTalentPoints() <= 0)
         return;
 
-    PlayerbotFactory factory(bot, bot->GetLevel());
+    ShadowFactory factory(bot, bot->GetLevel());
     factory.InitTalentsTree(true, true, true);
     factory.InitPetTalents();
 }
@@ -65,16 +65,16 @@ void AutoMaintenanceOnLevelupAction::AutoLearnSpell()
 void AutoMaintenanceOnLevelupAction::LearnSpells(std::ostringstream* out)
 {
     BroadcastHelper::BroadcastLevelup(botAI, bot);
-    if (sPlayerbotAIConfig->autoLearnTrainerSpells && sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (sShadowAIConfig->autoLearnTrainerSpells && sRandomShadowMgr->IsRandomBot(bot))
         LearnTrainerSpells(out);
 
-    if (sPlayerbotAIConfig->autoLearnQuestSpells && sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (sShadowAIConfig->autoLearnQuestSpells && sRandomShadowMgr->IsRandomBot(bot))
         LearnQuestSpells(out);
 }
 
 void AutoMaintenanceOnLevelupAction::LearnTrainerSpells(std::ostringstream* out)
 {
-    PlayerbotFactory factory(bot, bot->GetLevel());
+    ShadowFactory factory(bot, bot->GetLevel());
     factory.InitClassSpells();
     factory.InitAvailableSpells();
     factory.InitSkills();
@@ -156,10 +156,10 @@ void AutoMaintenanceOnLevelupAction::LearnSpell(uint32 spellId, std::ostringstre
 
 void AutoMaintenanceOnLevelupAction::AutoUpgradeEquip()
 {
-    if (!sPlayerbotAIConfig->autoUpgradeEquip || !sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sShadowAIConfig->autoUpgradeEquip || !sRandomShadowMgr->IsRandomBot(bot))
         return;
 
-    PlayerbotFactory factory(bot, bot->GetLevel());
+    ShadowFactory factory(bot, bot->GetLevel());
 
     // Clean up old consumables before adding new ones
     factory.CleanupConsumables();
@@ -170,9 +170,9 @@ void AutoMaintenanceOnLevelupAction::AutoUpgradeEquip()
     factory.InitConsumables();
     factory.InitPotions();
 
-    if (!sPlayerbotAIConfig->equipmentPersistence || bot->GetLevel() < sPlayerbotAIConfig->equipmentPersistenceLevel)
+    if (!sShadowAIConfig->equipmentPersistence || bot->GetLevel() < sShadowAIConfig->equipmentPersistenceLevel)
     {
-        if (sPlayerbotAIConfig->incrementalGearInit)
+        if (sShadowAIConfig->incrementalGearInit)
             factory.InitEquipment(true);
     }
 }

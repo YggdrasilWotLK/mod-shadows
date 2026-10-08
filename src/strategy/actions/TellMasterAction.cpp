@@ -6,7 +6,7 @@
 #include "TellMasterAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool TellMasterAction::Execute(Event event)
 {

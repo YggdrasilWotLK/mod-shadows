@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RACIALSSTRATEGY_H
-#define _PLAYERBOT_RACIALSSTRATEGY_H
+#ifndef _SHADOW_RACIALSSTRATEGY_H
+#define _SHADOW_RACIALSSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RacialsStrategy : public Strategy
 {
 public:
-    RacialsStrategy(PlayerbotAI* botAI);
+    RacialsStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "racials"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

@@ -4,12 +4,12 @@
  */
 
 #include "GenericActions.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Player.h"
 #include "Pet.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "CreatureAI.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "CharmInfo.h"
 #include "SharedDefines.h"
 #include "ObjectGuid.h"
@@ -113,7 +113,7 @@ bool TogglePetSpellAutoCastAction::Execute(Event event)
     }
 
     // Debug message if pet spells have been toggled and debug is enabled
-    if (toggled && sPlayerbotAIConfig->petChatCommandDebug == 1)
+    if (toggled && sShadowAIConfig->petChatCommandDebug == 1)
         botAI->TellMaster("Pet autocast spells have been toggled.");
 
     return toggled;
@@ -185,7 +185,7 @@ bool SetPetStanceAction::Execute(Event /*event*/)
     }
 
     // Get the default pet stance from the configuration
-    int32 stance = sPlayerbotAIConfig->defaultPetStance;
+    int32 stance = sShadowAIConfig->defaultPetStance;
     ReactStates react = REACT_DEFENSIVE;
     std::string stanceText = "defensive (from config, fallback)";
 
@@ -221,7 +221,7 @@ bool SetPetStanceAction::Execute(Event /*event*/)
     }
 
     // If debug is enabled in config, inform the master of the new stance
-    if (sPlayerbotAIConfig->petChatCommandDebug == 1)
+    if (sShadowAIConfig->petChatCommandDebug == 1)
         botAI->TellMaster("Pet stance set to " + stanceText + " (applied to all pets/guardians).");
 
     return true;

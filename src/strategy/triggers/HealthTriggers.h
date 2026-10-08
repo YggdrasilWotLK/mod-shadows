@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HEALTHTRIGGERS_H
-#define _PLAYERBOT_HEALTHTRIGGERS_H
+#ifndef _SHADOW_HEALTHTRIGGERS_H
+#define _SHADOW_HEALTHTRIGGERS_H
 
 #include <stdexcept>
 
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ValueInRangeTrigger : public Trigger
 {
 public:
-    ValueInRangeTrigger(PlayerbotAI* botAI, std::string const name, float maxValue, float minValue)
+    ValueInRangeTrigger(ShadowAI* botAI, std::string const name, float maxValue, float minValue)
         : Trigger(botAI, name), maxValue(maxValue), minValue(minValue)
     {
     }
@@ -35,7 +35,7 @@ protected:
 class HealthInRangeTrigger : public ValueInRangeTrigger
 {
 public:
-    HealthInRangeTrigger(PlayerbotAI* botAI, std::string const name, float maxValue, float minValue = 0)
+    HealthInRangeTrigger(ShadowAI* botAI, std::string const name, float maxValue, float minValue = 0)
         : ValueInRangeTrigger(botAI, name, maxValue, minValue)
     {
     }
@@ -47,8 +47,8 @@ public:
 class LowHealthTrigger : public HealthInRangeTrigger
 {
 public:
-    LowHealthTrigger(PlayerbotAI* botAI, std::string const name = "low health",
-                     float value = sPlayerbotAIConfig->lowHealth, float minValue = 0)
+    LowHealthTrigger(ShadowAI* botAI, std::string const name = "low health",
+                     float value = sShadowAIConfig->lowHealth, float minValue = 0)
         : HealthInRangeTrigger(botAI, name, value, minValue)
     {
     }
@@ -59,8 +59,8 @@ public:
 class CriticalHealthTrigger : public LowHealthTrigger
 {
 public:
-    CriticalHealthTrigger(PlayerbotAI* botAI)
-        : LowHealthTrigger(botAI, "critical health", sPlayerbotAIConfig->criticalHealth, 0)
+    CriticalHealthTrigger(ShadowAI* botAI)
+        : LowHealthTrigger(botAI, "critical health", sShadowAIConfig->criticalHealth, 0)
     {
     }
 };
@@ -68,8 +68,8 @@ public:
 class MediumHealthTrigger : public LowHealthTrigger
 {
 public:
-    MediumHealthTrigger(PlayerbotAI* botAI)
-        : LowHealthTrigger(botAI, "medium health", sPlayerbotAIConfig->mediumHealth, 0)
+    MediumHealthTrigger(ShadowAI* botAI)
+        : LowHealthTrigger(botAI, "medium health", sShadowAIConfig->mediumHealth, 0)
     {
     }
 };
@@ -77,9 +77,9 @@ public:
 class AlmostFullHealthTrigger : public LowHealthTrigger
 {
 public:
-    AlmostFullHealthTrigger(PlayerbotAI* botAI)
-        : LowHealthTrigger(botAI, "almost full health", sPlayerbotAIConfig->almostFullHealth,
-                           sPlayerbotAIConfig->mediumHealth)
+    AlmostFullHealthTrigger(ShadowAI* botAI)
+        : LowHealthTrigger(botAI, "almost full health", sShadowAIConfig->almostFullHealth,
+                           sShadowAIConfig->mediumHealth)
     {
     }
 };
@@ -87,8 +87,8 @@ public:
 class PartyMemberLowHealthTrigger : public HealthInRangeTrigger
 {
 public:
-    PartyMemberLowHealthTrigger(PlayerbotAI* botAI, std::string const name = "party member low health",
-                                float value = sPlayerbotAIConfig->lowHealth,
+    PartyMemberLowHealthTrigger(ShadowAI* botAI, std::string const name = "party member low health",
+                                float value = sShadowAIConfig->lowHealth,
                                 float minValue = 0)
         : HealthInRangeTrigger(botAI, name, value, minValue)
     {
@@ -100,8 +100,8 @@ public:
 class PartyMemberCriticalHealthTrigger : public PartyMemberLowHealthTrigger
 {
 public:
-    PartyMemberCriticalHealthTrigger(PlayerbotAI* botAI)
-        : PartyMemberLowHealthTrigger(botAI, "party member critical health", sPlayerbotAIConfig->criticalHealth, 0)
+    PartyMemberCriticalHealthTrigger(ShadowAI* botAI)
+        : PartyMemberLowHealthTrigger(botAI, "party member critical health", sShadowAIConfig->criticalHealth, 0)
     {
     }
 };
@@ -109,8 +109,8 @@ public:
 class PartyMemberMediumHealthTrigger : public PartyMemberLowHealthTrigger
 {
 public:
-    PartyMemberMediumHealthTrigger(PlayerbotAI* botAI)
-        : PartyMemberLowHealthTrigger(botAI, "party member medium health", sPlayerbotAIConfig->mediumHealth,
+    PartyMemberMediumHealthTrigger(ShadowAI* botAI)
+        : PartyMemberLowHealthTrigger(botAI, "party member medium health", sShadowAIConfig->mediumHealth,
                                       0)
     {
     }
@@ -119,8 +119,8 @@ public:
 class PartyMemberAlmostFullHealthTrigger : public PartyMemberLowHealthTrigger
 {
 public:
-    PartyMemberAlmostFullHealthTrigger(PlayerbotAI* botAI)
-        : PartyMemberLowHealthTrigger(botAI, "party member almost full health", sPlayerbotAIConfig->almostFullHealth,
+    PartyMemberAlmostFullHealthTrigger(ShadowAI* botAI)
+        : PartyMemberLowHealthTrigger(botAI, "party member almost full health", sShadowAIConfig->almostFullHealth,
                                       0)
     {
     }
@@ -129,7 +129,7 @@ public:
 class TargetLowHealthTrigger : public HealthInRangeTrigger
 {
 public:
-    TargetLowHealthTrigger(PlayerbotAI* botAI, float value, float minValue = 0)
+    TargetLowHealthTrigger(ShadowAI* botAI, float value, float minValue = 0)
         : HealthInRangeTrigger(botAI, "target low health", value, minValue)
     {
     }
@@ -140,13 +140,13 @@ public:
 class TargetCriticalHealthTrigger : public TargetLowHealthTrigger
 {
 public:
-    TargetCriticalHealthTrigger(PlayerbotAI* botAI) : TargetLowHealthTrigger(botAI, 20) {}
+    TargetCriticalHealthTrigger(ShadowAI* botAI) : TargetLowHealthTrigger(botAI, 20) {}
 };
 
 class PartyMemberDeadTrigger : public Trigger
 {
 public:
-    PartyMemberDeadTrigger(PlayerbotAI* botAI) : Trigger(botAI, "resurrect", 1 * 1000) {}
+    PartyMemberDeadTrigger(ShadowAI* botAI) : Trigger(botAI, "resurrect", 1 * 1000) {}
 
     std::string const GetTargetName() override { return "party member to resurrect"; }
     bool IsActive() override;
@@ -155,7 +155,7 @@ public:
 class CombatPartyMemberDeadTrigger : public Trigger
 {
 public:
-    CombatPartyMemberDeadTrigger(PlayerbotAI* ai) : Trigger(ai, "combat party member to resurrect", 1) {}
+    CombatPartyMemberDeadTrigger(ShadowAI* ai) : Trigger(ai, "combat party member to resurrect", 1) {}
     std::string const GetTargetName() override { return "party member to resurrect"; }
     bool IsActive() override;
 };
@@ -163,7 +163,7 @@ public:
 class DeadTrigger : public Trigger
 {
 public:
-    DeadTrigger(PlayerbotAI* botAI) : Trigger(botAI, "dead") {}
+    DeadTrigger(ShadowAI* botAI) : Trigger(botAI, "dead") {}
 
     std::string const GetTargetName() override { return "self target"; }
     bool IsActive() override;
@@ -172,7 +172,7 @@ public:
 class AoeHealTrigger : public Trigger
 {
 public:
-    AoeHealTrigger(PlayerbotAI* botAI, std::string const name, std::string const type, int32 count)
+    AoeHealTrigger(ShadowAI* botAI, std::string const name, std::string const type, int32 count)
         : Trigger(botAI, name), count(count), type(type)
     {
     }  // reorder args - whipowill
@@ -186,7 +186,7 @@ protected:
 class AoeInGroupTrigger : public Trigger
 {
 public:
-    AoeInGroupTrigger(PlayerbotAI* ai, std::string name, std::string type)
+    AoeInGroupTrigger(ShadowAI* ai, std::string name, std::string type)
         : Trigger(ai, name), type(type)
     {
     }

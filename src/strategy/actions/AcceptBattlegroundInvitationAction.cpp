@@ -6,7 +6,7 @@
 #include "AcceptBattlegroundInvitationAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool AcceptBgInvitationAction::Execute(Event event)
 {

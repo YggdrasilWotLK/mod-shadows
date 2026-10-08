@@ -10,8 +10,8 @@
 #include "ItemUsageValue.h"
 #include "LootAction.h"
 #include "ObjectMgr.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 bool LootRollAction::Execute(Event event)
 {
@@ -81,11 +81,11 @@ bool LootRollAction::Execute(Event event)
                     break;
             }
         }
-        if (sPlayerbotAIConfig->lootRollLevel == 0)
+        if (sShadowAIConfig->lootRollLevel == 0)
         {
             vote = PASS;
         }
-        else if (sPlayerbotAIConfig->lootRollLevel == 1)
+        else if (sShadowAIConfig->lootRollLevel == 1)
         {
             if (vote == NEED)
             {
@@ -147,7 +147,7 @@ RollVote LootRollAction::CalculateRollVote(ItemTemplate const* proto)
             break;
     }
 
-    return StoreLootAction::IsLootAllowed(proto->ItemId, GET_PLAYERBOT_AI(bot).get()) ? needVote : PASS;
+    return StoreLootAction::IsLootAllowed(proto->ItemId, GET_SHADOW_AI(bot).get()) ? needVote : PASS;
 }
 
 bool MasterLootRollAction::isUseful() { return !botAI->HasActivePlayerMaster(); }

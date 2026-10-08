@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WORLDBUFFACTION_H
-#define _PLAYERBOT_WORLDBUFFACTION_H
+#ifndef _SHADOW_WORLDBUFFACTION_H
+#define _SHADOW_WORLDBUFFACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class WorldBuffAction : public Action
 {
 public:
-    WorldBuffAction(PlayerbotAI* botAI) : Action(botAI, "world buff") {}
+    WorldBuffAction(ShadowAI* botAI) : Action(botAI, "world buff") {}
 
     bool Execute(Event event) override;
 

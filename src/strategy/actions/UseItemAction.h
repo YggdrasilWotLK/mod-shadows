@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_USEITEMACTION_H
-#define _PLAYERBOT_USEITEMACTION_H
+#ifndef _SHADOW_USEITEMACTION_H
+#define _SHADOW_USEITEMACTION_H
 
 #include "Action.h"
 
 class Item;
 class ObjectGuid;
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class UseItemAction : public Action
 {
 public:
-    UseItemAction(PlayerbotAI* botAI, std::string const name = "use", bool selfOnly = false)
+    UseItemAction(ShadowAI* botAI, std::string const name = "use", bool selfOnly = false)
         : Action(botAI, name), selfOnly(selfOnly)
     {
     }
@@ -40,7 +40,7 @@ private:
 class UseSpellItemAction : public UseItemAction
 {
 public:
-    UseSpellItemAction(PlayerbotAI* botAI, std::string const name, bool selfOnly = false)
+    UseSpellItemAction(ShadowAI* botAI, std::string const name, bool selfOnly = false)
         : UseItemAction(botAI, name, selfOnly)
     {
     }
@@ -51,7 +51,7 @@ public:
 class UseHealingPotion : public UseItemAction
 {
 public:
-    UseHealingPotion(PlayerbotAI* botAI) : UseItemAction(botAI, "healing potion") {}
+    UseHealingPotion(ShadowAI* botAI) : UseItemAction(botAI, "healing potion") {}
 
     bool isUseful() override;
 };
@@ -59,7 +59,7 @@ public:
 class UseManaPotion : public UseItemAction
 {
 public:
-    UseManaPotion(PlayerbotAI* botAI) : UseItemAction(botAI, "mana potion") {}
+    UseManaPotion(ShadowAI* botAI) : UseItemAction(botAI, "mana potion") {}
 
     bool isUseful() override;
 };
@@ -67,7 +67,7 @@ public:
 class UseHearthStone : public UseItemAction
 {
 public:
-    UseHearthStone(PlayerbotAI* botAI) : UseItemAction(botAI, "hearthstone", true) {}
+    UseHearthStone(ShadowAI* botAI) : UseItemAction(botAI, "hearthstone", true) {}
 
     bool isUseful() override;
     bool Execute(Event event) override;
@@ -76,7 +76,7 @@ public:
 class UseRandomRecipe : public UseItemAction
 {
 public:
-    UseRandomRecipe(PlayerbotAI* botAI) : UseItemAction(botAI, "random recipe", true) {}
+    UseRandomRecipe(ShadowAI* botAI) : UseItemAction(botAI, "random recipe", true) {}
 
     bool isUseful() override;
     bool isPossible() override;
@@ -86,7 +86,7 @@ public:
 class UseRandomQuestItem : public UseItemAction
 {
 public:
-    UseRandomQuestItem(PlayerbotAI* botAI) : UseItemAction(botAI, "random quest item", true) {}
+    UseRandomQuestItem(ShadowAI* botAI) : UseItemAction(botAI, "random quest item", true) {}
 
     bool isUseful() override;
     bool isPossible() override;

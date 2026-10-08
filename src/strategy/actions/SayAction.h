@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SAYACTION_H
-#define _PLAYERBOT_SAYACTION_H
+#ifndef _SHADOW_SAYACTION_H
+#define _SHADOW_SAYACTION_H
 
 #include "Action.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "NamedObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class SayAction : public Action, public Qualified
 {
 public:
-    SayAction(PlayerbotAI* botAI);
+    SayAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -28,7 +28,7 @@ private:
 class ChatReplyAction : public Action
 {
 public:
-    ChatReplyAction(PlayerbotAI* ai) : Action(ai, "chat message") {}
+    ChatReplyAction(ShadowAI* ai) : Action(ai, "chat message") {}
     virtual bool Execute(Event event) { return true; }
     bool isUseful() { return true; }
 

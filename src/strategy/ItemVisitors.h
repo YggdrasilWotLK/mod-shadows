@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ITEMVISITORS_H
-#define _PLAYERBOT_ITEMVISITORS_H
+#ifndef _SHADOW_ITEMVISITORS_H
+#define _SHADOW_ITEMVISITORS_H
 
 #include "ChatHelper.h"
 #include "Common.h"
@@ -14,7 +14,7 @@
 #include <memory>
 
 class AiObjectContext;
-class PlayerbotAI;
+class ShadowAI;
 class Player;
 
 char* strstri(char const* str1, char const* str2);
@@ -420,7 +420,7 @@ public:
 
 private:
     // Keeps the bot AI alive for the visitor's lifetime (logout/destruct race).
-    std::shared_ptr<PlayerbotAI> aiGuard;
+    std::shared_ptr<ShadowAI> aiGuard;
     AiObjectContext* context;
     ItemUsage usage;
 };

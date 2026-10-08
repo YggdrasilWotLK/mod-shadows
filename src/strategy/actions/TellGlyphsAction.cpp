@@ -6,7 +6,7 @@
 #include "TellGlyphsAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 #include "ObjectMgr.h"
 #include "SpellMgr.h"

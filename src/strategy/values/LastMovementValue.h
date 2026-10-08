@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LASTMOVEMENTVALUE_H
-#define _PLAYERBOT_LASTMOVEMENTVALUE_H
+#ifndef _SHADOW_LASTMOVEMENTVALUE_H
+#define _SHADOW_LASTMOVEMENTVALUE_H
 
 #include "ObjectGuid.h"
 #include "TravelNode.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 // High priority movement can override the previous low priority one
@@ -72,7 +72,7 @@ public:
 class LastMovementValue : public ManualSetValue<LastMovement&>
 {
 public:
-    LastMovementValue(PlayerbotAI* botAI) : ManualSetValue<LastMovement&>(botAI, data) {}
+    LastMovementValue(ShadowAI* botAI) : ManualSetValue<LastMovement&>(botAI, data) {}
 
 private:
     LastMovement data = LastMovement();
@@ -81,7 +81,7 @@ private:
 class StayTimeValue : public ManualSetValue<time_t>
 {
 public:
-    StayTimeValue(PlayerbotAI* botAI) : ManualSetValue<time_t>(botAI, 0) {}
+    StayTimeValue(ShadowAI* botAI) : ManualSetValue<time_t>(botAI, 0) {}
 };
 
 #endif

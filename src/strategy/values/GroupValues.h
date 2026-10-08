@@ -6,12 +6,12 @@
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GroupMembersValue : public ObjectGuidListCalculatedValue
 {
 public:
-    GroupMembersValue(PlayerbotAI* botAI) : ObjectGuidListCalculatedValue(botAI, "group members", 2 * 1000) {}
+    GroupMembersValue(ShadowAI* botAI) : ObjectGuidListCalculatedValue(botAI, "group members", 2 * 1000) {}
 
     GuidVector Calculate() override;
 };
@@ -19,7 +19,7 @@ public:
 class IsFollowingPartyValue : public BoolCalculatedValue
 {
 public:
-    IsFollowingPartyValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "following party") {}
+    IsFollowingPartyValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "following party") {}
 
     bool Calculate() override;
 };
@@ -27,7 +27,7 @@ public:
 class IsNearLeaderValue : public BoolCalculatedValue
 {
 public:
-    IsNearLeaderValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "near leader") {}
+    IsNearLeaderValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "near leader") {}
 
     bool Calculate() override;
 };
@@ -35,7 +35,7 @@ public:
 class BoolANDValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    BoolANDValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "bool and") {}
+    BoolANDValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "bool and") {}
 
     bool Calculate() override;
 };
@@ -43,7 +43,7 @@ public:
 class GroupBoolCountValue : public Uint32CalculatedValue, public Qualified
 {
 public:
-    GroupBoolCountValue(PlayerbotAI* botAI) : Uint32CalculatedValue(botAI, "group count") {}
+    GroupBoolCountValue(ShadowAI* botAI) : Uint32CalculatedValue(botAI, "group count") {}
 
     uint32 Calculate() override;
 };
@@ -51,7 +51,7 @@ public:
 class GroupBoolANDValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    GroupBoolANDValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "group bool and") {}
+    GroupBoolANDValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "group bool and") {}
 
     bool Calculate() override;
 };
@@ -59,7 +59,7 @@ public:
 class GroupBoolORValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    GroupBoolORValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "group bool or") {}
+    GroupBoolORValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "group bool or") {}
 
     bool Calculate() override;
 };
@@ -67,7 +67,7 @@ public:
 class GroupReadyValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    GroupReadyValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "group ready", 2 * 2000) {}
+    GroupReadyValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "group ready", 2 * 2000) {}
 
     bool Calculate() override;
 };

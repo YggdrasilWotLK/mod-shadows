@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BATTLEGROUNDTACTICSACTION_H
-#define _PLAYERBOT_BATTLEGROUNDTACTICSACTION_H
+#ifndef _SHADOW_BATTLEGROUNDTACTICSACTION_H
+#define _SHADOW_BATTLEGROUNDTACTICSACTION_H
 
 #include "BattlegroundAV.h"
 #include "MovementActions.h"
 
 class ChatHandler;
 class Battleground;
-class PlayerbotAI;
+class ShadowAI;
 struct Position;
 
 #define SPELL_CAPTURE_BANNER 21651
@@ -108,7 +108,7 @@ public:
     static bool HandleConsoleCommand(ChatHandler* handler, char const* args);
     uint8 static GetBotStrategyForTeam(Battleground* bg, TeamId teamId);
 
-    BGTactics(PlayerbotAI* botAI, std::string const name = "bg tactics") : MovementAction(botAI, name) {}
+    BGTactics(ShadowAI* botAI, std::string const name = "bg tactics") : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -136,7 +136,7 @@ private:
 class ArenaTactics : public MovementAction
 {
 public:
-    ArenaTactics(PlayerbotAI* botAI, std::string const name = "arena tactics") : MovementAction(botAI, name) {}
+    ArenaTactics(ShadowAI* botAI, std::string const name = "arena tactics") : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 

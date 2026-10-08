@@ -9,7 +9,7 @@
 #include "FuryWarriorStrategy.h"
 #include "GenericWarriorNonCombatStrategy.h"
 #include "NamedObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PullStrategy.h"
 #include "TankWarriorStrategy.h"
 #include "WarriorActions.h"
@@ -26,9 +26,9 @@ public:
     }
 
 private:
-    static Strategy* nc(PlayerbotAI* botAI) { return new GenericWarriorNonCombatStrategy(botAI); }
-    static Strategy* warrior_aoe(PlayerbotAI* botAI) { return new WarrirorAoeStrategy(botAI); }
-    static Strategy* pull(PlayerbotAI* botAI) { return new PullStrategy(botAI, "shoot"); }
+    static Strategy* nc(ShadowAI* botAI) { return new GenericWarriorNonCombatStrategy(botAI); }
+    static Strategy* warrior_aoe(ShadowAI* botAI) { return new WarrirorAoeStrategy(botAI); }
+    static Strategy* pull(ShadowAI* botAI) { return new PullStrategy(botAI, "shoot"); }
 };
 
 class WarriorCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -42,9 +42,9 @@ public:
     }
 
 private:
-    static Strategy* tank(PlayerbotAI* botAI) { return new TankWarriorStrategy(botAI); }
-    static Strategy* arms(PlayerbotAI* botAI) { return new ArmsWarriorStrategy(botAI); }
-    static Strategy* fury(PlayerbotAI* botAI) { return new FuryWarriorStrategy(botAI); }
+    static Strategy* tank(ShadowAI* botAI) { return new TankWarriorStrategy(botAI); }
+    static Strategy* arms(ShadowAI* botAI) { return new ArmsWarriorStrategy(botAI); }
+    static Strategy* fury(ShadowAI* botAI) { return new FuryWarriorStrategy(botAI); }
 };
 
 class WarriorTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -105,75 +105,75 @@ public:
     }
 
 private:
-    static Trigger* shield_block(PlayerbotAI* botAI) { return new ShieldBlockTrigger(botAI); }
-    static Trigger* defensive_stance(PlayerbotAI* botAI) { return new DefensiveStanceTrigger(botAI); }
-    static Trigger* berserker_stance(PlayerbotAI* botAI) { return new BerserkerStanceTrigger(botAI); }
-    static Trigger* battle_stance(PlayerbotAI* botAI) { return new BattleStanceTrigger(botAI); }
-    static Trigger* hamstring(PlayerbotAI* botAI) { return new HamstringTrigger(botAI); }
-    static Trigger* victory_rush(PlayerbotAI* botAI) { return new VictoryRushTrigger(botAI); }
-    static Trigger* death_wish(PlayerbotAI* botAI) { return new DeathWishTrigger(botAI); }
-    static Trigger* recklessness(PlayerbotAI* botAI) { return new RecklessnessTrigger(botAI); }
-    static Trigger* battle_shout(PlayerbotAI* botAI) { return new BattleShoutTrigger(botAI); }
-    static Trigger* commanding_shout(PlayerbotAI* botAI) { return new CommandingShoutTrigger(botAI); }
-    static Trigger* rend(PlayerbotAI* botAI) { return new RendDebuffTrigger(botAI); }
-    static Trigger* rend_on_attacker(PlayerbotAI* botAI) { return new RendDebuffOnAttackerTrigger(botAI); }
-    static Trigger* bloodrage(PlayerbotAI* botAI) { return new BloodrageBuffTrigger(botAI); }
-    static Trigger* shield_bash(PlayerbotAI* botAI) { return new ShieldBashInterruptSpellTrigger(botAI); }
-    static Trigger* disarm(PlayerbotAI* botAI) { return new DisarmDebuffTrigger(botAI); }
-    static Trigger* concussion_blow(PlayerbotAI* botAI) { return new ConcussionBlowTrigger(botAI); }
-    static Trigger* SwordAndBoard(PlayerbotAI* botAI) { return new SwordAndBoardTrigger(botAI); }
-    static Trigger* shield_bash_on_enemy_healer(PlayerbotAI* botAI)
+    static Trigger* shield_block(ShadowAI* botAI) { return new ShieldBlockTrigger(botAI); }
+    static Trigger* defensive_stance(ShadowAI* botAI) { return new DefensiveStanceTrigger(botAI); }
+    static Trigger* berserker_stance(ShadowAI* botAI) { return new BerserkerStanceTrigger(botAI); }
+    static Trigger* battle_stance(ShadowAI* botAI) { return new BattleStanceTrigger(botAI); }
+    static Trigger* hamstring(ShadowAI* botAI) { return new HamstringTrigger(botAI); }
+    static Trigger* victory_rush(ShadowAI* botAI) { return new VictoryRushTrigger(botAI); }
+    static Trigger* death_wish(ShadowAI* botAI) { return new DeathWishTrigger(botAI); }
+    static Trigger* recklessness(ShadowAI* botAI) { return new RecklessnessTrigger(botAI); }
+    static Trigger* battle_shout(ShadowAI* botAI) { return new BattleShoutTrigger(botAI); }
+    static Trigger* commanding_shout(ShadowAI* botAI) { return new CommandingShoutTrigger(botAI); }
+    static Trigger* rend(ShadowAI* botAI) { return new RendDebuffTrigger(botAI); }
+    static Trigger* rend_on_attacker(ShadowAI* botAI) { return new RendDebuffOnAttackerTrigger(botAI); }
+    static Trigger* bloodrage(ShadowAI* botAI) { return new BloodrageBuffTrigger(botAI); }
+    static Trigger* shield_bash(ShadowAI* botAI) { return new ShieldBashInterruptSpellTrigger(botAI); }
+    static Trigger* disarm(ShadowAI* botAI) { return new DisarmDebuffTrigger(botAI); }
+    static Trigger* concussion_blow(ShadowAI* botAI) { return new ConcussionBlowTrigger(botAI); }
+    static Trigger* SwordAndBoard(ShadowAI* botAI) { return new SwordAndBoardTrigger(botAI); }
+    static Trigger* shield_bash_on_enemy_healer(ShadowAI* botAI)
     {
         return new ShieldBashInterruptEnemyHealerSpellTrigger(botAI);
     }
 
-    static Trigger* thunderclap_and_rage(PlayerbotAI* botAI)
+    static Trigger* thunderclap_and_rage(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "thunder clap", "light rage available");
     }
-    static Trigger* intercept_can_cast(PlayerbotAI* botAI) { return new InterceptCanCastTrigger(botAI); }
-    static Trigger* intercept_and_far_enemy(PlayerbotAI* botAI)
+    static Trigger* intercept_can_cast(ShadowAI* botAI) { return new InterceptCanCastTrigger(botAI); }
+    static Trigger* intercept_and_far_enemy(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "enemy is out of melee", "intercept can cast");
     }
-    static Trigger* intercept_and_rage(PlayerbotAI* botAI)
+    static Trigger* intercept_and_rage(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "intercept and far enemy", "light rage available");
     }
 
-    static Trigger* intercept_on_snare_target(PlayerbotAI* botAI) { return new InterceptSnareTrigger(botAI); }
-    static Trigger* spell_reflection(PlayerbotAI* botAI) { return new SpellReflectionTrigger(botAI); }
-    static Trigger* taste_for_blood(PlayerbotAI* botAI) { return new TasteForBloodTrigger(botAI); }
-    static Trigger* shockwave_on_snare_target(PlayerbotAI* botAI) { return new ShockwaveSnareTrigger(botAI); }
-    static Trigger* shockwave(PlayerbotAI* botAI) { return new ShockwaveTrigger(botAI); }
-    static Trigger* instant_slam(PlayerbotAI* botAI) { return new SlamInstantTrigger(botAI); }
-    static Trigger* sudden_death(PlayerbotAI* botAI) { return new SuddenDeathTrigger(botAI); }
-    static Trigger* taunt_on_snare_target(PlayerbotAI* botAI) { return new TauntSnareTrigger(botAI); }
-    static Trigger* intercept(PlayerbotAI* botAI) { return new InterceptInterruptSpellTrigger(botAI); }
-    static Trigger* intercept_on_enemy_healer(PlayerbotAI* botAI)
+    static Trigger* intercept_on_snare_target(ShadowAI* botAI) { return new InterceptSnareTrigger(botAI); }
+    static Trigger* spell_reflection(ShadowAI* botAI) { return new SpellReflectionTrigger(botAI); }
+    static Trigger* taste_for_blood(ShadowAI* botAI) { return new TasteForBloodTrigger(botAI); }
+    static Trigger* shockwave_on_snare_target(ShadowAI* botAI) { return new ShockwaveSnareTrigger(botAI); }
+    static Trigger* shockwave(ShadowAI* botAI) { return new ShockwaveTrigger(botAI); }
+    static Trigger* instant_slam(ShadowAI* botAI) { return new SlamInstantTrigger(botAI); }
+    static Trigger* sudden_death(ShadowAI* botAI) { return new SuddenDeathTrigger(botAI); }
+    static Trigger* taunt_on_snare_target(ShadowAI* botAI) { return new TauntSnareTrigger(botAI); }
+    static Trigger* intercept(ShadowAI* botAI) { return new InterceptInterruptSpellTrigger(botAI); }
+    static Trigger* intercept_on_enemy_healer(ShadowAI* botAI)
     {
         return new InterceptInterruptEnemyHealerSpellTrigger(botAI);
     }
-    static Trigger* pummel(PlayerbotAI* botAI) { return new PummelInterruptSpellTrigger(botAI); }
-    static Trigger* pummel_on_enemy_healer(PlayerbotAI* botAI)
+    static Trigger* pummel(ShadowAI* botAI) { return new PummelInterruptSpellTrigger(botAI); }
+    static Trigger* pummel_on_enemy_healer(ShadowAI* botAI)
     {
         return new PummelInterruptEnemyHealerSpellTrigger(botAI);
     }
-    static Trigger* berserker_rage(PlayerbotAI* botAI) { return new BerserkerRageBuffTrigger(botAI); }
-    static Trigger* bloodthirst(PlayerbotAI* botAI) { return new BloodthirstBuffTrigger(botAI); }
-    static Trigger* whirlwind(PlayerbotAI* botAI) { return new WhirlwindTrigger(botAI); }
-    static Trigger* thunder_clap_on_snare_target(PlayerbotAI* botAI) { return new ThunderClapSnareTrigger(botAI); }
-    static Trigger* thunder_clap(PlayerbotAI* botAI) { return new ThunderClapTrigger(botAI); }
-    static Trigger* mortal_strike(PlayerbotAI* botAI) { return new MortalStrikeDebuffTrigger(botAI); }
-    static Trigger* rampage(PlayerbotAI* botAI) { return new RampageAvailableTrigger(botAI); }
-    static Trigger* mocking_blow(PlayerbotAI* botAI) { return new MockingBlowTrigger(botAI); }
-    static Trigger* overpower(PlayerbotAI* botAI) { return new OverpowerAvailableTrigger(botAI); }
-    static Trigger* revenge(PlayerbotAI* botAI) { return new RevengeAvailableTrigger(botAI); }
-    static Trigger* sunder_armor(PlayerbotAI* botAI) { return new SunderArmorDebuffTrigger(botAI); }
-    // static Trigger* slam(PlayerbotAI* ai) { return new SlamTrigger(ai); }
+    static Trigger* berserker_rage(ShadowAI* botAI) { return new BerserkerRageBuffTrigger(botAI); }
+    static Trigger* bloodthirst(ShadowAI* botAI) { return new BloodthirstBuffTrigger(botAI); }
+    static Trigger* whirlwind(ShadowAI* botAI) { return new WhirlwindTrigger(botAI); }
+    static Trigger* thunder_clap_on_snare_target(ShadowAI* botAI) { return new ThunderClapSnareTrigger(botAI); }
+    static Trigger* thunder_clap(ShadowAI* botAI) { return new ThunderClapTrigger(botAI); }
+    static Trigger* mortal_strike(ShadowAI* botAI) { return new MortalStrikeDebuffTrigger(botAI); }
+    static Trigger* rampage(ShadowAI* botAI) { return new RampageAvailableTrigger(botAI); }
+    static Trigger* mocking_blow(ShadowAI* botAI) { return new MockingBlowTrigger(botAI); }
+    static Trigger* overpower(ShadowAI* botAI) { return new OverpowerAvailableTrigger(botAI); }
+    static Trigger* revenge(ShadowAI* botAI) { return new RevengeAvailableTrigger(botAI); }
+    static Trigger* sunder_armor(ShadowAI* botAI) { return new SunderArmorDebuffTrigger(botAI); }
+    // static Trigger* slam(ShadowAI* ai) { return new SlamTrigger(ai); }
 
-    static Trigger* vigilance(PlayerbotAI* botAI) { return new VigilanceTrigger(botAI); }
-    static Trigger* shattering_throw_trigger(PlayerbotAI* botAI) { return new ShatteringThrowTrigger(botAI); }
+    static Trigger* vigilance(ShadowAI* botAI) { return new VigilanceTrigger(botAI); }
+    static Trigger* shattering_throw_trigger(ShadowAI* botAI) { return new ShatteringThrowTrigger(botAI); }
 };
 
 class WarriorAiObjectContextInternal : public NamedObjectContext<Action>
@@ -248,74 +248,74 @@ public:
     }
 
 private:
-    static Action* devastate(PlayerbotAI* botAI) { return new CastDevastateAction(botAI); }
-    static Action* last_stand(PlayerbotAI* botAI) { return new CastLastStandAction(botAI); }
-    static Action* shockwave(PlayerbotAI* botAI) { return new CastShockwaveAction(botAI); }
-    static Action* shockwave_on_snare_target(PlayerbotAI* botAI) { return new CastShockwaveSnareAction(botAI); }
-    static Action* cleave(PlayerbotAI* botAI) { return new CastCleaveAction(botAI); }
-    static Action* concussion_blow(PlayerbotAI* botAI) { return new CastConcussionBlowAction(botAI); }
-    static Action* taunt(PlayerbotAI* botAI) { return new CastTauntAction(botAI); }
-    static Action* revenge(PlayerbotAI* botAI) { return new CastRevengeAction(botAI); }
-    static Action* slam(PlayerbotAI* botAI) { return new CastSlamAction(botAI); }
-    static Action* shield_slam(PlayerbotAI* botAI) { return new CastShieldSlamAction(botAI); }
-    static Action* disarm(PlayerbotAI* botAI) { return new CastDisarmAction(botAI); }
-    static Action* sunder_armor(PlayerbotAI* botAI) { return new CastSunderArmorAction(botAI); }
-    static Action* overpower(PlayerbotAI* botAI) { return new CastOverpowerAction(botAI); }
-    static Action* charge(PlayerbotAI* botAI) { return new CastChargeAction(botAI); }
-    static Action* bloodthirst(PlayerbotAI* botAI) { return new CastBloodthirstAction(botAI); }
-    static Action* rend(PlayerbotAI* botAI) { return new CastRendAction(botAI); }
-    static Action* rend_on_attacker(PlayerbotAI* botAI) { return new CastRendOnAttackerAction(botAI); }
-    static Action* mocking_blow(PlayerbotAI* botAI) { return new CastMockingBlowAction(botAI); }
-    static Action* death_wish(PlayerbotAI* botAI) { return new CastDeathWishAction(botAI); }
-    static Action* recklessness(PlayerbotAI* botAI) { return new CastRecklessnessAction(botAI); }
-    static Action* berserker_rage(PlayerbotAI* botAI) { return new CastBerserkerRageAction(botAI); }
-    static Action* victory_rush(PlayerbotAI* botAI) { return new CastVictoryRushAction(botAI); }
-    static Action* execute(PlayerbotAI* botAI) { return new CastExecuteAction(botAI); }
-    static Action* defensive_stance(PlayerbotAI* botAI) { return new CastDefensiveStanceAction(botAI); }
-    static Action* hamstring(PlayerbotAI* botAI) { return new CastHamstringAction(botAI); }
-    static Action* shield_bash(PlayerbotAI* botAI) { return new CastShieldBashAction(botAI); }
-    static Action* shield_block(PlayerbotAI* botAI) { return new CastShieldBlockAction(botAI); }
-    static Action* bloodrage(PlayerbotAI* botAI) { return new CastBloodrageAction(botAI); }
-    static Action* battle_stance(PlayerbotAI* botAI) { return new CastBattleStanceAction(botAI); }
-    static Action* heroic_strike(PlayerbotAI* botAI) { return new CastHeroicStrikeAction(botAI); }
-    static Action* intimidating_shout(PlayerbotAI* botAI) { return new CastIntimidatingShoutAction(botAI); }
-    static Action* demoralizing_shout(PlayerbotAI* botAI) { return new CastDemoralizingShoutAction(botAI); }
-    static Action* demoralizing_shout_without_life_time_check(PlayerbotAI* botAI)
+    static Action* devastate(ShadowAI* botAI) { return new CastDevastateAction(botAI); }
+    static Action* last_stand(ShadowAI* botAI) { return new CastLastStandAction(botAI); }
+    static Action* shockwave(ShadowAI* botAI) { return new CastShockwaveAction(botAI); }
+    static Action* shockwave_on_snare_target(ShadowAI* botAI) { return new CastShockwaveSnareAction(botAI); }
+    static Action* cleave(ShadowAI* botAI) { return new CastCleaveAction(botAI); }
+    static Action* concussion_blow(ShadowAI* botAI) { return new CastConcussionBlowAction(botAI); }
+    static Action* taunt(ShadowAI* botAI) { return new CastTauntAction(botAI); }
+    static Action* revenge(ShadowAI* botAI) { return new CastRevengeAction(botAI); }
+    static Action* slam(ShadowAI* botAI) { return new CastSlamAction(botAI); }
+    static Action* shield_slam(ShadowAI* botAI) { return new CastShieldSlamAction(botAI); }
+    static Action* disarm(ShadowAI* botAI) { return new CastDisarmAction(botAI); }
+    static Action* sunder_armor(ShadowAI* botAI) { return new CastSunderArmorAction(botAI); }
+    static Action* overpower(ShadowAI* botAI) { return new CastOverpowerAction(botAI); }
+    static Action* charge(ShadowAI* botAI) { return new CastChargeAction(botAI); }
+    static Action* bloodthirst(ShadowAI* botAI) { return new CastBloodthirstAction(botAI); }
+    static Action* rend(ShadowAI* botAI) { return new CastRendAction(botAI); }
+    static Action* rend_on_attacker(ShadowAI* botAI) { return new CastRendOnAttackerAction(botAI); }
+    static Action* mocking_blow(ShadowAI* botAI) { return new CastMockingBlowAction(botAI); }
+    static Action* death_wish(ShadowAI* botAI) { return new CastDeathWishAction(botAI); }
+    static Action* recklessness(ShadowAI* botAI) { return new CastRecklessnessAction(botAI); }
+    static Action* berserker_rage(ShadowAI* botAI) { return new CastBerserkerRageAction(botAI); }
+    static Action* victory_rush(ShadowAI* botAI) { return new CastVictoryRushAction(botAI); }
+    static Action* execute(ShadowAI* botAI) { return new CastExecuteAction(botAI); }
+    static Action* defensive_stance(ShadowAI* botAI) { return new CastDefensiveStanceAction(botAI); }
+    static Action* hamstring(ShadowAI* botAI) { return new CastHamstringAction(botAI); }
+    static Action* shield_bash(ShadowAI* botAI) { return new CastShieldBashAction(botAI); }
+    static Action* shield_block(ShadowAI* botAI) { return new CastShieldBlockAction(botAI); }
+    static Action* bloodrage(ShadowAI* botAI) { return new CastBloodrageAction(botAI); }
+    static Action* battle_stance(ShadowAI* botAI) { return new CastBattleStanceAction(botAI); }
+    static Action* heroic_strike(ShadowAI* botAI) { return new CastHeroicStrikeAction(botAI); }
+    static Action* intimidating_shout(ShadowAI* botAI) { return new CastIntimidatingShoutAction(botAI); }
+    static Action* demoralizing_shout(ShadowAI* botAI) { return new CastDemoralizingShoutAction(botAI); }
+    static Action* demoralizing_shout_without_life_time_check(ShadowAI* botAI)
     {
         return new CastDemoralizingShoutWithoutLifeTimeCheckAction(botAI);
     }
-    static Action* challenging_shout(PlayerbotAI* botAI) { return new CastChallengingShoutAction(botAI); }
-    static Action* shield_wall(PlayerbotAI* botAI) { return new CastShieldWallAction(botAI); }
-    static Action* battle_shout(PlayerbotAI* botAI) { return new CastBattleShoutAction(botAI); }
-    static Action* commanding_shout(PlayerbotAI* botAI) { return new CastCommandingShoutAction(botAI); }
-    static Action* battle_shout_taunt(PlayerbotAI* botAI) { return new CastBattleShoutTauntAction(botAI); }
-    static Action* thunder_clap(PlayerbotAI* botAI) { return new CastThunderClapAction(botAI); }
-    static Action* shield_bash_on_enemy_healer(PlayerbotAI* botAI)
+    static Action* challenging_shout(ShadowAI* botAI) { return new CastChallengingShoutAction(botAI); }
+    static Action* shield_wall(ShadowAI* botAI) { return new CastShieldWallAction(botAI); }
+    static Action* battle_shout(ShadowAI* botAI) { return new CastBattleShoutAction(botAI); }
+    static Action* commanding_shout(ShadowAI* botAI) { return new CastCommandingShoutAction(botAI); }
+    static Action* battle_shout_taunt(ShadowAI* botAI) { return new CastBattleShoutTauntAction(botAI); }
+    static Action* thunder_clap(ShadowAI* botAI) { return new CastThunderClapAction(botAI); }
+    static Action* shield_bash_on_enemy_healer(ShadowAI* botAI)
     {
         return new CastShieldBashOnEnemyHealerAction(botAI);
     }
-    static Action* intercept_on_snare_target(PlayerbotAI* botAI) { return new CastInterceptOnSnareTargetAction(botAI); }
-    static Action* intercept_on_enemy_healer(PlayerbotAI* botAI) { return new CastInterceptOnEnemyHealerAction(botAI); }
-    static Action* taunt_on_snare_target(PlayerbotAI* botAI) { return new CastTauntOnSnareTargetAction(botAI); }
-    static Action* thunder_clap_on_snare_target(PlayerbotAI* botAI) { return new CastThunderClapSnareAction(botAI); }
-    static Action* berserker_stance(PlayerbotAI* botAI) { return new CastBerserkerStanceAction(botAI); }
-    static Action* retaliation(PlayerbotAI* botAI) { return new CastRetaliationAction(botAI); }
-    static Action* mortal_strike(PlayerbotAI* botAI) { return new CastMortalStrikeAction(botAI); }
-    static Action* sweeping_strikes(PlayerbotAI* botAI) { return new CastSweepingStrikesAction(botAI); }
-    static Action* intercept(PlayerbotAI* botAI) { return new CastInterceptAction(botAI); }
-    static Action* whirlwind(PlayerbotAI* botAI) { return new CastWhirlwindAction(botAI); }
-    static Action* pummel(PlayerbotAI* botAI) { return new CastPummelAction(botAI); }
-    static Action* pummel_on_enemy_healer(PlayerbotAI* botAI) { return new CastPummelOnEnemyHealerAction(botAI); }
-    static Action* piercing_howl(PlayerbotAI* botAI) { return new CastPiercingHowlAction(botAI); }
-    static Action* rampage(PlayerbotAI* botAI) { return new CastRampageAction(botAI); }
-    static Action* intervene(PlayerbotAI* botAI) { return new CastInterveneAction(botAI); }
-    static Action* spell_reflection(PlayerbotAI* botAI) { return new CastSpellReflectionAction(botAI); }
-    static Action* shattering_throw(PlayerbotAI* botAI) { return new CastShatteringThrowAction(botAI); }
-    static Action* heroic_throw_on_snare_target(PlayerbotAI* botAI) { return new CastHeroicThrowSnareAction(botAI); }
-    static Action* heroic_throw(PlayerbotAI* botAI) { return new CastHeroicThrowAction(botAI); }
-    static Action* bladestorm(PlayerbotAI* botAI) { return new CastBladestormAction(botAI); }
-    static Action* vigilance(PlayerbotAI* botAI) { return new CastVigilanceAction(botAI); }
-    static Action* enraged_regeneration(PlayerbotAI* botAI) { return new CastEnragedRegenerationAction(botAI); }
+    static Action* intercept_on_snare_target(ShadowAI* botAI) { return new CastInterceptOnSnareTargetAction(botAI); }
+    static Action* intercept_on_enemy_healer(ShadowAI* botAI) { return new CastInterceptOnEnemyHealerAction(botAI); }
+    static Action* taunt_on_snare_target(ShadowAI* botAI) { return new CastTauntOnSnareTargetAction(botAI); }
+    static Action* thunder_clap_on_snare_target(ShadowAI* botAI) { return new CastThunderClapSnareAction(botAI); }
+    static Action* berserker_stance(ShadowAI* botAI) { return new CastBerserkerStanceAction(botAI); }
+    static Action* retaliation(ShadowAI* botAI) { return new CastRetaliationAction(botAI); }
+    static Action* mortal_strike(ShadowAI* botAI) { return new CastMortalStrikeAction(botAI); }
+    static Action* sweeping_strikes(ShadowAI* botAI) { return new CastSweepingStrikesAction(botAI); }
+    static Action* intercept(ShadowAI* botAI) { return new CastInterceptAction(botAI); }
+    static Action* whirlwind(ShadowAI* botAI) { return new CastWhirlwindAction(botAI); }
+    static Action* pummel(ShadowAI* botAI) { return new CastPummelAction(botAI); }
+    static Action* pummel_on_enemy_healer(ShadowAI* botAI) { return new CastPummelOnEnemyHealerAction(botAI); }
+    static Action* piercing_howl(ShadowAI* botAI) { return new CastPiercingHowlAction(botAI); }
+    static Action* rampage(ShadowAI* botAI) { return new CastRampageAction(botAI); }
+    static Action* intervene(ShadowAI* botAI) { return new CastInterveneAction(botAI); }
+    static Action* spell_reflection(ShadowAI* botAI) { return new CastSpellReflectionAction(botAI); }
+    static Action* shattering_throw(ShadowAI* botAI) { return new CastShatteringThrowAction(botAI); }
+    static Action* heroic_throw_on_snare_target(ShadowAI* botAI) { return new CastHeroicThrowSnareAction(botAI); }
+    static Action* heroic_throw(ShadowAI* botAI) { return new CastHeroicThrowAction(botAI); }
+    static Action* bladestorm(ShadowAI* botAI) { return new CastBladestormAction(botAI); }
+    static Action* vigilance(ShadowAI* botAI) { return new CastVigilanceAction(botAI); }
+    static Action* enraged_regeneration(ShadowAI* botAI) { return new CastEnragedRegenerationAction(botAI); }
 };
 
 SharedNamedObjectContextList<Strategy> WarriorAiObjectContext::sharedStrategyContexts;
@@ -323,7 +323,7 @@ SharedNamedObjectContextList<Action> WarriorAiObjectContext::sharedActionContext
 SharedNamedObjectContextList<Trigger> WarriorAiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> WarriorAiObjectContext::sharedValueContexts;
 
-WarriorAiObjectContext::WarriorAiObjectContext(PlayerbotAI* botAI)
+WarriorAiObjectContext::WarriorAiObjectContext(ShadowAI* botAI)
     : AiObjectContext(botAI, sharedStrategyContexts, sharedActionContexts, sharedTriggerContexts, sharedValueContexts)
 {
 }

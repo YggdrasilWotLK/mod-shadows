@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEARESTFRIENDLYPLAYERSVALUES_H
-#define _PLAYERBOT_NEARESTFRIENDLYPLAYERSVALUES_H
+#ifndef _SHADOW_NEARESTFRIENDLYPLAYERSVALUES_H
+#define _SHADOW_NEARESTFRIENDLYPLAYERSVALUES_H
 
 #include "NearestUnitsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NearestFriendlyPlayersValue : public NearestUnitsValue
 {
 public:
-    NearestFriendlyPlayersValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestFriendlyPlayersValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest friendly players", range)
     {
     }

@@ -5,7 +5,7 @@
 
 #include "AttackerCountValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SharedDefines.h"
 
 uint8 MyAttackerCountValue::Calculate() { return bot->getAttackers().size(); }
@@ -34,7 +34,7 @@ bool HasAggroValue::Calculate()
 uint8 AttackerCountValue::Calculate()
 {
     uint32 count = 0;
-    float range = sPlayerbotAIConfig->sightDistance;
+    float range = sShadowAIConfig->sightDistance;
 
     GuidVector attackers = context->GetValue<GuidVector>("attackers")->Get();
     for (ObjectGuid const guid : attackers)

@@ -4,7 +4,7 @@
 #include "RaidKarazhanHelpers.h"
 #include "RaidKarazhanActions.h"
 #include "AiObjectContext.h"
-#include "PlayerbotMgr.h"
+#include "ShadowMgr.h"
 #include "Position.h"
 #include "Spell.h"
 
@@ -141,7 +141,7 @@ std::vector<Player*> RaidKarazhanHelpers::GetRedBlockers()
         for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
         {
             Player* member = itr->GetSource();
-            if (!member || !member->IsAlive() || !botAI->IsTank(member) || !GET_PLAYERBOT_AI(member) ||
+            if (!member || !member->IsAlive() || !botAI->IsTank(member) || !GET_SHADOW_AI(member) ||
                 member->HasAura(SPELL_NETHER_EXHAUSTION_RED))
             {
                 continue;
@@ -162,7 +162,7 @@ std::vector<Player*> RaidKarazhanHelpers::GetBlueBlockers()
         for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
         {
             Player* member = itr->GetSource();
-            if (!member || !member->IsAlive() || !GET_PLAYERBOT_AI(member))
+            if (!member || !member->IsAlive() || !GET_SHADOW_AI(member))
             {
                 continue;
             }
@@ -193,7 +193,7 @@ std::vector<Player*> RaidKarazhanHelpers::GetGreenBlockers()
         for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
         {
             Player* member = itr->GetSource();
-            if (!member || !member->IsAlive() || !GET_PLAYERBOT_AI(member))
+            if (!member || !member->IsAlive() || !GET_SHADOW_AI(member))
             {
                 continue;
             }

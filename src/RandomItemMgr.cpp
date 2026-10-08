@@ -7,7 +7,7 @@
 
 #include "ItemTemplate.h"
 #include "LootValues.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 char* strstri(char const* str1, char const* str2);
 std::set<uint32> RandomItemMgr::itemCache;
@@ -180,7 +180,7 @@ bool RandomItemMgr::HandleConsoleCommand(ChatHandler* handler, char const* args)
 {
     if (!args || !*args)
     {
-        LOG_ERROR("playerbots", "Usage: rnditem");
+        LOG_ERROR("shadows", "Usage: rnditem");
         return false;
     }
 
@@ -211,7 +211,7 @@ RandomItemList RandomItemMgr::Query(uint32 level, RandomItemType type, RandomIte
 void RandomItemMgr::BuildRandomItemCache()
 {
     if (PreparedQueryResult result =
-            PlayerbotsDatabase.Query(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_RNDITEM_CACHE)))
+            ShadowsDatabase.Query(ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_RNDITEM_CACHE)))
     {
         LOG_INFO("server.loading", "Loading random item cache");
         uint32 count = 0;
@@ -263,16 +263,16 @@ void RandomItemMgr::BuildRandomItemCache()
 
                 randomItemCache[level / 10][rit].push_back(itr.first);
 
-                PlayerbotsDatabasePreparedStatement* stmt =
-                    PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_RNDITEM_CACHE);
+                ShadowsDatabasePreparedStatement* stmt =
+                    ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_RNDITEM_CACHE);
                 stmt->SetData(0, level / 10);
                 stmt->SetData(1, type);
                 stmt->SetData(2, itr.first);
-                PlayerbotsDatabase.Execute(stmt);
+                ShadowsDatabase.Execute(stmt);
             }
         }
 
-        uint32 maxLevel = sPlayerbotAIConfig->randomBotMaxLevel;
+        uint32 maxLevel = sShadowAIConfig->randomBotMaxLevel;
         if (maxLevel > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
             maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
@@ -281,7 +281,7 @@ void RandomItemMgr::BuildRandomItemCache()
             for (uint32 type = RANDOM_ITEM_GUILD_TASK; type <= RANDOM_ITEM_GUILD_TASK_REWARD_TRADE_RARE; type++)
             {
                 RandomItemList list = randomItemCache[level][(RandomItemType)type];
-                LOG_INFO("playerbots", "    Level {}..{} Type {} - {} random items cached", level * 10, level * 10 + 9,
+                LOG_INFO("shadows", "    Level {}..{} Type {} - {} random items cached", level * 10, level * 10 + 9,
                          type, list.size());
 
                 for (RandomItemList::iterator i = list.begin(); i != list.end(); ++i)
@@ -291,7 +291,7 @@ void RandomItemMgr::BuildRandomItemCache()
                     if (!proto)
                         continue;
 
-                    LOG_DEBUG("playerbots", "        [{}] {}", itemId, proto->Name1.c_str());
+                    LOG_DEBUG("shadows", "        [{}] {}", itemId, proto->Name1.c_str());
                 }
             }
         }
@@ -836,15 +836,15 @@ void RandomItemMgr::BuildItemInfoCache()
     //uint32 maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL); //not used, line marked for removal.
 
     // load weightscales
-    LOG_INFO("playerbots", "Loading weightscales info");
+    LOG_INFO("shadows", "Loading weightscales info");
 
     uint32 counter = 1;
     uint32 totalcount = 0;
     uint32 statcount = 0;
     uint32 curClass = CLASS_WARRIOR;
 
-    PlayerbotsDatabasePreparedStatement* stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_WEIGHTSCALES);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    ShadowsDatabasePreparedStatement* stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_WEIGHTSCALES);
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         do
         {
@@ -868,11 +868,11 @@ void RandomItemMgr::BuildItemInfoCache()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", "Loaded {} weightscale class specs", totalcount);
+        LOG_INFO("shadows", "Loaded {} weightscale class specs", totalcount);
     }
 
-    stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_WEIGHTSCALE_DATA);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_WEIGHTSCALE_DATA);
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         do
         {
@@ -897,17 +897,17 @@ void RandomItemMgr::BuildItemInfoCache()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", "Loaded {} weightscale stat weights", statcount);
+        LOG_INFO("shadows", "Loaded {} weightscale stat weights", statcount);
     }
 
     if (m_weightScales[1].empty())
     {
-        LOG_ERROR("playerbots", "Error loading item weight scales");
+        LOG_ERROR("shadows", "Error loading item weight scales");
         return;
     }
 
     // vendor items
-    LOG_INFO("playerbots", "Loading vendor item list...");
+    LOG_INFO("shadows", "Loading vendor item list...");
 
     std::set<uint32> vendorItems;
     vendorItems.clear();
@@ -924,10 +924,10 @@ void RandomItemMgr::BuildItemInfoCache()
         } while (result->NextRow());
     }
 
-    LOG_INFO("playerbots", "Loaded {} vendor items...", vendorItems.size());
+    LOG_INFO("shadows", "Loaded {} vendor items...", vendorItems.size());
 
     // calculate drop source
-    LOG_INFO("playerbots", "Loading loot templates...");
+    LOG_INFO("shadows", "Loading loot templates...");
     DropMap* dropMap = new DropMap;
 
     if (CreatureTemplateContainer const* creatures = sObjectMgr->GetCreatureTemplates())
@@ -954,12 +954,12 @@ void RandomItemMgr::BuildItemInfoCache()
         }
     }
 
-    LOG_INFO("playerbots", "Loaded {} loot templates...", dropMap->size());
+    LOG_INFO("shadows", "Loaded {} loot templates...", dropMap->size());
 
     ItemTemplateContainer const* itemTemplate = sObjectMgr->GetItemTemplateStore();
-    LOG_INFO("playerbots", "Calculating stat weights for {} items...", itemTemplate->size());
+    LOG_INFO("shadows", "Calculating stat weights for {} items...", itemTemplate->size());
 
-    PlayerbotsDatabaseTransaction trans = PlayerbotsDatabase.BeginTransaction();
+    ShadowsDatabaseTransaction trans = ShadowsDatabase.BeginTransaction();
 
     for (auto const& itr : *itemTemplate)
     {
@@ -1064,7 +1064,7 @@ void RandomItemMgr::BuildItemInfoCache()
         //         //statWeight.weight = statW;
         //         // save item statWeight into ItemCache
         //         cacheInfo.weights[statWeight.id] = statWeight.weight;
-        //         LOG_DEBUG("playerbots", "Item: {}, weight: {}, class: {}, spec: {}", proto->ItemId,
+        //         LOG_DEBUG("shadows", "Item: {}, weight: {}, class: {}, spec: {}", proto->ItemId,
         //         statWeight.weight, clazz, m_weightScales[clazz][spec].info.name);
         //     }
         // }
@@ -1090,7 +1090,7 @@ void RandomItemMgr::BuildItemInfoCache()
         // }
 
         // if (cacheInfo.team < TEAM_NEUTRAL)
-        //     LOG_DEBUG("playerbots", "Item: {}, team (item): {}", proto->ItemId, cacheInfo.team == TEAM_ALLIANCE ?
+        //     LOG_DEBUG("shadows", "Item: {}, team (item): {}", proto->ItemId, cacheInfo.team == TEAM_ALLIANCE ?
         //     "Alliance" : "Horde");
 
         // // check min level
@@ -1102,7 +1102,7 @@ void RandomItemMgr::BuildItemInfoCache()
         // if (proto->Flags & ITEM_FLAG_NO_DISENCHANT)
         // {
         //     cacheInfo.source = ITEM_SOURCE_PVP;
-        //     LOG_DEBUG("playerbots", "Item: {}, source: PvP Reward", proto->ItemId);
+        //     LOG_DEBUG("shadows", "Item: {}, source: PvP Reward", proto->ItemId);
         // }
 
         // // check quests
@@ -1145,14 +1145,14 @@ void RandomItemMgr::BuildItemInfoCache()
         //         else if (isHorde)
         //             cacheInfo.team = TEAM_HORDE;
 
-        //         LOG_DEBUG("playerbots", "Item: {}, team (quest): {}", proto->ItemId, cacheInfo.team == TEAM_ALLIANCE
-        //         ? "Alliance" : cacheInfo.team == TEAM_HORDE ? "Horde" : "Both"); LOG_DEBUG("playerbots", "Item: {},
+        //         LOG_DEBUG("shadows", "Item: {}, team (quest): {}", proto->ItemId, cacheInfo.team == TEAM_ALLIANCE
+        //         ? "Alliance" : cacheInfo.team == TEAM_HORDE ? "Horde" : "Both"); LOG_DEBUG("shadows", "Item: {},
         //         source: quest {}, minlevel: {}", proto->ItemId, cacheInfo.sourceId, cacheInfo.minLevel);
         //     }
         // }
 
         // if (cacheInfo.minLevel)
-        //     LOG_DEBUG("playerbots", "Item: {}, minlevel: {}", proto->ItemId, cacheInfo.minLevel);
+        //     LOG_DEBUG("shadows", "Item: {}, minlevel: {}", proto->ItemId, cacheInfo.minLevel);
 
         // // check vendors
         // if (cacheInfo.source == ITEM_SOURCE_NONE)
@@ -1162,7 +1162,7 @@ void RandomItemMgr::BuildItemInfoCache()
         //         if (proto->ItemId == *i)
         //         {
         //             cacheInfo.source = ITEM_SOURCE_VENDOR;
-        //             LOG_DEBUG("playerbots", "Item: {} source: vendor", proto->ItemId);
+        //             LOG_DEBUG("shadows", "Item: {} source: vendor", proto->ItemId);
         //             break;
         //         }
         //     }
@@ -1190,13 +1190,13 @@ void RandomItemMgr::BuildItemInfoCache()
         //         {
         //             cacheInfo.source = ITEM_SOURCE_DROP;
         //             cacheInfo.sourceId = creatures.front();
-        //             LOG_DEBUG("playerbots", "Item: {}, source: creature drop, ID: {}", proto->ItemId,
+        //             LOG_DEBUG("shadows", "Item: {}, source: creature drop, ID: {}", proto->ItemId,
         //             creatures.front());
         //         }
         //         else
         //         {
         //             cacheInfo.source = ITEM_SOURCE_DROP;
-        //             LOG_DEBUG("playerbots", "Item: {}, source: creatures drop, number: {}", proto->ItemId,
+        //             LOG_DEBUG("shadows", "Item: {}, source: creatures drop, number: {}", proto->ItemId,
         //             creatures.size());
         //         }
         //     }
@@ -1211,13 +1211,13 @@ void RandomItemMgr::BuildItemInfoCache()
         //         {
         //             cacheInfo.source = ITEM_SOURCE_DROP;
         //             cacheInfo.sourceId = gameobjects.front();
-        //             LOG_INFO("playerbots", "Item: {}, source: gameobject, ID: {}", proto->ItemId,
+        //             LOG_INFO("shadows", "Item: {}, source: gameobject, ID: {}", proto->ItemId,
         //             gameobjects.front());
         //         }
         //         else
         //         {
         //             cacheInfo.source = ITEM_SOURCE_DROP;
-        //             LOG_INFO("playerbots", "Item: {}, source: gameobjects, number: {}", proto->ItemId,
+        //             LOG_INFO("shadows", "Item: {}, source: gameobjects, number: {}", proto->ItemId,
         //             gameobjects.size());
         //         }
         //     }
@@ -1236,11 +1236,11 @@ void RandomItemMgr::BuildItemInfoCache()
         // cacheInfo.slot = slot;
 
         // // save cache
-        // PlayerbotsDatabasePreparedStatement* stmt =
-        // PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_EQUIP_CACHE_NEW); stmt->SetData(0, proto->ItemId);
+        // ShadowsDatabasePreparedStatement* stmt =
+        // ShadowsDatabase.GetPreparedStatement(SHADOWS_DEL_EQUIP_CACHE_NEW); stmt->SetData(0, proto->ItemId);
         // trans->Append(stmt);
 
-        // stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_EQUIP_CACHE_NEW);
+        // stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_EQUIP_CACHE_NEW);
         // stmt->SetData(0, cacheInfo.itemId);
         // stmt->SetData(1, cacheInfo.quality);
         // stmt->SetData(2, cacheInfo.slot);
@@ -1264,7 +1264,7 @@ void RandomItemMgr::BuildItemInfoCache()
         // itemInfoCache[cacheInfo.itemId] = std::move(cacheInfo);
     }
 
-    PlayerbotsDatabase.CommitTransaction(trans);
+    ShadowsDatabase.CommitTransaction(trans);
 }
 
 uint32 RandomItemMgr::CalculateStatWeight(uint8 playerclass, uint8 spec, ItemTemplate const* proto)
@@ -1614,7 +1614,7 @@ uint32 RandomItemMgr::CalculateSingleStatWeight(uint8 playerclass, uint8 spec, s
         {
             statWeight = i->weight * value;
             // if (statWeight)
-            //     LOG_INFO("playerbots", "stat: {}, val: {}, weight: {}, total: {}, class: {}, spec: {}",
+            //     LOG_INFO("shadows", "stat: {}, val: {}, weight: {}, total: {}, class: {}, spec: {}",
             //         stat, value, i->weight, statWeight, playerclass, m_weightScales[playerclass][spec].info.name);
             return statWeight;
         }
@@ -1733,9 +1733,9 @@ uint32 RandomItemMgr::GetUpgrade(Player* player, std::string spec, uint8 slot, u
         oldStatWeight = itemInfoCache[itemId].weights[specId];
 
         if (oldStatWeight)
-            LOG_INFO("playerbots", "Old Item: {}, weight: {}", itemId, oldStatWeight);
+            LOG_INFO("shadows", "Old Item: {}, weight: {}", itemId, oldStatWeight);
         else
-            LOG_INFO("playerbots", "Old item has no stat weight");
+            LOG_INFO("shadows", "Old item has no stat weight");
     }
 
     for (std::map<uint32, ItemInfoEntry>::iterator i = itemInfoCache.begin(); i != itemInfoCache.end(); ++i)
@@ -1817,7 +1817,7 @@ uint32 RandomItemMgr::GetUpgrade(Player* player, std::string spec, uint8 slot, u
     }
 
     if (closestUpgrade)
-        LOG_INFO("playerbots", "New Item: {}, weight: {}", closestUpgrade, closestUpgradeWeight);
+        LOG_INFO("shadows", "New Item: {}, weight: {}", closestUpgrade, closestUpgradeWeight);
 
     return closestUpgrade;
 }
@@ -1855,9 +1855,9 @@ std::vector<uint32> RandomItemMgr::GetUpgradeList(Player* player, std::string sp
         oldStatWeight = itemInfoCache[itemId].weights[specId];
 
         if (oldStatWeight)
-            LOG_INFO("playerbots", "Old Item: {}, weight: {}", itemId, oldStatWeight);
+            LOG_INFO("shadows", "Old Item: {}, weight: {}", itemId, oldStatWeight);
         else
-            LOG_INFO("playerbots", "Old item has no stat weight");
+            LOG_INFO("shadows", "Old item has no stat weight");
     }
 
     for (std::map<uint32, ItemInfoEntry>::iterator i = itemInfoCache.begin(); i != itemInfoCache.end(); ++i)
@@ -1939,7 +1939,7 @@ std::vector<uint32> RandomItemMgr::GetUpgradeList(Player* player, std::string sp
     }
 
     if (listItems.size())
-        LOG_INFO("playerbots", "New Items: {}, Old item:%d, New items max: {}", listItems.size(), oldStatWeight,
+        LOG_INFO("shadows", "New Items: {}, Old item:%d, New items max: {}", listItems.size(), oldStatWeight,
                  closestUpgradeWeight);
 
     return std::move(listItems);
@@ -2092,14 +2092,14 @@ uint32 RandomItemMgr::GetLiveStatWeight(Player* player, uint32 itemId)
 
 void RandomItemMgr::BuildEquipCache()
 {
-    uint32 maxLevel = sPlayerbotAIConfig->randomBotMaxLevel;
+    uint32 maxLevel = sShadowAIConfig->randomBotMaxLevel;
     if (maxLevel > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
         maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
     ItemTemplateContainer const* itemTemplates = sObjectMgr->GetItemTemplateStore();
 
-    PlayerbotsDatabasePreparedStatement* stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_EQUIP_CACHE);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    ShadowsDatabasePreparedStatement* stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_EQUIP_CACHE);
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         LOG_INFO("server.loading",
                  "Loading equipment cache for {} classes, {} levels, {} slots, {} quality from {} items", MAX_CLASSES,
@@ -2120,7 +2120,7 @@ void RandomItemMgr::BuildEquipCache()
             ++count;
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", "Equipment cache loaded from {} records", count);
+        LOG_INFO("shadows", "Equipment cache loaded from {} records", count);
     }
     else
     {
@@ -2174,19 +2174,19 @@ void RandomItemMgr::BuildEquipCache()
 
                             items.push_back(itr.first);
 
-                            PlayerbotsDatabasePreparedStatement* stmt =
-                                PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_EQUIP_CACHE);
+                            ShadowsDatabasePreparedStatement* stmt =
+                                ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_EQUIP_CACHE);
                             stmt->SetData(0, class_);
                             stmt->SetData(1, level);
                             stmt->SetData(2, slot);
                             stmt->SetData(3, quality);
                             stmt->SetData(4, proto->ItemId);
-                            PlayerbotsDatabase.Execute(stmt);
+                            ShadowsDatabase.Execute(stmt);
                         }
 
                         equipCache[key] = items;
 
-                        LOG_DEBUG("playerbots",
+                        LOG_DEBUG("shadows",
                                   "Equipment cache for class: {}, level {}, slot {}, quality {}: {} items", class_,
                                   level, slot, quality, items.size());
                     }
@@ -2200,7 +2200,7 @@ void RandomItemMgr::BuildEquipCache()
 
 void RandomItemMgr::BuildEquipCacheNew()
 {
-    LOG_INFO("playerbots", "Loading equipments cache...");
+    LOG_INFO("shadows", "Loading equipments cache...");
 
     std::unordered_set<uint32> questItemIds;
     ObjectMgr::QuestMap const& questTemplates = sObjectMgr->GetQuestTemplates();
@@ -2338,7 +2338,7 @@ void RandomItemMgr::BuildPotionCache()
 {
     uint32 maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
-    LOG_INFO("playerbots", "Building potion cache for {} levels", maxLevel);
+    LOG_INFO("shadows", "Building potion cache for {} levels", maxLevel);
 
     ItemTemplateContainer const* itemTemplates = sObjectMgr->GetItemTemplateStore();
 
@@ -2411,12 +2411,12 @@ void RandomItemMgr::BuildPotionCache()
         }
     }
 
-    LOG_INFO("playerbots", "Cached {} potions", counter);
+    LOG_INFO("shadows", "Cached {} potions", counter);
 }
 
 void RandomItemMgr::BuildFoodCache()
 {
-    uint32 maxLevel = sPlayerbotAIConfig->randomBotMaxLevel;
+    uint32 maxLevel = sShadowAIConfig->randomBotMaxLevel;
     if (maxLevel > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
         maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
@@ -2549,7 +2549,7 @@ uint32 RandomItemMgr::GetRandomFood(uint32 level, uint32 category)
 
 void RandomItemMgr::BuildTradeCache()
 {
-    uint32 maxLevel = sPlayerbotAIConfig->randomBotMaxLevel;
+    uint32 maxLevel = sShadowAIConfig->randomBotMaxLevel;
     if (maxLevel > sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL))
         maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
@@ -2604,9 +2604,9 @@ uint32 RandomItemMgr::GetRandomTrade(uint32 level)
 void RandomItemMgr::BuildRarityCache()
 {
     if (PreparedQueryResult result =
-            PlayerbotsDatabase.Query(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_RARITY_CACHE)))
+            ShadowsDatabase.Query(ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_RARITY_CACHE)))
     {
-        LOG_INFO("playerbots", "Loading item rarity cache");
+        LOG_INFO("shadows", "Loading item rarity cache");
 
         uint32 count = 0;
         do
@@ -2620,12 +2620,12 @@ void RandomItemMgr::BuildRarityCache()
 
         } while (result->NextRow());
 
-        LOG_INFO("playerbots", "Item rarity cache loaded from {} records", count);
+        LOG_INFO("shadows", "Item rarity cache loaded from {} records", count);
     }
     else
     {
         ItemTemplateContainer const* itemTemplates = sObjectMgr->GetItemTemplateStore();
-        LOG_INFO("playerbots", "Building item rarity cache from {} items", itemTemplates->size());
+        LOG_INFO("shadows", "Building item rarity cache from {} items", itemTemplates->size());
 
         for (auto const& itr : *itemTemplates)
         {
@@ -2744,16 +2744,16 @@ void RandomItemMgr::BuildRarityCache()
                 {
                     rarityCache[itr.first] = rarity;
 
-                    PlayerbotsDatabasePreparedStatement* stmt =
-                        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_RARITY_CACHE);
+                    ShadowsDatabasePreparedStatement* stmt =
+                        ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_RARITY_CACHE);
                     stmt->SetData(0, itr.first);
                     stmt->SetData(1, rarity);
-                    PlayerbotsDatabase.Execute(stmt);
+                    ShadowsDatabase.Execute(stmt);
                 }
             }
         }
 
-        LOG_INFO("playerbots", "Item rarity cache built from {} items", itemTemplates->size());
+        LOG_INFO("shadows", "Item rarity cache built from {} items", itemTemplates->size());
     }
 }
 

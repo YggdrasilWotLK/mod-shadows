@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_UNHOLYDKSTRATEGY_H
-#define _PLAYERBOT_UNHOLYDKSTRATEGY_H
+#ifndef _SHADOW_UNHOLYDKSTRATEGY_H
+#define _SHADOW_UNHOLYDKSTRATEGY_H
 
 #include "GenericDKStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class UnholyDKStrategy : public GenericDKStrategy
 {
 public:
-    UnholyDKStrategy(PlayerbotAI* botAI);
+    UnholyDKStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "unholy"; }
@@ -24,7 +24,7 @@ public:
 class UnholyDKAoeStrategy : public CombatStrategy
 {
 public:
-    UnholyDKAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    UnholyDKAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "unholy aoe"; }

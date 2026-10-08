@@ -7,7 +7,7 @@
 
 #include "LastMovementValue.h"
 #include "ObjectGuid.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RtiTargetValue.h"
 #include "ScriptedCreature.h"
 #include "ThreatMgr.h"
@@ -41,7 +41,7 @@ bool FindNonCcTargetStrategy::IsCcTarget(Unit* attacker)
             if (!member || !member->IsAlive())
                 continue;
 
-            if (auto botAI = GET_PLAYERBOT_AI(member))
+            if (auto botAI = GET_SHADOW_AI(member))
             {
                 if (botAI->GetAiObjectContext()->GetValue<Unit*>("rti cc target")->Get() == attacker)
                     return true;

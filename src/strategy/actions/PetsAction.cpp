@@ -10,7 +10,7 @@
 #include "CreatureAI.h"
 #include "Pet.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "SharedDefines.h"
 
 bool PetsAction::Execute(Event event)
@@ -181,7 +181,7 @@ bool PetsAction::Execute(Event event)
             }
         }
         // Inform the master if the command succeeded or failed.
-        if (didAttack && sPlayerbotAIConfig->petChatCommandDebug == 1)
+        if (didAttack && sShadowAIConfig->petChatCommandDebug == 1)
             botAI->TellMaster("Pet commanded to attack your target.");
         else if (!didAttack)
             botAI->TellError("Pet did not attack. (Already attacking or unable to attack target)");
@@ -191,7 +191,7 @@ bool PetsAction::Execute(Event event)
     else if (param == "follow")
     {
         botAI->PetFollow();
-        if (sPlayerbotAIConfig->petChatCommandDebug == 1)
+        if (sShadowAIConfig->petChatCommandDebug == 1)
             botAI->TellMaster("Pet commanded to follow.");
         return true;
     }
@@ -228,7 +228,7 @@ bool PetsAction::Execute(Event event)
                 charmInfo->SetForcedTargetGUID();
             }
         }
-        if (sPlayerbotAIConfig->petChatCommandDebug == 1)
+        if (sShadowAIConfig->petChatCommandDebug == 1)
             botAI->TellMaster("Pet commanded to stay.");
         return true;
     }
@@ -250,7 +250,7 @@ bool PetsAction::Execute(Event event)
     }
 
     // Inform the master of the new stance if debug is enabled.
-    if (sPlayerbotAIConfig->petChatCommandDebug == 1)
+    if (sShadowAIConfig->petChatCommandDebug == 1)
         botAI->TellMaster("Pet stance set to " + stanceText + ".");
 
     return true;

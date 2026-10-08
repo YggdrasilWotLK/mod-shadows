@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_COMBATSTRATEGY_H
-#define _PLAYERBOT_COMBATSTRATEGY_H
+#ifndef _SHADOW_COMBATSTRATEGY_H
+#define _SHADOW_COMBATSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CombatStrategy : public Strategy
 {
 public:
-    CombatStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    CombatStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     uint32 GetType() const override { return STRATEGY_TYPE_COMBAT; }
@@ -22,7 +22,7 @@ public:
 class AvoidAoeStrategy : public Strategy
 {
 public:
-    explicit AvoidAoeStrategy(PlayerbotAI* ai);
+    explicit AvoidAoeStrategy(ShadowAI* ai);
     const std::string getName() override { return "avoid aoe"; }
     NextAction** getDefaultActions() override;
     void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
@@ -32,7 +32,7 @@ public:
 class TankFaceStrategy : public Strategy
 {
 public:
-    explicit TankFaceStrategy(PlayerbotAI* ai);
+    explicit TankFaceStrategy(ShadowAI* ai);
     const std::string getName() override { return "tank face"; }
     NextAction** getDefaultActions() override;
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -41,7 +41,7 @@ public:
 class CombatFormationStrategy : public Strategy
 {
 public:
-    CombatFormationStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+    CombatFormationStrategy(ShadowAI* ai) : Strategy(ai) {}
     const std::string getName() override { return "formation"; }
     NextAction** getDefaultActions() override;
 };

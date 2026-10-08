@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDEOETRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDEOETRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDEOETRIGGERCONTEXT_H
+#define _SHADOW_RAIDEOETRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -15,8 +15,8 @@ public:
     }
 
 private:
-    static Trigger* power_spark(PlayerbotAI* ai) { return new PowerSparkTrigger(ai); }
-    static Trigger* malygos(PlayerbotAI* ai) { return new MalygosTrigger(ai); }
+    static Trigger* power_spark(ShadowAI* ai) { return new PowerSparkTrigger(ai); }
+    static Trigger* malygos(ShadowAI* ai) { return new MalygosTrigger(ai); }
 };
 
 #endif

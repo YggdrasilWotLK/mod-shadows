@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOOTSTRATEGYACTION_H
-#define _PLAYERBOT_LOOTSTRATEGYACTION_H
+#ifndef _SHADOW_LOOTSTRATEGYACTION_H
+#define _SHADOW_LOOTSTRATEGYACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LootStrategyAction : public Action
 {
 public:
-    LootStrategyAction(PlayerbotAI* botAI) : Action(botAI, "ll") {}
+    LootStrategyAction(ShadowAI* botAI) : Action(botAI, "ll") {}
 
     bool Execute(Event event) override;
 };

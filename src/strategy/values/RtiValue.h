@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTIVALUE_H
-#define _PLAYERBOT_RTIVALUE_H
+#ifndef _SHADOW_RTIVALUE_H
+#define _SHADOW_RTIVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RtiValue : public ManualSetValue<std::string>
 {
 public:
-    RtiValue(PlayerbotAI* botAI);
+    RtiValue(ShadowAI* botAI);
 
     std::string const Save() override;
     bool Load(std::string const text) override;
@@ -22,7 +22,7 @@ public:
 class RtiCcValue : public ManualSetValue<std::string>
 {
 public:
-    RtiCcValue(PlayerbotAI* botAI);
+    RtiCcValue(ShadowAI* botAI);
 
     std::string const Save() override;
     bool Load(std::string const text) override;

@@ -5,7 +5,7 @@
 
 #include "PaladinBuffStrategies.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void PaladinBuffManaStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

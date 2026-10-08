@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REWARDACTION_H
-#define _PLAYERBOT_REWARDACTION_H
+#ifndef _SHADOW_REWARDACTION_H
+#define _SHADOW_REWARDACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Object;
 
 class RewardAction : public InventoryAction
 {
 public:
-    RewardAction(PlayerbotAI* botAI) : InventoryAction(botAI, "reward") {}
+    RewardAction(ShadowAI* botAI) : InventoryAction(botAI, "reward") {}
 
     bool Execute(Event event) override;
 

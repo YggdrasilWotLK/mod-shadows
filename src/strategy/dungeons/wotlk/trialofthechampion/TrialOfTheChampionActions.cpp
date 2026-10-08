@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "TrialOfTheChampionActions.h"
 #include "TrialOfTheChampionStrategy.h"
 #include "strategy/values/NearestNpcsValue.h"

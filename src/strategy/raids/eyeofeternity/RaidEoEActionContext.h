@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDEOEACTIONCONTEXT_H
-#define _PLAYERBOT_RAIDEOEACTIONCONTEXT_H
+#ifndef _SHADOW_RAIDEOEACTIONCONTEXT_H
+#define _SHADOW_RAIDEOEACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -19,12 +19,12 @@ public:
     }
 
 private:
-    static Action* position(PlayerbotAI* ai) { return new MalygosPositionAction(ai); }
-    static Action* target(PlayerbotAI* ai) { return new MalygosTargetAction(ai); }
-    // static Action* pull_power_spark(PlayerbotAI* ai) { return new PullPowerSparkAction(ai); }
-    // static Action* kill_power_spark(PlayerbotAI* ai) { return new KillPowerSparkAction(ai); }
-    static Action* eoe_fly_drake(PlayerbotAI* ai) { return new EoEFlyDrakeAction(ai); }
-    static Action* eoe_drake_attack(PlayerbotAI* ai) { return new EoEDrakeAttackAction(ai); }
+    static Action* position(ShadowAI* ai) { return new MalygosPositionAction(ai); }
+    static Action* target(ShadowAI* ai) { return new MalygosTargetAction(ai); }
+    // static Action* pull_power_spark(ShadowAI* ai) { return new PullPowerSparkAction(ai); }
+    // static Action* kill_power_spark(ShadowAI* ai) { return new KillPowerSparkAction(ai); }
+    static Action* eoe_fly_drake(ShadowAI* ai) { return new EoEFlyDrakeAction(ai); }
+    static Action* eoe_drake_attack(ShadowAI* ai) { return new EoEDrakeAttackAction(ai); }
 };
 
 #endif

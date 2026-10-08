@@ -6,9 +6,9 @@
 #include "DiscPriestStrategy.h"
 
 #include "GenericPriestStrategyActionNodeFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-DiscPriestStrategy::DiscPriestStrategy(PlayerbotAI* botAI) : GenericPriestStrategy(botAI)
+DiscPriestStrategy::DiscPriestStrategy(ShadowAI* botAI) : GenericPriestStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericPriestStrategyActionNodeFactory());
 }

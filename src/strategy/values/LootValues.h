@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOOTVALUES_H
-#define _PLAYERBOT_LOOTVALUES_H
+#ifndef _SHADOW_LOOTVALUES_H
+#define _SHADOW_LOOTVALUES_H
 
 #include "ItemUsageValue.h"
 #include "LootMgr.h"
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 // Cheat class copy to hack into the loot system
 class LootTemplateAccess
@@ -30,7 +30,7 @@ typedef std::unordered_map<uint32, int32> DropMap;
 class DropMapValue : public SingleCalculatedValue<DropMap*>
 {
 public:
-    DropMapValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "drop map") {}
+    DropMapValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "drop map") {}
 
     static LootTemplateAccess const* GetLootTemplate(ObjectGuid guid, LootType type = LOOT_CORPSE);
 
@@ -41,7 +41,7 @@ public:
 class ItemDropListValue : public SingleCalculatedValue<std::vector<int32>>, public Qualified
 {
 public:
-    ItemDropListValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "item drop list") {}
+    ItemDropListValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "item drop list") {}
 
     std::vector<int32> Calculate() override;
 };
@@ -50,7 +50,7 @@ public:
 class EntryLootListValue : public SingleCalculatedValue<std::vector<uint32>>, public Qualified
 {
 public:
-    EntryLootListValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "entry loot list") {}
+    EntryLootListValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "entry loot list") {}
 
     std::vector<uint32> Calculate() override;
 };
@@ -60,7 +60,7 @@ typedef std::unordered_map<ItemUsage, std::vector<uint32>> itemUsageMap;
 class EntryLootUsageValue : public CalculatedValue<itemUsageMap>, public Qualified
 {
 public:
-    EntryLootUsageValue(PlayerbotAI* botAI) : CalculatedValue(botAI, "entry loot usage", 2 * 1000) {}
+    EntryLootUsageValue(ShadowAI* botAI) : CalculatedValue(botAI, "entry loot usage", 2 * 1000) {}
 
     itemUsageMap Calculate() override;
 };
@@ -68,7 +68,7 @@ public:
 class HasUpgradeValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    HasUpgradeValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "has upgrade", 2 * 1000) {}
+    HasUpgradeValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "has upgrade", 2 * 1000) {}
 
     bool Calculate() override;
 };

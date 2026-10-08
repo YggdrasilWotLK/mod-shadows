@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDONYXIATRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDONYXIATRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDONYXIATRIGGERCONTEXT_H
+#define _SHADOW_RAIDONYXIATRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -18,11 +18,11 @@ public:
     }
 
 private:
-    static Trigger* near_tail(PlayerbotAI* ai) { return new OnyxiaNearTailTrigger(ai); }
-    static Trigger* deep_breath(PlayerbotAI* ai) { return new OnyxiaDeepBreathTrigger(ai); }
-    static Trigger* fireball_splash(PlayerbotAI* ai) { return new RaidOnyxiaFireballSplashTrigger(ai); }
-    static Trigger* whelps_spawn(PlayerbotAI* ai) { return new RaidOnyxiaWhelpsSpawnTrigger(ai); }
-    static Trigger* avoid_eggs(PlayerbotAI* ai) { return new OnyxiaAvoidEggsTrigger(ai); }
+    static Trigger* near_tail(ShadowAI* ai) { return new OnyxiaNearTailTrigger(ai); }
+    static Trigger* deep_breath(ShadowAI* ai) { return new OnyxiaDeepBreathTrigger(ai); }
+    static Trigger* fireball_splash(ShadowAI* ai) { return new RaidOnyxiaFireballSplashTrigger(ai); }
+    static Trigger* whelps_spawn(ShadowAI* ai) { return new RaidOnyxiaWhelpsSpawnTrigger(ai); }
+    static Trigger* avoid_eggs(ShadowAI* ai) { return new OnyxiaAvoidEggsTrigger(ai); }
 };
 
 #endif

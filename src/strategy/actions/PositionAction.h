@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_POSITIONACTION_H
-#define _PLAYERBOT_POSITIONACTION_H
+#ifndef _SHADOW_POSITIONACTION_H
+#define _SHADOW_POSITIONACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PositionAction : public Action
 {
 public:
-    PositionAction(PlayerbotAI* botAI) : Action(botAI, "position") {}
+    PositionAction(ShadowAI* botAI) : Action(botAI, "position") {}
 
     bool Execute(Event event) override;
 };
@@ -21,7 +21,7 @@ public:
 class MoveToPositionAction : public MovementAction
 {
 public:
-    MoveToPositionAction(PlayerbotAI* botAI, std::string const name, std::string const qualifier, bool idle = false)
+    MoveToPositionAction(ShadowAI* botAI, std::string const name, std::string const qualifier, bool idle = false)
         : MovementAction(botAI, name), qualifier(qualifier), idle(idle)
     {
     }
@@ -37,20 +37,20 @@ protected:
 class GuardAction : public MoveToPositionAction
 {
 public:
-    GuardAction(PlayerbotAI* botAI) : MoveToPositionAction(botAI, "move to position", "guard") {}
+    GuardAction(ShadowAI* botAI) : MoveToPositionAction(botAI, "move to position", "guard") {}
 };
 
 class ReturnToStayPositionAction : public MoveToPositionAction
 {
 public:
-    ReturnToStayPositionAction(PlayerbotAI* ai) : MoveToPositionAction(ai, "move to position", "stay") {}
+    ReturnToStayPositionAction(ShadowAI* ai) : MoveToPositionAction(ai, "move to position", "stay") {}
     virtual bool isPossible();
 };
 
 class SetReturnPositionAction : public Action
 {
 public:
-    SetReturnPositionAction(PlayerbotAI* botAI) : Action(botAI, "set return position") {}
+    SetReturnPositionAction(ShadowAI* botAI) : Action(botAI, "set return position") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -59,7 +59,7 @@ public:
 class ReturnAction : public MoveToPositionAction
 {
 public:
-    ReturnAction(PlayerbotAI* botAI) : MoveToPositionAction(botAI, "return", "return", true) {}
+    ReturnAction(ShadowAI* botAI) : MoveToPositionAction(botAI, "return", "return", true) {}
 
     bool isUseful() override;
 };

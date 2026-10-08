@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FIREMAGESTRATEGY_H
-#define _PLAYERBOT_FIREMAGESTRATEGY_H
+#ifndef _SHADOW_FIREMAGESTRATEGY_H
+#define _SHADOW_FIREMAGESTRATEGY_H
 
 #include "GenericMageStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FireMageStrategy : public GenericMageStrategy
 {
 public:
-    FireMageStrategy(PlayerbotAI* botAI);
+    FireMageStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "fire"; }
@@ -23,7 +23,7 @@ public:
 class FirestarterStrategy : public CombatStrategy
 {
 public:
-    FirestarterStrategy(PlayerbotAI* botAI);
+    FirestarterStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "firestarter"; }

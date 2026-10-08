@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUILDTASKMGR_H
-#define _PLAYERBOT_GUILDTASKMGR_H
+#ifndef _SHADOW_GUILDTASKMGR_H
+#define _SHADOW_GUILDTASKMGR_H
 
 #include <map>
 

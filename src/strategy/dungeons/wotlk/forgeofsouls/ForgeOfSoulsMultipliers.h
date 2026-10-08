@@ -1,12 +1,12 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONFOSMULTIPLIERS_H
-#define _PLAYERBOT_WOTLKDUNGEONFOSMULTIPLIERS_H
+#ifndef _SHADOW_WOTLKDUNGEONFOSMULTIPLIERS_H
+#define _SHADOW_WOTLKDUNGEONFOSMULTIPLIERS_H
 
 #include "Multiplier.h"
 
 class BronjahmMultiplier : public Multiplier
 {
     public:
-    BronjahmMultiplier(PlayerbotAI* ai) : Multiplier(ai, "bronjahm") {}
+    BronjahmMultiplier(ShadowAI* ai) : Multiplier(ai, "bronjahm") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -15,7 +15,7 @@ class BronjahmMultiplier : public Multiplier
 class AttackFragmentMultiplier : public Multiplier
 {
 public:
-    AttackFragmentMultiplier(PlayerbotAI* ai) : Multiplier(ai, "attack fragment") { }
+    AttackFragmentMultiplier(ShadowAI* ai) : Multiplier(ai, "attack fragment") { }
 
     float GetValue(Action* action) override;
 };

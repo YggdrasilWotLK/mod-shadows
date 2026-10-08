@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SELLACTION_H
-#define _PLAYERBOT_SELLACTION_H
+#ifndef _SHADOW_SELLACTION_H
+#define _SHADOW_SELLACTION_H
 
 #include "InventoryAction.h"
 
 class FindItemVisitor;
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 
 class SellAction : public InventoryAction
 {
 public:
-    SellAction(PlayerbotAI* botAI, std::string const name = "sell") : InventoryAction(botAI, name) {}
+    SellAction(ShadowAI* botAI, std::string const name = "sell") : InventoryAction(botAI, name) {}
 
     bool Execute(Event event) override;
     void Sell(FindItemVisitor* visitor);

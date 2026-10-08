@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "HallsOfStoneActions.h"
 #include "HallsOfStoneStrategy.h"
 

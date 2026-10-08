@@ -5,7 +5,7 @@
 
 #include "GenericDruidStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericDruidStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -24,7 +24,7 @@ public:
     }
 
 private:
-    static ActionNode* melee([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* melee([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("melee",
                               /*P*/ nullptr,
@@ -32,7 +32,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* caster_form([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* caster_form([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("caster form",
                               /*P*/ nullptr,
@@ -40,7 +40,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* cure_poison([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* cure_poison([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cure poison",
                               /*P*/ nullptr,
@@ -48,7 +48,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* cure_poison_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* cure_poison_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cure poison on party",
                               /*P*/ nullptr,
@@ -56,7 +56,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* abolish_poison([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* abolish_poison([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("abolish poison",
                               /*P*/ nullptr,
@@ -64,7 +64,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* abolish_poison_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* abolish_poison_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("abolish poison on party",
                               /*P*/ nullptr,
@@ -72,7 +72,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* rebirth([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rebirth([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rebirth",
                               /*P*/ nullptr,
@@ -80,7 +80,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* entangling_roots_on_cc([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* entangling_roots_on_cc([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("entangling roots on cc",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -88,7 +88,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* innervate([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* innervate([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("innervate",
                               /*P*/ nullptr,
@@ -97,7 +97,7 @@ private:
     }
 };
 
-GenericDruidStrategy::GenericDruidStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericDruidStrategy::GenericDruidStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericDruidStrategyActionNodeFactory());
 }

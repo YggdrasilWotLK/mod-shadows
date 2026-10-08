@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LASTSPELLCASTTIMEVALUE_H
-#define _PLAYERBOT_LASTSPELLCASTTIMEVALUE_H
+#ifndef _SHADOW_LASTSPELLCASTTIMEVALUE_H
+#define _SHADOW_LASTSPELLCASTTIMEVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LastSpellCastTimeValue : public ManualSetValue<time_t>, public Qualified
 {
 public:
-    LastSpellCastTimeValue(PlayerbotAI* botAI) : ManualSetValue<time_t>(botAI, 0), Qualified() {}
+    LastSpellCastTimeValue(ShadowAI* botAI) : ManualSetValue<time_t>(botAI, 0), Qualified() {}
 };
 
 #endif

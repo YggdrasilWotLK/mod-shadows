@@ -5,7 +5,7 @@
 
 #include "FrostMageStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class FrostMageStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -26,20 +26,20 @@ public:
     }
 
 private:
-    static ActionNode* cold_snap(PlayerbotAI*) { return new ActionNode("cold snap", nullptr, nullptr, nullptr); }
-    static ActionNode* ice_barrier(PlayerbotAI*) { return new ActionNode("ice barrier", nullptr, nullptr, nullptr); }
-    static ActionNode* summon_water_elemental(PlayerbotAI*) { return new ActionNode("summon water elemental", nullptr, nullptr, nullptr); }
-    static ActionNode* deep_freeze(PlayerbotAI*) { return new ActionNode("deep freeze", nullptr, nullptr, nullptr); }
-    static ActionNode* icy_veins(PlayerbotAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
-    static ActionNode* frostbolt(PlayerbotAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
-    static ActionNode* ice_lance(PlayerbotAI*) { return new ActionNode("ice lance", nullptr, nullptr, nullptr); }
-    static ActionNode* fire_blast(PlayerbotAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
-    static ActionNode* fireball(PlayerbotAI*) { return new ActionNode("fireball", nullptr, nullptr, nullptr); }
-    static ActionNode* frostfire_bolt(PlayerbotAI*) { return new ActionNode("frostfire bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* cold_snap(ShadowAI*) { return new ActionNode("cold snap", nullptr, nullptr, nullptr); }
+    static ActionNode* ice_barrier(ShadowAI*) { return new ActionNode("ice barrier", nullptr, nullptr, nullptr); }
+    static ActionNode* summon_water_elemental(ShadowAI*) { return new ActionNode("summon water elemental", nullptr, nullptr, nullptr); }
+    static ActionNode* deep_freeze(ShadowAI*) { return new ActionNode("deep freeze", nullptr, nullptr, nullptr); }
+    static ActionNode* icy_veins(ShadowAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
+    static ActionNode* frostbolt(ShadowAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
+    static ActionNode* ice_lance(ShadowAI*) { return new ActionNode("ice lance", nullptr, nullptr, nullptr); }
+    static ActionNode* fire_blast(ShadowAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
+    static ActionNode* fireball(ShadowAI*) { return new ActionNode("fireball", nullptr, nullptr, nullptr); }
+    static ActionNode* frostfire_bolt(ShadowAI*) { return new ActionNode("frostfire bolt", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-FrostMageStrategy::FrostMageStrategy(PlayerbotAI* botAI) : GenericMageStrategy(botAI)
+FrostMageStrategy::FrostMageStrategy(ShadowAI* botAI) : GenericMageStrategy(botAI)
 {
     actionNodeFactories.Add(new FrostMageStrategyActionNodeFactory());
 }

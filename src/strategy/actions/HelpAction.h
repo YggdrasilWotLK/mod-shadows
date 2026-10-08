@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HELPACTION_H
-#define _PLAYERBOT_HELPACTION_H
+#ifndef _SHADOW_HELPACTION_H
+#define _SHADOW_HELPACTION_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HelpAction : public Action
 {
 public:
-    HelpAction(PlayerbotAI* botAI);
+    HelpAction(ShadowAI* botAI);
 
     virtual ~HelpAction();
     bool Execute(Event event) override;

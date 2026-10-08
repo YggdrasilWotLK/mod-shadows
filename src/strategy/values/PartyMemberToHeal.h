@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PARTYMEMBERTOHEAL_H
-#define _PLAYERBOT_PARTYMEMBERTOHEAL_H
+#ifndef _SHADOW_PARTYMEMBERTOHEAL_H
+#define _SHADOW_PARTYMEMBERTOHEAL_H
 
 #include "PartyMemberValue.h"
 
 class Pet;
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class PartyMemberToHeal : public PartyMemberValue
 {
 public:
-    PartyMemberToHeal(PlayerbotAI* botAI, std::string const name = "party member to heal")
+    PartyMemberToHeal(ShadowAI* botAI, std::string const name = "party member to heal")
         : PartyMemberValue(botAI, name)
     {
     }
@@ -28,7 +28,7 @@ protected:
 class PartyMemberToProtect : public PartyMemberValue
 {
 public:
-    PartyMemberToProtect(PlayerbotAI* botAI, std::string const name = "party member to protect")
+    PartyMemberToProtect(ShadowAI* botAI, std::string const name = "party member to protect")
         : PartyMemberValue(botAI, name)
     {
     }

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MELEESHAMANSTRATEGY_H
-#define _PLAYERBOT_MELEESHAMANSTRATEGY_H
+#ifndef _SHADOW_MELEESHAMANSTRATEGY_H
+#define _SHADOW_MELEESHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MeleeShamanStrategy : public GenericShamanStrategy
 {
 public:
-    MeleeShamanStrategy(PlayerbotAI* botAI);
+    MeleeShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     NextAction** getDefaultActions() override;
@@ -24,7 +24,7 @@ public:
 class MeleeAoeShamanStrategy : public CombatStrategy
 {
 public:
-    MeleeAoeShamanStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    MeleeAoeShamanStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "melee aoe"; }

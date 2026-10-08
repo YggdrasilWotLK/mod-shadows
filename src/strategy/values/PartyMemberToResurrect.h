@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PARTYMEMBERTORESURRECT_H
-#define _PLAYERBOT_PARTYMEMBERTORESURRECT_H
+#ifndef _SHADOW_PARTYMEMBERTORESURRECT_H
+#define _SHADOW_PARTYMEMBERTORESURRECT_H
 
 #include "PartyMemberValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class PartyMemberToResurrect : public PartyMemberValue
 {
 public:
-    PartyMemberToResurrect(PlayerbotAI* botAI, std::string const name = "party member to resurrect")
+    PartyMemberToResurrect(ShadowAI* botAI, std::string const name = "party member to resurrect")
         : PartyMemberValue(botAI, name)
     {
     }

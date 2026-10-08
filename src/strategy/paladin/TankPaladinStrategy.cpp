@@ -5,7 +5,7 @@
 
 #include "TankPaladinStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class TankPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -21,21 +21,21 @@ public:
     }
 
 private:
-    // static ActionNode* seal_of_vengeance([[maybe_unused]] PlayerbotAI* botAI)
+    // static ActionNode* seal_of_vengeance([[maybe_unused]] ShadowAI* botAI)
     // {
     //     return new ActionNode("seal of vengeance",
     //         /*P*/ nullptr,
     //         /*A*/ NextAction::array(0, new NextAction("seal of righteousness"), nullptr),
     //         /*C*/ nullptr);
     // }
-    static ActionNode* seal_of_command([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_command([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of command",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("seal of corruption"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* seal_of_corruption([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_corruption([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of corruption",
                               /*P*/ nullptr,
@@ -43,7 +43,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_vengeance([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_vengeance([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of vengeance",
                               /*P*/ nullptr,
@@ -53,7 +53,7 @@ private:
     ACTION_NODE_A(hand_of_reckoning, "hand of reckoning", "righteous defense");
 };
 
-TankPaladinStrategy::TankPaladinStrategy(PlayerbotAI* botAI) : GenericPaladinStrategy(botAI)
+TankPaladinStrategy::TankPaladinStrategy(ShadowAI* botAI) : GenericPaladinStrategy(botAI)
 {
     actionNodeFactories.Add(new TankPaladinStrategyActionNodeFactory());
 }

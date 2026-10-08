@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PULLSTRATEGY_H
-#define _PLAYERBOT_PULLSTRATEGY_H
+#ifndef _SHADOW_PULLSTRATEGY_H
+#define _SHADOW_PULLSTRATEGY_H
 
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PullStrategy : public CombatStrategy
 {
 public:
-    PullStrategy(PlayerbotAI* botAI, std::string const action) : CombatStrategy(botAI), action(action) {}
+    PullStrategy(ShadowAI* botAI, std::string const action) : CombatStrategy(botAI), action(action) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
@@ -27,7 +27,7 @@ private:
 class PossibleAddsStrategy : public Strategy
 {
 public:
-    PossibleAddsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PossibleAddsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "adds"; }

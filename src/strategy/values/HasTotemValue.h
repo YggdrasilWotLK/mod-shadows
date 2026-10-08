@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HASTOTEMVALUE_H
-#define _PLAYERBOT_HASTOTEMVALUE_H
+#ifndef _SHADOW_HASTOTEMVALUE_H
+#define _SHADOW_HASTOTEMVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HasTotemValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    HasTotemValue(PlayerbotAI* botAI, std::string const name = "has totem") : BoolCalculatedValue(botAI, name) {}
+    HasTotemValue(ShadowAI* botAI, std::string const name = "has totem") : BoolCalculatedValue(botAI, name) {}
 
     bool Calculate() override;
 };

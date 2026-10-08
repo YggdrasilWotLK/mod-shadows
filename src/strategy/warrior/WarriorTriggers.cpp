@@ -5,11 +5,11 @@
 
 #include "WarriorTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool BloodrageBuffTrigger::IsActive()
 {
-    return AI_VALUE2(uint8, "health", "self target") >= sPlayerbotAIConfig->mediumHealth &&
+    return AI_VALUE2(uint8, "health", "self target") >= sShadowAIConfig->mediumHealth &&
            AI_VALUE2(uint8, "rage", "self target") < 20;
 }
 
@@ -120,12 +120,12 @@ bool ShatteringThrowTrigger::IsActive()
     return false; // No valid targets within range
 }
 
-static bool HasPaladinMightBuff(PlayerbotAI* botAI, Player* bot)
+static bool HasPaladinMightBuff(ShadowAI* botAI, Player* bot)
 {
     return botAI->HasAura("blessing of might", bot) || botAI->HasAura("greater blessing of might", bot);
 }
 
-static bool HasOtherWarriorBattleShout(PlayerbotAI* botAI, Player* bot)
+static bool HasOtherWarriorBattleShout(ShadowAI* botAI, Player* bot)
 {
     Group* group = bot->GetGroup();
     if (!group)

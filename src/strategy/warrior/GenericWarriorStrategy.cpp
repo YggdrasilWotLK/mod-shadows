@@ -5,9 +5,9 @@
 
 #include "GenericWarriorStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-GenericWarriorStrategy::GenericWarriorStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericWarriorStrategy::GenericWarriorStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     // actionNodeFactories.Add(new WarriorStanceRequirementActionNodeFactory());
 }
@@ -37,7 +37,7 @@ private:
     // ACTION_NODE_A(whirlwind, "whirlwind", "cleave");
 };
 
-WarrirorAoeStrategy::WarrirorAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+WarrirorAoeStrategy::WarrirorAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new WarrirorAoeStrategyActionNodeFactory());
 }

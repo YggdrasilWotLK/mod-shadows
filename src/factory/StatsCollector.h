@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_STATSCOLLECTOR_H
-#define _PLAYERBOT_STATSCOLLECTOR_H
+#ifndef _SHADOW_STATSCOLLECTOR_H
+#define _SHADOW_STATSCOLLECTOR_H
 
 #include "ItemTemplate.h"
 #include "SpellInfo.h"

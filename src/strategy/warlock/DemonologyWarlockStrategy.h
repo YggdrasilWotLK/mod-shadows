@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DEMONOLOGYWARLOCKSTRATEGY_H
-#define _PLAYERBOT_DEMONOLOGYWARLOCKSTRATEGY_H
+#ifndef _SHADOW_DEMONOLOGYWARLOCKSTRATEGY_H
+#define _SHADOW_DEMONOLOGYWARLOCKSTRATEGY_H
 
 #include "GenericWarlockStrategy.h"
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DemonologyWarlockStrategy : public GenericWarlockStrategy
 {
 public:
-    DemonologyWarlockStrategy(PlayerbotAI* botAI);
+    DemonologyWarlockStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "demo"; }
@@ -24,7 +24,7 @@ public:
 class MetaMeleeAoeStrategy : public CombatStrategy
 {
 public:
-    MetaMeleeAoeStrategy(PlayerbotAI* botAI);
+    MetaMeleeAoeStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "meta melee"; }

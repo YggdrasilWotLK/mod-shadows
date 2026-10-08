@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRAVELTRIGGERS_H
-#define _PLAYERBOT_TRAVELTRIGGERS_H
+#ifndef _SHADOW_TRAVELTRIGGERS_H
+#define _SHADOW_TRAVELTRIGGERS_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NoTravelTargetTrigger : public Trigger
 {
 public:
-    NoTravelTargetTrigger(PlayerbotAI* botAI) : Trigger(botAI, "no travel target") {}
+    NoTravelTargetTrigger(ShadowAI* botAI) : Trigger(botAI, "no travel target") {}
 
     bool IsActive() override;
 };
@@ -21,7 +21,7 @@ public:
 class FarFromTravelTargetTrigger : public Trigger
 {
 public:
-    FarFromTravelTargetTrigger(PlayerbotAI* botAI) : Trigger(botAI, "far from travel target") {}
+    FarFromTravelTargetTrigger(ShadowAI* botAI) : Trigger(botAI, "far from travel target") {}
 
     bool IsActive() override;
 };
@@ -29,7 +29,7 @@ public:
 class NearDarkPortalTrigger : public Trigger
 {
 public:
-    NearDarkPortalTrigger(PlayerbotAI* botAI) : Trigger(botAI, "near dark portal", 10) {}
+    NearDarkPortalTrigger(ShadowAI* botAI) : Trigger(botAI, "near dark portal", 10) {}
 
     virtual bool IsActive();
 };
@@ -37,7 +37,7 @@ public:
 class AtDarkPortalAzerothTrigger : public Trigger
 {
 public:
-    AtDarkPortalAzerothTrigger(PlayerbotAI* botAI) : Trigger(botAI, "at dark portal azeroth", 10) {}
+    AtDarkPortalAzerothTrigger(ShadowAI* botAI) : Trigger(botAI, "at dark portal azeroth", 10) {}
 
     bool IsActive() override;
 };
@@ -45,7 +45,7 @@ public:
 class AtDarkPortalOutlandTrigger : public Trigger
 {
 public:
-    AtDarkPortalOutlandTrigger(PlayerbotAI* botAI) : Trigger(botAI, "at dark portal outland", 10) {}
+    AtDarkPortalOutlandTrigger(ShadowAI* botAI) : Trigger(botAI, "at dark portal outland", 10) {}
 
     bool IsActive() override;
 };

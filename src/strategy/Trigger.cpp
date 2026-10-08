@@ -6,10 +6,10 @@
 #include "Trigger.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Timer.h"
 
-Trigger::Trigger(PlayerbotAI* botAI, std::string const name, int32 checkInterval)
+Trigger::Trigger(ShadowAI* botAI, std::string const name, int32 checkInterval)
     : AiNamedObject(botAI, name),
       checkInterval(checkInterval == 1 ? 1 : (checkInterval < 100 ? checkInterval * 1000 : checkInterval)),
       lastCheckTime(0)

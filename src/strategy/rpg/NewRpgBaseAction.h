@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_NEWRPGBASEACTION_H
-#define _PLAYERBOT_NEWRPGBASEACTION_H
+#ifndef _SHADOW_NEWRPGBASEACTION_H
+#define _SHADOW_NEWRPGBASEACTION_H
 
 #include "Duration.h"
 #include "LastMovementValue.h"
@@ -9,7 +9,7 @@
 #include "Object.h"
 #include "ObjectDefines.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "QuestDef.h"
 #include "TravelMgr.h"
 
@@ -25,7 +25,7 @@ struct POIInfo
 class NewRpgBaseAction : public MovementAction
 {
 public:
-    NewRpgBaseAction(PlayerbotAI* botAI, std::string name) : MovementAction(botAI, name) {}
+    NewRpgBaseAction(ShadowAI* botAI, std::string name) : MovementAction(botAI, name) {}
 
 protected:
     /* MOVEMENT RELATED */

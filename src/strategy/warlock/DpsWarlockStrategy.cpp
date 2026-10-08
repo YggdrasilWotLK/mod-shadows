@@ -5,7 +5,7 @@
 
 #include "DpsWarlockStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class DpsWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -18,21 +18,21 @@ public:
     }
 
 private:
-    static ActionNode* shadow_bolt([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* shadow_bolt([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("shadow bolt",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("shoot"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* unstable_affliction(PlayerbotAI* ai)
+    static ActionNode* unstable_affliction(ShadowAI* ai)
     {
         return new ActionNode("unstable affliction",
                               /*P*/ NULL,
                               /*A*/ NextAction::array(0, new NextAction("immolate"), NULL),
                               /*C*/ NULL);
     }
-    static ActionNode* unstable_affliction_on_attacker(PlayerbotAI* ai)
+    static ActionNode* unstable_affliction_on_attacker(ShadowAI* ai)
     {
         return new ActionNode("unstable affliction on attacker",
                               /*P*/ NULL,
@@ -41,7 +41,7 @@ private:
     }
 };
 
-DpsWarlockStrategy::DpsWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
+DpsWarlockStrategy::DpsWarlockStrategy(ShadowAI* botAI) : GenericWarlockStrategy(botAI)
 {
     actionNodeFactories.Add(new DpsWarlockStrategyActionNodeFactory());
 }

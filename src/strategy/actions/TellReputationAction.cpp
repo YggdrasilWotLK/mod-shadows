@@ -6,7 +6,7 @@
 #include "TellReputationAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ReputationMgr.h"
 
 bool TellReputationAction::Execute(Event event)

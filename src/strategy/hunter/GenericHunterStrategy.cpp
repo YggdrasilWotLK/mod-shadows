@@ -5,7 +5,7 @@
 
 #include "GenericHunterStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 class GenericHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -25,7 +25,7 @@ public:
     }
 
 private:
-    static ActionNode* rapid_fire([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rapid_fire([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rapid fire",
                               /*P*/ nullptr,
@@ -33,7 +33,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* aspect_of_the_pack([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* aspect_of_the_pack([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("aspect of the pack",
                               /*P*/ nullptr,
@@ -41,7 +41,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* aspect_of_the_dragonhawk([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* aspect_of_the_dragonhawk([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("aspect of the dragonhawk",
                               /*P*/ nullptr,
@@ -49,7 +49,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* feign_death([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* feign_death([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("feign death",
                               /*P*/ nullptr,
@@ -57,7 +57,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* wing_clip([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* wing_clip([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("wing clip",
                               /*P*/ nullptr,
@@ -66,7 +66,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mongoose_bite([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mongoose_bite([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mongoose bite",
                               /*P*/ nullptr,
@@ -74,7 +74,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* raptor_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* raptor_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("raptor strike",
                               /*P*/ NextAction::array(0, new NextAction("melee"), nullptr),
@@ -82,7 +82,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* explosive_trap([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* explosive_trap([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("explosive trap",
                               /*P*/ nullptr,
@@ -91,7 +91,7 @@ private:
     }
 };
 
-GenericHunterStrategy::GenericHunterStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericHunterStrategy::GenericHunterStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericHunterStrategyActionNodeFactory());
 }
@@ -132,7 +132,7 @@ void GenericHunterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 }
 
 // ===== AoE Strategy, 2/3+ enemies =====
-AoEHunterStrategy::AoEHunterStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+AoEHunterStrategy::AoEHunterStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 void AoEHunterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

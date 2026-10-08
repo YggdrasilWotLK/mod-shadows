@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HUNTERBUFFSTRATEGIES_H
-#define _PLAYERBOT_HUNTERBUFFSTRATEGIES_H
+#ifndef _SHADOW_HUNTERBUFFSTRATEGIES_H
+#define _SHADOW_HUNTERBUFFSTRATEGIES_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HunterBuffSpeedStrategy : public NonCombatStrategy
 {
 public:
-    HunterBuffSpeedStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    HunterBuffSpeedStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "bspeed"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -22,7 +22,7 @@ public:
 class HunterBuffManaStrategy : public NonCombatStrategy
 {
 public:
-    HunterBuffManaStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    HunterBuffManaStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "bmana"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -31,7 +31,7 @@ public:
 class HunterBuffDpsStrategy : public NonCombatStrategy
 {
 public:
-    HunterBuffDpsStrategy(PlayerbotAI* botAI);
+    HunterBuffDpsStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "bdps"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -40,7 +40,7 @@ public:
 class HunterNatureResistanceStrategy : public NonCombatStrategy
 {
 public:
-    HunterNatureResistanceStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    HunterNatureResistanceStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "rnature"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

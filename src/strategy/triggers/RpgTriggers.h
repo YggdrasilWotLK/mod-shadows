@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RPGTRIGGERS_H
-#define _PLAYERBOT_RPGTRIGGERS_H
+#ifndef _SHADOW_RPGTRIGGERS_H
+#define _SHADOW_RPGTRIGGERS_H
 
 #include "Trigger.h"
 
 class Event;
 class GuidPosition;
-class PlayerbotAI;
+class ShadowAI;
 
 struct CreatureTemplate;
 
 class NoRpgTargetTrigger : public Trigger
 {
 public:
-    NoRpgTargetTrigger(PlayerbotAI* botAI, std::string const name = "no rpg target", int checkInterval = 1)
+    NoRpgTargetTrigger(ShadowAI* botAI, std::string const name = "no rpg target", int checkInterval = 1)
         : Trigger(botAI, name, checkInterval)
     {
     }
@@ -28,7 +28,7 @@ public:
 class HasRpgTargetTrigger : public NoRpgTargetTrigger
 {
 public:
-    HasRpgTargetTrigger(PlayerbotAI* botAI, std::string const name = "has rpg target", int checkInterval = 1)
+    HasRpgTargetTrigger(ShadowAI* botAI, std::string const name = "has rpg target", int checkInterval = 1)
         : NoRpgTargetTrigger(botAI, name, checkInterval)
     {
     }
@@ -39,7 +39,7 @@ public:
 class FarFromRpgTargetTrigger : public NoRpgTargetTrigger
 {
 public:
-    FarFromRpgTargetTrigger(PlayerbotAI* botAI, std::string const name = "far from rpg target", int checkInterval = 1)
+    FarFromRpgTargetTrigger(ShadowAI* botAI, std::string const name = "far from rpg target", int checkInterval = 1)
         : NoRpgTargetTrigger(botAI, name, checkInterval)
     {
     }
@@ -50,7 +50,7 @@ public:
 class NearRpgTargetTrigger : public FarFromRpgTargetTrigger
 {
 public:
-    NearRpgTargetTrigger(PlayerbotAI* botAI, std::string const name = "near rpg target", int checkInterval = 1)
+    NearRpgTargetTrigger(ShadowAI* botAI, std::string const name = "near rpg target", int checkInterval = 1)
         : FarFromRpgTargetTrigger(botAI, name, checkInterval)
     {
     }
@@ -62,7 +62,7 @@ public:
 class RpgTrigger : public FarFromRpgTargetTrigger
 {
 public:
-    RpgTrigger(PlayerbotAI* botAI, std::string const name = "sub rpg", int checkInterval = 2)
+    RpgTrigger(ShadowAI* botAI, std::string const name = "sub rpg", int checkInterval = 2)
         : FarFromRpgTargetTrigger(botAI, name, checkInterval)
     {
     }
@@ -76,7 +76,7 @@ public:
 class RpgTaxiTrigger : public RpgTrigger
 {
 public:
-    RpgTaxiTrigger(PlayerbotAI* botAI, std::string const name = "rpg taxi") : RpgTrigger(botAI, name) {}
+    RpgTaxiTrigger(ShadowAI* botAI, std::string const name = "rpg taxi") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -84,7 +84,7 @@ public:
 class RpgDiscoverTrigger : public RpgTrigger
 {
 public:
-    RpgDiscoverTrigger(PlayerbotAI* botAI, std::string const name = "rpg discover") : RpgTrigger(botAI, name) {}
+    RpgDiscoverTrigger(ShadowAI* botAI, std::string const name = "rpg discover") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -92,7 +92,7 @@ public:
 class RpgStartQuestTrigger : public RpgTrigger
 {
 public:
-    RpgStartQuestTrigger(PlayerbotAI* botAI, std::string const name = "rpg start quest") : RpgTrigger(botAI, name) {}
+    RpgStartQuestTrigger(ShadowAI* botAI, std::string const name = "rpg start quest") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -100,7 +100,7 @@ public:
 class RpgEndQuestTrigger : public RpgTrigger
 {
 public:
-    RpgEndQuestTrigger(PlayerbotAI* botAI, std::string const name = "rpg end quest") : RpgTrigger(botAI, name) {}
+    RpgEndQuestTrigger(ShadowAI* botAI, std::string const name = "rpg end quest") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -108,7 +108,7 @@ public:
 class RpgBuyTrigger : public RpgTrigger
 {
 public:
-    RpgBuyTrigger(PlayerbotAI* botAI, std::string const name = "rpg buy") : RpgTrigger(botAI, name) {}
+    RpgBuyTrigger(ShadowAI* botAI, std::string const name = "rpg buy") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -116,7 +116,7 @@ public:
 class RpgSellTrigger : public RpgTrigger
 {
 public:
-    RpgSellTrigger(PlayerbotAI* botAI, std::string const name = "rpg sell") : RpgTrigger(botAI, name) {}
+    RpgSellTrigger(ShadowAI* botAI, std::string const name = "rpg sell") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -124,7 +124,7 @@ public:
 class RpgRepairTrigger : public RpgTrigger
 {
 public:
-    RpgRepairTrigger(PlayerbotAI* botAI, std::string const name = "rpg repair") : RpgTrigger(botAI, name) {}
+    RpgRepairTrigger(ShadowAI* botAI, std::string const name = "rpg repair") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -132,7 +132,7 @@ public:
 class RpgTrainTrigger : public RpgTrigger
 {
 public:
-    RpgTrainTrigger(PlayerbotAI* botAI, std::string const name = "rpg train") : RpgTrigger(botAI, name) {}
+    RpgTrainTrigger(ShadowAI* botAI, std::string const name = "rpg train") : RpgTrigger(botAI, name) {}
 
     static bool IsTrainerOf(CreatureTemplate const* cInfo, Player* pPlayer);
 
@@ -142,7 +142,7 @@ public:
 class RpgHealTrigger : public RpgTrigger
 {
 public:
-    RpgHealTrigger(PlayerbotAI* botAI, std::string const name = "rpg heal") : RpgTrigger(botAI, name) {}
+    RpgHealTrigger(ShadowAI* botAI, std::string const name = "rpg heal") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -150,7 +150,7 @@ public:
 class RpgHomeBindTrigger : public RpgTrigger
 {
 public:
-    RpgHomeBindTrigger(PlayerbotAI* botAI, std::string const name = "rpg home bind") : RpgTrigger(botAI, name) {}
+    RpgHomeBindTrigger(ShadowAI* botAI, std::string const name = "rpg home bind") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -158,7 +158,7 @@ public:
 class RpgQueueBGTrigger : public RpgTrigger
 {
 public:
-    RpgQueueBGTrigger(PlayerbotAI* botAI, std::string const name = "rpg queue bg") : RpgTrigger(botAI, name) {}
+    RpgQueueBGTrigger(ShadowAI* botAI, std::string const name = "rpg queue bg") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -166,7 +166,7 @@ public:
 class RpgBuyPetitionTrigger : public RpgTrigger
 {
 public:
-    RpgBuyPetitionTrigger(PlayerbotAI* botAI, std::string const name = "rpg buy petition") : RpgTrigger(botAI, name) {}
+    RpgBuyPetitionTrigger(ShadowAI* botAI, std::string const name = "rpg buy petition") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -174,7 +174,7 @@ public:
 class RpgUseTrigger : public RpgTrigger
 {
 public:
-    RpgUseTrigger(PlayerbotAI* botAI, std::string const name = "rpg use") : RpgTrigger(botAI, name) {}
+    RpgUseTrigger(ShadowAI* botAI, std::string const name = "rpg use") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -182,7 +182,7 @@ public:
 class RpgSpellTrigger : public RpgTrigger
 {
 public:
-    RpgSpellTrigger(PlayerbotAI* botAI, std::string const name = "rpg spell") : RpgTrigger(botAI, name) {}
+    RpgSpellTrigger(ShadowAI* botAI, std::string const name = "rpg spell") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -190,7 +190,7 @@ public:
 class RpgCraftTrigger : public RpgTrigger
 {
 public:
-    RpgCraftTrigger(PlayerbotAI* botAI, std::string const name = "rpg craft") : RpgTrigger(botAI, name) {}
+    RpgCraftTrigger(ShadowAI* botAI, std::string const name = "rpg craft") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -198,7 +198,7 @@ public:
 class RpgTradeUsefulTrigger : public RpgTrigger
 {
 public:
-    RpgTradeUsefulTrigger(PlayerbotAI* botAI, std::string const name = "rpg trade useful") : RpgTrigger(botAI, name) {}
+    RpgTradeUsefulTrigger(ShadowAI* botAI, std::string const name = "rpg trade useful") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };
@@ -206,7 +206,7 @@ public:
 class RpgDuelTrigger : public RpgTrigger
 {
 public:
-    RpgDuelTrigger(PlayerbotAI* botAI, std::string const name = "rpg duel") : RpgTrigger(botAI, name) {}
+    RpgDuelTrigger(ShadowAI* botAI, std::string const name = "rpg duel") : RpgTrigger(botAI, name) {}
 
     bool IsActive() override;
 };

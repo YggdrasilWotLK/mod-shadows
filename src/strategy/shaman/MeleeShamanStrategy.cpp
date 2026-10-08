@@ -5,7 +5,7 @@
 
 #include "MeleeShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class MeleeShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -18,7 +18,7 @@ public:
     }
 
 private:
-    static ActionNode* stormstrike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* stormstrike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("stormstrike",
                               /*P*/ nullptr,
@@ -27,7 +27,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* lava_lash([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* lava_lash([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("lava lash",
                               /*P*/ nullptr,
@@ -35,7 +35,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* magma_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* magma_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("magma totem",
                               /*P*/ NULL,
@@ -44,7 +44,7 @@ private:
     }
 };
 
-MeleeShamanStrategy::MeleeShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+MeleeShamanStrategy::MeleeShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new MeleeShamanStrategyActionNodeFactory());
 }

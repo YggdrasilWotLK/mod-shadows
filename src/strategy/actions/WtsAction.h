@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WTSACTION_H
-#define _PLAYERBOT_WTSACTION_H
+#ifndef _SHADOW_WTSACTION_H
+#define _SHADOW_WTSACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class WtsAction : public InventoryAction
 {
 public:
-    WtsAction(PlayerbotAI* botAI) : InventoryAction(botAI, "wts") {}
+    WtsAction(ShadowAI* botAI) : InventoryAction(botAI, "wts") {}
 
     bool Execute(Event event) override;
 };

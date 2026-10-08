@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PETSACTION_H
-#define _PLAYERBOT_PETSACTION_H
+#ifndef _SHADOW_PETSACTION_H
+#define _SHADOW_PETSACTION_H
 
 #include <string>
 
 #include "Action.h"
-#include "PlayerbotFactory.h"
+#include "ShadowFactory.h"
 #include "Unit.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PetsAction : public Action
 {
 public:
-    PetsAction(PlayerbotAI* botAI, const std::string& defaultCmd = "") : Action(botAI, "pet"), defaultCmd(defaultCmd) {}
+    PetsAction(ShadowAI* botAI, const std::string& defaultCmd = "") : Action(botAI, "pet"), defaultCmd(defaultCmd) {}
 
     bool Execute(Event event) override;
 

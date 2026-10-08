@@ -5,7 +5,7 @@
 
 #include "BattlegroundStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void BGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -14,7 +14,7 @@ void BGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(new TriggerNode("timer", NextAction::array(0, new NextAction("bg strategy check", relevance), nullptr)));
 }
 
-BGStrategy::BGStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) {}
+BGStrategy::BGStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) {}
 
 void BattlegroundStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

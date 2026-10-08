@@ -5,7 +5,7 @@
 
 #include "GenericMageStrategy.h"
 #include "AiFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RangedCombatStrategy.h"
 
 class GenericMageStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -31,7 +31,7 @@ public:
     }
 
 private:
-    static ActionNode* frostbolt([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* frostbolt([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("frostbolt",
                               /*P*/ nullptr,
@@ -39,7 +39,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* frostfire_bolt([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* frostfire_bolt([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("frostfire bolt",
                               /*P*/ nullptr,
@@ -47,7 +47,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* ice_lance([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* ice_lance([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("ice lance",
                               /*P*/ nullptr,
@@ -55,7 +55,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* fire_blast([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* fire_blast([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("fire blast",
                               /*P*/ nullptr,
@@ -63,7 +63,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* scorch([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* scorch([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("scorch",
                               /*P*/ nullptr,
@@ -71,7 +71,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* frost_nova([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* frost_nova([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("frost nova",
                               /*P*/ nullptr,
@@ -79,7 +79,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* cone_of_cold([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* cone_of_cold([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cone of cold",
                               /*P*/ nullptr,
@@ -87,7 +87,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* icy_veins([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* icy_veins([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("icy veins",
                               /*P*/ nullptr,
@@ -95,7 +95,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* combustion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* combustion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("combustion",
                               /*P*/ nullptr,
@@ -103,7 +103,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* evocation([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* evocation([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("evocation",
                               /*P*/ nullptr,
@@ -111,7 +111,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* dragons_breath([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* dragons_breath([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("dragon's breath",
                               /*P*/ nullptr,
@@ -119,7 +119,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* blast_wave([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* blast_wave([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("blast wave",
                               /*P*/ nullptr,
@@ -127,7 +127,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* remove_curse([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* remove_curse([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("remove curse",
                               /*P*/ nullptr,
@@ -135,14 +135,14 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* remove_curse_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* remove_curse_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("remove curse on party",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("remove lesser curse on party"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* fireball([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* fireball([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("fireball",
                               /*P*/ nullptr,
@@ -151,7 +151,7 @@ private:
     }
 };
 
-GenericMageStrategy::GenericMageStrategy(PlayerbotAI* botAI) : RangedCombatStrategy(botAI)
+GenericMageStrategy::GenericMageStrategy(ShadowAI* botAI) : RangedCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericMageStrategyActionNodeFactory());
 }

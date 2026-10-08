@@ -5,7 +5,7 @@
 
 #include "LootValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SharedValueContext.h"
 
 LootTemplateAccess const* DropMapValue::GetLootTemplate(ObjectGuid guid, LootType type)

@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_COLLISIONVALUE_H
-#define _PLAYERBOT_COLLISIONVALUE_H
+#ifndef _SHADOW_COLLISIONVALUE_H
+#define _SHADOW_COLLISIONVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CollisionValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    CollisionValue(PlayerbotAI* botAI, std::string const name = "collision")
+    CollisionValue(ShadowAI* botAI, std::string const name = "collision")
         : BoolCalculatedValue(botAI, name), Qualified()
     {
     }

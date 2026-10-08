@@ -6,7 +6,7 @@
 #include "QuestValues.h"
 
 #include "MapMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SharedValueContext.h"
 
 // What kind of a relation does this entry have with this quest.

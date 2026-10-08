@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ROGUEAIOBJECTCONTEXT_H
-#define _PLAYERBOT_ROGUEAIOBJECTCONTEXT_H
+#ifndef _SHADOW_ROGUEAIOBJECTCONTEXT_H
+#define _SHADOW_ROGUEAIOBJECTCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RogueAiObjectContext : public AiObjectContext
 {
 public:
-    RogueAiObjectContext(PlayerbotAI* botAI);
+    RogueAiObjectContext(ShadowAI* botAI);
 
     static void BuildSharedContexts();
     static void BuildSharedStrategyContexts(SharedNamedObjectContextList<Strategy>& strategyContexts);

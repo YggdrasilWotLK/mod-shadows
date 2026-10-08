@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOSTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONHOSTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONHOSTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONHOSTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -14,8 +14,8 @@ class WotlkDungeonHoSTriggerContext : public NamedObjectContext<Trigger>
             creators["lightning ring"] = &WotlkDungeonHoSTriggerContext::lightning_ring;
         }
     private:
-        static Trigger* ground_slam(PlayerbotAI* ai) { return new KrystallusGroundSlamTrigger(ai); }
-        static Trigger* lightning_ring(PlayerbotAI* ai) { return new SjonnirLightningRingTrigger(ai); }
+        static Trigger* ground_slam(ShadowAI* ai) { return new KrystallusGroundSlamTrigger(ai); }
+        static Trigger* lightning_ring(ShadowAI* ai) { return new SjonnirLightningRingTrigger(ai); }
 };
 
 #endif

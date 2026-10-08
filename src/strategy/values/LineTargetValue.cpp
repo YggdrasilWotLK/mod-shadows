@@ -5,7 +5,7 @@
 
 #include "LineTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* LineTargetValue::Calculate()
 {

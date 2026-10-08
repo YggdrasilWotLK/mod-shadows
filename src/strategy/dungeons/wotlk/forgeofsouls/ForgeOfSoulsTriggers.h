@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONFOSTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONFOSTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONFOSTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONFOSTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -23,7 +23,7 @@ enum ForgeOfSoulsBronjahmIDs
 class MoveFromBronjahmTrigger : public Trigger
 {
 public:
-    MoveFromBronjahmTrigger(PlayerbotAI* ai) : Trigger(ai, "move from bronjahm") {}
+    MoveFromBronjahmTrigger(ShadowAI* ai) : Trigger(ai, "move from bronjahm") {}
 
     bool IsActive() override;
 };
@@ -31,7 +31,7 @@ public:
 class SwitchToSoulFragment : public Trigger
 {
 public:
-    SwitchToSoulFragment(PlayerbotAI* ai) : Trigger(ai, "switch to soul fragment") {}
+    SwitchToSoulFragment(ShadowAI* ai) : Trigger(ai, "switch to soul fragment") {}
 
     bool IsActive() override;
 };
@@ -39,14 +39,14 @@ public:
 class BronjahmPositionTrigger : public Trigger
 {
 public:
-    BronjahmPositionTrigger(PlayerbotAI* ai) : Trigger(ai, "bronjahm position") {}
+    BronjahmPositionTrigger(ShadowAI* ai) : Trigger(ai, "bronjahm position") {}
     bool IsActive() override;
 };
 
 class DevourerOfSoulsTrigger : public Trigger
 {
 public:
-    DevourerOfSoulsTrigger(PlayerbotAI* ai) : Trigger(ai, "devourer of souls") {}
+    DevourerOfSoulsTrigger(ShadowAI* ai) : Trigger(ai, "devourer of souls") {}
     bool IsActive() override;
 };
 

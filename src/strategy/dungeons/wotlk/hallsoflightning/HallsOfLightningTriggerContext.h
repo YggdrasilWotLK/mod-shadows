@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOLTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONHOLTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONHOLTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONHOLTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -21,15 +21,15 @@ class WotlkDungeonHoLTriggerContext : public NamedObjectContext<Trigger>
             creators["lightning nova"] = &WotlkDungeonHoLTriggerContext::lightning_nova;
         }
     private:
-        static Trigger* stormforged_lieutenant(PlayerbotAI* ai) { return new StormforgedLieutenantTrigger(ai); }
-        static Trigger* bjarngrim_whirlwind(PlayerbotAI* ai) { return new BjarngrimWhirlwindTrigger(ai); }
-        static Trigger* volkhan(PlayerbotAI* ai) { return new VolkhanTrigger(ai); }
-        static Trigger* static_overload(PlayerbotAI* ai) { return new IonarStaticOverloadTrigger(ai); }
-        static Trigger* ball_lightning(PlayerbotAI* ai) { return new IonarBallLightningTrigger(ai); }
-        static Trigger* ionar_tank_aggro(PlayerbotAI* ai) { return new IonarTankAggroTrigger(ai); }
-        static Trigger* ionar_disperse(PlayerbotAI* ai) { return new IonarDisperseTrigger(ai); }
-        static Trigger* loken_ranged(PlayerbotAI* ai) { return new LokenRangedTrigger(ai); }
-        static Trigger* lightning_nova(PlayerbotAI* ai) { return new LokenLightningNovaTrigger(ai); }
+        static Trigger* stormforged_lieutenant(ShadowAI* ai) { return new StormforgedLieutenantTrigger(ai); }
+        static Trigger* bjarngrim_whirlwind(ShadowAI* ai) { return new BjarngrimWhirlwindTrigger(ai); }
+        static Trigger* volkhan(ShadowAI* ai) { return new VolkhanTrigger(ai); }
+        static Trigger* static_overload(ShadowAI* ai) { return new IonarStaticOverloadTrigger(ai); }
+        static Trigger* ball_lightning(ShadowAI* ai) { return new IonarBallLightningTrigger(ai); }
+        static Trigger* ionar_tank_aggro(ShadowAI* ai) { return new IonarTankAggroTrigger(ai); }
+        static Trigger* ionar_disperse(ShadowAI* ai) { return new IonarDisperseTrigger(ai); }
+        static Trigger* loken_ranged(ShadowAI* ai) { return new LokenRangedTrigger(ai); }
+        static Trigger* lightning_nova(ShadowAI* ai) { return new LokenLightningNovaTrigger(ai); }
 };
 
 #endif

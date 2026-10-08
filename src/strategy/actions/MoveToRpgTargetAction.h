@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MOVETORPGTARGETACTION_H
-#define _PLAYERBOT_MOVETORPGTARGETACTION_H
+#ifndef _SHADOW_MOVETORPGTARGETACTION_H
+#define _SHADOW_MOVETORPGTARGETACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MoveToRpgTargetAction : public MovementAction
 {
 public:
-    MoveToRpgTargetAction(PlayerbotAI* botAI) : MovementAction(botAI, "move to rpg target") {}
+    MoveToRpgTargetAction(ShadowAI* botAI) : MovementAction(botAI, "move to rpg target") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

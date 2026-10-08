@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDONYXIAACTIONS_CONTEXT_H
-#define _PLAYERBOT_RAIDONYXIAACTIONS_CONTEXT_H
+#ifndef _SHADOW_RAIDONYXIAACTIONS_CONTEXT_H
+#define _SHADOW_RAIDONYXIAACTIONS_CONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -18,11 +18,11 @@ public:
     }
 
 private:
-    static Action* move_to_side(PlayerbotAI* ai) { return new RaidOnyxiaMoveToSideAction(ai); }
-    static Action* spread_out(PlayerbotAI* ai) { return new RaidOnyxiaSpreadOutAction(ai); }
-    static Action* move_to_safe_zone(PlayerbotAI* ai) { return new RaidOnyxiaMoveToSafeZoneAction(ai); }
-    static Action* kill_whelps(PlayerbotAI* ai) { return new RaidOnyxiaKillWhelpsAction(ai); }
-    static Action* avoid_eggs(PlayerbotAI* ai) { return new OnyxiaAvoidEggsAction(ai); }
+    static Action* move_to_side(ShadowAI* ai) { return new RaidOnyxiaMoveToSideAction(ai); }
+    static Action* spread_out(ShadowAI* ai) { return new RaidOnyxiaSpreadOutAction(ai); }
+    static Action* move_to_safe_zone(ShadowAI* ai) { return new RaidOnyxiaMoveToSafeZoneAction(ai); }
+    static Action* kill_whelps(ShadowAI* ai) { return new RaidOnyxiaKillWhelpsAction(ai); }
+    static Action* avoid_eggs(ShadowAI* ai) { return new OnyxiaAvoidEggsAction(ai); }
 };
 
 #endif

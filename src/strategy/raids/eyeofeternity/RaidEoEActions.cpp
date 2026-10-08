@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RaidEoEActions.h"
 #include "RaidEoETriggers.h"
 

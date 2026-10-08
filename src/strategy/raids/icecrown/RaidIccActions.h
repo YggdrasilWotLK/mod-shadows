@@ -1,14 +1,14 @@
-#ifndef _PLAYERBOT_RAIDICCACTIONS_H
-#define _PLAYERBOT_RAIDICCACTIONS_H
+#ifndef _SHADOW_RAIDICCACTIONS_H
+#define _SHADOW_RAIDICCACTIONS_H
 
 #include "Action.h"
 #include "MovementActions.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "AttackAction.h"
 #include "LastMovementValue.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "RaidIccStrategy.h"
 #include "ScriptedCreature.h"
 #include "SharedDefines.h"
@@ -88,7 +88,7 @@ const Position ICC_LK_FROSTR3_POSITION = Position(526.35297f, -2071.0317f, 840.8
 class IccLmTankPositionAction : public AttackAction
 {
 public:
-    IccLmTankPositionAction(PlayerbotAI* botAI, std::string const name = "icc lm tank position")
+    IccLmTankPositionAction(ShadowAI* botAI, std::string const name = "icc lm tank position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -98,7 +98,7 @@ public:
 class IccSpikeAction : public AttackAction
 {
 public:
-    IccSpikeAction(PlayerbotAI* botAI) : AttackAction(botAI, "icc spike") {}
+    IccSpikeAction(ShadowAI* botAI) : AttackAction(botAI, "icc spike") {}
     bool Execute(Event event) override;
 
     bool HandleSpikeTargeting(Unit* boss);
@@ -110,7 +110,7 @@ public:
 class IccDarkReckoningAction : public MovementAction
 {
 public:
-    IccDarkReckoningAction(PlayerbotAI* botAI, std::string const name = "icc dark reckoning")
+    IccDarkReckoningAction(ShadowAI* botAI, std::string const name = "icc dark reckoning")
         : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 };
@@ -118,7 +118,7 @@ public:
 class IccRangedPositionLadyDeathwhisperAction : public AttackAction
 {
 public:
-    IccRangedPositionLadyDeathwhisperAction(PlayerbotAI* botAI, std::string const name = "icc ranged position lady deathwhisper")
+    IccRangedPositionLadyDeathwhisperAction(ShadowAI* botAI, std::string const name = "icc ranged position lady deathwhisper")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -128,7 +128,7 @@ public:
 class IccAddsLadyDeathwhisperAction : public AttackAction
 {
 public:
-    IccAddsLadyDeathwhisperAction(PlayerbotAI* botAI, std::string const name = "icc adds lady deathwhisper")
+    IccAddsLadyDeathwhisperAction(ShadowAI* botAI, std::string const name = "icc adds lady deathwhisper")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -142,7 +142,7 @@ public:
 class IccShadeLadyDeathwhisperAction : public MovementAction
 {
 public:
-    IccShadeLadyDeathwhisperAction(PlayerbotAI* botAI, std::string const name = "icc shade lady deathwhisper")
+    IccShadeLadyDeathwhisperAction(ShadowAI* botAI, std::string const name = "icc shade lady deathwhisper")
         : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 };
@@ -151,7 +151,7 @@ public:
 class IccRottingFrostGiantTankPositionAction : public AttackAction
 {
 public:
-    IccRottingFrostGiantTankPositionAction(PlayerbotAI* botAI, std::string const name = "icc rotting frost giant tank position")
+    IccRottingFrostGiantTankPositionAction(ShadowAI* botAI, std::string const name = "icc rotting frost giant tank position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 };
@@ -159,7 +159,7 @@ public:
 class IccCannonFireAction : public Action
 {
 public:
-    IccCannonFireAction(PlayerbotAI* botAI, std::string const name = "icc cannon fire")
+    IccCannonFireAction(ShadowAI* botAI, std::string const name = "icc cannon fire")
         : Action(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -170,7 +170,7 @@ public:
 class IccGunshipEnterCannonAction : public MovementAction
 {
 public:
-    IccGunshipEnterCannonAction(PlayerbotAI* botAI, std::string const name = "icc gunship enter cannon")
+    IccGunshipEnterCannonAction(ShadowAI* botAI, std::string const name = "icc gunship enter cannon")
         : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -182,7 +182,7 @@ public:
 class IccGunshipTeleportAllyAction : public AttackAction
 {
 public:
-    IccGunshipTeleportAllyAction(PlayerbotAI* botAI, std::string const name = "icc gunship teleport ally")
+    IccGunshipTeleportAllyAction(ShadowAI* botAI, std::string const name = "icc gunship teleport ally")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -193,7 +193,7 @@ public:
 class IccGunshipTeleportHordeAction : public AttackAction
 {
 public:
-    IccGunshipTeleportHordeAction(PlayerbotAI* botAI, std::string const name = "icc gunship teleport horde")
+    IccGunshipTeleportHordeAction(ShadowAI* botAI, std::string const name = "icc gunship teleport horde")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -205,7 +205,7 @@ public:
 class IccDbsTankPositionAction : public AttackAction
 {
 public:
-    IccDbsTankPositionAction(PlayerbotAI* botAI, std::string const name = "icc dbs tank position")
+    IccDbsTankPositionAction(ShadowAI* botAI, std::string const name = "icc dbs tank position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -217,7 +217,7 @@ public:
 class IccAddsDbsAction : public AttackAction
 {
 public:
-    IccAddsDbsAction(PlayerbotAI* botAI, std::string const name = "icc adds dbs")
+    IccAddsDbsAction(ShadowAI* botAI, std::string const name = "icc adds dbs")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -229,7 +229,7 @@ public:
 class IccFestergutGroupPositionAction : public AttackAction
 {
 public:
-    IccFestergutGroupPositionAction(PlayerbotAI* botAI, std::string const name = "icc festergut group position")
+    IccFestergutGroupPositionAction(ShadowAI* botAI, std::string const name = "icc festergut group position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -241,7 +241,7 @@ public:
 class IccFestergutSporeAction : public AttackAction
 {
 public:
-    IccFestergutSporeAction(PlayerbotAI* botAI, std::string const name = "icc festergut spore")
+    IccFestergutSporeAction(ShadowAI* botAI, std::string const name = "icc festergut spore")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -261,7 +261,7 @@ public:
 class IccRotfaceTankPositionAction : public AttackAction
 {
 public:
-    IccRotfaceTankPositionAction(PlayerbotAI* botAI, std::string const name = "icc rotface tank position")
+    IccRotfaceTankPositionAction(ShadowAI* botAI, std::string const name = "icc rotface tank position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -274,7 +274,7 @@ public:
 class IccRotfaceGroupPositionAction : public AttackAction
 {
 public:
-    IccRotfaceGroupPositionAction(PlayerbotAI* botAI, std::string const name = "icc rotface group position")
+    IccRotfaceGroupPositionAction(ShadowAI* botAI, std::string const name = "icc rotface group position")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -290,7 +290,7 @@ public:
 class IccRotfaceMoveAwayFromExplosionAction : public MovementAction
 {
 public:
-    IccRotfaceMoveAwayFromExplosionAction(PlayerbotAI* botAI, std::string const name = "icc rotface move away from explosion")
+    IccRotfaceMoveAwayFromExplosionAction(ShadowAI* botAI, std::string const name = "icc rotface move away from explosion")
         : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -302,7 +302,7 @@ public:
 class IccPutricideGrowingOozePuddleAction : public AttackAction
 {
 public:
-    IccPutricideGrowingOozePuddleAction(PlayerbotAI* botAI, std::string const name = "icc putricide growing ooze puddle")
+    IccPutricideGrowingOozePuddleAction(ShadowAI* botAI, std::string const name = "icc putricide growing ooze puddle")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -316,7 +316,7 @@ public:
 class IccPutricideVolatileOozeAction : public AttackAction
 {
 public:
-    IccPutricideVolatileOozeAction(PlayerbotAI* botAI, std::string const name = "icc putricide volatile ooze")
+    IccPutricideVolatileOozeAction(ShadowAI* botAI, std::string const name = "icc putricide volatile ooze")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -327,7 +327,7 @@ public:
 class IccPutricideGasCloudAction : public AttackAction
 {
 public:
-    IccPutricideGasCloudAction(PlayerbotAI* botAI, std::string const name = "icc putricide gas cloud")
+    IccPutricideGasCloudAction(ShadowAI* botAI, std::string const name = "icc putricide gas cloud")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -342,7 +342,7 @@ public:
 class IccPutricideAvoidMalleableGooAction : public MovementAction
 {
 public:
-    IccPutricideAvoidMalleableGooAction(PlayerbotAI* botAI, std::string const name = "icc putricide avoid malleable goo")
+    IccPutricideAvoidMalleableGooAction(ShadowAI* botAI, std::string const name = "icc putricide avoid malleable goo")
         : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 
@@ -360,7 +360,7 @@ public:
 class IccBpcKelesethTankAction : public AttackAction
 {
 public:
-    IccBpcKelesethTankAction(PlayerbotAI* botAI)
+    IccBpcKelesethTankAction(ShadowAI* botAI)
         : AttackAction(botAI, "icc bpc keleseth tank") {}
     bool Execute(Event event) override;
 };
@@ -368,7 +368,7 @@ public:
 class IccBpcMainTankAction : public AttackAction
 {
 public:
-    IccBpcMainTankAction(PlayerbotAI* botAI)
+    IccBpcMainTankAction(ShadowAI* botAI)
         : AttackAction(botAI, "icc bpc main tank") {}
     bool Execute(Event event) override;
 
@@ -378,7 +378,7 @@ public:
 class IccBpcEmpoweredVortexAction : public MovementAction
 {
 public:
-    IccBpcEmpoweredVortexAction(PlayerbotAI* botAI)
+    IccBpcEmpoweredVortexAction(ShadowAI* botAI)
         : MovementAction(botAI, "icc bpc empowered vortex") {}
     bool Execute(Event event) override;
 
@@ -389,7 +389,7 @@ public:
 class IccBpcKineticBombAction : public AttackAction
 {
 public:
-    IccBpcKineticBombAction(PlayerbotAI* botAI)
+    IccBpcKineticBombAction(ShadowAI* botAI)
         : AttackAction(botAI, "icc bpc kinetic bomb") {}
     bool Execute(Event event) override;
 
@@ -400,7 +400,7 @@ public:
 class IccBpcBallOfFlameAction : public MovementAction
 {
 public:
-    IccBpcBallOfFlameAction(PlayerbotAI* botAI)
+    IccBpcBallOfFlameAction(ShadowAI* botAI)
         : MovementAction(botAI, "icc bpc ball of flame") {}
     bool Execute(Event event) override;
 };
@@ -409,7 +409,7 @@ public:
 class IccBqlGroupPositionAction : public AttackAction
 {
 public:
-    IccBqlGroupPositionAction(PlayerbotAI* botAI)
+    IccBqlGroupPositionAction(ShadowAI* botAI)
         : AttackAction(botAI, "icc group tank position") {}
     bool Execute(Event event) override;
 
@@ -436,7 +436,7 @@ private:
 class IccBqlPactOfDarkfallenAction : public MovementAction
 {
 public:
-    IccBqlPactOfDarkfallenAction(PlayerbotAI* botAI)
+    IccBqlPactOfDarkfallenAction(ShadowAI* botAI)
         : MovementAction(botAI, "icc bql pact of darkfallen") {}
     bool Execute(Event event) override;
 
@@ -447,7 +447,7 @@ public:
 class IccBqlVampiricBiteAction : public AttackAction
 {
 public:
-    IccBqlVampiricBiteAction(PlayerbotAI* botAI)
+    IccBqlVampiricBiteAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc bql vampiric bite") {}
     bool Execute(Event event) override;
 
@@ -461,7 +461,7 @@ public:
 class IccValkyreSpearAction : public AttackAction
 {
 public:
-    IccValkyreSpearAction(PlayerbotAI* botAI)
+    IccValkyreSpearAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc valkyre spear") {}
     bool Execute(Event event) override;
 };
@@ -469,7 +469,7 @@ public:
 class IccSisterSvalnaAction : public AttackAction
 {
 public:
-    IccSisterSvalnaAction(PlayerbotAI* botAI)
+    IccSisterSvalnaAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc sister svalna") {}
     bool Execute(Event event) override;
 };
@@ -479,7 +479,7 @@ public:
 class IccValithriaGroupAction : public AttackAction
 {
 public:
-    IccValithriaGroupAction(PlayerbotAI* botAI)
+    IccValithriaGroupAction(ShadowAI* botAI)
         : AttackAction(botAI, "icc valithria group") {}
     bool Execute(Event event) override;
 
@@ -492,7 +492,7 @@ public:
 class IccValithriaPortalAction : public MovementAction
 {
 public:
-    IccValithriaPortalAction(PlayerbotAI* botAI)
+    IccValithriaPortalAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc valithria portal") {}
     bool Execute(Event event) override;
 };
@@ -500,7 +500,7 @@ public:
 class IccValithriaHealAction : public AttackAction
 {
 public:
-    IccValithriaHealAction(PlayerbotAI* botAI)
+    IccValithriaHealAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc valithria heal") {}
     bool Execute(Event event) override;
 };
@@ -508,7 +508,7 @@ public:
 class IccValithriaDreamCloudAction : public MovementAction
 {
 public:
-    IccValithriaDreamCloudAction(PlayerbotAI* botAI)
+    IccValithriaDreamCloudAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc valithria dream cloud") {}
     bool Execute(Event event) override;
 };
@@ -517,7 +517,7 @@ public:
 class IccSindragosaGroupPositionAction : public AttackAction
 {
 public:
-    IccSindragosaGroupPositionAction(PlayerbotAI* botAI)
+    IccSindragosaGroupPositionAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc sindragosa group position") {}
     bool Execute(Event event) override;
 
@@ -529,7 +529,7 @@ public:
 class IccSindragosaFrostBeaconAction : public MovementAction
 {
 public:
-    IccSindragosaFrostBeaconAction(PlayerbotAI* botAI)
+    IccSindragosaFrostBeaconAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc sindragosa frost beacon") {}
     bool Execute(Event event) override;
 
@@ -552,7 +552,7 @@ public:
 class IccSindragosaBlisteringColdAction : public MovementAction
 {
 public:
-    IccSindragosaBlisteringColdAction(PlayerbotAI* botAI)
+    IccSindragosaBlisteringColdAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc sindragosa blistering cold") {}
     bool Execute(Event event) override;
 };
@@ -560,7 +560,7 @@ public:
 class IccSindragosaUnchainedMagicAction : public AttackAction
 {
 public:
-    IccSindragosaUnchainedMagicAction(PlayerbotAI* botAI)
+    IccSindragosaUnchainedMagicAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc sindragosa unchained magic") {}
     bool Execute(Event event) override;
 };
@@ -568,7 +568,7 @@ public:
 class IccSindragosaChilledToTheBoneAction : public AttackAction
 {
 public:
-    IccSindragosaChilledToTheBoneAction(PlayerbotAI* botAI)
+    IccSindragosaChilledToTheBoneAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc sindragosa chilled to the bone") {}
     bool Execute(Event event) override;
 };
@@ -576,7 +576,7 @@ public:
 class IccSindragosaMysticBuffetAction : public MovementAction
 {
 public:
-    IccSindragosaMysticBuffetAction(PlayerbotAI* botAI)
+    IccSindragosaMysticBuffetAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc sindragosa mystic buffet") {}
     bool Execute(Event event) override;
 };
@@ -584,7 +584,7 @@ public:
 class IccSindragosaFrostBombAction : public MovementAction
 {
 public:
-    IccSindragosaFrostBombAction(PlayerbotAI* botAI)
+    IccSindragosaFrostBombAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc sindragosa frost bomb") {}
     bool Execute(Event event) override;
 };
@@ -592,7 +592,7 @@ public:
 class IccSindragosaTankSwapPositionAction : public AttackAction
 {
     public:
-        IccSindragosaTankSwapPositionAction(PlayerbotAI* botAI)
+        IccSindragosaTankSwapPositionAction(ShadowAI* botAI)
             : AttackAction(botAI, "sindragosa tank swap position") {}
         bool Execute(Event event) override;
 };
@@ -602,7 +602,7 @@ class IccSindragosaTankSwapPositionAction : public AttackAction
 class IccLichKingShadowTrapAction : public MovementAction
 {
     public:
-        IccLichKingShadowTrapAction(PlayerbotAI* botAI)
+        IccLichKingShadowTrapAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc lich king shadow trap") {}
         bool Execute(Event event) override;
 };
@@ -610,7 +610,7 @@ class IccLichKingShadowTrapAction : public MovementAction
 class IccLichKingNecroticPlagueAction : public MovementAction
 {
     public:
-        IccLichKingNecroticPlagueAction(PlayerbotAI* botAI)
+        IccLichKingNecroticPlagueAction(ShadowAI* botAI)
             : MovementAction(botAI, "icc lich king necrotic plague") {}
         bool Execute(Event event) override;
 };
@@ -618,7 +618,7 @@ class IccLichKingNecroticPlagueAction : public MovementAction
 class IccLichKingWinterAction : public AttackAction
 {
     public:
-        IccLichKingWinterAction(PlayerbotAI* botAI)
+        IccLichKingWinterAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc lich king winter") {}
         bool Execute(Event event) override;
 
@@ -641,7 +641,7 @@ class IccLichKingWinterAction : public AttackAction
 class IccLichKingAddsAction : public AttackAction
 {
     public:
-        IccLichKingAddsAction(PlayerbotAI* botAI)
+        IccLichKingAddsAction(ShadowAI* botAI)
             : AttackAction(botAI, "icc lich king adds") {}
         bool Execute(Event event) override;
 

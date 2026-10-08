@@ -6,9 +6,9 @@
 #include "ImbueAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-ImbueWithPoisonAction::ImbueWithPoisonAction(PlayerbotAI* botAI) : Action(botAI, "apply poison") {}
+ImbueWithPoisonAction::ImbueWithPoisonAction(ShadowAI* botAI) : Action(botAI, "apply poison") {}
 
 bool ImbueWithPoisonAction::Execute(Event event)
 {
@@ -101,7 +101,7 @@ bool ImbueWithPoisonAction::Execute(Event event)
 }
 
 // Search and apply stone to weapons
-ImbueWithStoneAction::ImbueWithStoneAction(PlayerbotAI* botAI) : Action(botAI, "apply stone") {}
+ImbueWithStoneAction::ImbueWithStoneAction(ShadowAI* botAI) : Action(botAI, "apply stone") {}
 
 bool ImbueWithStoneAction::Execute(Event event)
 {
@@ -146,7 +146,7 @@ bool ImbueWithStoneAction::Execute(Event event)
 }
 
 // Search and apply oil to weapons
-ImbueWithOilAction::ImbueWithOilAction(PlayerbotAI* botAI) : Action(botAI, "apply oil") {}
+ImbueWithOilAction::ImbueWithOilAction(ShadowAI* botAI) : Action(botAI, "apply oil") {}
 
 bool ImbueWithOilAction::Execute(Event event)
 {
@@ -199,7 +199,7 @@ static const uint32 uPrioritizedHealingItemIds[19] = {
     MINOR_HEALING_POTION,
 };
 
-TryEmergencyAction::TryEmergencyAction(PlayerbotAI* botAI) : Action(botAI, "try emergency") {}
+TryEmergencyAction::TryEmergencyAction(ShadowAI* botAI) : Action(botAI, "try emergency") {}
 
 bool TryEmergencyAction::Execute(Event event)
 {

@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PLACEHOLDERHELPER_H
-#define _PLAYERBOT_PLACEHOLDERHELPER_H
+#ifndef _SHADOW_PLACEHOLDERHELPER_H
+#define _SHADOW_PLACEHOLDERHELPER_H
 
 #include <map>
 
 #include "Common.h"
 #include "Player.h"
-#include "PlayerbotDungeonSuggestionMgr.h"
+#include "ShadowDungeonSuggestionMgr.h"
 
 typedef std::map<std::string, std::string> PlaceholderMap;
 

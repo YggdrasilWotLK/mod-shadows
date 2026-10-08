@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEARESTNONBOTPLAYERSVALUE_H
-#define _PLAYERBOT_NEARESTNONBOTPLAYERSVALUE_H
+#ifndef _SHADOW_NEARESTNONBOTPLAYERSVALUE_H
+#define _SHADOW_NEARESTNONBOTPLAYERSVALUE_H
 
 #include "NearestUnitsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NearestNonBotPlayersValue : public NearestUnitsValue
 {
 public:
-    NearestNonBotPlayersValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->grindDistance)
+    NearestNonBotPlayersValue(ShadowAI* botAI, float range = sShadowAIConfig->grindDistance)
         : NearestUnitsValue(botAI, "nearest non bot players", range, true)
     {
     }

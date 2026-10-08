@@ -10,8 +10,8 @@
 #include "Event.h"
 #include "Formations.h"
 #include "LastMovementValue.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 
@@ -44,7 +44,7 @@ bool FollowAction::Execute(Event event)
     //     botAI->PetFollow();
     // }
     // if (moved)
-    // botAI->SetNextCheckDelay(sPlayerbotAIConfig->reactDelay);
+    // botAI->SetNextCheckDelay(sShadowAIConfig->reactDelay);
 
     return moved;
 }
@@ -132,7 +132,7 @@ bool FleeToMasterAction::Execute(Event event)
     WorldPosition bosPos(bot);
     float distance = bosPos.fDist(targetPos);
 
-    if (distance < sPlayerbotAIConfig->reactDistance * 3)
+    if (distance < sShadowAIConfig->reactDistance * 3)
     {
         if (!urand(0, 3))
             botAI->TellMaster("I am close, wait for me!");

@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONVHTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONVHTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONVHTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONVHTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -24,35 +24,35 @@ enum VioletHoldIDs
 class ErekemTargetTrigger : public Trigger
 {
 public:
-    ErekemTargetTrigger(PlayerbotAI* ai) : Trigger(ai, "erekem target") {}
+    ErekemTargetTrigger(ShadowAI* ai) : Trigger(ai, "erekem target") {}
     bool IsActive() override;
 };
 
 class IchoronTargetTrigger : public Trigger
 {
 public:
-    IchoronTargetTrigger(PlayerbotAI* ai) : Trigger(ai, "ichoron target") {}
+    IchoronTargetTrigger(ShadowAI* ai) : Trigger(ai, "ichoron target") {}
     bool IsActive() override;
 };
 
 class VoidShiftTrigger : public Trigger
 {
 public:
-    VoidShiftTrigger(PlayerbotAI* ai) : Trigger(ai, "void shift") {}
+    VoidShiftTrigger(ShadowAI* ai) : Trigger(ai, "void shift") {}
     bool IsActive() override;
 };
 
 class ShroudOfDarknessTrigger : public Trigger
 {
 public:
-    ShroudOfDarknessTrigger(PlayerbotAI* ai) : Trigger(ai, "shroud of darkness") {}
+    ShroudOfDarknessTrigger(ShadowAI* ai) : Trigger(ai, "shroud of darkness") {}
     bool IsActive() override;
 };
 
 class CyanigosaPositioningTrigger : public Trigger
 {
 public:
-    CyanigosaPositioningTrigger(PlayerbotAI* ai) : Trigger(ai, "cyanigosa positioning") {}
+    CyanigosaPositioningTrigger(ShadowAI* ai) : Trigger(ai, "cyanigosa positioning") {}
     bool IsActive() override;
 };
 

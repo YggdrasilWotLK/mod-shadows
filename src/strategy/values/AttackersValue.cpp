@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ReputationMgr.h"
 #include "ServerFacade.h"
 
@@ -77,7 +77,7 @@ void AttackersValue::AddAttackersOf(Group* group, std::unordered_set<Unit*>& tar
     {
         Player* member = ObjectAccessor::FindPlayer(itr->guid);
         if (!member || !member->IsAlive() || member == bot || member->GetMapId() != bot->GetMapId() ||
-            sServerFacade->GetDistance2d(bot, member) > sPlayerbotAIConfig->sightDistance)
+            sServerFacade->GetDistance2d(bot, member) > sShadowAIConfig->sightDistance)
             continue;
 
         AddAttackersOf(member, targets);
@@ -110,7 +110,7 @@ void AttackersValue::AddAttackersOf(Player* player, std::unordered_set<Unit*>& t
         Unit* victim = attacker->GetVictim();
 
         if (player->IsValidAttackTarget(attacker) &&
-            player->GetDistance2d(attacker) < sPlayerbotAIConfig->sightDistance)
+            player->GetDistance2d(attacker) < sShadowAIConfig->sightDistance)
         {
             targets.insert(attacker);
         }
@@ -149,7 +149,7 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
     if (attacker && bot->GetGroup())
         rti = bot->GetGroup()->GetTargetIcon(7) == attacker->GetGUID();
 
-    auto attackerBotAI = GET_PLAYERBOT_AI(bot);
+    auto attackerBotAI = GET_SHADOW_AI(bot);
     if (!attackerBotAI)
         return false;
 
@@ -160,7 +160,7 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
     bool isMemberBotGroup = false;
     if (bot->GetGroup() && attackerBotAI->GetMaster())
     {
-        auto masterBotAI = GET_PLAYERBOT_AI(attackerBotAI->GetMaster());
+        auto masterBotAI = GET_SHADOW_AI(attackerBotAI->GetMaster());
         if (masterBotAI && !masterBotAI->IsRealPlayer())
             isMemberBotGroup = true;
     }
@@ -182,7 +182,7 @@ bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
            !(attacker->GetCreatureType() == CREATURE_TYPE_CRITTER && !attacker->IsInCombat()) &&
            !attacker->HasUnitFlag(UNIT_FLAG_IMMUNE_TO_PC) && !attacker->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE) &&
            bot->CanSeeOrDetect(attacker) &&
-           !(sPlayerbotAIConfig->IsPvpProhibited(attacker->GetZoneId(), attacker->GetAreaId()) &&
+           !(sShadowAIConfig->IsPvpProhibited(attacker->GetZoneId(), attacker->GetAreaId()) &&
              (attacker->GetGUID().IsPlayer() || attacker->GetGUID().IsPet())) &&
            !(attacker->IsPlayer() && !attacker->IsPvP() && !attacker->IsFFAPvP() &&
              (!bot->duel || bot->duel->Opponent != attacker)) &&
@@ -202,7 +202,7 @@ bool AttackersValue::IsValidTarget(Unit* attacker, Player* bot)
     return IsPossibleTarget(attacker, bot) && bot->IsWithinLOSInMap(attacker);
     // (attacker->GetThreatMgr().getCurrentVictim() || attacker->GetGuidValue(UNIT_FIELD_TARGET) ||
     // attacker->GetGUID().IsPlayer() || attacker->GetGUID() ==
-    // GET_PLAYERBOT_AI(bot)->GetAiObjectContext()->GetValue<ObjectGuid>("pull target")->Get());
+    // GET_SHADOW_AI(bot)->GetAiObjectContext()->GetValue<ObjectGuid>("pull target")->Get());
 }
 
 bool PossibleAddsValue::Calculate()
@@ -226,10 +226,10 @@ bool PossibleAddsValue::Calculate()
                         continue;
 
                     float dist = sServerFacade->GetDistance2d(attacker, add);
-                    if (sServerFacade->IsDistanceLessOrEqualThan(dist, sPlayerbotAIConfig->aoeRadius * 1.5f))
+                    if (sServerFacade->IsDistanceLessOrEqualThan(dist, sShadowAIConfig->aoeRadius * 1.5f))
                         continue;
 
-                    if (sServerFacade->IsDistanceLessOrEqualThan(dist, sPlayerbotAIConfig->aggroDistance))
+                    if (sServerFacade->IsDistanceLessOrEqualThan(dist, sShadowAIConfig->aggroDistance))
                         return true;
                 }
             }

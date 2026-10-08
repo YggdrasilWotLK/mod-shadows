@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONANACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONANACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONANACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONANACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,9 +14,9 @@ class WotlkDungeonANActionContext : public NamedObjectContext<Action>
             creators["dodge pound"] = &WotlkDungeonANActionContext::dodge_pound;
         }
     private:
-        static Action* attack_web_wrap(PlayerbotAI* ai) { return new AttackWebWrapAction(ai); }
-        static Action* krikthir_priority(PlayerbotAI* ai) { return new WatchersTargetAction(ai); }
-        static Action* dodge_pound(PlayerbotAI* ai) { return new AnubarakDodgePoundAction(ai); }
+        static Action* attack_web_wrap(ShadowAI* ai) { return new AttackWebWrapAction(ai); }
+        static Action* krikthir_priority(ShadowAI* ai) { return new WatchersTargetAction(ai); }
+        static Action* dodge_pound(ShadowAI* ai) { return new AnubarakDodgePoundAction(ai); }
 };
 
 #endif

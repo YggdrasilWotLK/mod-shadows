@@ -5,12 +5,12 @@
 
 #include "PerformanceMonitor.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 PerformanceMonitorOperation* PerformanceMonitor::start(PerformanceMetric metric, std::string const name,
                                                        PerformanceStack* stack)
 {
-    if (!sPlayerbotAIConfig->perfMonEnabled)
+    if (!sShadowAIConfig->perfMonEnabled)
         return nullptr;
 
     std::string stackName = name;
@@ -57,16 +57,16 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
     {
         float updateAITotalTime = 0;
         for (auto& map : data[PERF_MON_TOTAL])
-            if (map.first.find("PlayerbotAI::UpdateAIInternal") != std::string::npos)
+            if (map.first.find("ShadowAI::UpdateAIInternal") != std::string::npos)
                 updateAITotalTime += map.second->totalTime;
 
         LOG_INFO(
-            "playerbots",
+            "shadows",
             "--------------------------------------[TOTAL BOT]------------------------------------------------------");
-        LOG_INFO("playerbots",
+        LOG_INFO("shadows",
                  "percentage     time  |     min ..     max (      avg  of      count) - type      : name");
         LOG_INFO(
-            "playerbots",
+            "shadows",
             "-------------------------------------------------------------------------------------------------------");
 
         for (std::map<PerformanceMetric, std::map<std::string, PerformanceData*>>::iterator i = data.begin();
@@ -101,7 +101,7 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
 
             for (std::map<std::string, PerformanceData*>::iterator j = pdMap.begin(); j != pdMap.end(); ++j)
             {
-                if (key == "Total" && j->first.find("PlayerbotAI::UpdateAIInternal") == std::string::npos)
+                if (key == "Total" && j->first.find("ShadowAI::UpdateAIInternal") == std::string::npos)
                     continue;
 
                 names.push_back(j->first);
@@ -135,7 +135,7 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
 
                 if (perc >= 0.1f || avg >= 0.25f || pd->maxTime > 1000)
                 {
-                    LOG_INFO("playerbots",
+                    LOG_INFO("shadows",
                              "{:7.3f}% {:10.3f}s | {:7.1f} .. {:7.1f} ({:10.3f} of {:10d}) - {:6}    : {}", perc, time,
                              minTime, maxTime, avg, pd->count, key.c_str(), disName.c_str());
                 }
@@ -145,23 +145,23 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
             float tMinTime = (float)typeMinTime / 1000.0f;
             float tMaxTime = (float)typeMaxTime / 1000.0f;
             float tAvg = (float)typeTotalTime / (float)typeCount / 1000.0f;
-            LOG_INFO("playerbots", "{:7.3f}% {:10.3f}s | {:7.1f} .. {:7.1f} ({:10.3f} of {:10d}) - {:6}    : {}", tPerc,
+            LOG_INFO("shadows", "{:7.3f}% {:10.3f}s | {:7.1f} .. {:7.1f} ({:10.3f} of {:10d}) - {:6}    : {}", tPerc,
                      tTime, tMinTime, tMaxTime, tAvg, typeCount, key.c_str(), "Total");
-            LOG_INFO("playerbots", " ");
+            LOG_INFO("shadows", " ");
         }
     }
     else
     {
-        float fullTickCount = data[PERF_MON_TOTAL]["PlayerbotAIBase::FullTick"]->count;
-        float fullTickTotalTime = data[PERF_MON_TOTAL]["PlayerbotAIBase::FullTick"]->totalTime;
+        float fullTickCount = data[PERF_MON_TOTAL]["ShadowAIBase::FullTick"]->count;
+        float fullTickTotalTime = data[PERF_MON_TOTAL]["ShadowAIBase::FullTick"]->totalTime;
 
         LOG_INFO(
-            "playerbots",
+            "shadows",
             "---------------------------------------[PER TICK]------------------------------------------------------");
-        LOG_INFO("playerbots",
+        LOG_INFO("shadows",
                  "percentage     time  |     min ..     max (      avg  of      count) - type      : name");
         LOG_INFO(
-            "playerbots",
+            "shadows",
             "-------------------------------------------------------------------------------------------------------");
 
         for (std::map<PerformanceMetric, std::map<std::string, PerformanceData*>>::iterator i = data.begin();
@@ -226,7 +226,7 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
                     disName = disName.substr(0, disName.find("|")) + "]";
                 if (perc >= 0.1f || avg >= 0.25f || pd->maxTime > 1000)
                 {
-                    LOG_INFO("playerbots",
+                    LOG_INFO("shadows",
                              "{:7.3f}% {:9.3f}ms | {:7.1f} .. {:7.1f} ({:10.3f} of {:10.2f}) - {:6}    : {}", perc,
                              time, minTime, maxTime, avg, amount, key.c_str(), disName.c_str());
                 }
@@ -239,10 +239,10 @@ void PerformanceMonitor::PrintStats(bool perTick, bool fullStack)
                 float tMaxTime = (float)typeMaxTime / 1000.0f;
                 float tAvg = (float)typeTotalTime / (float)typeCount / 1000.0f;
                 float tAmount = (float)typeCount / fullTickCount;
-                LOG_INFO("playerbots", "{:7.3f}% {:9.3f}ms | {:7.1f} .. {:7.1f} ({:10.3f} of {:10.2f}) - {:6}    : {}",
+                LOG_INFO("shadows", "{:7.3f}% {:9.3f}ms | {:7.1f} .. {:7.1f} ({:10.3f} of {:10.2f}) - {:6}    : {}",
                          tPerc, tTime, tMinTime, tMaxTime, tAvg, tAmount, key.c_str(), "Total");
             }
-            LOG_INFO("playerbots", " ");
+            LOG_INFO("shadows", " ");
         }
     }
 }

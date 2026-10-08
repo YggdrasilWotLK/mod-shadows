@@ -6,7 +6,7 @@
 #include "LootTriggers.h"
 
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool LootAvailableTrigger::IsActive()

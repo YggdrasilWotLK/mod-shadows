@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "GuildMgr.h"
 #include "Log.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool InviteToGroupAction::Invite(Player* inviter, Player* player)
@@ -20,12 +20,12 @@ bool InviteToGroupAction::Invite(Player* inviter, Player* player)
     if (inviter == player)
         return false;
 
-    if (!GET_PLAYERBOT_AI(player) && !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, true, player))
+    if (!GET_SHADOW_AI(player) && !botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, true, player))
         return false;
 
     if (Group* group = inviter->GetGroup())
     {
-        if (auto inviteeAI = GET_PLAYERBOT_AI(player))
+        if (auto inviteeAI = GET_SHADOW_AI(player))
         {
             if (!inviteeAI->IsRealPlayer())
                 if (!group->isRaidGroup() && group->GetMembersCount() > 4)
@@ -60,9 +60,9 @@ bool InviteNearbyToGroupAction::Execute(Event event)
         if (player->GetGroup())
             continue;
 
-        if (!sPlayerbotAIConfig->randomBotInvitePlayer)
+        if (!sShadowAIConfig->randomBotInvitePlayer)
         {
-            if (auto nearbyAI = GET_PLAYERBOT_AI(player))
+            if (auto nearbyAI = GET_SHADOW_AI(player))
             {
                 if (nearbyAI->IsRealPlayer())
                     continue;
@@ -90,7 +90,7 @@ bool InviteNearbyToGroupAction::Execute(Event event)
         if (abs(int32(player->GetLevel() - bot->GetLevel())) > 2)
             continue;
 
-        if (sServerFacade->GetDistance2d(bot, player) > sPlayerbotAIConfig->sightDistance)
+        if (sServerFacade->GetDistance2d(bot, player) > sShadowAIConfig->sightDistance)
             continue;
 
         // When inviting the 5th member of the group convert to raid for future invites.
@@ -98,7 +98,7 @@ bool InviteNearbyToGroupAction::Execute(Event event)
             bot->GetGroup()->GetMembersCount() > 3)
             group->ConvertToRaid();
 
-        if (sPlayerbotAIConfig->inviteChat && sRandomPlayerbotMgr->IsRandomBot(bot))
+        if (sShadowAIConfig->inviteChat && sRandomShadowMgr->IsRandomBot(bot))
         {
             std::map<std::string, std::string> placeholders;
             placeholders["%player"] = player->GetName();
@@ -119,7 +119,7 @@ bool InviteNearbyToGroupAction::Execute(Event event)
 
 bool InviteNearbyToGroupAction::isUseful()
 {
-    if (!sPlayerbotAIConfig->randomBotGroupNearby)
+    if (!sShadowAIConfig->randomBotGroupNearby)
         return false;
 
     if (bot->InBattleground())
@@ -185,9 +185,9 @@ bool InviteGuildToGroupAction::Execute(Event event)
         if (player->isDND())
             continue;
 
-        if (!sPlayerbotAIConfig->randomBotInvitePlayer)
+        if (!sShadowAIConfig->randomBotInvitePlayer)
         {
-            if (auto guildInviteeAI = GET_PLAYERBOT_AI(player))
+            if (auto guildInviteeAI = GET_SHADOW_AI(player))
             {
                 if (guildInviteeAI->IsRealPlayer())
                     continue;
@@ -203,7 +203,7 @@ bool InviteGuildToGroupAction::Execute(Event event)
         if (WorldPosition(player).distance(bot) > 1000 && player->GetLevel() < 15)
             continue;
 
-        auto playerAi = GET_PLAYERBOT_AI(player);
+        auto playerAi = GET_SHADOW_AI(player);
 
         if (playerAi)
         {
@@ -226,7 +226,7 @@ bool InviteGuildToGroupAction::Execute(Event event)
             player->GetLevel() + 5)  // Do not invite members that too low level or risk dragging them to deadly places.
             continue;
 
-        if (!playerAi && sServerFacade->GetDistance2d(bot, player) > sPlayerbotAIConfig->sightDistance)
+        if (!playerAi && sServerFacade->GetDistance2d(bot, player) > sShadowAIConfig->sightDistance)
             continue;
 
         Group* group = bot->GetGroup();
@@ -237,8 +237,8 @@ bool InviteGuildToGroupAction::Execute(Event event)
             group->ConvertToRaid();
         }
 
-        if (sPlayerbotAIConfig->inviteChat &&
-            (sRandomPlayerbotMgr->IsRandomBot(bot) || !botAI->HasActivePlayerMaster()))
+        if (sShadowAIConfig->inviteChat &&
+            (sRandomShadowMgr->IsRandomBot(bot) || !botAI->HasActivePlayerMaster()))
         {
             BroadcastHelper::BroadcastGuildGroupOrRaidInvite(botAI, bot, player, group);
         }

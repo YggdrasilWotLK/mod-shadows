@@ -6,7 +6,7 @@
 #include "PassLeadershipToMasterAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool PassLeadershipToMasterAction::Execute(Event event)
 {
@@ -20,7 +20,7 @@ bool PassLeadershipToMasterAction::Execute(Event event)
             if (!message.empty())
                 botAI->TellMasterNoFacing(message);
 
-            if (sRandomPlayerbotMgr->IsRandomBot(bot))
+            if (sRandomShadowMgr->IsRandomBot(bot))
             {
                 botAI->ResetStrategies();
                 botAI->Reset();

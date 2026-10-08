@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
- #ifndef _PLAYERBOT_OFFHEALDRUIDCATSTRATEGY_H
- #define _PLAYERBOT_OFFHEALDRUIDCATSTRATEGY_H
+ #ifndef _SHADOW_OFFHEALDRUIDCATSTRATEGY_H
+ #define _SHADOW_OFFHEALDRUIDCATSTRATEGY_H
 
  #include "FeralDruidStrategy.h"
 
- class PlayerbotAI;
+ class ShadowAI;
 
  class OffhealDruidCatStrategy : public FeralDruidStrategy
  {
  public:
-    OffhealDruidCatStrategy(PlayerbotAI* botAI);
+    OffhealDruidCatStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "offheal"; }

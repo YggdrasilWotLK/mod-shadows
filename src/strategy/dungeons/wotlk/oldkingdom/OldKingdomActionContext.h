@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOKACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONOKACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONOKACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONOKACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,9 +14,9 @@ class WotlkDungeonOKActionContext : public NamedObjectContext<Action>
             creators["avoid shadow crash"] = &WotlkDungeonOKActionContext::avoid_shadow_crash;
         }
     private:
-        static Action* attack_nadox_guardian(PlayerbotAI* ai) { return new AttackNadoxGuardianAction(ai); }
-        static Action* attack_jedoga_volunteer(PlayerbotAI* ai) { return new AttackJedogaVolunteerAction(ai); }
-        static Action* avoid_shadow_crash(PlayerbotAI* ai) { return new AvoidShadowCrashAction(ai); }
+        static Action* attack_nadox_guardian(ShadowAI* ai) { return new AttackNadoxGuardianAction(ai); }
+        static Action* attack_jedoga_volunteer(ShadowAI* ai) { return new AttackJedogaVolunteerAction(ai); }
+        static Action* avoid_shadow_crash(ShadowAI* ai) { return new AvoidShadowCrashAction(ai); }
 };
 
 #endif

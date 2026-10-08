@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICACTIONS_H
-#define _PLAYERBOT_GENERICACTIONS_H
+#ifndef _SHADOW_GENERICACTIONS_H
+#define _SHADOW_GENERICACTIONS_H
 
 #include "AttackAction.h"
 #include "Action.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MeleeAction : public AttackAction
 {
 public:
-    MeleeAction(PlayerbotAI* botAI) : AttackAction(botAI, "melee") {}
+    MeleeAction(ShadowAI* botAI) : AttackAction(botAI, "melee") {}
 
     std::string const GetTargetName() override { return "current target"; }
     bool isUseful() override;
@@ -24,21 +24,21 @@ public:
 class TogglePetSpellAutoCastAction : public Action
 {
 public:
-    TogglePetSpellAutoCastAction(PlayerbotAI* ai) : Action(ai, "toggle pet spell") {}
+    TogglePetSpellAutoCastAction(ShadowAI* ai) : Action(ai, "toggle pet spell") {}
     virtual bool Execute(Event event) override;
 };
 
 class PetAttackAction : public Action
 {
 public:
-    PetAttackAction(PlayerbotAI* ai) : Action(ai, "pet attack") {}
+    PetAttackAction(ShadowAI* ai) : Action(ai, "pet attack") {}
     virtual bool Execute(Event event) override;
 };
 
 class SetPetStanceAction : public Action
 {
 public:
-    SetPetStanceAction(PlayerbotAI* botAI) : Action(botAI, "set pet stance") {}
+    SetPetStanceAction(ShadowAI* botAI) : Action(botAI, "set pet stance") {}
 
     bool Execute(Event event) override;
 };

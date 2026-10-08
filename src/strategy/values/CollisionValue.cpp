@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool CollisionValue::Calculate()
@@ -18,7 +18,7 @@ bool CollisionValue::Calculate()
         return false;
 
     std::list<Unit*> targets;
-    float range = sPlayerbotAIConfig->contactDistance;
+    float range = sShadowAIConfig->contactDistance;
     Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
     Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);

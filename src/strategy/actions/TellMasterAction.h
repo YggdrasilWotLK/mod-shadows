@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TELLMASTERACTION_H
-#define _PLAYERBOT_TELLMASTERACTION_H
+#ifndef _SHADOW_TELLMASTERACTION_H
+#define _SHADOW_TELLMASTERACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TellMasterAction : public Action
 {
 public:
-    TellMasterAction(PlayerbotAI* botAI, std::string const text) : Action(botAI, "tell master"), text(text) {}
+    TellMasterAction(ShadowAI* botAI, std::string const text) : Action(botAI, "tell master"), text(text) {}
 
     bool Execute(Event event) override;
 
@@ -24,7 +24,7 @@ private:
 class OutOfReactRangeAction : public MovementAction
 {
 public:
-    OutOfReactRangeAction(PlayerbotAI* botAI) : MovementAction(botAI, "tell out of react range") {}
+    OutOfReactRangeAction(ShadowAI* botAI) : MovementAction(botAI, "tell out of react range") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

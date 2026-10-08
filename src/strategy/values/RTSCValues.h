@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTSCVALUE_H
-#define _PLAYERBOT_RTSCVALUE_H
+#ifndef _SHADOW_RTSCVALUE_H
+#define _SHADOW_RTSCVALUE_H
 
 #include "NamedObjectContext.h"
 #include "TravelMgr.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SeeSpellLocationValue : public LogCalculatedValue<WorldPosition>
 {
 public:
-    SeeSpellLocationValue(PlayerbotAI* botAI, std::string const name = "see spell location")
+    SeeSpellLocationValue(ShadowAI* botAI, std::string const name = "see spell location")
         : LogCalculatedValue(botAI, name){};
 
     bool EqualToLast(WorldPosition value) override;
@@ -25,14 +25,14 @@ public:
 class RTSCSelectedValue : public ManualSetValue<bool>
 {
 public:
-    RTSCSelectedValue(PlayerbotAI* botAI, bool defaultvalue = false, std::string const name = "RTSC selected")
+    RTSCSelectedValue(ShadowAI* botAI, bool defaultvalue = false, std::string const name = "RTSC selected")
         : ManualSetValue(botAI, defaultvalue, name){};
 };
 
 class RTSCNextSpellActionValue : public ManualSetValue<std::string>
 {
 public:
-    RTSCNextSpellActionValue(PlayerbotAI* botAI, std::string const defaultvalue = "",
+    RTSCNextSpellActionValue(ShadowAI* botAI, std::string const defaultvalue = "",
                              std::string const name = "RTSC next spell action")
         : ManualSetValue(botAI, defaultvalue, name){};
 };
@@ -40,7 +40,7 @@ public:
 class RTSCSavedLocationValue : public ManualSetValue<WorldPosition>, public Qualified
 {
 public:
-    RTSCSavedLocationValue(PlayerbotAI* botAI, WorldPosition defaultvalue = WorldPosition(),
+    RTSCSavedLocationValue(ShadowAI* botAI, WorldPosition defaultvalue = WorldPosition(),
                            std::string const name = "RTSC saved location")
         : ManualSetValue(botAI, defaultvalue, name){};
 

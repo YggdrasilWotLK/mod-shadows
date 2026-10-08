@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_OUTFITACTION_H
-#define _PLAYERBOT_OUTFITACTION_H
+#ifndef _SHADOW_OUTFITACTION_H
+#define _SHADOW_OUTFITACTION_H
 
 #include "ChatHelper.h"
 #include "EquipAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class OutfitAction : public EquipAction
 {
 public:
-    OutfitAction(PlayerbotAI* botAI) : EquipAction(botAI, "outfit") {}
+    OutfitAction(ShadowAI* botAI) : EquipAction(botAI, "outfit") {}
 
     bool Execute(Event event) override;
 

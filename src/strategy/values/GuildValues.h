@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUILDVALUES_H
-#define _PLAYERBOT_GUILDVALUES_H
+#ifndef _SHADOW_GUILDVALUES_H
+#define _SHADOW_GUILDVALUES_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PetitionSignsValue : public SingleCalculatedValue<uint8>
 {
 public:
-    PetitionSignsValue(PlayerbotAI* botAI) : SingleCalculatedValue<uint8>(botAI, "petition signs") {}
+    PetitionSignsValue(ShadowAI* botAI) : SingleCalculatedValue<uint8>(botAI, "petition signs") {}
 
     uint8 Calculate();
 };

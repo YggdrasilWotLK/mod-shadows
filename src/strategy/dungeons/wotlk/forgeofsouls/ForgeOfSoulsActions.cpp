@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ForgeOfSoulsActions.h"
 #include "ForgeOfSoulsStrategy.h"
 #include "SharedDefines.h"

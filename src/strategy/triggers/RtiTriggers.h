@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTITRIGGERS_H
-#define _PLAYERBOT_RTITRIGGERS_H
+#ifndef _SHADOW_RTITRIGGERS_H
+#define _SHADOW_RTITRIGGERS_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NoRtiTrigger : public Trigger
 {
 public:
-    NoRtiTrigger(PlayerbotAI* botAI) : Trigger(botAI, "no rti target") {}
+    NoRtiTrigger(ShadowAI* botAI) : Trigger(botAI, "no rti target") {}
 
     bool IsActive() override;
 };

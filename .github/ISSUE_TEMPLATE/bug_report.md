@@ -23,9 +23,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Modules**
-Please list all modules used as many are known to cause conflicts with Playerbots.
+Please list all modules used as many are known to cause conflicts with Shadows.
 
-**Playerbot Settings**
+**Shadow Settings**
 Number of bots, scaling settings, etc if performance related.
 
 **System**

@@ -6,7 +6,7 @@
 #include "NonCombatActions.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool DrinkAction::Execute(Event event)
 {
@@ -21,7 +21,7 @@ bool DrinkAction::Execute(Event event)
         if (bot->isMoving())
         {
             bot->StopMoving();
-            // botAI->SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+            // botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
             // return false;
         }
         bot->SetStandState(UNIT_STAND_STATE_SIT);
@@ -76,7 +76,7 @@ bool EatAction::Execute(Event event)
         if (bot->isMoving())
         {
             bot->StopMoving();
-            // botAI->SetNextCheckDelay(sPlayerbotAIConfig->globalCoolDown);
+            // botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
             // return false;
         }
 

@@ -7,7 +7,7 @@
 
 #include "ArenaTeam.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool PetitionSignAction::Execute(Event event)
 {
@@ -73,12 +73,12 @@ bool PetitionSignAction::Execute(Event event)
     if (_inviter == bot)
         return false;
 
-    if (!accept || !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, _inviter, true))
+    if (!accept || !botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, false, _inviter, true))
     {
         WorldPacket data(MSG_PETITION_DECLINE);
         data << petitionGuid;
         bot->GetSession()->HandlePetitionDeclineOpcode(data);
-        LOG_INFO("playerbots", "Bot {} <{}> declines {} invite", bot->GetGUID().ToString().c_str(),
+        LOG_INFO("shadows", "Bot {} <{}> declines {} invite", bot->GetGUID().ToString().c_str(),
                  bot->GetName().c_str(), isArena ? "Arena" : "Guild");
         return false;
     }
@@ -89,7 +89,7 @@ bool PetitionSignAction::Execute(Event event)
         data << petitionGuid << unk;
         bot->GetSession()->HandlePetitionSignOpcode(data);
         bot->Say("Thanks for the invite!", LANG_UNIVERSAL);
-        LOG_INFO("playerbots", "Bot {} <{}> accepts {} invite", bot->GetGUID().ToString().c_str(),
+        LOG_INFO("shadows", "Bot {} <{}> accepts {} invite", bot->GetGUID().ToString().c_str(),
                  bot->GetName().c_str(), isArena ? "Arena" : "Guild");
         return true;
     }

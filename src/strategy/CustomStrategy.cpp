@@ -7,7 +7,7 @@
 
 #include <regex>
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::map<std::string, std::string> CustomStrategy::actionLinesCache;
 
@@ -19,7 +19,7 @@ NextAction* toNextAction(std::string const action)
     else if (tokens.size() == 1 && !tokens[0].empty())
         return new NextAction(tokens[0], ACTION_NORMAL);
 
-    LOG_ERROR("playerbots", "Invalid action {}", action.c_str());
+    LOG_ERROR("shadows", "Invalid action {}", action.c_str());
     return nullptr;
 }
 
@@ -45,11 +45,11 @@ TriggerNode* toTriggerNode(std::string const actionLine)
     if (tokens.size() == 2)
         return new TriggerNode(tokens[0], toNextActionArray(tokens[1]));
 
-    LOG_ERROR("playerbots", "Invalid action line {}", actionLine.c_str());
+    LOG_ERROR("shadows", "Invalid action line {}", actionLine.c_str());
     return nullptr;
 }
 
-CustomStrategy::CustomStrategy(PlayerbotAI* botAI) : Strategy(botAI), Qualified() {}
+CustomStrategy::CustomStrategy(ShadowAI* botAI) : Strategy(botAI), Qualified() {}
 
 void CustomStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -89,11 +89,11 @@ void CustomStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 
 void CustomStrategy::LoadActionLines(uint32 owner)
 {
-    PlayerbotsDatabasePreparedStatement* stmt =
-        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME);
+    ShadowsDatabasePreparedStatement* stmt =
+        ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME);
     stmt->SetData(0, owner);
     stmt->SetData(1, qualifier);
-    PreparedQueryResult result = PlayerbotsDatabase.Query(stmt);
+    PreparedQueryResult result = ShadowsDatabase.Query(stmt);
     if (result)
     {
         do

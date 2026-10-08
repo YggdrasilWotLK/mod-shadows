@@ -1,14 +1,14 @@
 
 // RaidOnyxiaStrategy.h
-#ifndef _PLAYERBOT_RAIDONYXIASTRATEGY_H_
-#define _PLAYERBOT_RAIDONYXIASTRATEGY_H_
+#ifndef _SHADOW_RAIDONYXIASTRATEGY_H_
+#define _SHADOW_RAIDONYXIASTRATEGY_H_
 
 #include "Strategy.h"
 
 class RaidOnyxiaStrategy : public Strategy
 {
 public:
-    RaidOnyxiaStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+    RaidOnyxiaStrategy(ShadowAI* ai) : Strategy(ai) {}
 
     std::string const getName() override { return "onyxia"; }
 

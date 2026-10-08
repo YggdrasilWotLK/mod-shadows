@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HASAVAILABLELOOTVALUE_H
-#define _PLAYERBOT_HASAVAILABLELOOTVALUE_H
+#ifndef _SHADOW_HASAVAILABLELOOTVALUE_H
+#define _SHADOW_HASAVAILABLELOOTVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HasAvailableLootValue : public BoolCalculatedValue
 {
 public:
-    HasAvailableLootValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI) {}
+    HasAvailableLootValue(ShadowAI* botAI) : BoolCalculatedValue(botAI) {}
 
     bool Calculate() override;
 };

@@ -5,7 +5,7 @@
 
 #include "FleeStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void FleeStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

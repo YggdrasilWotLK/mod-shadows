@@ -5,8 +5,8 @@
 
 #include "UseFoodStrategy.h"
 
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 void UseFoodStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

@@ -6,7 +6,7 @@
 #include "AcceptResurrectAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool AcceptResurrectAction::Execute(Event event)
 {

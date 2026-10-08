@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDSTRATEGYCONTEXT_H_
-#define _PLAYERBOT_RAIDSTRATEGYCONTEXT_H_
+#ifndef _SHADOW_RAIDSTRATEGYCONTEXT_H_
+#define _SHADOW_RAIDSTRATEGYCONTEXT_H_
 
 #include "Strategy.h"
 #include "RaidAq20Strategy.h"
@@ -33,17 +33,17 @@ public:
     }
 
 private:
-    static Strategy* aq20(PlayerbotAI* botAI) { return new RaidAq20Strategy(botAI); }
-    static Strategy* mc(PlayerbotAI* botAI) { return new RaidMcStrategy(botAI); }
-    static Strategy* bwl(PlayerbotAI* botAI) { return new RaidBwlStrategy(botAI); }
-    static Strategy* karazhan(PlayerbotAI* botAI) { return new RaidKarazhanStrategy(botAI); }
-    static Strategy* naxx(PlayerbotAI* botAI) { return new RaidNaxxStrategy(botAI); }
-    static Strategy* wotlk_os(PlayerbotAI* botAI) { return new RaidOsStrategy(botAI); }
-    static Strategy* wotlk_eoe(PlayerbotAI* botAI) { return new RaidEoEStrategy(botAI); }
-    static Strategy* voa(PlayerbotAI* botAI) { return new RaidVoAStrategy(botAI); }
-    static Strategy* onyxia(PlayerbotAI* botAI) { return new RaidOnyxiaStrategy(botAI); }
-    static Strategy* uld(PlayerbotAI* botAI) { return new RaidUlduarStrategy(botAI); }
-    static Strategy* icc(PlayerbotAI* botAI) { return new RaidIccStrategy(botAI); }
+    static Strategy* aq20(ShadowAI* botAI) { return new RaidAq20Strategy(botAI); }
+    static Strategy* mc(ShadowAI* botAI) { return new RaidMcStrategy(botAI); }
+    static Strategy* bwl(ShadowAI* botAI) { return new RaidBwlStrategy(botAI); }
+    static Strategy* karazhan(ShadowAI* botAI) { return new RaidKarazhanStrategy(botAI); }
+    static Strategy* naxx(ShadowAI* botAI) { return new RaidNaxxStrategy(botAI); }
+    static Strategy* wotlk_os(ShadowAI* botAI) { return new RaidOsStrategy(botAI); }
+    static Strategy* wotlk_eoe(ShadowAI* botAI) { return new RaidEoEStrategy(botAI); }
+    static Strategy* voa(ShadowAI* botAI) { return new RaidVoAStrategy(botAI); }
+    static Strategy* onyxia(ShadowAI* botAI) { return new RaidOnyxiaStrategy(botAI); }
+    static Strategy* uld(ShadowAI* botAI) { return new RaidUlduarStrategy(botAI); }
+    static Strategy* icc(ShadowAI* botAI) { return new RaidIccStrategy(botAI); }
 };
 
 #endif

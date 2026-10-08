@@ -5,10 +5,10 @@
 
 #include "ShadowPriestStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ShadowPriestStrategyActionNodeFactory.h"
 
-ShadowPriestStrategy::ShadowPriestStrategy(PlayerbotAI* botAI) : GenericPriestStrategy(botAI)
+ShadowPriestStrategy::ShadowPriestStrategy(ShadowAI* botAI) : GenericPriestStrategy(botAI)
 {
     actionNodeFactories.Add(new ShadowPriestStrategyActionNodeFactory());
 }

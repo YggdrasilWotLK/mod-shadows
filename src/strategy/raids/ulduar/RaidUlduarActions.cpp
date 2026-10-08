@@ -13,9 +13,9 @@
 #include "LastMovementValue.h"
 #include "ObjectDefines.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "Position.h"
 #include "RaidUlduarBossHelper.h"
 #include "RaidUlduarScripts.h"
@@ -535,12 +535,12 @@ bool RazorscaleAvoidSentinelAction::Execute(Event event)
     Unit* mainTankUnit = AI_VALUE(Unit*, "main tank");
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         // Iterate through the first 3 bot tanks to assign the Skull marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group && lowestHealthSentinel)
@@ -590,11 +590,11 @@ bool RazorscaleAvoidSentinelAction::isUseful()
     }
 
     // If the main tank is a human, check if this bot is one of the first three valid bot tanks
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a human player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a human player
     {
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 return true;  // This bot should assist with marking
             }
@@ -722,11 +722,11 @@ bool RazorscaleIgnoreBossAction::isUseful()
         }
 
         // If the main tank is a human, check if this bot is the lowest-indexed bot tank
-        if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a human player
+        if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a human player
         {
             for (int i = 0; i < 3; ++i)  // Only iterate through the first 3 indexes
             {
-                if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Valid bot tank
+                if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Valid bot tank
                 {
                     return true;  // This bot should assign the marker
                 }
@@ -784,11 +784,11 @@ bool RazorscaleIgnoreBossAction::Execute(Event event)
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
     // If the main tank is a human, assign the moon marker using the lowest-indexed bot tank
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         for (int i = 0; i < 3; ++i)  // Only iterate through the first 3 indexes
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 group->SetTargetIcon(moonIndex, bot->GetGUID(), boss->GetGUID());
                 SetNextMovementDelay(1000);
@@ -907,12 +907,12 @@ bool RazorscaleGroundedAction::Execute(Event event)
     Unit* mainTankUnit = AI_VALUE(Unit*, "main tank");
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a human player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a human player
     {
         // Iterate through the first 3 bot tanks to handle the moon marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 int8 moonIndex = 4;
                 ObjectGuid currentMoonTarget = group->GetTargetIcon(moonIndex);
@@ -1291,12 +1291,12 @@ bool KologarnMarkDpsTargetAction::Execute(Event event)
     Unit* mainTankUnit = AI_VALUE(Unit*, "main tank");
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         // Iterate through the first 3 bot tanks to assign the Skull marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group)
@@ -1338,7 +1338,7 @@ bool KologarnMarkDpsTargetAction::Execute(Event event)
     {
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot) && bot->IsAlive())  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot) && bot->IsAlive())  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group)
@@ -1713,12 +1713,12 @@ bool FreyaMarkDpsTargetAction::Execute(Event event)
     int8 squareIndex = 5;  // Square
     int8 skullIndex = 7;   // Skull
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         // Iterate through the first 3 bot tanks to assign the Skull marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group)
@@ -2964,7 +2964,7 @@ bool YoggSaronMoveToEnterPortalAction::Execute(Event event)
     {
         return MoveNear(bot->GetMapId(), assignedPortalPosition.GetPositionX(),
                                assignedPortalPosition.GetPositionY(),
-                 assignedPortalPosition.GetPositionZ(), sPlayerbotAIConfig->contactDistance,
+                 assignedPortalPosition.GetPositionZ(), sShadowAIConfig->contactDistance,
                  MovementPriority::MOVEMENT_FORCED);
     }
 }

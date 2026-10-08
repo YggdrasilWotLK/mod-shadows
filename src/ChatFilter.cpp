@@ -6,7 +6,7 @@
 #include "ChatFilter.h"
 
 #include "Group.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RtiTargetValue.h"
 #include "AiFactory.h"
 
@@ -32,7 +32,7 @@ std::string const ChatFilter::Filter(std::string& message)
 class StrategyChatFilter : public ChatFilter
 {
 public:
-    StrategyChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    StrategyChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -77,7 +77,7 @@ public:
 class LevelChatFilter : public ChatFilter
 {
 public:
-    LevelChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    LevelChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -108,7 +108,7 @@ public:
 class CombatTypeChatFilter : public ChatFilter
 {
 public:
-    CombatTypeChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    CombatTypeChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -158,7 +158,7 @@ public:
 class RtiChatFilter : public ChatFilter
 {
 public:
-    RtiChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI)
+    RtiChatFilter(ShadowAI* botAI) : ChatFilter(botAI)
     {
         rtis.push_back("@star");
         rtis.push_back("@circle");
@@ -216,7 +216,7 @@ private:
 class ClassChatFilter : public ChatFilter
 {
 public:
-    ClassChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI)
+    ClassChatFilter(ShadowAI* botAI) : ChatFilter(botAI)
     {
         classNames["@dk"] = CLASS_DEATH_KNIGHT;
         classNames["@druid"] = CLASS_DRUID;
@@ -260,7 +260,7 @@ private:
 class SubGroupChatFilter : public ChatFilter
 {
 public:
-    SubGroupChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    SubGroupChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -312,7 +312,7 @@ public:
 class SpecChatFilter : public ChatFilter
 {
 public:
-    SpecChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI)
+    SpecChatFilter(ShadowAI* botAI) : ChatFilter(botAI)
     {
         // Map (class, specTab) to spec+class string
         specTabNames[{CLASS_PALADIN, 0}] = "hpal";
@@ -415,7 +415,7 @@ private:
 class AuraChatFilter : public ChatFilter
 {
 public:
-    AuraChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    AuraChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -474,7 +474,7 @@ public:
 class AggroByChatFilter : public ChatFilter
 {
 public:
-    AggroByChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI) {}
+    AggroByChatFilter(ShadowAI* botAI) : ChatFilter(botAI) {}
 
     std::string const Filter(std::string& message) override
     {
@@ -580,7 +580,7 @@ public:
     }
 };
 
-CompositeChatFilter::CompositeChatFilter(PlayerbotAI* botAI) : ChatFilter(botAI)
+CompositeChatFilter::CompositeChatFilter(ShadowAI* botAI) : ChatFilter(botAI)
 {
     filters.push_back(new StrategyChatFilter(botAI));
     filters.push_back(new ClassChatFilter(botAI));

@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_VALUECONTEXT_H
-#define _PLAYERBOT_VALUECONTEXT_H
+#ifndef _SHADOW_VALUECONTEXT_H
+#define _SHADOW_VALUECONTEXT_H
 
 #include "ActiveSpellValue.h"
 #include "AlwaysLootListValue.h"
@@ -89,7 +89,7 @@
 #include "TradeValues.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ValueContext : public NamedObjectContext<UntypedValue>
 {
@@ -315,250 +315,250 @@ public:
     }
 
 private:
-    static UntypedValue* party_member_without_water(PlayerbotAI* botAI)
+    static UntypedValue* party_member_without_water(ShadowAI* botAI)
     {
         return new PartyMemberWithoutWaterValue(botAI);
     }
-    static UntypedValue* party_member_without_food(PlayerbotAI* botAI)
+    static UntypedValue* party_member_without_food(ShadowAI* botAI)
     {
         return new PartyMemberWithoutFoodValue(botAI);
     }
-    static UntypedValue* party_member_without_item(PlayerbotAI* botAI)
+    static UntypedValue* party_member_without_item(ShadowAI* botAI)
     {
         return new PartyMemberWithoutItemValue(botAI);
     }
-    static UntypedValue* inside_target(PlayerbotAI* botAI) { return new InsideTargetValue(botAI); }
-    static UntypedValue* range(PlayerbotAI* botAI) { return new RangeValue(botAI); }
-    static UntypedValue* active_spell(PlayerbotAI* botAI) { return new ActiveSpellValue(botAI); }
-    static UntypedValue* group(PlayerbotAI* botAI) { return new IsInGroupValue(botAI); }
-    static UntypedValue* craft(PlayerbotAI* botAI) { return new CraftValue(botAI); }
-    static UntypedValue* collision(PlayerbotAI* botAI) { return new CollisionValue(botAI); }
-    static UntypedValue* already_seen_players(PlayerbotAI* botAI) { return new AlreadySeenPlayersValue(botAI); }
-    static UntypedValue* new_player_nearby(PlayerbotAI* botAI) { return new NewPlayerNearbyValue(botAI); }
-    static UntypedValue* item_usage(PlayerbotAI* botAI) { return new ItemUsageValue(botAI); }
-    static UntypedValue* formation(PlayerbotAI* botAI) { return new FormationValue(botAI); }
-    static UntypedValue* stance(PlayerbotAI* botAI) { return new StanceValue(botAI); }
-    static UntypedValue* mana_save_level(PlayerbotAI* botAI) { return new ManaSaveLevelValue(botAI); }
-    static UntypedValue* invalid_target(PlayerbotAI* botAI) { return new InvalidTargetValue(botAI); }
-    static UntypedValue* balance(PlayerbotAI* botAI) { return new BalancePercentValue(botAI); }
-    static UntypedValue* attackers(PlayerbotAI* botAI) { return new AttackersValue(botAI); }
+    static UntypedValue* inside_target(ShadowAI* botAI) { return new InsideTargetValue(botAI); }
+    static UntypedValue* range(ShadowAI* botAI) { return new RangeValue(botAI); }
+    static UntypedValue* active_spell(ShadowAI* botAI) { return new ActiveSpellValue(botAI); }
+    static UntypedValue* group(ShadowAI* botAI) { return new IsInGroupValue(botAI); }
+    static UntypedValue* craft(ShadowAI* botAI) { return new CraftValue(botAI); }
+    static UntypedValue* collision(ShadowAI* botAI) { return new CollisionValue(botAI); }
+    static UntypedValue* already_seen_players(ShadowAI* botAI) { return new AlreadySeenPlayersValue(botAI); }
+    static UntypedValue* new_player_nearby(ShadowAI* botAI) { return new NewPlayerNearbyValue(botAI); }
+    static UntypedValue* item_usage(ShadowAI* botAI) { return new ItemUsageValue(botAI); }
+    static UntypedValue* formation(ShadowAI* botAI) { return new FormationValue(botAI); }
+    static UntypedValue* stance(ShadowAI* botAI) { return new StanceValue(botAI); }
+    static UntypedValue* mana_save_level(ShadowAI* botAI) { return new ManaSaveLevelValue(botAI); }
+    static UntypedValue* invalid_target(ShadowAI* botAI) { return new InvalidTargetValue(botAI); }
+    static UntypedValue* balance(ShadowAI* botAI) { return new BalancePercentValue(botAI); }
+    static UntypedValue* attackers(ShadowAI* botAI) { return new AttackersValue(botAI); }
 
-    static UntypedValue* position(PlayerbotAI* botAI) { return new PositionValue(botAI); }
-    static UntypedValue* pos(PlayerbotAI* ai) { return new SinglePositionValue(ai); }
-    static UntypedValue* current_position(PlayerbotAI* botAI) { return new CurrentPositionValue(botAI); }
-    static UntypedValue* rti(PlayerbotAI* botAI) { return new RtiValue(botAI); }
-    static UntypedValue* rti_cc(PlayerbotAI* botAI) { return new RtiCcValue(botAI); }
+    static UntypedValue* position(ShadowAI* botAI) { return new PositionValue(botAI); }
+    static UntypedValue* pos(ShadowAI* ai) { return new SinglePositionValue(ai); }
+    static UntypedValue* current_position(ShadowAI* botAI) { return new CurrentPositionValue(botAI); }
+    static UntypedValue* rti(ShadowAI* botAI) { return new RtiValue(botAI); }
+    static UntypedValue* rti_cc(ShadowAI* botAI) { return new RtiCcValue(botAI); }
 
-    static UntypedValue* aoe_heal(PlayerbotAI* botAI) { return new AoeHealValue(botAI); }
+    static UntypedValue* aoe_heal(ShadowAI* botAI) { return new AoeHealValue(botAI); }
 
-    static UntypedValue* chat(PlayerbotAI* botAI) { return new ChatValue(botAI); }
-    static UntypedValue* last_spell_cast(PlayerbotAI* botAI) { return new LastSpellCastValue(botAI); }
-    static UntypedValue* last_spell_cast_time(PlayerbotAI* botAI) { return new LastSpellCastTimeValue(botAI); }
-    static UntypedValue* spell_cast_useful(PlayerbotAI* botAI) { return new SpellCastUsefulValue(botAI); }
-    static UntypedValue* item_for_spell(PlayerbotAI* botAI) { return new ItemForSpellValue(botAI); }
-    static UntypedValue* spell_id(PlayerbotAI* botAI) { return new SpellIdValue(botAI); }
-    static UntypedValue* vehicle_spell_id(PlayerbotAI* botAI) { return new VehicleSpellIdValue(botAI); }
-    static UntypedValue* inventory_item(PlayerbotAI* botAI) { return new InventoryItemValue(botAI); }
-    static UntypedValue* item_count(PlayerbotAI* botAI) { return new ItemCountValue(botAI); }
-    static UntypedValue* behind(PlayerbotAI* botAI) { return new IsBehindValue(botAI); }
-    static UntypedValue* facing(PlayerbotAI* botAI) { return new IsFacingValue(botAI); }
-    static UntypedValue* moving(PlayerbotAI* botAI) { return new IsMovingValue(botAI); }
-    static UntypedValue* swimming(PlayerbotAI* botAI) { return new IsSwimmingValue(botAI); }
-    static UntypedValue* distance(PlayerbotAI* botAI) { return new DistanceValue(botAI); }
-    static UntypedValue* last_movement(PlayerbotAI* botAI) { return new LastMovementValue(botAI); }
-    static UntypedValue* stay_time(PlayerbotAI* botAI) { return new StayTimeValue(botAI); }
+    static UntypedValue* chat(ShadowAI* botAI) { return new ChatValue(botAI); }
+    static UntypedValue* last_spell_cast(ShadowAI* botAI) { return new LastSpellCastValue(botAI); }
+    static UntypedValue* last_spell_cast_time(ShadowAI* botAI) { return new LastSpellCastTimeValue(botAI); }
+    static UntypedValue* spell_cast_useful(ShadowAI* botAI) { return new SpellCastUsefulValue(botAI); }
+    static UntypedValue* item_for_spell(ShadowAI* botAI) { return new ItemForSpellValue(botAI); }
+    static UntypedValue* spell_id(ShadowAI* botAI) { return new SpellIdValue(botAI); }
+    static UntypedValue* vehicle_spell_id(ShadowAI* botAI) { return new VehicleSpellIdValue(botAI); }
+    static UntypedValue* inventory_item(ShadowAI* botAI) { return new InventoryItemValue(botAI); }
+    static UntypedValue* item_count(ShadowAI* botAI) { return new ItemCountValue(botAI); }
+    static UntypedValue* behind(ShadowAI* botAI) { return new IsBehindValue(botAI); }
+    static UntypedValue* facing(ShadowAI* botAI) { return new IsFacingValue(botAI); }
+    static UntypedValue* moving(ShadowAI* botAI) { return new IsMovingValue(botAI); }
+    static UntypedValue* swimming(ShadowAI* botAI) { return new IsSwimmingValue(botAI); }
+    static UntypedValue* distance(ShadowAI* botAI) { return new DistanceValue(botAI); }
+    static UntypedValue* last_movement(ShadowAI* botAI) { return new LastMovementValue(botAI); }
+    static UntypedValue* stay_time(ShadowAI* botAI) { return new StayTimeValue(botAI); }
 
-    static UntypedValue* can_loot(PlayerbotAI* botAI) { return new CanLootValue(botAI); }
-    static UntypedValue* available_loot(PlayerbotAI* botAI) { return new AvailableLootValue(botAI); }
-    static UntypedValue* loot_target(PlayerbotAI* botAI) { return new LootTargetValue(botAI); }
-    static UntypedValue* has_available_loot(PlayerbotAI* botAI) { return new HasAvailableLootValue(botAI); }
-    static UntypedValue* always_loot_list(PlayerbotAI* botAI) { return new AlwaysLootListValue(botAI); }
-    static UntypedValue* loot_strategy(PlayerbotAI* botAI) { return new LootStrategyValue(botAI); }
+    static UntypedValue* can_loot(ShadowAI* botAI) { return new CanLootValue(botAI); }
+    static UntypedValue* available_loot(ShadowAI* botAI) { return new AvailableLootValue(botAI); }
+    static UntypedValue* loot_target(ShadowAI* botAI) { return new LootTargetValue(botAI); }
+    static UntypedValue* has_available_loot(ShadowAI* botAI) { return new HasAvailableLootValue(botAI); }
+    static UntypedValue* always_loot_list(ShadowAI* botAI) { return new AlwaysLootListValue(botAI); }
+    static UntypedValue* loot_strategy(ShadowAI* botAI) { return new LootStrategyValue(botAI); }
 
-    static UntypedValue* attacker_count(PlayerbotAI* botAI) { return new AttackerCountValue(botAI); }
-    static UntypedValue* my_attacker_count(PlayerbotAI* botAI) { return new MyAttackerCountValue(botAI); }
-    static UntypedValue* has_aggro(PlayerbotAI* botAI) { return new HasAggroValue(botAI); }
-    static UntypedValue* mounted(PlayerbotAI* botAI) { return new IsMountedValue(botAI); }
-    static UntypedValue* health(PlayerbotAI* botAI) { return new HealthValue(botAI); }
-    static UntypedValue* rage(PlayerbotAI* botAI) { return new RageValue(botAI); }
-    static UntypedValue* energy(PlayerbotAI* botAI) { return new EnergyValue(botAI); }
-    static UntypedValue* mana(PlayerbotAI* botAI) { return new ManaValue(botAI); }
-    static UntypedValue* combo(PlayerbotAI* botAI) { return new ComboPointsValue(botAI); }
-    static UntypedValue* dead(PlayerbotAI* botAI) { return new IsDeadValue(botAI); }
-    static UntypedValue* pet_happy(PlayerbotAI* botAI) { return new PetIsHappyValue(botAI); }
-    static UntypedValue* pet_dead(PlayerbotAI* botAI) { return new PetIsDeadValue(botAI); }
-    static UntypedValue* has_mana(PlayerbotAI* botAI) { return new HasManaValue(botAI); }
-    static UntypedValue* nearest_game_objects(PlayerbotAI* botAI) { return new NearestGameObjects(botAI); }
-    static UntypedValue* nearest_game_objects_no_los(PlayerbotAI* botAI)
+    static UntypedValue* attacker_count(ShadowAI* botAI) { return new AttackerCountValue(botAI); }
+    static UntypedValue* my_attacker_count(ShadowAI* botAI) { return new MyAttackerCountValue(botAI); }
+    static UntypedValue* has_aggro(ShadowAI* botAI) { return new HasAggroValue(botAI); }
+    static UntypedValue* mounted(ShadowAI* botAI) { return new IsMountedValue(botAI); }
+    static UntypedValue* health(ShadowAI* botAI) { return new HealthValue(botAI); }
+    static UntypedValue* rage(ShadowAI* botAI) { return new RageValue(botAI); }
+    static UntypedValue* energy(ShadowAI* botAI) { return new EnergyValue(botAI); }
+    static UntypedValue* mana(ShadowAI* botAI) { return new ManaValue(botAI); }
+    static UntypedValue* combo(ShadowAI* botAI) { return new ComboPointsValue(botAI); }
+    static UntypedValue* dead(ShadowAI* botAI) { return new IsDeadValue(botAI); }
+    static UntypedValue* pet_happy(ShadowAI* botAI) { return new PetIsHappyValue(botAI); }
+    static UntypedValue* pet_dead(ShadowAI* botAI) { return new PetIsDeadValue(botAI); }
+    static UntypedValue* has_mana(ShadowAI* botAI) { return new HasManaValue(botAI); }
+    static UntypedValue* nearest_game_objects(ShadowAI* botAI) { return new NearestGameObjects(botAI); }
+    static UntypedValue* nearest_game_objects_no_los(ShadowAI* botAI)
     {
-        return new NearestGameObjects(botAI, sPlayerbotAIConfig->sightDistance, true);
+        return new NearestGameObjects(botAI, sShadowAIConfig->sightDistance, true);
     }
-    static UntypedValue* closest_game_objects(PlayerbotAI* botAI)
+    static UntypedValue* closest_game_objects(ShadowAI* botAI)
     {
         return new NearestGameObjects(botAI, INTERACTION_DISTANCE);
     }
-    static UntypedValue* log_level(PlayerbotAI* botAI) { return new LogLevelValue(botAI); }
-    static UntypedValue* nearest_npcs(PlayerbotAI* botAI) { return new NearestNpcsValue(botAI); }
-    static UntypedValue* nearest_hostile_npcs(PlayerbotAI* botAI) { return new NearestHostileNpcsValue(botAI); }
-    static UntypedValue* nearest_totems(PlayerbotAI* botAI) { return new NearestTotemsValue(botAI); }
-    static UntypedValue* nearest_vehicles(PlayerbotAI* botAI) { return new NearestVehiclesValue(botAI); }
-    static UntypedValue* nearest_vehicles_far(PlayerbotAI* botAI) { return new NearestVehiclesValue(botAI, 200.0f); }
-    static UntypedValue* nearest_friendly_players(PlayerbotAI* botAI) { return new NearestFriendlyPlayersValue(botAI); }
-    static UntypedValue* closest_friendly_players(PlayerbotAI* botAI)
+    static UntypedValue* log_level(ShadowAI* botAI) { return new LogLevelValue(botAI); }
+    static UntypedValue* nearest_npcs(ShadowAI* botAI) { return new NearestNpcsValue(botAI); }
+    static UntypedValue* nearest_hostile_npcs(ShadowAI* botAI) { return new NearestHostileNpcsValue(botAI); }
+    static UntypedValue* nearest_totems(ShadowAI* botAI) { return new NearestTotemsValue(botAI); }
+    static UntypedValue* nearest_vehicles(ShadowAI* botAI) { return new NearestVehiclesValue(botAI); }
+    static UntypedValue* nearest_vehicles_far(ShadowAI* botAI) { return new NearestVehiclesValue(botAI, 200.0f); }
+    static UntypedValue* nearest_friendly_players(ShadowAI* botAI) { return new NearestFriendlyPlayersValue(botAI); }
+    static UntypedValue* closest_friendly_players(ShadowAI* botAI)
     {
         return new NearestFriendlyPlayersValue(botAI, INTERACTION_DISTANCE);
     }
-    static UntypedValue* nearest_enemy_players(PlayerbotAI* botAI) { return new NearestEnemyPlayersValue(botAI); }
-    static UntypedValue* nearest_corpses(PlayerbotAI* botAI) { return new NearestCorpsesValue(botAI); }
-    static UntypedValue* possible_rpg_targets(PlayerbotAI* botAI) { return new PossibleRpgTargetsValue(botAI); }
-    static UntypedValue* possible_new_rpg_targets(PlayerbotAI* botAI) { return new PossibleNewRpgTargetsValue(botAI); }
-    static UntypedValue* possible_new_rpg_game_objects(PlayerbotAI* botAI) { return new PossibleNewRpgGameObjectsValue(botAI); }
-    static UntypedValue* possible_targets(PlayerbotAI* botAI) { return new PossibleTargetsValue(botAI); }
-    static UntypedValue* possible_triggers(PlayerbotAI* botAI) { return new PossibleTriggersValue(botAI); }
-    static UntypedValue* possible_targets_no_los(PlayerbotAI* botAI)
+    static UntypedValue* nearest_enemy_players(ShadowAI* botAI) { return new NearestEnemyPlayersValue(botAI); }
+    static UntypedValue* nearest_corpses(ShadowAI* botAI) { return new NearestCorpsesValue(botAI); }
+    static UntypedValue* possible_rpg_targets(ShadowAI* botAI) { return new PossibleRpgTargetsValue(botAI); }
+    static UntypedValue* possible_new_rpg_targets(ShadowAI* botAI) { return new PossibleNewRpgTargetsValue(botAI); }
+    static UntypedValue* possible_new_rpg_game_objects(ShadowAI* botAI) { return new PossibleNewRpgGameObjectsValue(botAI); }
+    static UntypedValue* possible_targets(ShadowAI* botAI) { return new PossibleTargetsValue(botAI); }
+    static UntypedValue* possible_triggers(ShadowAI* botAI) { return new PossibleTriggersValue(botAI); }
+    static UntypedValue* possible_targets_no_los(ShadowAI* botAI)
     {
-        return new PossibleTargetsValue(botAI, "possible targets", sPlayerbotAIConfig->sightDistance, true);
+        return new PossibleTargetsValue(botAI, "possible targets", sShadowAIConfig->sightDistance, true);
     }
-    static UntypedValue* possible_adds(PlayerbotAI* botAI) { return new PossibleAddsValue(botAI); }
-    static UntypedValue* prioritized_targets(PlayerbotAI* botAI) { return new PrioritizedTargetsValue(botAI); }
-    static UntypedValue* all_targets(PlayerbotAI* botAI) { return new AllTargetsValue(botAI); }
-    static UntypedValue* nearest_adds(PlayerbotAI* botAI) { return new NearestAddsValue(botAI); }
-    static UntypedValue* party_member_without_aura(PlayerbotAI* botAI)
+    static UntypedValue* possible_adds(ShadowAI* botAI) { return new PossibleAddsValue(botAI); }
+    static UntypedValue* prioritized_targets(ShadowAI* botAI) { return new PrioritizedTargetsValue(botAI); }
+    static UntypedValue* all_targets(ShadowAI* botAI) { return new AllTargetsValue(botAI); }
+    static UntypedValue* nearest_adds(ShadowAI* botAI) { return new NearestAddsValue(botAI); }
+    static UntypedValue* party_member_without_aura(ShadowAI* botAI)
     {
         return new PartyMemberWithoutAuraValue(botAI);
     }
-    static UntypedValue* attacker_without_aura(PlayerbotAI* botAI) { return new AttackerWithoutAuraTargetValue(botAI); }
-    static UntypedValue* melee_attacker_without_aura(PlayerbotAI* botAI)
+    static UntypedValue* attacker_without_aura(ShadowAI* botAI) { return new AttackerWithoutAuraTargetValue(botAI); }
+    static UntypedValue* melee_attacker_without_aura(ShadowAI* botAI)
     {
         return new MeleeAttackerWithoutAuraTargetValue(botAI);
     }
-    static UntypedValue* party_member_to_heal(PlayerbotAI* botAI) { return new PartyMemberToHeal(botAI); }
-    static UntypedValue* party_member_to_resurrect(PlayerbotAI* botAI) { return new PartyMemberToResurrect(botAI); }
-    static UntypedValue* party_member_to_dispel(PlayerbotAI* botAI) { return new PartyMemberToDispel(botAI); }
-    static UntypedValue* party_member_to_protect(PlayerbotAI* botAI) { return new PartyMemberToProtect(botAI); }
-    static UntypedValue* current_target(PlayerbotAI* botAI) { return new CurrentTargetValue(botAI); }
-    static UntypedValue* old_target(PlayerbotAI* botAI) { return new CurrentTargetValue(botAI); }
-    static UntypedValue* self_target(PlayerbotAI* botAI) { return new SelfTargetValue(botAI); }
-    static UntypedValue* master(PlayerbotAI* botAI) { return new MasterTargetValue(botAI); }
-    static UntypedValue* line_target(PlayerbotAI* botAI) { return new LineTargetValue(botAI); }
-    static UntypedValue* tank_target(PlayerbotAI* botAI) { return new TankTargetValue(botAI); }
-    static UntypedValue* dps_target(PlayerbotAI* botAI) { return new DpsTargetValue(botAI); }
-    static UntypedValue* dps_aoe_target(PlayerbotAI* botAI) { return new DpsAoeTargetValue(botAI); }
-    static UntypedValue* least_hp_target(PlayerbotAI* botAI) { return new LeastHpTargetValue(botAI); }
-    static UntypedValue* enemy_player_target(PlayerbotAI* botAI) { return new EnemyPlayerValue(botAI); }
-    static UntypedValue* cc_target(PlayerbotAI* botAI) { return new CcTargetValue(botAI); }
-    static UntypedValue* current_cc_target(PlayerbotAI* botAI) { return new CurrentCcTargetValue(botAI); }
-    static UntypedValue* pet_target(PlayerbotAI* botAI) { return new PetTargetValue(botAI); }
-    static UntypedValue* grind_target(PlayerbotAI* botAI) { return new GrindTargetValue(botAI); }
-    static UntypedValue* rti_target(PlayerbotAI* botAI) { return new RtiTargetValue(botAI); }
-    static UntypedValue* rti_cc_target(PlayerbotAI* botAI) { return new RtiCcTargetValue(botAI); }
-    static UntypedValue* duel_target(PlayerbotAI* botAI) { return new DuelTargetValue(botAI); }
-    static UntypedValue* has_totem(PlayerbotAI* botAI) { return new HasTotemValue(botAI); }
-    static UntypedValue* threat(PlayerbotAI* botAI) { return new ThreatValue(botAI); }
-    static UntypedValue* combat(PlayerbotAI* botAI) { return new IsInCombatValue(botAI); }
-    static UntypedValue* lfg_proposal(PlayerbotAI* botAI) { return new LfgProposalValue(botAI); }
-    static UntypedValue* bag_space(PlayerbotAI* botAI) { return new BagSpaceValue(botAI); }
-    static UntypedValue* durability(PlayerbotAI* botAI) { return new DurabilityValue(botAI); }
-    static UntypedValue* max_repair_cost(PlayerbotAI* botAI) { return new MaxGearRepairCostValue(botAI); }
-    static UntypedValue* repair_cost(PlayerbotAI* botAI) { return new RepairCostValue(botAI); }
-    static UntypedValue* train_cost(PlayerbotAI* botAI) { return new TrainCostValue(botAI); }
-    static UntypedValue* enemy_healer_target(PlayerbotAI* botAI) { return new EnemyHealerTargetValue(botAI); }
-    static UntypedValue* snare_target(PlayerbotAI* botAI) { return new SnareTargetValue(botAI); }
-    static UntypedValue* speed(PlayerbotAI* botAI) { return new SpeedValue(botAI); }
-    static UntypedValue* last_said(PlayerbotAI* botAI) { return new LastSaidValue(botAI); }
-    static UntypedValue* last_emote(PlayerbotAI* botAI) { return new LastEmoteValue(botAI); }
-    static UntypedValue* aoe_count(PlayerbotAI* botAI) { return new AoeCountValue(botAI); }
-    static UntypedValue* aoe_position(PlayerbotAI* botAI) { return new AoePositionValue(botAI); }
-    static UntypedValue* outfit_list_value(PlayerbotAI* botAI) { return new OutfitListValue(botAI); }
-    static UntypedValue* random_bot_update_value(PlayerbotAI* botAI) { return new RandomBotUpdateValue(botAI); }
-    static UntypedValue* nearest_non_bot_players(PlayerbotAI* botAI) { return new NearestNonBotPlayersValue(botAI); }
-    static UntypedValue* skip_spells_list_value(PlayerbotAI* botAI) { return new SkipSpellsListValue(botAI); }
-    static UntypedValue* rpg_target(PlayerbotAI* botAI) { return new RpgTargetValue(botAI); }
-    static UntypedValue* ignore_rpg_target(PlayerbotAI* botAI) { return new IgnoreRpgTargetValue(botAI); }
-    static UntypedValue* talk_target(PlayerbotAI* botAI) { return new TalkTargetValue(botAI); }
-    static UntypedValue* next_rpg_action(PlayerbotAI* botAI) { return new NextRpgActionValue(botAI); }
-    static UntypedValue* travel_target(PlayerbotAI* botAI) { return new TravelTargetValue(botAI); }
-    static UntypedValue* pull_target(PlayerbotAI* botAI) { return new PullTargetValue(botAI); }
+    static UntypedValue* party_member_to_heal(ShadowAI* botAI) { return new PartyMemberToHeal(botAI); }
+    static UntypedValue* party_member_to_resurrect(ShadowAI* botAI) { return new PartyMemberToResurrect(botAI); }
+    static UntypedValue* party_member_to_dispel(ShadowAI* botAI) { return new PartyMemberToDispel(botAI); }
+    static UntypedValue* party_member_to_protect(ShadowAI* botAI) { return new PartyMemberToProtect(botAI); }
+    static UntypedValue* current_target(ShadowAI* botAI) { return new CurrentTargetValue(botAI); }
+    static UntypedValue* old_target(ShadowAI* botAI) { return new CurrentTargetValue(botAI); }
+    static UntypedValue* self_target(ShadowAI* botAI) { return new SelfTargetValue(botAI); }
+    static UntypedValue* master(ShadowAI* botAI) { return new MasterTargetValue(botAI); }
+    static UntypedValue* line_target(ShadowAI* botAI) { return new LineTargetValue(botAI); }
+    static UntypedValue* tank_target(ShadowAI* botAI) { return new TankTargetValue(botAI); }
+    static UntypedValue* dps_target(ShadowAI* botAI) { return new DpsTargetValue(botAI); }
+    static UntypedValue* dps_aoe_target(ShadowAI* botAI) { return new DpsAoeTargetValue(botAI); }
+    static UntypedValue* least_hp_target(ShadowAI* botAI) { return new LeastHpTargetValue(botAI); }
+    static UntypedValue* enemy_player_target(ShadowAI* botAI) { return new EnemyPlayerValue(botAI); }
+    static UntypedValue* cc_target(ShadowAI* botAI) { return new CcTargetValue(botAI); }
+    static UntypedValue* current_cc_target(ShadowAI* botAI) { return new CurrentCcTargetValue(botAI); }
+    static UntypedValue* pet_target(ShadowAI* botAI) { return new PetTargetValue(botAI); }
+    static UntypedValue* grind_target(ShadowAI* botAI) { return new GrindTargetValue(botAI); }
+    static UntypedValue* rti_target(ShadowAI* botAI) { return new RtiTargetValue(botAI); }
+    static UntypedValue* rti_cc_target(ShadowAI* botAI) { return new RtiCcTargetValue(botAI); }
+    static UntypedValue* duel_target(ShadowAI* botAI) { return new DuelTargetValue(botAI); }
+    static UntypedValue* has_totem(ShadowAI* botAI) { return new HasTotemValue(botAI); }
+    static UntypedValue* threat(ShadowAI* botAI) { return new ThreatValue(botAI); }
+    static UntypedValue* combat(ShadowAI* botAI) { return new IsInCombatValue(botAI); }
+    static UntypedValue* lfg_proposal(ShadowAI* botAI) { return new LfgProposalValue(botAI); }
+    static UntypedValue* bag_space(ShadowAI* botAI) { return new BagSpaceValue(botAI); }
+    static UntypedValue* durability(ShadowAI* botAI) { return new DurabilityValue(botAI); }
+    static UntypedValue* max_repair_cost(ShadowAI* botAI) { return new MaxGearRepairCostValue(botAI); }
+    static UntypedValue* repair_cost(ShadowAI* botAI) { return new RepairCostValue(botAI); }
+    static UntypedValue* train_cost(ShadowAI* botAI) { return new TrainCostValue(botAI); }
+    static UntypedValue* enemy_healer_target(ShadowAI* botAI) { return new EnemyHealerTargetValue(botAI); }
+    static UntypedValue* snare_target(ShadowAI* botAI) { return new SnareTargetValue(botAI); }
+    static UntypedValue* speed(ShadowAI* botAI) { return new SpeedValue(botAI); }
+    static UntypedValue* last_said(ShadowAI* botAI) { return new LastSaidValue(botAI); }
+    static UntypedValue* last_emote(ShadowAI* botAI) { return new LastEmoteValue(botAI); }
+    static UntypedValue* aoe_count(ShadowAI* botAI) { return new AoeCountValue(botAI); }
+    static UntypedValue* aoe_position(ShadowAI* botAI) { return new AoePositionValue(botAI); }
+    static UntypedValue* outfit_list_value(ShadowAI* botAI) { return new OutfitListValue(botAI); }
+    static UntypedValue* random_bot_update_value(ShadowAI* botAI) { return new RandomBotUpdateValue(botAI); }
+    static UntypedValue* nearest_non_bot_players(ShadowAI* botAI) { return new NearestNonBotPlayersValue(botAI); }
+    static UntypedValue* skip_spells_list_value(ShadowAI* botAI) { return new SkipSpellsListValue(botAI); }
+    static UntypedValue* rpg_target(ShadowAI* botAI) { return new RpgTargetValue(botAI); }
+    static UntypedValue* ignore_rpg_target(ShadowAI* botAI) { return new IgnoreRpgTargetValue(botAI); }
+    static UntypedValue* talk_target(ShadowAI* botAI) { return new TalkTargetValue(botAI); }
+    static UntypedValue* next_rpg_action(ShadowAI* botAI) { return new NextRpgActionValue(botAI); }
+    static UntypedValue* travel_target(ShadowAI* botAI) { return new TravelTargetValue(botAI); }
+    static UntypedValue* pull_target(ShadowAI* botAI) { return new PullTargetValue(botAI); }
 
-    static UntypedValue* bg_master(PlayerbotAI* botAI) { return new BgMasterValue(botAI); }
-    static UntypedValue* bg_role(PlayerbotAI* botAI) { return new BgRoleValue(botAI); }
-    static UntypedValue* arena_type(PlayerbotAI* botAI) { return new ArenaTypeValue(botAI); }
-    static UntypedValue* bg_type(PlayerbotAI* botAI) { return new BgTypeValue(botAI); }
-    static UntypedValue* rpg_bg_type(PlayerbotAI* botAI) { return new RpgBgTypeValue(botAI); }
-    static UntypedValue* team_fc(PlayerbotAI* botAI) { return new FlagCarrierValue(botAI, true, true); }
-    static UntypedValue* enemy_fc(PlayerbotAI* botAI) { return new FlagCarrierValue(botAI, false, true); }
+    static UntypedValue* bg_master(ShadowAI* botAI) { return new BgMasterValue(botAI); }
+    static UntypedValue* bg_role(ShadowAI* botAI) { return new BgRoleValue(botAI); }
+    static UntypedValue* arena_type(ShadowAI* botAI) { return new ArenaTypeValue(botAI); }
+    static UntypedValue* bg_type(ShadowAI* botAI) { return new BgTypeValue(botAI); }
+    static UntypedValue* rpg_bg_type(ShadowAI* botAI) { return new RpgBgTypeValue(botAI); }
+    static UntypedValue* team_fc(ShadowAI* botAI) { return new FlagCarrierValue(botAI, true, true); }
+    static UntypedValue* enemy_fc(ShadowAI* botAI) { return new FlagCarrierValue(botAI, false, true); }
 
-    static UntypedValue* last_long_move(PlayerbotAI* botAI) { return new LastLongMoveValue(botAI); }
-    static UntypedValue* home_bind(PlayerbotAI* botAI) { return new HomeBindValue(botAI); }
+    static UntypedValue* last_long_move(ShadowAI* botAI) { return new LastLongMoveValue(botAI); }
+    static UntypedValue* home_bind(ShadowAI* botAI) { return new HomeBindValue(botAI); }
 
-    static UntypedValue* free_quest_log_slots(PlayerbotAI* botAI) { return new FreeQuestLogSlotValue(botAI); }
-    static UntypedValue* dialog_status(PlayerbotAI* botAI) { return new DialogStatusValue(botAI); }
-    static UntypedValue* dialog_status_quest(PlayerbotAI* botAI) { return new DialogStatusQuestValue(botAI); }
-    static UntypedValue* can_accept_quest_npc(PlayerbotAI* botAI) { return new CanAcceptQuestValue(botAI); }
-    static UntypedValue* can_accept_quest_low_level_npc(PlayerbotAI* botAI)
+    static UntypedValue* free_quest_log_slots(ShadowAI* botAI) { return new FreeQuestLogSlotValue(botAI); }
+    static UntypedValue* dialog_status(ShadowAI* botAI) { return new DialogStatusValue(botAI); }
+    static UntypedValue* dialog_status_quest(ShadowAI* botAI) { return new DialogStatusQuestValue(botAI); }
+    static UntypedValue* can_accept_quest_npc(ShadowAI* botAI) { return new CanAcceptQuestValue(botAI); }
+    static UntypedValue* can_accept_quest_low_level_npc(ShadowAI* botAI)
     {
         return new CanAcceptQuestLowLevelValue(botAI);
     }
-    static UntypedValue* can_turn_in_quest_npc(PlayerbotAI* botAI) { return new CanTurnInQuestValue(botAI); }
+    static UntypedValue* can_turn_in_quest_npc(ShadowAI* botAI) { return new CanTurnInQuestValue(botAI); }
 
-    static UntypedValue* money_needed_for(PlayerbotAI* botAI) { return new MoneyNeededForValue(botAI); }
-    static UntypedValue* total_money_needed_for(PlayerbotAI* botAI) { return new TotalMoneyNeededForValue(botAI); }
-    static UntypedValue* free_money_for(PlayerbotAI* botAI) { return new FreeMoneyForValue(botAI); }
-    static UntypedValue* should_get_money(PlayerbotAI* botAI) { return new ShouldGetMoneyValue(botAI); }
+    static UntypedValue* money_needed_for(ShadowAI* botAI) { return new MoneyNeededForValue(botAI); }
+    static UntypedValue* total_money_needed_for(ShadowAI* botAI) { return new TotalMoneyNeededForValue(botAI); }
+    static UntypedValue* free_money_for(ShadowAI* botAI) { return new FreeMoneyForValue(botAI); }
+    static UntypedValue* should_get_money(ShadowAI* botAI) { return new ShouldGetMoneyValue(botAI); }
 
-    static UntypedValue* can_move_around(PlayerbotAI* botAI) { return new CanMoveAroundValue(botAI); }
-    static UntypedValue* should_home_bind(PlayerbotAI* botAI) { return new ShouldHomeBindValue(botAI); }
-    static UntypedValue* should_repair(PlayerbotAI* botAI) { return new ShouldRepairValue(botAI); }
-    static UntypedValue* can_repair(PlayerbotAI* botAI) { return new CanRepairValue(botAI); }
-    static UntypedValue* should_sell(PlayerbotAI* botAI) { return new ShouldSellValue(botAI); }
-    static UntypedValue* can_sell(PlayerbotAI* botAI) { return new CanSellValue(botAI); }
-    static UntypedValue* can_fight_equal(PlayerbotAI* botAI) { return new CanFightEqualValue(botAI); }
-    static UntypedValue* can_fight_elite(PlayerbotAI* botAI) { return new CanFightEliteValue(botAI); }
-    static UntypedValue* can_fight_boss(PlayerbotAI* botAI) { return new CanFightBossValue(botAI); }
+    static UntypedValue* can_move_around(ShadowAI* botAI) { return new CanMoveAroundValue(botAI); }
+    static UntypedValue* should_home_bind(ShadowAI* botAI) { return new ShouldHomeBindValue(botAI); }
+    static UntypedValue* should_repair(ShadowAI* botAI) { return new ShouldRepairValue(botAI); }
+    static UntypedValue* can_repair(ShadowAI* botAI) { return new CanRepairValue(botAI); }
+    static UntypedValue* should_sell(ShadowAI* botAI) { return new ShouldSellValue(botAI); }
+    static UntypedValue* can_sell(ShadowAI* botAI) { return new CanSellValue(botAI); }
+    static UntypedValue* can_fight_equal(ShadowAI* botAI) { return new CanFightEqualValue(botAI); }
+    static UntypedValue* can_fight_elite(ShadowAI* botAI) { return new CanFightEliteValue(botAI); }
+    static UntypedValue* can_fight_boss(ShadowAI* botAI) { return new CanFightBossValue(botAI); }
 
-    static UntypedValue* death_count(PlayerbotAI* botAI) { return new DeathCountValue(botAI); }
+    static UntypedValue* death_count(ShadowAI* botAI) { return new DeathCountValue(botAI); }
 
-    static UntypedValue* group_members(PlayerbotAI* botAI) { return new GroupMembersValue(botAI); }
-    static UntypedValue* following_party(PlayerbotAI* botAI) { return new IsFollowingPartyValue(botAI); }
-    static UntypedValue* near_leader(PlayerbotAI* botAI) { return new IsNearLeaderValue(botAI); }
-    static UntypedValue* and_value(PlayerbotAI* botAI) { return new BoolANDValue(botAI); }
-    static UntypedValue* group_count(PlayerbotAI* botAI) { return new GroupBoolCountValue(botAI); }
-    static UntypedValue* group_and(PlayerbotAI* botAI) { return new GroupBoolANDValue(botAI); }
-    static UntypedValue* group_or(PlayerbotAI* botAI) { return new GroupBoolORValue(botAI); }
-    static UntypedValue* group_ready(PlayerbotAI* botAI) { return new GroupReadyValue(botAI); }
+    static UntypedValue* group_members(ShadowAI* botAI) { return new GroupMembersValue(botAI); }
+    static UntypedValue* following_party(ShadowAI* botAI) { return new IsFollowingPartyValue(botAI); }
+    static UntypedValue* near_leader(ShadowAI* botAI) { return new IsNearLeaderValue(botAI); }
+    static UntypedValue* and_value(ShadowAI* botAI) { return new BoolANDValue(botAI); }
+    static UntypedValue* group_count(ShadowAI* botAI) { return new GroupBoolCountValue(botAI); }
+    static UntypedValue* group_and(ShadowAI* botAI) { return new GroupBoolANDValue(botAI); }
+    static UntypedValue* group_or(ShadowAI* botAI) { return new GroupBoolORValue(botAI); }
+    static UntypedValue* group_ready(ShadowAI* botAI) { return new GroupReadyValue(botAI); }
 
-    static UntypedValue* petition_signs(PlayerbotAI* botAI) { return new PetitionSignsValue(botAI); }
+    static UntypedValue* petition_signs(ShadowAI* botAI) { return new PetitionSignsValue(botAI); }
 
-    static UntypedValue* experience(PlayerbotAI* botAI) { return new ExperienceValue(botAI); }
+    static UntypedValue* experience(ShadowAI* botAI) { return new ExperienceValue(botAI); }
 
-    static UntypedValue* entry_loot_usage(PlayerbotAI* botAI) { return new EntryLootUsageValue(botAI); }
-    static UntypedValue* has_upgrade(PlayerbotAI* botAI) { return new HasUpgradeValue(botAI); }
-    static UntypedValue* items_useful_to_give(PlayerbotAI* botAI) { return new ItemsUsefulToGiveValue(botAI); }
+    static UntypedValue* entry_loot_usage(ShadowAI* botAI) { return new EntryLootUsageValue(botAI); }
+    static UntypedValue* has_upgrade(ShadowAI* botAI) { return new HasUpgradeValue(botAI); }
+    static UntypedValue* items_useful_to_give(ShadowAI* botAI) { return new ItemsUsefulToGiveValue(botAI); }
 
-    static UntypedValue* see_spell_location(PlayerbotAI* botAI) { return new SeeSpellLocationValue(botAI); }
-    static UntypedValue* RTSC_selected(PlayerbotAI* botAI) { return new RTSCSelectedValue(botAI); }
-    static UntypedValue* RTSC_next_spell_action(PlayerbotAI* botAI) { return new RTSCNextSpellActionValue(botAI); }
-    static UntypedValue* RTSC_saved_location(PlayerbotAI* botAI) { return new RTSCSavedLocationValue(botAI); }
+    static UntypedValue* see_spell_location(ShadowAI* botAI) { return new SeeSpellLocationValue(botAI); }
+    static UntypedValue* RTSC_selected(ShadowAI* botAI) { return new RTSCSelectedValue(botAI); }
+    static UntypedValue* RTSC_next_spell_action(ShadowAI* botAI) { return new RTSCNextSpellActionValue(botAI); }
+    static UntypedValue* RTSC_saved_location(ShadowAI* botAI) { return new RTSCSavedLocationValue(botAI); }
 
-    static UntypedValue* has_area_debuff(PlayerbotAI* botAI) { return new HasAreaDebuffValue(botAI); }
+    static UntypedValue* has_area_debuff(ShadowAI* botAI) { return new HasAreaDebuffValue(botAI); }
 
-    static UntypedValue* main_tank(PlayerbotAI* ai) { return new PartyMemberMainTankValue(ai); }
-    static UntypedValue* find_target(PlayerbotAI* ai) { return new FindTargetValue(ai); }
-    static UntypedValue* boss_target(PlayerbotAI* ai) { return new BossTargetValue(ai); }
-    static UntypedValue* nearest_triggers(PlayerbotAI* ai) { return new NearestTriggersValue(ai); }
-    static UntypedValue* neglect_threat(PlayerbotAI* ai) { return new NeglectThreatResetValue(ai); }
-    static UntypedValue* expected_lifetime(PlayerbotAI* ai) { return new EstimatedLifetimeValue(ai); }
-    static UntypedValue* expected_group_dps(PlayerbotAI* ai) { return new EstimatedGroupDpsValue(ai); }
-    static UntypedValue* area_debuff(PlayerbotAI* ai) { return new AreaDebuffValue(ai); }
-    static UntypedValue* nearest_trap_with_damange(PlayerbotAI* ai) { return new NearestTrapWithDamageValue(ai); }
-    static UntypedValue* disperse_distance(PlayerbotAI* ai) { return new DisperseDistanceValue(ai); }
-    static UntypedValue* last_flee_angle(PlayerbotAI* ai) { return new LastFleeAngleValue(ai); }
-    static UntypedValue* last_flee_timestamp(PlayerbotAI* ai) { return new LastFleeTimestampValue(ai); }
-    static UntypedValue* recently_flee_info(PlayerbotAI* ai) { return new RecentlyFleeInfo(ai); }
+    static UntypedValue* main_tank(ShadowAI* ai) { return new PartyMemberMainTankValue(ai); }
+    static UntypedValue* find_target(ShadowAI* ai) { return new FindTargetValue(ai); }
+    static UntypedValue* boss_target(ShadowAI* ai) { return new BossTargetValue(ai); }
+    static UntypedValue* nearest_triggers(ShadowAI* ai) { return new NearestTriggersValue(ai); }
+    static UntypedValue* neglect_threat(ShadowAI* ai) { return new NeglectThreatResetValue(ai); }
+    static UntypedValue* expected_lifetime(ShadowAI* ai) { return new EstimatedLifetimeValue(ai); }
+    static UntypedValue* expected_group_dps(ShadowAI* ai) { return new EstimatedGroupDpsValue(ai); }
+    static UntypedValue* area_debuff(ShadowAI* ai) { return new AreaDebuffValue(ai); }
+    static UntypedValue* nearest_trap_with_damange(ShadowAI* ai) { return new NearestTrapWithDamageValue(ai); }
+    static UntypedValue* disperse_distance(ShadowAI* ai) { return new DisperseDistanceValue(ai); }
+    static UntypedValue* last_flee_angle(ShadowAI* ai) { return new LastFleeAngleValue(ai); }
+    static UntypedValue* last_flee_timestamp(ShadowAI* ai) { return new LastFleeTimestampValue(ai); }
+    static UntypedValue* recently_flee_info(ShadowAI* ai) { return new RecentlyFleeInfo(ai); }
     // -------------------------------------------------------
     // Flag for cutom glyphs : true when /w bot glyph equip
     // -------------------------------------------------------
-    static UntypedValue* custom_glyphs(PlayerbotAI* ai)
+    static UntypedValue* custom_glyphs(ShadowAI* ai)
     {
         return new ManualSetValue<bool>(ai, false, "custom_glyphs");
     }

@@ -1,5 +1,5 @@
 #include "OpenItemAction.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "ItemTemplate.h"
 #include "WorldPacket.h"
 #include "Player.h"

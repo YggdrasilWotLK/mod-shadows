@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_USEMEETINGSTONEACTION_H
-#define _PLAYERBOT_USEMEETINGSTONEACTION_H
+#ifndef _SHADOW_USEMEETINGSTONEACTION_H
+#define _SHADOW_USEMEETINGSTONEACTION_H
 
 #include "MovementActions.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 class SummonAction : public MovementAction
 {
 public:
-    SummonAction(PlayerbotAI* botAI, std::string const name = "summon") : MovementAction(botAI, name) {}
+    SummonAction(ShadowAI* botAI, std::string const name = "summon") : MovementAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -27,7 +27,7 @@ protected:
 class UseMeetingStoneAction : public SummonAction
 {
 public:
-    UseMeetingStoneAction(PlayerbotAI* botAI) : SummonAction(botAI, "use meeting stone") {}
+    UseMeetingStoneAction(ShadowAI* botAI) : SummonAction(botAI, "use meeting stone") {}
 
     bool Execute(Event event) override;
 };

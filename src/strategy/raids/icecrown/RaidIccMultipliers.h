@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDICCMULTIPLIERS_H
-#define _PLAYERBOT_RAIDICCMULTIPLIERS_H
+#ifndef _SHADOW_RAIDICCMULTIPLIERS_H
+#define _SHADOW_RAIDICCMULTIPLIERS_H
 
 #include "Multiplier.h"
 
@@ -7,7 +7,7 @@
 class IccLadyDeathwhisperMultiplier : public Multiplier
 {
 public:
-    IccLadyDeathwhisperMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc lady deathwhisper") {}
+    IccLadyDeathwhisperMultiplier(ShadowAI* ai) : Multiplier(ai, "icc lady deathwhisper") {}
     virtual float GetValue(Action* action);
 };
 
@@ -15,7 +15,7 @@ public:
 class IccAddsDbsMultiplier : public Multiplier
 {
 public:
-    IccAddsDbsMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc adds dbs") {}
+    IccAddsDbsMultiplier(ShadowAI* ai) : Multiplier(ai, "icc adds dbs") {}
     virtual float GetValue(Action* action);
 };
 
@@ -24,7 +24,7 @@ public:
 class IccDogsMultiplier : public Multiplier
 {
 public:
-    IccDogsMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc dogs") {}
+    IccDogsMultiplier(ShadowAI* ai) : Multiplier(ai, "icc dogs") {}
     virtual float GetValue(Action* action);
 };
 
@@ -32,7 +32,7 @@ public:
 class IccFestergutMultiplier : public Multiplier
 {
 public:
-    IccFestergutMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc festergut") {}
+    IccFestergutMultiplier(ShadowAI* ai) : Multiplier(ai, "icc festergut") {}
     virtual float GetValue(Action* action);
 };
 
@@ -40,14 +40,14 @@ public:
 class IccRotfaceMultiplier : public Multiplier
 {
 public:
-    IccRotfaceMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc rotface") {}
+    IccRotfaceMultiplier(ShadowAI* ai) : Multiplier(ai, "icc rotface") {}
     virtual float GetValue(Action* action);
 };
 
 /*class IccRotfaceGroupPositionMultiplier : public Multiplier
 {
 public:
-    IccRotfaceGroupPositionMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc rotface group position") {}
+    IccRotfaceGroupPositionMultiplier(ShadowAI* ai) : Multiplier(ai, "icc rotface group position") {}
     virtual float GetValue(Action* action);
 };*/
 
@@ -55,7 +55,7 @@ public:
 class IccAddsPutricideMultiplier : public Multiplier
 {
 public:
-    IccAddsPutricideMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc adds putricide") {}
+    IccAddsPutricideMultiplier(ShadowAI* ai) : Multiplier(ai, "icc adds putricide") {}
     virtual float GetValue(Action* action);
 };
 
@@ -63,7 +63,7 @@ public:
 class IccBpcAssistMultiplier : public Multiplier
 {
 public:
-    IccBpcAssistMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "icc bpc assist") {}
+    IccBpcAssistMultiplier(ShadowAI* botAI) : Multiplier(botAI, "icc bpc assist") {}
     virtual float GetValue(Action* action);
 };
 
@@ -71,7 +71,7 @@ public:
 class IccBqlMultiplier : public Multiplier
 {
 public:
-    IccBqlMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "icc bql multiplier") {}
+    IccBqlMultiplier(ShadowAI* botAI) : Multiplier(botAI, "icc bql multiplier") {}
     virtual float GetValue(Action* action) override;
 };
 
@@ -79,7 +79,7 @@ public:
 class IccValithriaDreamCloudMultiplier : public Multiplier
 {
 public:
-    IccValithriaDreamCloudMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc valithria dream cloud") {}
+    IccValithriaDreamCloudMultiplier(ShadowAI* ai) : Multiplier(ai, "icc valithria dream cloud") {}
     virtual float GetValue(Action* action);
 };
 
@@ -87,7 +87,7 @@ public:
 class IccSindragosaMultiplier : public Multiplier
 {
 public:
-    IccSindragosaMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc sindragosa") {}
+    IccSindragosaMultiplier(ShadowAI* ai) : Multiplier(ai, "icc sindragosa") {}
     virtual float GetValue(Action* action);
 };
 
@@ -95,7 +95,7 @@ public:
 class IccLichKingAddsMultiplier : public Multiplier
 {
 public:
-    IccLichKingAddsMultiplier(PlayerbotAI* ai) : Multiplier(ai, "icc lich king adds") {}
+    IccLichKingAddsMultiplier(ShadowAI* ai) : Multiplier(ai, "icc lich king adds") {}
     virtual float GetValue(Action* action);
 };
 

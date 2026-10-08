@@ -1,10 +1,10 @@
 #include "EstimatedLifetimeValue.h"
 
 #include "AiFactory.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotAIConfig.h"
-#include "PlayerbotFactory.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "ShadowAIConfig.h"
+#include "ShadowFactory.h"
+#include "Shadows.h"
 #include "SharedDefines.h"
 
 float EstimatedLifetimeValue::Calculate()
@@ -40,7 +40,7 @@ float EstimatedGroupDpsValue::Calculate()
                 continue;
 
             // ignore real player as they may not help with damage
-            if (auto memberAI = GET_PLAYERBOT_AI(member))
+            if (auto memberAI = GET_SHADOW_AI(member))
             {
                 if (memberAI->IsRealPlayer())
                     continue;
@@ -49,7 +49,7 @@ float EstimatedGroupDpsValue::Calculate()
             if (member->GetMapId() != bot->GetMapId())
                 continue;
 
-            if (member->GetExactDist(bot) > sPlayerbotAIConfig->sightDistance)
+            if (member->GetExactDist(bot) > sShadowAIConfig->sightDistance)
                 continue;
 
             groupPlayer.push_back(member);
@@ -66,7 +66,7 @@ float EstimatedGroupDpsValue::Calculate()
             roleMultiplier = 1.0f;
         float basicDps = GetBasicDps(player->GetLevel());
         float basicGs = GetBasicGs(player->GetLevel());
-        uint32 mixedGearScore = PlayerbotAI::GetMixedGearScore(player, true, false, 12);
+        uint32 mixedGearScore = ShadowAI::GetMixedGearScore(player, true, false, 12);
         float gs_modifier = (float)mixedGearScore / basicGs;
         // bonus for wotlk epic gear
         if (mixedGearScore >= 300)
@@ -130,23 +130,23 @@ float EstimatedGroupDpsValue::GetBasicGs(uint32 level)
 
     if (level <= 8)
     {
-        basic_gs = PlayerbotFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_NORMAL);
+        basic_gs = ShadowFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_NORMAL);
     }
     else if (level <= 15)
     {
-        basic_gs = PlayerbotFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_UNCOMMON);
+        basic_gs = ShadowFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_UNCOMMON);
     }
     else if (level <= 60)
     {
-        basic_gs = PlayerbotFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_RARE);
+        basic_gs = ShadowFactory::CalcMixedGearScore(level + 5, ITEM_QUALITY_RARE);
     }
     else if (level <= 70)
     {
-        basic_gs = PlayerbotFactory::CalcMixedGearScore(85 + (level - 60) * 3, ITEM_QUALITY_RARE);
+        basic_gs = ShadowFactory::CalcMixedGearScore(85 + (level - 60) * 3, ITEM_QUALITY_RARE);
     }
     else
     {
-        basic_gs = PlayerbotFactory::CalcMixedGearScore(155 + (level - 70) * 4, ITEM_QUALITY_RARE);
+        basic_gs = ShadowFactory::CalcMixedGearScore(155 + (level - 70) * 4, ITEM_QUALITY_RARE);
     }
     return basic_gs;
 }

@@ -7,7 +7,7 @@
 
 #include "BudgetValues.h"
 #include "GuildCreateActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SocialMgr.h"
 

@@ -12,8 +12,8 @@
 #include "ItemVisitors.h"
 #include "AiFactory.h"
 #include "ChatHelper.h"
-#include "Playerbots.h"
-#include "PlayerbotTextMgr.h"
+#include "Shadows.h"
+#include "ShadowTextMgr.h"
 #include "Config.h"
 #include "BroadcastHelper.h"
 #include "AiFactory.h"
@@ -23,8 +23,8 @@
 #include "Event.h"
 #include "GuildMgr.h"
 #include "ItemVisitors.h"
-#include "PlayerbotTextMgr.h"
-#include "Playerbots.h"
+#include "ShadowTextMgr.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 enum eTalkType
@@ -41,7 +41,7 @@ enum eTalkType
 std::map<std::string, uint8> SuggestDungeonAction::instances;
 std::map<std::string, uint8> SuggestWhatToDoAction::factions;
 
-SuggestWhatToDoAction::SuggestWhatToDoAction(PlayerbotAI* botAI, std::string const name)
+SuggestWhatToDoAction::SuggestWhatToDoAction(ShadowAI* botAI, std::string const name)
     : InventoryAction{botAI, name}, _dbc_locale{sWorld->GetDefaultDbcLocale()}
 {
     suggestions.push_back(std::bind(&SuggestWhatToDoAction::specificQuest, this));
@@ -54,7 +54,7 @@ SuggestWhatToDoAction::SuggestWhatToDoAction(PlayerbotAI* botAI, std::string con
 
 bool SuggestWhatToDoAction::isUseful()
 {
-    if (!sRandomPlayerbotMgr->IsRandomBot(bot) || bot->GetGroup() || bot->GetInstanceId() || bot->GetBattleground())
+    if (!sRandomShadowMgr->IsRandomBot(bot) || bot->GetGroup() || bot->GetInstanceId() || bot->GetBattleground())
         return false;
 
     std::string qualifier = "suggest what to do";
@@ -255,13 +255,13 @@ private:
     uint32 quality;
 };
 
-SuggestDungeonAction::SuggestDungeonAction(PlayerbotAI* botAI) : SuggestWhatToDoAction(botAI, "suggest dungeon") {}
+SuggestDungeonAction::SuggestDungeonAction(ShadowAI* botAI) : SuggestWhatToDoAction(botAI, "suggest dungeon") {}
 
 bool SuggestDungeonAction::Execute(Event event)
 {
-    // TODO: use sPlayerbotDungeonSuggestionMgr
+    // TODO: use sShadowDungeonSuggestionMgr
 
-    if (!sPlayerbotAIConfig->randomBotSuggestDungeons || bot->GetGroup())
+    if (!sShadowAIConfig->randomBotSuggestDungeons || bot->GetGroup())
         return false;
 
     if (instances.empty())
@@ -322,7 +322,7 @@ bool SuggestDungeonAction::Execute(Event event)
     return true;
 }
 
-SuggestTradeAction::SuggestTradeAction(PlayerbotAI* botAI) : SuggestWhatToDoAction(botAI, "suggest trade") {}
+SuggestTradeAction::SuggestTradeAction(ShadowAI* botAI) : SuggestWhatToDoAction(botAI, "suggest trade") {}
 
 bool SuggestTradeAction::Execute(Event event)
 {
@@ -372,7 +372,7 @@ bool SuggestTradeAction::Execute(Event event)
     if (!proto)
         return false;
 
-    uint32 price = proto->SellPrice * sRandomPlayerbotMgr->GetSellMultiplier(bot) * count;
+    uint32 price = proto->SellPrice * sRandomShadowMgr->GetSellMultiplier(bot) * count;
     if (!price)
         return false;
 

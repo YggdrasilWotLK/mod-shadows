@@ -5,7 +5,7 @@
 
 #include "CasterShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class CasterShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -17,14 +17,14 @@ public:
     }
 
 private:
-    static ActionNode* magma_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* magma_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("magma totem",
                               /*P*/ nullptr,
                               /*A*/ nullptr,
                               /*C*/ NextAction::array(0, new NextAction("fire nova"), nullptr));
     }
-    static ActionNode* totem_of_wrath(PlayerbotAI* botAI)
+    static ActionNode* totem_of_wrath(ShadowAI* botAI)
     {
         return new ActionNode("totem of wrath",
                               /*P*/ NULL,
@@ -33,7 +33,7 @@ private:
     }
 };
 
-CasterShamanStrategy::CasterShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+CasterShamanStrategy::CasterShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new CasterShamanStrategyActionNodeFactory());
 }

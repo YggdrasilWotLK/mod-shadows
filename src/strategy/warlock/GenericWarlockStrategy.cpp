@@ -5,7 +5,7 @@
 
 #include "GenericWarlockStrategy.h"
 #include "Strategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -20,14 +20,14 @@ public:
     }
 
 private:
-    static ActionNode* banish_on_cc(PlayerbotAI*) { return new ActionNode("banish on cc", nullptr, nullptr, nullptr); }
-    static ActionNode* fear_on_cc(PlayerbotAI*) { return new ActionNode("fear on cc", nullptr, nullptr, nullptr); }
-    static ActionNode* spell_lock(PlayerbotAI*) { return new ActionNode("spell lock", nullptr, nullptr, nullptr); }
-    static ActionNode* devour_magic_purge(PlayerbotAI*) { return new ActionNode("devour magic purge", nullptr, nullptr, nullptr); }
-    static ActionNode* devour_magic_cleanse(PlayerbotAI*) { return new ActionNode("devour magic cleanse", nullptr, nullptr, nullptr); }
+    static ActionNode* banish_on_cc(ShadowAI*) { return new ActionNode("banish on cc", nullptr, nullptr, nullptr); }
+    static ActionNode* fear_on_cc(ShadowAI*) { return new ActionNode("fear on cc", nullptr, nullptr, nullptr); }
+    static ActionNode* spell_lock(ShadowAI*) { return new ActionNode("spell lock", nullptr, nullptr, nullptr); }
+    static ActionNode* devour_magic_purge(ShadowAI*) { return new ActionNode("devour magic purge", nullptr, nullptr, nullptr); }
+    static ActionNode* devour_magic_cleanse(ShadowAI*) { return new ActionNode("devour magic cleanse", nullptr, nullptr, nullptr); }
 };
 
-GenericWarlockStrategy::GenericWarlockStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericWarlockStrategy::GenericWarlockStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericWarlockStrategyActionNodeFactory());
 }

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DPSPALADINSTRATEGY_H
-#define _PLAYERBOT_DPSPALADINSTRATEGY_H
+#ifndef _SHADOW_DPSPALADINSTRATEGY_H
+#define _SHADOW_DPSPALADINSTRATEGY_H
 
 #include "GenericPaladinStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DpsPaladinStrategy : public GenericPaladinStrategy
 {
 public:
-    DpsPaladinStrategy(PlayerbotAI* botAI);
+    DpsPaladinStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "dps"; }

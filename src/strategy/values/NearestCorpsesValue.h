@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEARESTCORPSESVALUE_H
-#define _PLAYERBOT_NEARESTCORPSESVALUE_H
+#ifndef _SHADOW_NEARESTCORPSESVALUE_H
+#define _SHADOW_NEARESTCORPSESVALUE_H
 
 #include "NearestUnitsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NearestCorpsesValue : public NearestUnitsValue
 {
 public:
-    NearestCorpsesValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestCorpsesValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest corpses", range, true)
     {
     }

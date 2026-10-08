@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONVHACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONVHACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONVHACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONVHACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -15,10 +15,10 @@ class WotlkDungeonVHActionContext : public NamedObjectContext<Action>
             creators["stop attack"] = &WotlkDungeonVHActionContext::stop_attack;
         }
     private:
-        static Action* attack_erekem(PlayerbotAI* ai) { return new AttackErekemAction(ai); }
-        static Action* attack_ichor_globule(PlayerbotAI* ai) { return new AttackIchorGlobuleAction(ai); }
-        static Action* attack_void_sentry(PlayerbotAI* ai) { return new AttackVoidSentryAction(ai); }
-        static Action* stop_attack(PlayerbotAI* ai) { return new StopAttackAction(ai); }
+        static Action* attack_erekem(ShadowAI* ai) { return new AttackErekemAction(ai); }
+        static Action* attack_ichor_globule(ShadowAI* ai) { return new AttackIchorGlobuleAction(ai); }
+        static Action* attack_void_sentry(ShadowAI* ai) { return new AttackVoidSentryAction(ai); }
+        static Action* stop_attack(ShadowAI* ai) { return new StopAttackAction(ai); }
 };
 
 #endif

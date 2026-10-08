@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONPOSACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONPOSACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONPOSACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONPOSACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,8 +14,8 @@ class WotlkDungeonPoSActionContext : public NamedObjectContext<Action>
             creators["tyrannus"] = &WotlkDungeonPoSActionContext::tyrannus;
         }
     private:
-        static Action* ick_and_krick(PlayerbotAI* ai) { return new IckAndKrickAction(ai); }
-        static Action* tyrannus(PlayerbotAI* ai) { return new TyrannusAction(ai); }
+        static Action* ick_and_krick(ShadowAI* ai) { return new IckAndKrickAction(ai); }
+        static Action* tyrannus(ShadowAI* ai) { return new TyrannusAction(ai); }
 };
 
 #endif

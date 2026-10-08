@@ -3,12 +3,12 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BOSSAURATRIGGERS_H
-#define _PLAYERBOT_BOSSAURATRIGGERS_H
+#ifndef _SHADOW_BOSSAURATRIGGERS_H
+#define _SHADOW_BOSSAURATRIGGERS_H
 
 #include "GenericTriggers.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 enum BossAuraIDs
 {
@@ -36,7 +36,7 @@ enum BossAuraIDs
 class BossFireResistanceTrigger : public Trigger
 {
 public:
-    BossFireResistanceTrigger(PlayerbotAI* ai, std::string const bossName)
+    BossFireResistanceTrigger(ShadowAI* ai, std::string const bossName)
         : Trigger(ai, bossName + " fire resistance trigger"), bossName(bossName)
     {
     }
@@ -49,7 +49,7 @@ private:
 class BossFrostResistanceTrigger : public Trigger
 {
 public:
-    BossFrostResistanceTrigger(PlayerbotAI* ai, std::string const bossName)
+    BossFrostResistanceTrigger(ShadowAI* ai, std::string const bossName)
         : Trigger(ai, bossName + " frost resistance trigger"), bossName(bossName)
     {
     }
@@ -62,7 +62,7 @@ private:
 class BossNatureResistanceTrigger : public Trigger
 {
 public:
-    BossNatureResistanceTrigger(PlayerbotAI* ai, std::string const bossName)
+    BossNatureResistanceTrigger(ShadowAI* ai, std::string const bossName)
         : Trigger(ai, " nature resistance trigger"), bossName(bossName)
     {
     }
@@ -75,7 +75,7 @@ private:
 class BossShadowResistanceTrigger : public Trigger
 {
 public:
-    BossShadowResistanceTrigger(PlayerbotAI* ai, std::string const bossName)
+    BossShadowResistanceTrigger(ShadowAI* ai, std::string const bossName)
         : Trigger(ai, " shadow resistance trigger"), bossName(bossName)
     {
     }

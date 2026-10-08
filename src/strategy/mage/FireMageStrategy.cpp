@@ -4,7 +4,7 @@
  */
 
 #include "FireMageStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 // ===== Action Node Factory =====
@@ -23,17 +23,17 @@ public:
     }
 
 private:
-    static ActionNode* fireball(PlayerbotAI*) { return new ActionNode("fireball", nullptr, nullptr, nullptr); }
-    static ActionNode* frostbolt(PlayerbotAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
-    static ActionNode* fire_blast(PlayerbotAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
-    static ActionNode* pyroblast(PlayerbotAI*) { return new ActionNode("pyroblast", nullptr, nullptr, nullptr); }
-    static ActionNode* scorch(PlayerbotAI*) { return new ActionNode("scorch", nullptr, nullptr, nullptr); }
-    static ActionNode* living_bomb(PlayerbotAI*) { return new ActionNode("living bomb", nullptr, nullptr, nullptr); }
-    static ActionNode* combustion(PlayerbotAI*) { return new ActionNode("combustion", nullptr, nullptr, nullptr); }
+    static ActionNode* fireball(ShadowAI*) { return new ActionNode("fireball", nullptr, nullptr, nullptr); }
+    static ActionNode* frostbolt(ShadowAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
+    static ActionNode* fire_blast(ShadowAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
+    static ActionNode* pyroblast(ShadowAI*) { return new ActionNode("pyroblast", nullptr, nullptr, nullptr); }
+    static ActionNode* scorch(ShadowAI*) { return new ActionNode("scorch", nullptr, nullptr, nullptr); }
+    static ActionNode* living_bomb(ShadowAI*) { return new ActionNode("living bomb", nullptr, nullptr, nullptr); }
+    static ActionNode* combustion(ShadowAI*) { return new ActionNode("combustion", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-FireMageStrategy::FireMageStrategy(PlayerbotAI* botAI) : GenericMageStrategy(botAI)
+FireMageStrategy::FireMageStrategy(ShadowAI* botAI) : GenericMageStrategy(botAI)
 {
     actionNodeFactories.Add(new FireMageStrategyActionNodeFactory());
 }
@@ -64,7 +64,7 @@ void FireMageStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 // Disabled by default for the Fire/Frostfire spec
 // To enable, type "co +firestarter"
 // To disable, type "co -firestarter"
-FirestarterStrategy::FirestarterStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+FirestarterStrategy::FirestarterStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 void FirestarterStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

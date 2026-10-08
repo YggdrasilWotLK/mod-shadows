@@ -5,9 +5,9 @@
 
 #include "KiteStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-KiteStrategy::KiteStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+KiteStrategy::KiteStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 void KiteStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

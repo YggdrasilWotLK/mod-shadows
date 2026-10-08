@@ -9,7 +9,7 @@
 #include "ChooseRpgTargetAction.h"
 #include "Event.h"
 #include "LastMovementValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool MoveToRpgTargetAction::Execute(Event event)
 {
@@ -46,7 +46,7 @@ bool MoveToRpgTargetAction::Execute(Event event)
     {
         Player* player = guidP.GetPlayer();
 
-        if (player && GET_PLAYERBOT_AI(player))
+        if (player && GET_SHADOW_AI(player))
         {
             GuidPosition guidPP = PAI_VALUE(GuidPosition, "rpg target");
 
@@ -61,7 +61,7 @@ bool MoveToRpgTargetAction::Execute(Event event)
     }
 
     if ((unit && unit->isMoving() && !urand(0, 20)) || !ChooseRpgTargetAction::isFollowValid(bot, wo) ||
-        guidP.distance(bot) > sPlayerbotAIConfig->reactDistance * 2 || !urand(0, 50))
+        guidP.distance(bot) > sShadowAIConfig->reactDistance * 2 || !urand(0, 50))
     {
         AI_VALUE(GuidSet&, "ignore rpg target").insert(AI_VALUE(GuidPosition, "rpg target"));
         RESET_AI_VALUE(GuidPosition, "rpg target");
@@ -73,7 +73,7 @@ bool MoveToRpgTargetAction::Execute(Event event)
     float z = wo->GetPositionZ();
     float mapId = wo->GetMapId();
 
-    if (sPlayerbotAIConfig->randombotsWalkingRPG)
+    if (sShadowAIConfig->randombotsWalkingRPG)
         if (!bot->IsOutdoors())
             bot->m_movementInfo.AddMovementFlag(MOVEMENTFLAG_WALKING);
 

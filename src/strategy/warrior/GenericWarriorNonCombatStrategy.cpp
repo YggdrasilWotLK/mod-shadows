@@ -5,7 +5,7 @@
 
 #include "GenericWarriorNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void GenericWarriorNonCombatStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

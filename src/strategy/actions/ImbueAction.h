@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_IMBUEACTION_H
-#define _PLAYERBOT_IMBUEACTION_H
+#ifndef _SHADOW_IMBUEACTION_H
+#define _SHADOW_IMBUEACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ImbueWithPoisonAction : public Action
 {
 public:
-    ImbueWithPoisonAction(PlayerbotAI* botAI);
+    ImbueWithPoisonAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };
@@ -21,7 +21,7 @@ public:
 class ImbueWithStoneAction : public Action
 {
 public:
-    ImbueWithStoneAction(PlayerbotAI* botAI);
+    ImbueWithStoneAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };
@@ -29,7 +29,7 @@ public:
 class ImbueWithOilAction : public Action
 {
 public:
-    ImbueWithOilAction(PlayerbotAI* botAI);
+    ImbueWithOilAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };
@@ -37,7 +37,7 @@ public:
 class TryEmergencyAction : public Action
 {
 public:
-    TryEmergencyAction(PlayerbotAI* botAI);
+    TryEmergencyAction(ShadowAI* botAI);
 
     bool Execute(Event event) override;
 };

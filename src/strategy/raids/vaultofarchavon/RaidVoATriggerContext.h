@@ -3,8 +3,8 @@
 //  and/or modify it under version 2 of the License, or (at your option), any later version.
 //  */
 
-#ifndef _PLAYERBOT_RAIDVOATRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDVOATRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDVOATRIGGERCONTEXT_H
+#define _SHADOW_RAIDVOATRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -24,12 +24,12 @@ public:
     }
 
 private:
-    static Trigger* emalon_mark_boss_trigger(PlayerbotAI* ai) { return new EmalonMarkBossTrigger(ai); }
-    static Trigger* emalon_lighting_nova_trigger(PlayerbotAI* ai) { return new EmalonLightingNovaTrigger(ai); }
-    static Trigger* emalon_overcharge_trigger(PlayerbotAI* ai) { return new EmalonOverchargeTrigger(ai); }
-    static Trigger* emalon_fall_from_floor_trigger(PlayerbotAI* ai) { return new EmalonFallFromFloorTrigger(ai); }
-    static Trigger* emalon_nature_resistance_trigger(PlayerbotAI* ai) { return new BossNatureResistanceTrigger(ai, "emalon the storm watcher"); }
-    static Trigger* koralon_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "koralon the flame watcher"); }
+    static Trigger* emalon_mark_boss_trigger(ShadowAI* ai) { return new EmalonMarkBossTrigger(ai); }
+    static Trigger* emalon_lighting_nova_trigger(ShadowAI* ai) { return new EmalonLightingNovaTrigger(ai); }
+    static Trigger* emalon_overcharge_trigger(ShadowAI* ai) { return new EmalonOverchargeTrigger(ai); }
+    static Trigger* emalon_fall_from_floor_trigger(ShadowAI* ai) { return new EmalonFallFromFloorTrigger(ai); }
+    static Trigger* emalon_nature_resistance_trigger(ShadowAI* ai) { return new BossNatureResistanceTrigger(ai, "emalon the storm watcher"); }
+    static Trigger* koralon_fire_resistance_trigger(ShadowAI* ai) { return new BossFireResistanceTrigger(ai, "koralon the flame watcher"); }
 };
 
 #endif

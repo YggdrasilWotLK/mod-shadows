@@ -1,7 +1,7 @@
 #include "RaidNaxxTriggers.h"
 
 #include "EventMap.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ScriptedCreature.h"
 #include "Trigger.h"
 

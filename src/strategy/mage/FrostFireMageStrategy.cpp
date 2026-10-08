@@ -4,7 +4,7 @@
  */
 
 #include "FrostFireMageStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class FrostFireMageStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -22,17 +22,17 @@ public:
     }
 
 private:
-    static ActionNode* frostfire_bolt(PlayerbotAI*) { return new ActionNode("frostfire bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* fire_blast(PlayerbotAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
-    static ActionNode* pyroblast(PlayerbotAI*) { return new ActionNode("pyroblast", nullptr, nullptr, nullptr); }
-    static ActionNode* combustion(PlayerbotAI*) { return new ActionNode("combustion", nullptr, nullptr, nullptr); }
-    static ActionNode* icy_veins(PlayerbotAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
-    static ActionNode* scorch(PlayerbotAI*) { return new ActionNode("scorch", nullptr, nullptr, nullptr); }
-    static ActionNode* living_bomb(PlayerbotAI*) { return new ActionNode("living bomb", nullptr, nullptr, nullptr); }
+    static ActionNode* frostfire_bolt(ShadowAI*) { return new ActionNode("frostfire bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* fire_blast(ShadowAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
+    static ActionNode* pyroblast(ShadowAI*) { return new ActionNode("pyroblast", nullptr, nullptr, nullptr); }
+    static ActionNode* combustion(ShadowAI*) { return new ActionNode("combustion", nullptr, nullptr, nullptr); }
+    static ActionNode* icy_veins(ShadowAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
+    static ActionNode* scorch(ShadowAI*) { return new ActionNode("scorch", nullptr, nullptr, nullptr); }
+    static ActionNode* living_bomb(ShadowAI*) { return new ActionNode("living bomb", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-FrostFireMageStrategy::FrostFireMageStrategy(PlayerbotAI* botAI) : GenericMageStrategy(botAI)
+FrostFireMageStrategy::FrostFireMageStrategy(ShadowAI* botAI) : GenericMageStrategy(botAI)
 {
     actionNodeFactories.Add(new FrostFireMageStrategyActionNodeFactory());
 }

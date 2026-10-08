@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHECKMOUNTSTATEACTION_H
-#define _PLAYERBOT_CHECKMOUNTSTATEACTION_H
+#ifndef _SHADOW_CHECKMOUNTSTATEACTION_H
+#define _SHADOW_CHECKMOUNTSTATEACTION_H
 
 #include <unordered_map>
 #include <vector>
@@ -30,12 +30,12 @@ struct PreferredMountCache
     std::vector<uint32> flightMounts;
 };
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CheckMountStateAction : public UseItemAction
 {
 public:
-    CheckMountStateAction(PlayerbotAI* botAI) : UseItemAction(botAI, "check mount state", true) {}
+    CheckMountStateAction(ShadowAI* botAI) : UseItemAction(botAI, "check mount state", true) {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

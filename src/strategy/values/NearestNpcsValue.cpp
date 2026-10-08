@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Vehicle.h"
 
 void NearestNpcsValue::FindUnits(std::list<Unit*>& targets)

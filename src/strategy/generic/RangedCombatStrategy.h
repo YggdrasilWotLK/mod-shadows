@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RANGEDCOMBATSTRATEGY_H
-#define _PLAYERBOT_RANGEDCOMBATSTRATEGY_H
+#ifndef _SHADOW_RANGEDCOMBATSTRATEGY_H
+#define _SHADOW_RANGEDCOMBATSTRATEGY_H
 
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RangedCombatStrategy : public CombatStrategy
 {
 public:
-    RangedCombatStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    RangedCombatStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     uint32 GetType() const override { return STRATEGY_TYPE_COMBAT | STRATEGY_TYPE_RANGED; }
     std::string const getName() override { return "ranged"; }

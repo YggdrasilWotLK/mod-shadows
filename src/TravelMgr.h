@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRAVELMGR_H
-#define _PLAYERBOT_TRAVELMGR_H
+#ifndef _SHADOW_TRAVELMGR_H
+#define _SHADOW_TRAVELMGR_H
 
 #include <boost/functional/hash.hpp>
 #include <random>
@@ -14,13 +14,13 @@
 #include "CreatureData.h"
 #include "GameObject.h"
 #include "GridDefines.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
 class GuidPosition;
 class ObjectGuid;
 class Quest;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 struct QuestStatusData;
 
@@ -297,11 +297,11 @@ public:
 
     std::vector<WorldPosition> getPathTo(WorldPosition endPos, Unit* bot) { return endPos.getPathFrom(*this, bot); }
 
-    bool isPathTo(std::vector<WorldPosition> path, float maxDistance = sPlayerbotAIConfig->targetPosRecalcDistance)
+    bool isPathTo(std::vector<WorldPosition> path, float maxDistance = sShadowAIConfig->targetPosRecalcDistance)
     {
         return !path.empty() && distance(path.back()) < maxDistance;
     };
-    bool cropPathTo(std::vector<WorldPosition>& path, float maxDistance = sPlayerbotAIConfig->targetPosRecalcDistance);
+    bool cropPathTo(std::vector<WorldPosition>& path, float maxDistance = sShadowAIConfig->targetPosRecalcDistance);
     bool canPathTo(WorldPosition endPos, Unit* bot) { return endPos.isPathTo(getPathTo(endPos, bot)); }
 
     float getPathLength(std::vector<WorldPosition> points)
@@ -752,8 +752,8 @@ protected:
 class TravelTarget : AiObject
 {
 public:
-    TravelTarget(PlayerbotAI* botAI) : AiObject(botAI), m_status(TRAVEL_STATUS_NONE), startTime(getMSTime()){};
-    TravelTarget(PlayerbotAI* botAI, TravelDestination* tDestination1, WorldPosition* wPosition1)
+    TravelTarget(ShadowAI* botAI) : AiObject(botAI), m_status(TRAVEL_STATUS_NONE), startTime(getMSTime()){};
+    TravelTarget(ShadowAI* botAI, TravelDestination* tDestination1, WorldPosition* wPosition1)
         : AiObject(botAI), m_status(TRAVEL_STATUS_NONE), startTime(getMSTime())
     {
         setTarget(tDestination1, wPosition1);
@@ -802,7 +802,7 @@ public:
         return tDestination->getEntry();
     }
 
-    PlayerbotAI* getAi() { return botAI; }
+    ShadowAI* getAi() { return botAI; }
 
     uint32 getExpiredTime() { return getMSTime() - startTime; }
 

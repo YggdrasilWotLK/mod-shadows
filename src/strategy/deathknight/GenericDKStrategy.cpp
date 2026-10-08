@@ -5,7 +5,7 @@
 #include "GenericDKStrategy.h"
 
 #include "DKAiObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericDKStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -51,7 +51,7 @@ public:
     }
 
 private:
-    static ActionNode* death_coil([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* death_coil([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("death coil",
                               /*P*/ nullptr,
@@ -59,7 +59,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* death_grip([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* death_grip([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("death grip",
                               /*P*/ nullptr,
@@ -67,7 +67,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* plague_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* plague_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("plague strike",
                               /*P*/ nullptr,
@@ -75,7 +75,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* icy_touch([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* icy_touch([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("icy touch",
                               /*P*/ nullptr,
@@ -83,7 +83,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* heart_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* heart_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("heart strike",
                               /*P*/ nullptr,
@@ -91,7 +91,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* pestilence([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* pestilence([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("pestilence",
                               /*P*/ nullptr,
@@ -99,7 +99,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* horn_of_winter([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* horn_of_winter([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("horn of winter",
                               /*P*/ nullptr,
@@ -107,7 +107,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* bone_shield([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* bone_shield([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("bone shield",
                               /*P*/ nullptr,
@@ -115,7 +115,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* killing_machine([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* killing_machine([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("killing machine",
                               /*P*/ nullptr,
@@ -123,7 +123,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* corpse_explosion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* corpse_explosion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("corpse explosion",
                               /*P*/ nullptr,
@@ -131,7 +131,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* death_and_decay([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* death_and_decay([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("death and decay",
                               /*P*/ nullptr,
@@ -139,7 +139,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* anti_magic_zone([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* anti_magic_zone([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("anti magic zone",
                               /*P*/ nullptr,
@@ -147,7 +147,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* icebound_fortitude([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* icebound_fortitude([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("icebound fortitude",
                               /*P*/ nullptr,
@@ -156,7 +156,7 @@ private:
     }
 };
 
-GenericDKStrategy::GenericDKStrategy(PlayerbotAI* botAI) : MeleeCombatStrategy(botAI)
+GenericDKStrategy::GenericDKStrategy(ShadowAI* botAI) : MeleeCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericDKStrategyActionNodeFactory());
 }

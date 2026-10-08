@@ -5,6 +5,6 @@
 
 #include "RogueOpeningActions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Value<Unit*>* CastSapAction::GetTargetValue() { return context->GetValue<Unit*>("cc target", getName()); }

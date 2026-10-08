@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICDKSTRATEGY_H
-#define _PLAYERBOT_GENERICDKSTRATEGY_H
+#ifndef _SHADOW_GENERICDKSTRATEGY_H
+#define _SHADOW_GENERICDKSTRATEGY_H
 
 #include "MeleeCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericDKStrategy : public MeleeCombatStrategy
 {
 public:
-    GenericDKStrategy(PlayerbotAI* botAI);
+    GenericDKStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "DK"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

@@ -5,11 +5,11 @@
 
 #include "EmoteStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void EmoteStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
-    if (sPlayerbotAIConfig->randomBotEmote)
+    if (sShadowAIConfig->randomBotEmote)
     {
         triggers.push_back(new TriggerNode("often", NextAction::array(0, new NextAction("talk", 1.0f), nullptr)));
         triggers.push_back(new TriggerNode("seldom", NextAction::array(0, new NextAction("emote", 1.0f), nullptr)));
@@ -19,7 +19,7 @@ void EmoteStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
             new TriggerNode("receive emote", NextAction::array(0, new NextAction("emote", 10.0f), nullptr)));
     }
 
-    if (sPlayerbotAIConfig->randomBotTalk)
+    if (sShadowAIConfig->randomBotTalk)
     {
         triggers.push_back(new TriggerNode(
             "often",
@@ -27,7 +27,7 @@ void EmoteStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
                               new NextAction("suggest trade", 3.0f), nullptr)));
     }
 
-    if (sPlayerbotAIConfig->enableGreet)
+    if (sShadowAIConfig->enableGreet)
         triggers.push_back(
             new TriggerNode("new player nearby", NextAction::array(0, new NextAction("greet", 1.0f), nullptr)));
 

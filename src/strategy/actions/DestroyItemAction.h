@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DESTROYITEMACTION_H
-#define _PLAYERBOT_DESTROYITEMACTION_H
+#ifndef _SHADOW_DESTROYITEMACTION_H
+#define _SHADOW_DESTROYITEMACTION_H
 
 #include "InventoryAction.h"
 
 class FindItemVisitor;
-class PlayerbotAI;
+class ShadowAI;
 
 class DestroyItemAction : public InventoryAction
 {
 public:
-    DestroyItemAction(PlayerbotAI* botAI, std::string const name = "destroy") : InventoryAction(botAI, name) {}
+    DestroyItemAction(ShadowAI* botAI, std::string const name = "destroy") : InventoryAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -25,7 +25,7 @@ protected:
 class SmartDestroyItemAction : public DestroyItemAction
 {
 public:
-    SmartDestroyItemAction(PlayerbotAI* botAI) : DestroyItemAction(botAI, "smart destroy") {}
+    SmartDestroyItemAction(ShadowAI* botAI) : DestroyItemAction(botAI, "smart destroy") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

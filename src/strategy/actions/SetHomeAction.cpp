@@ -6,7 +6,7 @@
 #include "SetHomeAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool SetHomeAction::Execute(Event event)
 {

@@ -5,7 +5,7 @@
 
 #include "WorldPacketHandlerStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void WorldPacketHandlerStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -72,7 +72,7 @@ void WorldPacketHandlerStrategy::InitTriggers(std::vector<TriggerNode*>& trigger
     triggers.push_back(new TriggerNode("very often", NextAction::array(0, new NextAction("loot roll", 10.0f), nullptr)));
 }
 
-WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI)
+WorldPacketHandlerStrategy::WorldPacketHandlerStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI)
 {
     supported.push_back("loot roll");
     supported.push_back("check mount state");

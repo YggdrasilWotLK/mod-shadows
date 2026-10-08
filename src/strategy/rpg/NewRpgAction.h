@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_NEWRPGACTION_H
-#define _PLAYERBOT_NEWRPGACTION_H
+#ifndef _SHADOW_NEWRPGACTION_H
+#define _SHADOW_NEWRPGACTION_H
 
 #include "Duration.h"
 #include "MovementActions.h"
@@ -9,14 +9,14 @@
 #include "Object.h"
 #include "ObjectDefines.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "QuestDef.h"
 #include "TravelMgr.h"
 
 class TellRpgStatusAction : public Action
 {
 public:
-    TellRpgStatusAction(PlayerbotAI* botAI) : Action(botAI, "rpg status") {}
+    TellRpgStatusAction(ShadowAI* botAI) : Action(botAI, "rpg status") {}
 
     bool Execute(Event event) override;
 };
@@ -24,7 +24,7 @@ public:
 class StartRpgDoQuestAction : public Action
 {
 public:
-    StartRpgDoQuestAction(PlayerbotAI* botAI) : Action(botAI, "start rpg do quest") {}
+    StartRpgDoQuestAction(ShadowAI* botAI) : Action(botAI, "start rpg do quest") {}
 
     bool Execute(Event event) override;
 };
@@ -32,7 +32,7 @@ public:
 class NewRpgStatusUpdateAction : public NewRpgBaseAction
 {
 public:
-    NewRpgStatusUpdateAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg status update")
+    NewRpgStatusUpdateAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg status update")
     {
         // int statusCount = RPG_STATUS_END - 1;
 
@@ -56,28 +56,28 @@ protected:
 class NewRpgGoGrindAction : public NewRpgBaseAction
 {
 public:
-    NewRpgGoGrindAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg go grind") {}
+    NewRpgGoGrindAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg go grind") {}
     bool Execute(Event event) override;
 };
 
 class NewRpgGoCampAction : public NewRpgBaseAction
 {
 public:
-    NewRpgGoCampAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg go camp") {}
+    NewRpgGoCampAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg go camp") {}
     bool Execute(Event event) override;
 };
 
 class NewRpgWanderRandomAction : public NewRpgBaseAction
 {
 public:
-    NewRpgWanderRandomAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg wander random") {}
+    NewRpgWanderRandomAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg wander random") {}
     bool Execute(Event event) override;
 };
 
 class NewRpgWanderNpcAction : public NewRpgBaseAction
 {
 public:
-    NewRpgWanderNpcAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg move npcs") {}
+    NewRpgWanderNpcAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg move npcs") {}
     bool Execute(Event event) override;
 
     const uint32 npcStayTime = 8 * 1000;
@@ -86,7 +86,7 @@ public:
 class NewRpgDoQuestAction : public NewRpgBaseAction
 {
 public:
-    NewRpgDoQuestAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg do quest") {}
+    NewRpgDoQuestAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg do quest") {}
     bool Execute(Event event) override;
 
 protected:
@@ -99,7 +99,7 @@ protected:
 class NewRpgTravelFlightAction : public NewRpgBaseAction
 {
 public:
-    NewRpgTravelFlightAction(PlayerbotAI* botAI) : NewRpgBaseAction(botAI, "new rpg travel flight") {}
+    NewRpgTravelFlightAction(ShadowAI* botAI) : NewRpgBaseAction(botAI, "new rpg travel flight") {}
     bool Execute(Event event) override;
 };
 

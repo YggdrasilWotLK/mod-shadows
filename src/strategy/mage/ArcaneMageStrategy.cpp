@@ -4,7 +4,7 @@
  */
 
 #include "ArcaneMageStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class ArcaneMageStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -22,17 +22,17 @@ public:
     }
 
 private:
-    static ActionNode* arcane_blast(PlayerbotAI*) { return new ActionNode("arcane blast", nullptr, nullptr, nullptr); }
-    static ActionNode* arcane_barrage(PlayerbotAI*) { return new ActionNode("arcane barrage", nullptr, nullptr, nullptr); }
-    static ActionNode* arcane_missiles(PlayerbotAI*) { return new ActionNode("arcane missiles", nullptr, nullptr, nullptr); }
-    static ActionNode* fire_blast(PlayerbotAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
-    static ActionNode* frostbolt(PlayerbotAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
-    static ActionNode* arcane_power(PlayerbotAI*) { return new ActionNode("arcane power", nullptr, nullptr, nullptr); }
-    static ActionNode* icy_veins(PlayerbotAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
+    static ActionNode* arcane_blast(ShadowAI*) { return new ActionNode("arcane blast", nullptr, nullptr, nullptr); }
+    static ActionNode* arcane_barrage(ShadowAI*) { return new ActionNode("arcane barrage", nullptr, nullptr, nullptr); }
+    static ActionNode* arcane_missiles(ShadowAI*) { return new ActionNode("arcane missiles", nullptr, nullptr, nullptr); }
+    static ActionNode* fire_blast(ShadowAI*) { return new ActionNode("fire blast", nullptr, nullptr, nullptr); }
+    static ActionNode* frostbolt(ShadowAI*) { return new ActionNode("frostbolt", nullptr, nullptr, nullptr); }
+    static ActionNode* arcane_power(ShadowAI*) { return new ActionNode("arcane power", nullptr, nullptr, nullptr); }
+    static ActionNode* icy_veins(ShadowAI*) { return new ActionNode("icy veins", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-ArcaneMageStrategy::ArcaneMageStrategy(PlayerbotAI* botAI) : GenericMageStrategy(botAI)
+ArcaneMageStrategy::ArcaneMageStrategy(ShadowAI* botAI) : GenericMageStrategy(botAI)
 {
     actionNodeFactories.Add(new ArcaneMageStrategyActionNodeFactory());
 }

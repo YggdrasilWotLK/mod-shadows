@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GRINDTARGETVALUE_H
-#define _PLAYERBOT_GRINDTARGETVALUE_H
+#ifndef _SHADOW_GRINDTARGETVALUE_H
+#define _SHADOW_GRINDTARGETVALUE_H
 
 #include "TargetValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class GrindTargetValue : public TargetValue
 {
 public:
-    GrindTargetValue(PlayerbotAI* botAI, std::string const name = "grind target") : TargetValue(botAI, name) {}
+    GrindTargetValue(ShadowAI* botAI, std::string const name = "grind target") : TargetValue(botAI, name) {}
 
     Unit* Calculate() override;
 

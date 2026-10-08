@@ -5,7 +5,7 @@
 
 #include "DruidTriggers.h"
 #include "Player.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool MarkOfTheWildOnPartyTrigger::IsActive()
 {

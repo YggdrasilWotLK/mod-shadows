@@ -7,7 +7,7 @@
 
 #include "ChatHelper.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool DropQuestAction::Execute(Event event)
 {
@@ -17,7 +17,7 @@ bool DropQuestAction::Execute(Event event)
     if (!master)
         return false;
 
-    PlayerbotChatHandler handler(master);
+    ShadowChatHandler handler(master);
     uint32 entry = handler.extractQuestId(link);
 
     // remove all quest entries for 'entry' from quest log
@@ -50,7 +50,7 @@ bool DropQuestAction::Execute(Event event)
     {
         const Quest* pQuest = sObjectMgr->GetQuestTemplate(entry);
         const std::string text_quest = ChatHelper::FormatQuest(pQuest);
-        LOG_INFO("playerbots", "{} => Quest [ {} ] removed", bot->GetName(), pQuest->GetTitle());
+        LOG_INFO("shadows", "{} => Quest [ {} ] removed", bot->GetName(), pQuest->GetTitle());
         bot->Say("Quest [ " + text_quest + " ] removed", LANG_UNIVERSAL);
     }
 
@@ -68,7 +68,7 @@ bool CleanQuestLogAction::Execute(Event event)
         return false;
     }
 
-    if (!sPlayerbotAIConfig->dropObsoleteQuests)
+    if (!sShadowAIConfig->dropObsoleteQuests)
     {
         return false;
     }
@@ -143,7 +143,7 @@ bool CleanQuestLogAction::Execute(Event event)
             if (botAI->HasStrategy("debug rpg", BotState::BOT_STATE_COMBAT))
             {
                 const std::string text_quest = ChatHelper::FormatQuest(quest);
-                LOG_INFO("playerbots", "{} => Quest [ {} ] removed", bot->GetName(), quest->GetTitle());
+                LOG_INFO("shadows", "{} => Quest [ {} ] removed", bot->GetName(), quest->GetTitle());
                 bot->Say("Quest [ " + text_quest + " ] removed", LANG_UNIVERSAL);
             }
 
@@ -235,7 +235,7 @@ void CleanQuestLogAction::DropQuestType(uint8& numQuest, uint8 wantNum, bool isG
         if (botAI->HasStrategy("debug quest", BotState::BOT_STATE_NON_COMBAT) || botAI->HasStrategy("debug rpg", BotState::BOT_STATE_COMBAT))
         {
             const std::string text_quest = ChatHelper::FormatQuest(quest);
-            LOG_INFO("playerbots", "{} => Quest [ {} ] removed", bot->GetName(), quest->GetTitle());
+            LOG_INFO("shadows", "{} => Quest [ {} ] removed", bot->GetName(), quest->GetTitle());
             bot->Say("Quest [ " + text_quest + " ] removed", LANG_UNIVERSAL);
         }
         botAI->TellMaster("Quest removed" + chat->FormatQuest(quest));

@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_STANCES_H
-#define _PLAYERBOT_STANCES_H
+#ifndef _SHADOW_STANCES_H
+#define _SHADOW_STANCES_H
 
 #include "Action.h"
 #include "Formations.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class Stance : public Formation
 {
 public:
-    Stance(PlayerbotAI* botAI, std::string const name) : Formation(botAI, name) {}
+    Stance(ShadowAI* botAI, std::string const name) : Formation(botAI, name) {}
 
     WorldLocation GetLocation() override;
     std::string const GetTargetName() override;
@@ -30,7 +30,7 @@ protected:
 class MoveStance : public Stance
 {
 public:
-    MoveStance(PlayerbotAI* botAI, std::string const name) : Stance(botAI, name) {}
+    MoveStance(ShadowAI* botAI, std::string const name) : Stance(botAI, name) {}
 
 protected:
     WorldLocation GetLocationInternal();
@@ -40,7 +40,7 @@ protected:
 class StanceValue : public ManualSetValue<Stance*>
 {
 public:
-    StanceValue(PlayerbotAI* botAI);
+    StanceValue(ShadowAI* botAI);
     ~StanceValue();
 
     std::string const Save() override;
@@ -50,7 +50,7 @@ public:
 class SetStanceAction : public Action
 {
 public:
-    SetStanceAction(PlayerbotAI* botAI) : Action(botAI, "set Stance") {}
+    SetStanceAction(ShadowAI* botAI) : Action(botAI, "set Stance") {}
 
     bool Execute(Event event) override;
 };

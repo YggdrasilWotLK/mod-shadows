@@ -5,12 +5,12 @@
 
 #include "CurrentCcTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class FindCurrentCcTargetStrategy : public FindTargetStrategy
 {
 public:
-    FindCurrentCcTargetStrategy(PlayerbotAI* botAI, std::string const spell) : FindTargetStrategy(botAI), spell(spell)
+    FindCurrentCcTargetStrategy(ShadowAI* botAI, std::string const spell) : FindTargetStrategy(botAI), spell(spell)
     {
     }
 

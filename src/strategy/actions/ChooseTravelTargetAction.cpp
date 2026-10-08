@@ -7,7 +7,7 @@
 
 #include "ChatHelper.h"
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool ChooseTravelTargetAction::Execute(Event event)
 {
@@ -423,14 +423,14 @@ bool ChooseTravelTargetAction::SetGroupTarget(TravelTarget* target)
         if (!player)
             continue;
 
-        auto playerBotAI = GET_PLAYERBOT_AI(player);
-        if (!playerBotAI)
+        auto shadowAI = GET_SHADOW_AI(player);
+        if (!shadowAI)
             continue;
 
-        if (!playerBotAI->GetAiObjectContext())
+        if (!shadowAI->GetAiObjectContext())
             continue;
 
-        TravelTarget* groupTarget = playerBotAI->GetAiObjectContext()->GetValue<TravelTarget*>("travel target")->Get();
+        TravelTarget* groupTarget = shadowAI->GetAiObjectContext()->GetValue<TravelTarget*>("travel target")->Get();
 
         if (groupTarget->isGroupCopy())
             continue;

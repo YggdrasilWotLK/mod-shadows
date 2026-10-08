@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REVEALGATHERINGITEMACTION_H
-#define _PLAYERBOT_REVEALGATHERINGITEMACTION_H
+#ifndef _SHADOW_REVEALGATHERINGITEMACTION_H
+#define _SHADOW_REVEALGATHERINGITEMACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RevealGatheringItemAction : public Action
 {
 public:
-    RevealGatheringItemAction(PlayerbotAI* botAI) : Action(botAI, "reveal gathering item") {}
+    RevealGatheringItemAction(ShadowAI* botAI) : Action(botAI, "reveal gathering item") {}
 
     bool Execute(Event event) override;
 };

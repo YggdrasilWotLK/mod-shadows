@@ -6,7 +6,7 @@
 #include "SpellCastUsefulValue.h"
 
 #include "LastSpellCastValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool SpellCastUsefulValue::Calculate()
 {

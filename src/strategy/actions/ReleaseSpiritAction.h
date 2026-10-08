@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef PLAYERBOT_RELEASESPIRITACTION_H
-#define PLAYERBOT_RELEASESPIRITACTION_H
+#ifndef SHADOW_RELEASESPIRITACTION_H
+#define SHADOW_RELEASESPIRITACTION_H
 
 #include "Action.h"
 #include "ReviveFromCorpseAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ReleaseSpiritAction : public Action
 {
 public:
-    ReleaseSpiritAction(PlayerbotAI* botAI, const std::string& name = "release")
+    ReleaseSpiritAction(ShadowAI* botAI, const std::string& name = "release")
         : Action(botAI, name) {}
 
     bool Execute(Event event) override;
@@ -27,7 +27,7 @@ protected:
 class AutoReleaseSpiritAction : public ReleaseSpiritAction
 {
 public:
-    AutoReleaseSpiritAction(PlayerbotAI* botAI, const std::string& name = "auto release")
+    AutoReleaseSpiritAction(ShadowAI* botAI, const std::string& name = "auto release")
         : ReleaseSpiritAction(botAI, name) {}
 
     bool Execute(Event event) override;
@@ -44,7 +44,7 @@ private:
 class RepopAction : public SpiritHealerAction
 {
 public:
-    RepopAction(PlayerbotAI* botAI, const std::string& name = "repop")
+    RepopAction(ShadowAI* botAI, const std::string& name = "repop")
         : SpiritHealerAction(botAI, name) {}
 
     bool Execute(Event event) override;
@@ -59,7 +59,7 @@ private:
 class SelfResurrectAction : public Action
 {
 public:
-    SelfResurrectAction(PlayerbotAI* ai) : Action(ai, "self resurrect") {}
+    SelfResurrectAction(ShadowAI* ai) : Action(ai, "self resurrect") {}
     virtual bool Execute(Event event) override;
     bool isUseful() override;
 };

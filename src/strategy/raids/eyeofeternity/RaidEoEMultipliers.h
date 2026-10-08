@@ -7,7 +7,7 @@
 class MalygosMultiplier : public Multiplier
 {
 public:
-    MalygosMultiplier(PlayerbotAI* ai) : Multiplier(ai, "malygos") {}
+    MalygosMultiplier(ShadowAI* ai) : Multiplier(ai, "malygos") {}
 
 public:
     virtual float GetValue(Action* action);

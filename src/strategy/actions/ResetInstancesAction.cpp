@@ -5,7 +5,7 @@
 
 #include "ResetInstancesAction.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool ResetInstancesAction::Execute(Event event)
 {

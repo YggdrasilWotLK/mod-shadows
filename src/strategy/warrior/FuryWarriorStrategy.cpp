@@ -5,7 +5,7 @@
 
 #include "FuryWarriorStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class FuryWarriorStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -29,7 +29,7 @@ private:
     // ACTION_NODE_A(bloodthirst, "bloodthirst", "melee");
     ACTION_NODE_A(pummel, "pummel", "intercept");
 
-    static ActionNode* enraged_regeneration(PlayerbotAI* botAI)
+    static ActionNode* enraged_regeneration(ShadowAI* botAI)
     {
         return new ActionNode("enraged regeneration",
                               /*P*/ nullptr,
@@ -38,7 +38,7 @@ private:
     }
 };
 
-FuryWarriorStrategy::FuryWarriorStrategy(PlayerbotAI* botAI) : GenericWarriorStrategy(botAI)
+FuryWarriorStrategy::FuryWarriorStrategy(ShadowAI* botAI) : GenericWarriorStrategy(botAI)
 {
     actionNodeFactories.Add(new FuryWarriorStrategyActionNodeFactory());
 }

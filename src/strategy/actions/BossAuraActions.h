@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BOSSAURAACTION_H
-#define _PLAYERBOT_BOSSAURAACTION_H
+#ifndef _SHADOW_BOSSAURAACTION_H
+#define _SHADOW_BOSSAURAACTION_H
 
 #include <string>
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class BossFireResistanceAction : public Action
 {
 public:
-    BossFireResistanceAction(PlayerbotAI* botAI, std::string const bossName)
+    BossFireResistanceAction(ShadowAI* botAI, std::string const bossName)
         : Action(botAI, bossName + " fire resistance action"), bossName(bossName)
     {
     }
@@ -29,7 +29,7 @@ private:
 class BossFrostResistanceAction : public Action
 {
 public:
-    BossFrostResistanceAction(PlayerbotAI* botAI, std::string const bossName)
+    BossFrostResistanceAction(ShadowAI* botAI, std::string const bossName)
         : Action(botAI, bossName + " frost resistance action"), bossName(bossName)
     {
     }
@@ -43,7 +43,7 @@ private:
 class BossNatureResistanceAction : public Action
 {
 public:
-    BossNatureResistanceAction(PlayerbotAI* botAI, std::string const bossName)
+    BossNatureResistanceAction(ShadowAI* botAI, std::string const bossName)
         : Action(botAI, bossName + " nature resistance action"), bossName(bossName)
     {
     }
@@ -57,7 +57,7 @@ private:
 class BossShadowResistanceAction : public Action
 {
 public:
-    BossShadowResistanceAction(PlayerbotAI* botAI, std::string const bossName)
+    BossShadowResistanceAction(ShadowAI* botAI, std::string const bossName)
         : Action(botAI, bossName + " shadow resistance action"), bossName(bossName)
     {
     }

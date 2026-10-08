@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOGLEVELVALUE_H
-#define _PLAYERBOT_LOGLEVELVALUE_H
+#ifndef _SHADOW_LOGLEVELVALUE_H
+#define _SHADOW_LOGLEVELVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LogLevelValue : public ManualSetValue<LogLevel>
 {
 public:
-    LogLevelValue(PlayerbotAI* botAI, std::string const name = "log level")
+    LogLevelValue(ShadowAI* botAI, std::string const name = "log level")
         : ManualSetValue<LogLevel>(botAI, LOG_LEVEL_DEBUG, name)
     {
     }

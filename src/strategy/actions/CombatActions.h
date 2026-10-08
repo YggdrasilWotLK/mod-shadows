@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_COMBATACTIONS_H
-#define _PLAYERBOT_COMBATACTIONS_H
+#ifndef _SHADOW_COMBATACTIONS_H
+#define _SHADOW_COMBATACTIONS_H
 
 #include "ChangeStrategyAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SwitchToMeleeAction : public ChangeCombatStrategyAction
 {
 public:
-    SwitchToMeleeAction(PlayerbotAI* botAI) : ChangeCombatStrategyAction(botAI, "-ranged,+close") {}
+    SwitchToMeleeAction(ShadowAI* botAI) : ChangeCombatStrategyAction(botAI, "-ranged,+close") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -22,7 +22,7 @@ public:
 class SwitchToRangedAction : public ChangeCombatStrategyAction
 {
 public:
-    SwitchToRangedAction(PlayerbotAI* botAI) : ChangeCombatStrategyAction(botAI, "-close,+ranged") {}
+    SwitchToRangedAction(ShadowAI* botAI) : ChangeCombatStrategyAction(botAI, "-close,+ranged") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

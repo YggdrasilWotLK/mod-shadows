@@ -3,24 +3,24 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MAILACTION_H
-#define _PLAYERBOT_MAILACTION_H
+#ifndef _SHADOW_MAILACTION_H
+#define _SHADOW_MAILACTION_H
 
 #include "InventoryAction.h"
 
 class ObjectGuid;
-class PlayerbotAI;
+class ShadowAI;
 
 struct Mail;
 
 class MailProcessor
 {
 public:
-    virtual bool Before([[maybe_unused]] PlayerbotAI* botAI) { return true; }
-    virtual bool Process(uint32 index, Mail* mail, PlayerbotAI* botAI) = 0;
-    virtual bool After([[maybe_unused]] PlayerbotAI* botAI) { return true; }
+    virtual bool Before([[maybe_unused]] ShadowAI* botAI) { return true; }
+    virtual bool Process(uint32 index, Mail* mail, ShadowAI* botAI) = 0;
+    virtual bool After([[maybe_unused]] ShadowAI* botAI) { return true; }
 
-    static ObjectGuid FindMailbox(PlayerbotAI* botAI);
+    static ObjectGuid FindMailbox(ShadowAI* botAI);
 
 protected:
     void RemoveMail(Player* bot, uint32 id, ObjectGuid mailbox);
@@ -29,7 +29,7 @@ protected:
 class MailAction : public InventoryAction
 {
 public:
-    MailAction(PlayerbotAI* botAI) : InventoryAction(botAI, "mail") {}
+    MailAction(ShadowAI* botAI) : InventoryAction(botAI, "mail") {}
 
     bool Execute(Event event) override;
 

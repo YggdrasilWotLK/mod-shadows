@@ -5,9 +5,9 @@
 
 #include "QuestStrategies.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-QuestStrategy::QuestStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) { supported.push_back("accept quest"); }
+QuestStrategy::QuestStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) { supported.push_back("accept quest"); }
 
 void QuestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -29,7 +29,7 @@ void DefaultQuestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         "complete quest", NextAction::array(0, new NextAction("talk to quest giver", relevance), nullptr)));
 }
 
-DefaultQuestStrategy::DefaultQuestStrategy(PlayerbotAI* botAI) : QuestStrategy(botAI) {}
+DefaultQuestStrategy::DefaultQuestStrategy(ShadowAI* botAI) : QuestStrategy(botAI) {}
 
 void AcceptAllQuestsStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -46,4 +46,4 @@ void AcceptAllQuestsStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
                                                             new NextAction("accept all quests", relevance), nullptr)));
 }
 
-AcceptAllQuestsStrategy::AcceptAllQuestsStrategy(PlayerbotAI* botAI) : QuestStrategy(botAI) {}
+AcceptAllQuestsStrategy::AcceptAllQuestsStrategy(ShadowAI* botAI) : QuestStrategy(botAI) {}

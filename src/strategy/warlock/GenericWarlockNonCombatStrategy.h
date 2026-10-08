@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICWARLOCKNONCOMBATSTRATEGY_H
-#define _PLAYERBOT_GENERICWARLOCKNONCOMBATSTRATEGY_H
+#ifndef _SHADOW_GENERICWARLOCKNONCOMBATSTRATEGY_H
+#define _SHADOW_GENERICWARLOCKNONCOMBATSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericWarlockNonCombatStrategy : public NonCombatStrategy
 {
 public:
-    GenericWarlockNonCombatStrategy(PlayerbotAI* botAI);
+    GenericWarlockNonCombatStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "nc"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -22,7 +22,7 @@ public:
 class SummonImpStrategy : public NonCombatStrategy
 {
 public:
-    SummonImpStrategy(PlayerbotAI* ai);
+    SummonImpStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "imp"; }
 
 public:
@@ -32,7 +32,7 @@ public:
 class SummonVoidwalkerStrategy : public NonCombatStrategy
 {
 public:
-    SummonVoidwalkerStrategy(PlayerbotAI* ai);
+    SummonVoidwalkerStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "voidwalker"; }
 
 public:
@@ -42,7 +42,7 @@ public:
 class SummonSuccubusStrategy : public NonCombatStrategy
 {
 public:
-    SummonSuccubusStrategy(PlayerbotAI* ai);
+    SummonSuccubusStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "succubus"; }
 
 public:
@@ -52,7 +52,7 @@ public:
 class SummonFelhunterStrategy : public NonCombatStrategy
 {
 public:
-    SummonFelhunterStrategy(PlayerbotAI* ai);
+    SummonFelhunterStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "felhunter"; }
 
 public:
@@ -62,7 +62,7 @@ public:
 class SummonFelguardStrategy : public NonCombatStrategy
 {
 public:
-    SummonFelguardStrategy(PlayerbotAI* ai);
+    SummonFelguardStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "felguard"; }
 
 public:
@@ -72,7 +72,7 @@ public:
 class SoulstoneSelfStrategy : public NonCombatStrategy
 {
 public:
-    SoulstoneSelfStrategy(PlayerbotAI* ai);
+    SoulstoneSelfStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "ss self"; }
 
 public:
@@ -82,7 +82,7 @@ public:
 class SoulstoneMasterStrategy : public NonCombatStrategy
 {
 public:
-    SoulstoneMasterStrategy(PlayerbotAI* ai);
+    SoulstoneMasterStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "ss master"; }
 
 public:
@@ -92,7 +92,7 @@ public:
 class SoulstoneTankStrategy : public NonCombatStrategy
 {
 public:
-    SoulstoneTankStrategy(PlayerbotAI* ai);
+    SoulstoneTankStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "ss tank"; }
 
 public:
@@ -102,7 +102,7 @@ public:
 class SoulstoneHealerStrategy : public NonCombatStrategy
 {
 public:
-    SoulstoneHealerStrategy(PlayerbotAI* ai);
+    SoulstoneHealerStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "ss healer"; }
 
 public:
@@ -112,7 +112,7 @@ public:
 class UseSpellstoneStrategy : public NonCombatStrategy
 {
 public:
-    UseSpellstoneStrategy(PlayerbotAI* ai);
+    UseSpellstoneStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "spellstone"; }
 
 public:
@@ -122,7 +122,7 @@ public:
 class UseFirestoneStrategy : public NonCombatStrategy
 {
 public:
-    UseFirestoneStrategy(PlayerbotAI* ai);
+    UseFirestoneStrategy(ShadowAI* ai);
     virtual std::string const getName() override { return "firestone"; }
 
 public:

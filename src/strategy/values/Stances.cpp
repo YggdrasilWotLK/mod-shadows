@@ -7,7 +7,7 @@
 
 #include "Arrow.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* Stance::GetTarget()
 {
@@ -48,7 +48,7 @@ WorldLocation Stance::GetNearLocation(float angle, float distance)
 WorldLocation MoveStance::GetLocationInternal()
 {
     Unit* target = GetTarget();
-    float distance = std::max(sPlayerbotAIConfig->meleeDistance, target->GetCombatReach());
+    float distance = std::max(sShadowAIConfig->meleeDistance, target->GetCombatReach());
 
     float angle = GetAngle();
     return GetNearLocation(angle, distance);
@@ -56,7 +56,7 @@ WorldLocation MoveStance::GetLocationInternal()
 
 std::string const Stance::GetTargetName() { return "current target"; }
 
-float Stance::GetMaxDistance() { return sPlayerbotAIConfig->contactDistance; }
+float Stance::GetMaxDistance() { return sShadowAIConfig->contactDistance; }
 
 StanceValue::~StanceValue()
 {
@@ -70,7 +70,7 @@ StanceValue::~StanceValue()
 class NearStance : public MoveStance
 {
 public:
-    NearStance(PlayerbotAI* botAI) : MoveStance(botAI, "near") {}
+    NearStance(ShadowAI* botAI) : MoveStance(botAI, "near") {}
 
     float GetAngle() override
     {
@@ -117,7 +117,7 @@ public:
 class TankStance : public MoveStance
 {
 public:
-    TankStance(PlayerbotAI* botAI) : MoveStance(botAI, "tank") {}
+    TankStance(ShadowAI* botAI) : MoveStance(botAI, "tank") {}
 
     float GetAngle() override
     {
@@ -129,7 +129,7 @@ public:
 class TurnBackStance : public MoveStance
 {
 public:
-    TurnBackStance(PlayerbotAI* botAI) : MoveStance(botAI, "turnback") {}
+    TurnBackStance(ShadowAI* botAI) : MoveStance(botAI, "turnback") {}
 
     float GetAngle() override
     {
@@ -160,7 +160,7 @@ public:
 class BehindStance : public MoveStance
 {
 public:
-    BehindStance(PlayerbotAI* botAI) : MoveStance(botAI, "behind") {}
+    BehindStance(ShadowAI* botAI) : MoveStance(botAI, "behind") {}
 
     float GetAngle() override
     {
@@ -192,7 +192,7 @@ public:
     }
 };
 
-StanceValue::StanceValue(PlayerbotAI* botAI) : ManualSetValue<Stance*>(botAI, new NearStance(botAI), "stance") {}
+StanceValue::StanceValue(ShadowAI* botAI) : ManualSetValue<Stance*>(botAI, new NearStance(botAI), "stance") {}
 
 std::string const StanceValue::Save() { return value ? value->getName() : "?"; }
 

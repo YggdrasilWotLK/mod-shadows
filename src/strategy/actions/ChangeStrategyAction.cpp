@@ -6,8 +6,8 @@
 #include "ChangeStrategyAction.h"
 
 #include "Event.h"
-#include "PlayerbotDbStore.h"
-#include "Playerbots.h"
+#include "ShadowDbStore.h"
+#include "Shadows.h"
 
 bool ChangeCombatStrategyAction::Execute(Event event)
 {
@@ -24,7 +24,7 @@ bool ChangeCombatStrategyAction::Execute(Event event)
                 case '+':
                 case '-':
                 case '~':
-                    sPlayerbotDbStore->Save(botAI);
+                    sShadowDbStore->Save(botAI);
                     break;
                 case '?':
                     break;
@@ -40,7 +40,7 @@ bool ChangeNonCombatStrategyAction::Execute(Event event)
     std::string const text = event.getParam();
 
     uint32 account = bot->GetSession()->GetAccountId();
-    if (sPlayerbotAIConfig->IsInRandomAccountList(account) && botAI->GetMaster() &&
+    if (sShadowAIConfig->IsInRandomAccountList(account) && botAI->GetMaster() &&
         botAI->GetMaster()->GetSession()->GetSecurity() < SEC_GAMEMASTER)
     {
         if (text.find("loot") != std::string::npos || text.find("gather") != std::string::npos)
@@ -62,7 +62,7 @@ bool ChangeNonCombatStrategyAction::Execute(Event event)
                 case '+':
                 case '-':
                 case '~':
-                    sPlayerbotDbStore->Save(botAI);
+                    sShadowDbStore->Save(botAI);
                     break;
                 case '?':
                     break;

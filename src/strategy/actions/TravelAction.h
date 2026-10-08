@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRAVELACTION_H
-#define _PLAYERBOT_TRAVELACTION_H
+#ifndef _SHADOW_TRAVELACTION_H
+#define _SHADOW_TRAVELACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TravelAction : public MovementAction
 {
 public:
-    TravelAction(PlayerbotAI* botAI) : MovementAction(botAI, "travel") {}
+    TravelAction(ShadowAI* botAI) : MovementAction(botAI, "travel") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -22,7 +22,7 @@ public:
 class MoveToDarkPortalAction : public MovementAction
 {
 public:
-    MoveToDarkPortalAction(PlayerbotAI* botAI) : MovementAction(botAI, "move to dark portal") {}
+    MoveToDarkPortalAction(ShadowAI* botAI) : MovementAction(botAI, "move to dark portal") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -31,7 +31,7 @@ public:
 class DarkPortalAzerothAction : public MovementAction
 {
 public:
-    DarkPortalAzerothAction(PlayerbotAI* botAI) : MovementAction(botAI, "dark portal azeroth") {}
+    DarkPortalAzerothAction(ShadowAI* botAI) : MovementAction(botAI, "dark portal azeroth") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -40,7 +40,7 @@ public:
 class MoveFromDarkPortalAction : public MovementAction
 {
 public:
-    MoveFromDarkPortalAction(PlayerbotAI* botAI) : MovementAction(botAI, "move from dark portal") {}
+    MoveFromDarkPortalAction(ShadowAI* botAI) : MovementAction(botAI, "move from dark portal") {}
 
     bool Execute(Event event) override;
 };

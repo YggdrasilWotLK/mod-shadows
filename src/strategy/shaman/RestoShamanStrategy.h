@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RESTOSHAMANSTRATEGY_H
-#define _PLAYERBOT_RESTOSHAMANSTRATEGY_H
+#ifndef _SHADOW_RESTOSHAMANSTRATEGY_H
+#define _SHADOW_RESTOSHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RestoShamanStrategy : public GenericShamanStrategy
 {
 public:
-    RestoShamanStrategy(PlayerbotAI* botAI);
+    RestoShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "resto"; }
@@ -24,7 +24,7 @@ public:
 class ShamanHealerDpsStrategy : public Strategy
 {
 public:
-    ShamanHealerDpsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    ShamanHealerDpsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "healer dps"; }

@@ -1,4 +1,4 @@
 #include "NewRpgTriggers.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
 bool NewRpgStatusTrigger::IsActive() { return status == botAI->rpgInfo.status; }

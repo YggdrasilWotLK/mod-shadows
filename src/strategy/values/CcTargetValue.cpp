@@ -6,13 +6,13 @@
 #include "CcTargetValue.h"
 
 #include "Action.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 class FindTargetForCcStrategy : public FindTargetStrategy
 {
 public:
-    FindTargetForCcStrategy(PlayerbotAI* botAI, std::string const spell)
+    FindTargetForCcStrategy(ShadowAI* botAI, std::string const spell)
         : FindTargetStrategy(botAI), spell(spell), maxDistance(0.f)
     {
     }
@@ -34,7 +34,7 @@ public:
             return;
 
         uint8 health = static_cast<uint8>(creature->GetHealthPct());
-        if (health < sPlayerbotAIConfig->mediumHealth)
+        if (health < sShadowAIConfig->mediumHealth)
             return;
 
         float minDistance = botAI->GetRange("spell");
@@ -47,7 +47,7 @@ public:
             WorldLocation aoe = *botAI->GetAiObjectContext()->GetValue<WorldLocation>("aoe position");
             if (sServerFacade->IsDistanceLessOrEqualThan(
                     sServerFacade->GetDistance2d(creature, aoe.GetPositionX(), aoe.GetPositionY()),
-                    sPlayerbotAIConfig->aoeRadius))
+                    sShadowAIConfig->aoeRadius))
                 return;
         }
 

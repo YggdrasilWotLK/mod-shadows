@@ -5,7 +5,7 @@
 
 #include "BloodDKStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class BloodDKStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -36,21 +36,21 @@ public:
     }
 
 private:
-    static ActionNode* rune_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rune_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rune strike",
                               /*P*/ NextAction::array(0, new NextAction("frost presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* icy_touch([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* icy_touch([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("icy touch",
                               /*P*/ NextAction::array(0, new NextAction("frost presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* heart_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* heart_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("heart strike",
                               /*P*/ NextAction::array(0, new NextAction("frost presence"), nullptr),
@@ -58,14 +58,14 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* death_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* death_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("death strike",
                               /*P*/ NextAction::array(0, new NextAction("frost presence"), nullptr),
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* dark_command([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* dark_command([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("dark command",
                               /*P*/ NextAction::array(0, new NextAction("frost presence"), NULL),
@@ -74,7 +74,7 @@ private:
     }
 };
 
-BloodDKStrategy::BloodDKStrategy(PlayerbotAI* botAI) : GenericDKStrategy(botAI)
+BloodDKStrategy::BloodDKStrategy(ShadowAI* botAI) : GenericDKStrategy(botAI)
 {
     actionNodeFactories.Add(new BloodDKStrategyActionNodeFactory());
 }

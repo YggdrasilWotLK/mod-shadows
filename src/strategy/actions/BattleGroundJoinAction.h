@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BATTLEGROUNDJOINACTION_H
-#define _PLAYERBOT_BATTLEGROUNDJOINACTION_H
+#ifndef _SHADOW_BATTLEGROUNDJOINACTION_H
+#define _SHADOW_BATTLEGROUNDJOINACTION_H
 
 #include "Action.h"
 #include "DBCEnums.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct CreatureData;
 
@@ -20,7 +20,7 @@ enum BattlegroundBracketId : uint8;
 class BGJoinAction : public Action
 {
 public:
-    BGJoinAction(PlayerbotAI* botAI, std::string const name = "bg join") : Action(botAI, name) {}
+    BGJoinAction(ShadowAI* botAI, std::string const name = "bg join") : Action(botAI, name) {}
 
     bool isUseful() override;
     bool canJoinBg(BattlegroundQueueTypeId queueTypeId, BattlegroundBracketId bracketId);
@@ -37,7 +37,7 @@ protected:
 class FreeBGJoinAction : public BGJoinAction
 {
 public:
-    FreeBGJoinAction(PlayerbotAI* botAI, std::string const name = "free bg join") : BGJoinAction(botAI, name) {}
+    FreeBGJoinAction(ShadowAI* botAI, std::string const name = "free bg join") : BGJoinAction(botAI, name) {}
 
     bool shouldJoinBg(BattlegroundQueueTypeId queueTypeId, BattlegroundBracketId bracketId) override;
 };
@@ -45,7 +45,7 @@ public:
 class BGLeaveAction : public Action
 {
 public:
-    BGLeaveAction(PlayerbotAI* botAI, std::string const name = "bg leave") : Action(botAI, name) {}
+    BGLeaveAction(ShadowAI* botAI, std::string const name = "bg leave") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
 };
@@ -53,17 +53,17 @@ public:
 class BGStatusAction : public Action
 {
 public:
-    BGStatusAction(PlayerbotAI* botAI) : Action(botAI, "bg status") {}
+    BGStatusAction(ShadowAI* botAI) : Action(botAI, "bg status") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
-    static bool LeaveBG(PlayerbotAI* botAI);
+    static bool LeaveBG(ShadowAI* botAI);
 };
 
 class BGStatusCheckAction : public Action
 {
 public:
-    BGStatusCheckAction(PlayerbotAI* botAI, std::string const name = "bg status check") : Action(botAI, name) {}
+    BGStatusCheckAction(ShadowAI* botAI, std::string const name = "bg status check") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -72,7 +72,7 @@ public:
 class BGStrategyCheckAction : public Action
 {
 public:
-    BGStrategyCheckAction(PlayerbotAI* botAI, std::string const name = "bg strategy check") : Action(botAI, name) {}
+    BGStrategyCheckAction(ShadowAI* botAI, std::string const name = "bg strategy check") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
 };
