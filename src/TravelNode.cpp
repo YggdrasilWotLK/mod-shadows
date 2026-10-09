@@ -10,7 +10,7 @@
 
 #include "BudgetValues.h"
 #include "PathGenerator.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "TransportMgr.h"
 
@@ -432,7 +432,7 @@ bool TravelNode::cropUselessLinks()
             this->removeLinkTo(farNode);
             hasRemoved = true;
 
-            if (sPlayerbotAIConfig->hasLog("crop.csv"))
+            if (sShadowAIConfig->hasLog("crop.csv"))
             {
                 std::ostringstream out;
                 out << getName() << ",";
@@ -440,7 +440,7 @@ bool TravelNode::cropUselessLinks()
                 WorldPosition().printWKT({*getPosition(), *farNode->getPosition()}, out, 1);
                 out << std::fixed;
 
-                sPlayerbotAIConfig->log("crop.csv", out.str().c_str());
+                sShadowAIConfig->log("crop.csv", out.str().c_str());
             }
         }
 
@@ -449,7 +449,7 @@ bool TravelNode::cropUselessLinks()
             farNode->removeLinkTo(this);
             hasRemoved = true;
 
-            if (sPlayerbotAIConfig->hasLog("crop.csv"))
+            if (sShadowAIConfig->hasLog("crop.csv"))
             {
                 std::ostringstream out;
                 out << getName() << ",";
@@ -457,7 +457,7 @@ bool TravelNode::cropUselessLinks()
                 WorldPosition().printWKT({*getPosition(), *farNode->getPosition()}, out, 1);
                 out << std::fixed;
 
-                sPlayerbotAIConfig->log("crop.csv", out.str().c_str());
+                sShadowAIConfig->log("crop.csv", out.str().c_str());
             }
         }
     }
@@ -612,7 +612,7 @@ void TravelNode::print([[maybe_unused]] bool printFailed)
     out << (isImportant() ? 1 : 0) << ",";
     out << mapSize;
 
-    sPlayerbotAIConfig->log("travelNodes.csv", out.str().c_str());
+    sShadowAIConfig->log("travelNodes.csv", out.str().c_str());
 
     std::vector<WorldPosition> ppath;
 
@@ -666,7 +666,7 @@ void TravelNode::print([[maybe_unused]] bool printFailed)
             out << std::to_string(path->getMaxLevelCreature()[1]) << ",";
             out << std::to_string(path->getMaxLevelCreature()[2]);
 
-            sPlayerbotAIConfig->log("travelPaths.csv", out.str().c_str());
+            sShadowAIConfig->log("travelPaths.csv", out.str().c_str());
         }
     }
 }
@@ -696,8 +696,8 @@ bool TravelPath::makeShortCut(WorldPosition startPos, float maxDist)
                 totalDist += p.point.sqDistance(std::prev(&p)->point);
 
             if (curDist <
-                sPlayerbotAIConfig->tooCloseDistance *
-                    sPlayerbotAIConfig->tooCloseDistance)  // We are on the path. This is a good starting point
+                sShadowAIConfig->tooCloseDistance *
+                    sShadowAIConfig->tooCloseDistance)  // We are on the path. This is a good starting point
             {
                 minDist = curDist;
                 totalDist = curDist;
@@ -732,11 +732,11 @@ bool TravelPath::makeShortCut(WorldPosition startPos, float maxDist)
     WorldPosition beginPos = newPath.begin()->point;
 
     // The old path seems to be the best.
-    if (beginPos.distance(firstNode) < sPlayerbotAIConfig->tooCloseDistance)
+    if (beginPos.distance(firstNode) < sShadowAIConfig->tooCloseDistance)
         return false;
 
     // We are (nearly) on the new path. Just follow the rest.
-    if (beginPos.distance(startPos) < sPlayerbotAIConfig->tooCloseDistance)
+    if (beginPos.distance(startPos) < sShadowAIConfig->tooCloseDistance)
     {
         fullPath = newPath;
         return true;
@@ -892,7 +892,7 @@ WorldPosition TravelPath::getNextPoint(WorldPosition startPos, float maxDist, Tr
     }
 
     // We have to move far for next point. Try to make a cropped path.
-    if (moveDist < sPlayerbotAIConfig->targetPosRecalcDistance && std::next(startP) != ed)
+    if (moveDist < sShadowAIConfig->targetPosRecalcDistance && std::next(startP) != ed)
     {
         // std::vector<WorldPosition> path = startPos.getPathTo(std::next(startP)->point, nullptr);
         // startP->point = startPos.lastInRange(path, -1, maxDist);
@@ -906,7 +906,7 @@ std::ostringstream const TravelPath::print()
 {
     std::ostringstream out;
 
-    out << sPlayerbotAIConfig->GetTimestampStr();
+    out << sShadowAIConfig->GetTimestampStr();
     out << "+00,"
         << "1,";
     out << std::fixed;
@@ -1032,7 +1032,7 @@ std::ostringstream const TravelNodeRoute::print()
 {
     std::ostringstream out;
 
-    out << sPlayerbotAIConfig->GetTimestampStr();
+    out << sShadowAIConfig->GetTimestampStr();
     out << "+00"
         << ",0,"
         << "\"LINESTRING(";
@@ -1216,7 +1216,7 @@ TravelNodeRoute TravelNodeMap::getRoute(TravelNode* start, TravelNode* goal, Pla
 
     if (bot)
     {
-        auto botAI = GET_PLAYERBOT_AI(bot);
+        auto botAI = GET_SHADOW_AI(bot);
         if (botAI)
         {
             if (botAI->HasCheat(BotCheatMask::gold))
@@ -1371,7 +1371,7 @@ TravelNodeRoute TravelNodeMap::getRoute(WorldPosition startPos, WorldPosition en
         WorldPosition startNodePosition = *startNode->getPosition();
         WorldPosition endNodePosition = *endNode->getPosition();
 
-        float maxStartDistance = startNode->isTransport() ? 20.0f : sPlayerbotAIConfig->targetPosRecalcDistance;
+        float maxStartDistance = startNode->isTransport() ? 20.0f : sShadowAIConfig->targetPosRecalcDistance;
 
         TravelNodeRoute route = getRoute(startNode, endNode, bot);
 
@@ -1430,7 +1430,7 @@ TravelNodeRoute TravelNodeMap::getRoute(WorldPosition startPos, WorldPosition en
 TravelPath TravelNodeMap::getFullPath(WorldPosition startPos, WorldPosition endPos, Player* bot)
 {
     TravelPath movePath;
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     std::vector<WorldPosition> beginPath, endPath;
 
     beginPath = endPos.getPathFromPath({startPos}, nullptr, 40);
@@ -1450,24 +1450,24 @@ TravelPath TravelNodeMap::getFullPath(WorldPosition startPos, WorldPosition endP
     if (route.isEmpty())
         return movePath;
 
-    if (sPlayerbotAIConfig->hasLog("bot_pathfinding.csv"))
+    if (sShadowAIConfig->hasLog("bot_pathfinding.csv"))
     {
         if (botAI->HasStrategy("debug move", BOT_STATE_NON_COMBAT))
         {
-            sPlayerbotAIConfig->openLog("bot_pathfinding.csv", "w");
-            sPlayerbotAIConfig->log("bot_pathfinding.csv", route.print().str().c_str());
+            sShadowAIConfig->openLog("bot_pathfinding.csv", "w");
+            sShadowAIConfig->log("bot_pathfinding.csv", route.print().str().c_str());
         }
     }
 
     endPath = route.getNodes().back()->getPosition()->getPathTo(endPos, nullptr);
     movePath = route.buildPath(beginPath, endPath);
 
-    if (sPlayerbotAIConfig->hasLog("bot_pathfinding.csv"))
+    if (sShadowAIConfig->hasLog("bot_pathfinding.csv"))
     {
         if (botAI->HasStrategy("debug move", BOT_STATE_NON_COMBAT))
         {
-            sPlayerbotAIConfig->openLog("bot_pathfinding.csv", "w");
-            sPlayerbotAIConfig->log("bot_pathfinding.csv", movePath.print().str().c_str());
+            sShadowAIConfig->openLog("bot_pathfinding.csv", "w");
+            sShadowAIConfig->log("bot_pathfinding.csv", movePath.print().str().c_str());
         }
     }
 
@@ -1988,15 +1988,15 @@ void TravelNodeMap::generateZoneMeanNodes()
 
 void TravelNodeMap::generateNodes()
 {
-    LOG_INFO("playerbots", "-Generating Start nodes");
+    LOG_INFO("shadows", "-Generating Start nodes");
     generateStartNodes();
-    LOG_INFO("playerbots", "-Generating npc nodes");
+    LOG_INFO("shadows", "-Generating npc nodes");
     generateNpcNodes();
-    LOG_INFO("playerbots", "-Generating area trigger nodes");
+    LOG_INFO("shadows", "-Generating area trigger nodes");
     generateAreaTriggerNodes();
-    LOG_INFO("playerbots", "-Generating transport nodes");
+    LOG_INFO("shadows", "-Generating transport nodes");
     generateTransportNodes();
-    LOG_INFO("playerbots", "-Generating zone mean nodes");
+    LOG_INFO("shadows", "-Generating zone mean nodes");
     generateZoneMeanNodes();
 }
 
@@ -2037,7 +2037,7 @@ void TravelNodeMap::generateWalkPaths()
         }
     }
 
-    LOG_INFO("playerbots", ">> Generated paths for {} nodes.", sTravelNodeMap->getNodes().size());
+    LOG_INFO("shadows", ">> Generated paths for {} nodes.", sTravelNodeMap->getNodes().size());
 }
 
 void TravelNodeMap::generateTaxiPaths()
@@ -2141,7 +2141,7 @@ void TravelNodeMap::removeUselessPaths()
 
         it++;
 
-        LOG_INFO("playerbots", "Iteration {}, removed {}", it, rem);
+        LOG_INFO("shadows", "Iteration {}, removed {}", it, rem);
     }
 }
 
@@ -2163,20 +2163,20 @@ void TravelNodeMap::calculatePathCosts()
         }
     }
 
-    LOG_INFO("playerbots", ">> Calculated pathcost for {} nodes.", sTravelNodeMap->getNodes().size());
+    LOG_INFO("shadows", ">> Calculated pathcost for {} nodes.", sTravelNodeMap->getNodes().size());
 }
 
 void TravelNodeMap::generatePaths()
 {
-    LOG_INFO("playerbots", "-Calculating walkable paths");
+    LOG_INFO("shadows", "-Calculating walkable paths");
     generateWalkPaths();
-    LOG_INFO("playerbots", "-Removing useless nodes");
+    LOG_INFO("shadows", "-Removing useless nodes");
     removeLowNodes();
-    LOG_INFO("playerbots", "-Removing useless paths");
+    LOG_INFO("shadows", "-Removing useless paths");
     removeUselessPaths();
-    LOG_INFO("playerbots", "-Calculating path costs");
+    LOG_INFO("shadows", "-Calculating path costs");
     calculatePathCosts();
-    LOG_INFO("playerbots", "-Generating taxi paths");
+    LOG_INFO("shadows", "-Generating taxi paths");
     generateTaxiPaths();
 }
 
@@ -2185,10 +2185,10 @@ void TravelNodeMap::generateAll()
     if (hasToFullGen)
         generateNodes();
 
-    LOG_INFO("playerbots", "-Calculating mapoffset");
+    LOG_INFO("shadows", "-Calculating mapoffset");
     calcMapOffset();
 
-    LOG_INFO("playerbots", "-Generating maptransfers");
+    LOG_INFO("shadows", "-Generating maptransfers");
     sTravelMgr->loadMapTransfers();
 
     if (hasToGen || hasToFullGen)
@@ -2202,14 +2202,14 @@ void TravelNodeMap::generateAll()
 
 void TravelNodeMap::printMap()
 {
-    if (!sPlayerbotAIConfig->hasLog("travelNodes.csv") && !sPlayerbotAIConfig->hasLog("travelPaths.csv"))
+    if (!sShadowAIConfig->hasLog("travelNodes.csv") && !sShadowAIConfig->hasLog("travelPaths.csv"))
         return;
 
     printf("\r [Qgis] \r\x3D");
     fflush(stdout);
 
-    sPlayerbotAIConfig->openLog("travelNodes.csv", "w");
-    sPlayerbotAIConfig->openLog("travelPaths.csv", "w");
+    sShadowAIConfig->openLog("travelNodes.csv", "w");
+    sShadowAIConfig->openLog("travelPaths.csv", "w");
 
     std::vector<TravelNode*> anodes = getNodes();
 
@@ -2225,26 +2225,26 @@ void TravelNodeMap::printNodeStore()
 {
     std::string const nodeStore = "TravelNodeStore.h";
 
-    if (!sPlayerbotAIConfig->hasLog(nodeStore))
+    if (!sShadowAIConfig->hasLog(nodeStore))
         return;
 
     printf("\r [Map] \r\x3D");
     fflush(stdout);
 
-    sPlayerbotAIConfig->openLog(nodeStore, "w");
+    sShadowAIConfig->openLog(nodeStore, "w");
 
     std::unordered_map<TravelNode*, uint32> saveNodes;
 
     std::vector<TravelNode*> anodes = getNodes();
 
-    sPlayerbotAIConfig->log(nodeStore, "#pragma once");
-    sPlayerbotAIConfig->log(nodeStore, "#include \"TravelMgr.h\"");
-    sPlayerbotAIConfig->log(nodeStore, "class TravelNodeStore");
-    sPlayerbotAIConfig->log(nodeStore, "    {");
-    sPlayerbotAIConfig->log(nodeStore, "    public:");
-    sPlayerbotAIConfig->log(nodeStore, "    static void loadNodes()");
-    sPlayerbotAIConfig->log(nodeStore, "    {");
-    sPlayerbotAIConfig->log(nodeStore, "        TravelNode** nodes = new TravelNode*[%zu];", anodes.size());
+    sShadowAIConfig->log(nodeStore, "#pragma once");
+    sShadowAIConfig->log(nodeStore, "#include \"TravelMgr.h\"");
+    sShadowAIConfig->log(nodeStore, "class TravelNodeStore");
+    sShadowAIConfig->log(nodeStore, "    {");
+    sShadowAIConfig->log(nodeStore, "    public:");
+    sShadowAIConfig->log(nodeStore, "    static void loadNodes()");
+    sShadowAIConfig->log(nodeStore, "    {");
+    sShadowAIConfig->log(nodeStore, "        TravelNode** nodes = new TravelNode*[%zu];", anodes.size());
 
     for (uint32 i = 0; i < anodes.size(); i++)
     {
@@ -2275,7 +2275,7 @@ void TravelNodeMap::printNodeStore()
 
                 out << ");";
                 */
-        sPlayerbotAIConfig->log(nodeStore, out.str().c_str());
+        sShadowAIConfig->log(nodeStore, out.str().c_str());
 
         saveNodes.insert(std::make_pair(node, i));
     }
@@ -2298,12 +2298,12 @@ void TravelNodeMap::printNodeStore()
 
             // out << std::fixed << std::setprecision(1) << "        nodes[" << i << "]->setPathTo(nodes[" <<
             // saveNodes.find(Link.first)->second << "],TravelNodePath("; out << Link.second->print() << "), true);";
-            sPlayerbotAIConfig->log(nodeStore, out.str().c_str());
+            sShadowAIConfig->log(nodeStore, out.str().c_str());
         }
     }
 
-    sPlayerbotAIConfig->log(nodeStore, "    }");
-    sPlayerbotAIConfig->log(nodeStore, "};");
+    sShadowAIConfig->log(nodeStore, "    }");
+    sShadowAIConfig->log(nodeStore, "};");
 
     printf("\r [Done] \r\x3D");
     fflush(stdout);
@@ -2316,11 +2316,11 @@ void TravelNodeMap::saveNodeStore()
 
     hasToSave = false;
 
-    PlayerbotsDatabaseTransaction trans = PlayerbotsDatabase.BeginTransaction();
+    ShadowsDatabaseTransaction trans = ShadowsDatabase.BeginTransaction();
 
-    trans->Append(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_TRAVELNODE));
-    trans->Append(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_TRAVELNODE_LINK));
-    trans->Append(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_TRAVELNODE_PATH));
+    trans->Append(ShadowsDatabase.GetPreparedStatement(SHADOWS_DEL_TRAVELNODE));
+    trans->Append(ShadowsDatabase.GetPreparedStatement(SHADOWS_DEL_TRAVELNODE_LINK));
+    trans->Append(ShadowsDatabase.GetPreparedStatement(SHADOWS_DEL_TRAVELNODE_PATH));
 
     std::unordered_map<TravelNode*, uint32> saveNodes;
     std::vector<TravelNode*> anodes = sTravelNodeMap->getNodes();
@@ -2332,7 +2332,7 @@ void TravelNodeMap::saveNodeStore()
         std::string name = node->getName();
         name.erase(remove(name.begin(), name.end(), '\''), name.end());
 
-        PlayerbotsDatabasePreparedStatement* stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_TRAVELNODE);
+        ShadowsDatabasePreparedStatement* stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_TRAVELNODE);
         stmt->SetData(0, i);
         stmt->SetData(1, name);
         stmt->SetData(2, node->getMapId());
@@ -2345,7 +2345,7 @@ void TravelNodeMap::saveNodeStore()
         saveNodes.insert(std::make_pair(node, i));
     }
 
-    LOG_INFO("playerbots", ">> Saved {} travelNodes.", anodes.size());
+    LOG_INFO("shadows", ">> Saved {} travelNodes.", anodes.size());
 
     {
         uint32 paths = 0, points = 0;
@@ -2357,8 +2357,8 @@ void TravelNodeMap::saveNodeStore()
             {
                 TravelNodePath* path = link.second;
 
-                PlayerbotsDatabasePreparedStatement* stmt =
-                    PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_TRAVELNODE_LINK);
+                ShadowsDatabasePreparedStatement* stmt =
+                    ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_TRAVELNODE_LINK);
                 stmt->SetData(0, i);
                 stmt->SetData(1, saveNodes.find(link.first)->second);
                 stmt->SetData(2, static_cast<uint8>(path->getPathType()));
@@ -2380,8 +2380,8 @@ void TravelNodeMap::saveNodeStore()
                 {
                     WorldPosition point = ppath[j];
 
-                    PlayerbotsDatabasePreparedStatement* stmt =
-                        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_TRAVELNODE_PATH);
+                    ShadowsDatabasePreparedStatement* stmt =
+                        ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_TRAVELNODE_PATH);
                     stmt->SetData(0, i);
                     stmt->SetData(1, saveNodes.find(link.first)->second);
                     stmt->SetData(2, j);
@@ -2396,21 +2396,21 @@ void TravelNodeMap::saveNodeStore()
             }
         }
 
-        LOG_INFO("playerbots", ">> Saved {} travelNode Paths, {} points.", paths, points);
+        LOG_INFO("shadows", ">> Saved {} travelNode Paths, {} points.", paths, points);
     }
 
-    PlayerbotsDatabase.CommitTransaction(trans);
+    ShadowsDatabase.CommitTransaction(trans);
 }
 
 void TravelNodeMap::loadNodeStore()
 {
-    std::string const query = "SELECT id, name, map_id, x, y, z, linked FROM playerbots_travelnode";
+    std::string const query = "SELECT id, name, map_id, x, y, z, linked FROM shadows_travelnode";
 
     std::unordered_map<uint32, TravelNode*> saveNodes;
 
     {
         if (PreparedQueryResult result =
-                PlayerbotsDatabase.Query(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_TRAVELNODE)))
+                ShadowsDatabase.Query(ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_TRAVELNODE)))
         {
             do
             {
@@ -2429,18 +2429,18 @@ void TravelNodeMap::loadNodeStore()
 
             } while (result->NextRow());
 
-            LOG_INFO("playerbots", ">> Loaded {} travelNodes.", saveNodes.size());
+            LOG_INFO("shadows", ">> Loaded {} travelNodes.", saveNodes.size());
         }
         else
         {
             hasToFullGen = true;
-            LOG_ERROR("playerbots", ">> Error loading travelNodes.");
+            LOG_ERROR("shadows", ">> Error loading travelNodes.");
         }
     }
 
     {
         if (PreparedQueryResult result =
-                PlayerbotsDatabase.Query(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_TRAVELNODE_LINK)))
+                ShadowsDatabase.Query(ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_TRAVELNODE_LINK)))
         {
             do
             {
@@ -2465,17 +2465,17 @@ void TravelNodeMap::loadNodeStore()
 
             } while (result->NextRow());
 
-            LOG_INFO("playerbots", ">> Loaded {} travelNode paths.", result->GetRowCount());
+            LOG_INFO("shadows", ">> Loaded {} travelNode paths.", result->GetRowCount());
         }
         else
         {
-            LOG_ERROR("playerbots", ">> Error loading travelNode links.");
+            LOG_ERROR("shadows", ">> Error loading travelNode links.");
         }
     }
 
     {
         if (PreparedQueryResult result =
-                PlayerbotsDatabase.Query(PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_TRAVELNODE_PATH)))
+                ShadowsDatabase.Query(ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_TRAVELNODE_PATH)))
         {
             do
             {
@@ -2500,11 +2500,11 @@ void TravelNodeMap::loadNodeStore()
 
             } while (result->NextRow());
 
-            LOG_INFO("playerbots", ">> Loaded {} travelNode paths points.", result->GetRowCount());
+            LOG_INFO("shadows", ">> Loaded {} travelNode paths points.", result->GetRowCount());
         }
         else
         {
-            LOG_ERROR("playerbots", ">> Error loading travelNode paths.");
+            LOG_ERROR("shadows", ">> Error loading travelNode paths.");
         }
     }
 }

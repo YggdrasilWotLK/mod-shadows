@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REACHTARGETACTIONS_H
-#define _PLAYERBOT_REACHTARGETACTIONS_H
+#ifndef _SHADOW_REACHTARGETACTIONS_H
+#define _SHADOW_REACHTARGETACTIONS_H
 
 #include "GenericSpellActions.h"
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ReachTargetAction : public MovementAction
 {
 public:
-    ReachTargetAction(PlayerbotAI* botAI, std::string const name, float distance)
+    ReachTargetAction(ShadowAI* botAI, std::string const name, float distance)
         : MovementAction(botAI, name), distance(distance)
     {
     }
@@ -30,7 +30,7 @@ protected:
 class CastReachTargetSpellAction : public CastSpellAction
 {
 public:
-    CastReachTargetSpellAction(PlayerbotAI* botAI, std::string const spell, float distance)
+    CastReachTargetSpellAction(ShadowAI* botAI, std::string const spell, float distance)
         : CastSpellAction(botAI, spell), distance(distance)
     {
     }
@@ -44,19 +44,19 @@ protected:
 class ReachMeleeAction : public ReachTargetAction
 {
 public:
-    ReachMeleeAction(PlayerbotAI* botAI) : ReachTargetAction(botAI, "reach melee", sPlayerbotAIConfig->meleeDistance) {}
+    ReachMeleeAction(ShadowAI* botAI) : ReachTargetAction(botAI, "reach melee", sShadowAIConfig->meleeDistance) {}
 };
 
 class ReachSpellAction : public ReachTargetAction
 {
 public:
-    ReachSpellAction(PlayerbotAI* botAI);
+    ReachSpellAction(ShadowAI* botAI);
 };
 
 class ReachPartyMemberToHealAction : public ReachTargetAction
 {
 public:
-    ReachPartyMemberToHealAction(PlayerbotAI* botAI);
+    ReachPartyMemberToHealAction(ShadowAI* botAI);
 
     std::string const GetTargetName() override;
 };
@@ -64,7 +64,7 @@ public:
 class ReachPartyMemberToResurrectAction : public ReachTargetAction
 {
 public:
-    ReachPartyMemberToResurrectAction(PlayerbotAI* botAI);
+    ReachPartyMemberToResurrectAction(ShadowAI* botAI);
 
     std::string const GetTargetName() override;
 };

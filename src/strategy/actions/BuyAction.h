@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BUYACTION_H
-#define _PLAYERBOT_BUYACTION_H
+#ifndef _SHADOW_BUYACTION_H
+#define _SHADOW_BUYACTION_H
 
 #include "InventoryAction.h"
 
@@ -12,7 +12,7 @@ class FindItemVisitor;
 class ObjectGuid;
 class Item;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 struct ItemTemplate;
 struct VendorItemData;
@@ -20,7 +20,7 @@ struct VendorItemData;
 class BuyAction : public InventoryAction
 {
 public:
-    BuyAction(PlayerbotAI* botAI) : InventoryAction(botAI, "buy") {}
+    BuyAction(ShadowAI* botAI) : InventoryAction(botAI, "buy") {}
 
     bool Execute(Event event) override;
 

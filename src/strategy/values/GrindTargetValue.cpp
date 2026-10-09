@@ -6,7 +6,7 @@
 #include "GrindTargetValue.h"
 
 #include "NewRpgInfo.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ReputationMgr.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
@@ -35,7 +35,7 @@ Unit* GrindTargetValue::FindTargetForGrinding(uint32 assistCount)
     Player* master = GetMaster();
 
     if (master && (master == bot || master->GetMapId() != bot->GetMapId() || master->IsBeingTeleported() ||
-                   !GET_PLAYERBOT_AI(master)))
+                   !GET_SHADOW_AI(master)))
         master = nullptr;
 
     GuidVector attackers = context->GetValue<GuidVector>("attackers")->Get();
@@ -86,12 +86,12 @@ Unit* GrindTargetValue::FindTargetForGrinding(uint32 assistCount)
         if (!bot->InBattleground() && GetTargetingPlayerCount(unit) > assistCount)
             continue;
 
-        // if (!bot->InBattleground() && master && master->GetDistance(unit) >= sPlayerbotAIConfig->grindDistance &&
-        // !sRandomPlayerbotMgr->IsRandomBot(bot)) continue;
+        // if (!bot->InBattleground() && master && master->GetDistance(unit) >= sShadowAIConfig->grindDistance &&
+        // !sRandomShadowMgr->IsRandomBot(bot)) continue;
 
         // Bots in bot-groups no have a more limited range to look for grind target
         if (!bot->InBattleground() && master && botAI->HasStrategy("follow", BotState::BOT_STATE_NON_COMBAT) &&
-            sServerFacade->GetDistance2d(master, unit) > sPlayerbotAIConfig->lootDistance)
+            sServerFacade->GetDistance2d(master, unit) > sShadowAIConfig->lootDistance)
         {
             if (botAI->HasStrategy("debug grind", BotState::BOT_STATE_NON_COMBAT))
                 botAI->TellMaster(chat->FormatWorldobject(unit) + " ignored (far from master).");
@@ -223,7 +223,7 @@ uint32 GrindTargetValue::GetTargetingPlayerCount(Unit* unit)
         if (!member || !member->IsAlive() || member == bot)
             continue;
 
-        auto botAI = GET_PLAYERBOT_AI(member);
+        auto botAI = GET_SHADOW_AI(member);
         if ((botAI && *botAI->GetAiObjectContext()->GetValue<Unit*>("current target") == unit) ||
             (!botAI && member->GetTarget() == unit->GetGUID()))
             ++count;

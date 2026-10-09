@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GEARSCORECALCULATOR_H
-#define _PLAYERBOT_GEARSCORECALCULATOR_H
+#ifndef _SHADOW_GEARSCORECALCULATOR_H
+#define _SHADOW_GEARSCORECALCULATOR_H
 
 #include "Player.h"
 #include "StatsCollector.h"

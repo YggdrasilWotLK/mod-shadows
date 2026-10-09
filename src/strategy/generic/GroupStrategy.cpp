@@ -5,7 +5,7 @@
 
 #include "GroupStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void GroupStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

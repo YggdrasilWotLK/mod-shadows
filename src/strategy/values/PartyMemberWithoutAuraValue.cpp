@@ -5,15 +5,15 @@
 
 #include "PartyMemberWithoutAuraValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 extern std::vector<std::string> split(std::string const s, char delim);
 
-class PlayerWithoutAuraPredicate : public FindPlayerPredicate, public PlayerbotAIAware
+class PlayerWithoutAuraPredicate : public FindPlayerPredicate, public ShadowAIAware
 {
 public:
-    PlayerWithoutAuraPredicate(PlayerbotAI* botAI, std::string const aura)
-        : PlayerbotAIAware(botAI), FindPlayerPredicate(), auras(split(aura, ','))
+    PlayerWithoutAuraPredicate(ShadowAI* botAI, std::string const aura)
+        : ShadowAIAware(botAI), FindPlayerPredicate(), auras(split(aura, ','))
     {
     }
 

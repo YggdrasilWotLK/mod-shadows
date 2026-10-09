@@ -2,11 +2,11 @@
 
 #include "GenericTriggers.h"
 #include "ObjectAccessor.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "strategy/values/NearestNpcsValue.h"
 
-OnyxiaDeepBreathTrigger::OnyxiaDeepBreathTrigger(PlayerbotAI* botAI) : Trigger(botAI, "ony deep breath warning") {}
+OnyxiaDeepBreathTrigger::OnyxiaDeepBreathTrigger(ShadowAI* botAI) : Trigger(botAI, "ony deep breath warning") {}
 
 bool OnyxiaDeepBreathTrigger::IsActive()
 {
@@ -38,7 +38,7 @@ bool OnyxiaDeepBreathTrigger::IsActive()
     return false;
 }
 
-OnyxiaNearTailTrigger::OnyxiaNearTailTrigger(PlayerbotAI* botAI) : Trigger(botAI, "ony near tail") {}
+OnyxiaNearTailTrigger::OnyxiaNearTailTrigger(ShadowAI* botAI) : Trigger(botAI, "ony near tail") {}
 
 bool OnyxiaNearTailTrigger::IsActive()
 {
@@ -52,7 +52,7 @@ bool OnyxiaNearTailTrigger::IsActive()
 
     return true;
 }
-RaidOnyxiaFireballSplashTrigger::RaidOnyxiaFireballSplashTrigger(PlayerbotAI* botAI)
+RaidOnyxiaFireballSplashTrigger::RaidOnyxiaFireballSplashTrigger(ShadowAI* botAI)
     : Trigger(botAI, "ony fireball splash incoming")
 {
 }
@@ -83,7 +83,7 @@ bool RaidOnyxiaFireballSplashTrigger::IsActive()
     return false;
 }
 
-RaidOnyxiaWhelpsSpawnTrigger::RaidOnyxiaWhelpsSpawnTrigger(PlayerbotAI* botAI) : Trigger(botAI, "ony whelps spawn") {}
+RaidOnyxiaWhelpsSpawnTrigger::RaidOnyxiaWhelpsSpawnTrigger(ShadowAI* botAI) : Trigger(botAI, "ony whelps spawn") {}
 
 bool RaidOnyxiaWhelpsSpawnTrigger::IsActive()
 {
@@ -94,7 +94,7 @@ bool RaidOnyxiaWhelpsSpawnTrigger::IsActive()
     return !botAI->IsHeal(bot) && boss->IsFlying();  // DPS + Tanks only
 }
 
-OnyxiaAvoidEggsTrigger::OnyxiaAvoidEggsTrigger(PlayerbotAI* botAI) : Trigger(botAI, "ony avoid eggs") {}
+OnyxiaAvoidEggsTrigger::OnyxiaAvoidEggsTrigger(ShadowAI* botAI) : Trigger(botAI, "ony avoid eggs") {}
 
 bool OnyxiaAvoidEggsTrigger::IsActive()
 {

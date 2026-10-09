@@ -6,7 +6,7 @@
 #include "ChangeChatAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool ChangeChatAction::Execute(Event event)
 {

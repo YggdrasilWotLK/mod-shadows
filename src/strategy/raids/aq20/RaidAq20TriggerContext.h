@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDAQ20TRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDAQ20TRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDAQ20TRIGGERCONTEXT_H
+#define _SHADOW_RAIDAQ20TRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -14,7 +14,7 @@ public:
     }
 
 private:
-    static Trigger* move_to_crystal(PlayerbotAI* ai) { return new Aq20MoveToCrystalTrigger(ai); }
+    static Trigger* move_to_crystal(ShadowAI* ai) { return new Aq20MoveToCrystalTrigger(ai); }
 };
 
 #endif

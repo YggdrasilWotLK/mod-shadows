@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_DUNGEONSTRATEGYCONTEXT_H
-#define _PLAYERBOT_DUNGEONSTRATEGYCONTEXT_H
+#ifndef _SHADOW_DUNGEONSTRATEGYCONTEXT_H
+#define _SHADOW_DUNGEONSTRATEGYCONTEXT_H
 
 #include "Strategy.h"
 #include "wotlk/utgardekeep/UtgardeKeepStrategy.h"
@@ -67,23 +67,23 @@ class DungeonStrategyContext : public NamedObjectContext<Strategy>
             creators["wotlk-fos"] = &DungeonStrategyContext::wotlk_fos;     // The Forge of Souls
         }
     private:
-        static Strategy* wotlk_uk(PlayerbotAI* botAI) { return new WotlkDungeonUKStrategy(botAI); }
-        static Strategy* wotlk_nex(PlayerbotAI* botAI) { return new WotlkDungeonNexStrategy(botAI); }
-        static Strategy* wotlk_an(PlayerbotAI* botAI) { return new WotlkDungeonANStrategy(botAI); }
-        static Strategy* wotlk_ok(PlayerbotAI* botAI) { return new WotlkDungeonOKStrategy(botAI); }
-        static Strategy* wotlk_dtk(PlayerbotAI* botAI) { return new WotlkDungeonDTKStrategy(botAI); }
-        static Strategy* wotlk_vh(PlayerbotAI* botAI) { return new WotlkDungeonVHStrategy(botAI); }
-        static Strategy* wotlk_gd(PlayerbotAI* botAI) { return new WotlkDungeonGDStrategy(botAI); }
-        static Strategy* wotlk_hos(PlayerbotAI* botAI) { return new WotlkDungeonHoSStrategy(botAI); }
-        static Strategy* wotlk_hol(PlayerbotAI* botAI) { return new WotlkDungeonHoLStrategy(botAI); }
-        static Strategy* wotlk_occ(PlayerbotAI* botAI) { return new WotlkDungeonOccStrategy(botAI); }
-        static Strategy* wotlk_up(PlayerbotAI* botAI) { return new WotlkDungeonUPStrategy(botAI); }
-        static Strategy* wotlk_cos(PlayerbotAI* botAI) { return new WotlkDungeonCoSStrategy(botAI); }
-        static Strategy* wotlk_fos(PlayerbotAI* botAI) { return new WotlkDungeonFoSStrategy(botAI); }
-        static Strategy* wotlk_pos(PlayerbotAI* botAI) { return new WotlkDungeonPoSStrategy(botAI); }
-        static Strategy* wotlk_toc(PlayerbotAI* botAI) { return new WotlkDungeonToCStrategy(botAI); }
+        static Strategy* wotlk_uk(ShadowAI* botAI) { return new WotlkDungeonUKStrategy(botAI); }
+        static Strategy* wotlk_nex(ShadowAI* botAI) { return new WotlkDungeonNexStrategy(botAI); }
+        static Strategy* wotlk_an(ShadowAI* botAI) { return new WotlkDungeonANStrategy(botAI); }
+        static Strategy* wotlk_ok(ShadowAI* botAI) { return new WotlkDungeonOKStrategy(botAI); }
+        static Strategy* wotlk_dtk(ShadowAI* botAI) { return new WotlkDungeonDTKStrategy(botAI); }
+        static Strategy* wotlk_vh(ShadowAI* botAI) { return new WotlkDungeonVHStrategy(botAI); }
+        static Strategy* wotlk_gd(ShadowAI* botAI) { return new WotlkDungeonGDStrategy(botAI); }
+        static Strategy* wotlk_hos(ShadowAI* botAI) { return new WotlkDungeonHoSStrategy(botAI); }
+        static Strategy* wotlk_hol(ShadowAI* botAI) { return new WotlkDungeonHoLStrategy(botAI); }
+        static Strategy* wotlk_occ(ShadowAI* botAI) { return new WotlkDungeonOccStrategy(botAI); }
+        static Strategy* wotlk_up(ShadowAI* botAI) { return new WotlkDungeonUPStrategy(botAI); }
+        static Strategy* wotlk_cos(ShadowAI* botAI) { return new WotlkDungeonCoSStrategy(botAI); }
+        static Strategy* wotlk_fos(ShadowAI* botAI) { return new WotlkDungeonFoSStrategy(botAI); }
+        static Strategy* wotlk_pos(ShadowAI* botAI) { return new WotlkDungeonPoSStrategy(botAI); }
+        static Strategy* wotlk_toc(ShadowAI* botAI) { return new WotlkDungeonToCStrategy(botAI); }
         // NYI from here down
-        static Strategy* wotlk_hor(PlayerbotAI* botAI) { return new WotlkDungeonUKStrategy(botAI); }
+        static Strategy* wotlk_hor(ShadowAI* botAI) { return new WotlkDungeonUKStrategy(botAI); }
 
 
 };

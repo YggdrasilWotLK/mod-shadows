@@ -1,0 +1,212 @@
+/*
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "BattleGroundTactics.h"
+#include "Chat.h"
+#include "GuildTaskMgr.h"
+#include "PerformanceMonitor.h"
+#include "ShadowMgr.h"
+#include "RandomShadowMgr.h"
+#include "ScriptMgr.h"
+
+using namespace Acore::ChatCommands;
+
+class shadows_commandscript : public CommandScript
+{
+public:
+    shadows_commandscript() : CommandScript("shadows_commandscript") {}
+
+    ChatCommandTable GetCommands() const override
+    {
+        static ChatCommandTable shadowsDebugCommandTable = {
+            {"bg", HandleDebugBGCommand, SEC_GAMEMASTER, Console::Yes},
+        };
+
+        static ChatCommandTable shadowsAccountCommandTable = {
+            {"setKey", HandleSetSecurityKeyCommand, SEC_PLAYER, Console::No},
+            {"link", HandleLinkAccountCommand, SEC_PLAYER, Console::No},
+            {"linkedAccounts", HandleViewLinkedAccountsCommand, SEC_PLAYER, Console::No},
+            {"unlink", HandleUnlinkAccountCommand, SEC_PLAYER, Console::No},
+        };
+
+        static ChatCommandTable shadowsCommandTable = {
+            {"bot", HandleShadowCommand, SEC_PLAYER, Console::No},
+            {"gtask", HandleGuildTaskCommand, SEC_GAMEMASTER, Console::Yes},
+            {"pmon", HandlePerfMonCommand, SEC_GAMEMASTER, Console::Yes},
+            {"rndbot", HandleRandomShadowCommand, SEC_GAMEMASTER, Console::Yes},
+            {"debug", shadowsDebugCommandTable},
+            {"account", shadowsAccountCommandTable},
+        };
+
+        static ChatCommandTable commandTable = {
+            {"shadows", shadowsCommandTable},
+        };
+
+        return commandTable;
+    }
+
+    static bool HandleShadowCommand(ChatHandler* handler, char const* args)
+    {
+        return ShadowMgr::HandleShadowMgrCommand(handler, args);
+    }
+
+    static bool HandleRandomShadowCommand(ChatHandler* handler, char const* args)
+    {
+        return RandomShadowMgr::HandleShadowConsoleCommand(handler, args);
+    }
+
+    static bool HandleGuildTaskCommand(ChatHandler* handler, char const* args)
+    {
+        return GuildTaskMgr::HandleConsoleCommand(handler, args);
+    }
+
+    static bool HandlePerfMonCommand(ChatHandler* handler, char const* args)
+    {
+        if (!strcmp(args, "reset"))
+        {
+            sPerformanceMonitor->Reset();
+            return true;
+        }
+
+        if (!strcmp(args, "tick"))
+        {
+            sPerformanceMonitor->PrintStats(true, false);
+            return true;
+        }
+
+        if (!strcmp(args, "stack"))
+        {
+            sPerformanceMonitor->PrintStats(false, true);
+            return true;
+        }
+
+        if (!strcmp(args, "toggle"))
+        {
+            sShadowAIConfig->perfMonEnabled = !sShadowAIConfig->perfMonEnabled;
+            if (sShadowAIConfig->perfMonEnabled)
+                LOG_INFO("shadows", "Performance monitor enabled");
+            else
+                LOG_INFO("shadows", "Performance monitor disabled");
+            return true;
+        }
+
+        sPerformanceMonitor->PrintStats();
+        return true;
+    }
+
+    static bool HandleDebugBGCommand(ChatHandler* handler, char const* args)
+    {
+        return BGTactics::HandleConsoleCommand(handler, args);
+    }
+
+    static bool HandleSetSecurityKeyCommand(ChatHandler* handler, char const* args)
+    {
+        if (!args || !*args)
+        {
+            handler->PSendSysMessage("Usage: .shadows account setKey <securityKey>");
+            return false;
+        }
+
+        Player* player = handler->GetSession()->GetPlayer();
+        std::string key = args;
+
+        auto mgr = sShadowsMgr->GetShadowMgr(player);
+        if (mgr)
+        {
+            mgr->HandleSetSecurityKeyCommand(player, key);
+            return true;
+        }
+        else
+        {
+            handler->PSendSysMessage("ShadowMgr instance not found.");
+            return false;
+        }
+    }
+
+    static bool HandleLinkAccountCommand(ChatHandler* handler, char const* args)
+    {
+        if (!args || !*args)
+            return false;
+
+        char* accountName = strtok((char*)args, " ");
+        char* key = strtok(nullptr, " ");
+
+        if (!accountName || !key)
+        {
+            handler->PSendSysMessage("Usage: .shadows account link <accountName> <securityKey>");
+            return false;
+        }
+
+        Player* player = handler->GetSession()->GetPlayer();
+
+        auto mgr = sShadowsMgr->GetShadowMgr(player);
+        if (mgr)
+        {
+            mgr->HandleLinkAccountCommand(player, accountName, key);
+            return true;
+        }
+        else
+        {
+            handler->PSendSysMessage("ShadowMgr instance not found.");
+            return false;
+        }
+    }
+
+    static bool HandleViewLinkedAccountsCommand(ChatHandler* handler, char const* /*args*/)
+    {
+        Player* player = handler->GetSession()->GetPlayer();
+
+        auto mgr = sShadowsMgr->GetShadowMgr(player);
+        if (mgr)
+        {
+            mgr->HandleViewLinkedAccountsCommand(player);
+            return true;
+        }
+        else
+        {
+            handler->PSendSysMessage("ShadowMgr instance not found.");
+            return false;
+        }
+    }
+
+    static bool HandleUnlinkAccountCommand(ChatHandler* handler, char const* args)
+    {
+        if (!args || !*args)
+            return false;
+
+        char* accountName = strtok((char*)args, " ");
+        if (!accountName)
+        {
+            handler->PSendSysMessage("Usage: .shadows account unlink <accountName>");
+            return false;
+        }
+
+        Player* player = handler->GetSession()->GetPlayer();
+
+        auto mgr = sShadowsMgr->GetShadowMgr(player);
+        if (mgr)
+        {
+            mgr->HandleUnlinkAccountCommand(player, accountName);
+            return true;
+        }
+        else
+        {
+            handler->PSendSysMessage("ShadowMgr instance not found.");
+            return false;
+        }
+    }
+};
+
+void AddSC_shadows_commandscript() { new shadows_commandscript(); }

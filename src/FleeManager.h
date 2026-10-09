@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FLEEMANAGER_H
-#define _PLAYERBOT_FLEEMANAGER_H
+#ifndef _SHADOW_FLEEMANAGER_H
+#define _SHADOW_FLEEMANAGER_H
 
 #include <vector>
 
@@ -12,12 +12,12 @@
 #include "TravelMgr.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 class FleePoint
 {
 public:
-    FleePoint(PlayerbotAI* botAI, float x, float y, float z)
+    FleePoint(ShadowAI* botAI, float x, float y, float z)
         : x(x), y(y), z(z), sumDistance(0.0f), minDistance(0.0f), botAI(botAI)
     {
     }
@@ -30,7 +30,7 @@ public:
     float minDistance;
 
 private:
-    PlayerbotAI* botAI;
+    ShadowAI* botAI;
 };
 
 class FleeManager

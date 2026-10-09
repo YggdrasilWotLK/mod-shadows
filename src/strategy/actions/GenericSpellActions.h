@@ -3,23 +3,23 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICSPELLACTIONS_H
-#define _PLAYERBOT_GENERICSPELLACTIONS_H
+#ifndef _SHADOW_GENERICSPELLACTIONS_H
+#define _SHADOW_GENERICSPELLACTIONS_H
 
 #include "Action.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAI.h"
+#include "ShadowAIConfig.h"
 #include "UseItemAction.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 class WorldObject;
 
 class CastSpellAction : public Action
 {
 public:
-    CastSpellAction(PlayerbotAI* botAI, std::string const spell);
+    CastSpellAction(ShadowAI* botAI, std::string const spell);
 
     std::string const GetTargetName() override { return "current target"; };
     bool Execute(Event event) override;
@@ -38,7 +38,7 @@ protected:
 class CastAuraSpellAction : public CastSpellAction
 {
 public:
-    CastAuraSpellAction(PlayerbotAI* botAI, std::string const spell, bool isOwner = false, bool checkDuration = false, uint32 beforeDuration = 0)
+    CastAuraSpellAction(ShadowAI* botAI, std::string const spell, bool isOwner = false, bool checkDuration = false, uint32 beforeDuration = 0)
         : CastSpellAction(botAI, spell)
     {
         this->isOwner = isOwner;
@@ -57,14 +57,14 @@ protected:
 class CastMeleeSpellAction : public CastSpellAction
 {
 public:
-    CastMeleeSpellAction(PlayerbotAI* botAI, std::string const spell);
+    CastMeleeSpellAction(ShadowAI* botAI, std::string const spell);
     bool isUseful() override;
 };
 
 class CastDebuffSpellAction : public CastAuraSpellAction
 {
 public:
-    CastDebuffSpellAction(PlayerbotAI* botAI, std::string const spell, bool isOwner = false, float needLifeTime = 8.0f)
+    CastDebuffSpellAction(ShadowAI* botAI, std::string const spell, bool isOwner = false, float needLifeTime = 8.0f)
         : CastAuraSpellAction(botAI, spell, isOwner), needLifeTime(needLifeTime)
     {
     }
@@ -77,14 +77,14 @@ private:
 class CastMeleeDebuffSpellAction : public CastDebuffSpellAction
 {
 public:
-    CastMeleeDebuffSpellAction(PlayerbotAI* botAI, std::string const spell, bool isOwner = false, float needLifeTime = 8.0f);
+    CastMeleeDebuffSpellAction(ShadowAI* botAI, std::string const spell, bool isOwner = false, float needLifeTime = 8.0f);
     bool isUseful() override;
 };
 
 class CastDebuffSpellOnAttackerAction : public CastDebuffSpellAction
 {
 public:
-    CastDebuffSpellOnAttackerAction(PlayerbotAI* botAI, std::string const spell, bool isOwner = true,
+    CastDebuffSpellOnAttackerAction(ShadowAI* botAI, std::string const spell, bool isOwner = true,
                                     float needLifeTime = 8.0f)
         : CastDebuffSpellAction(botAI, spell, isOwner, needLifeTime)
     {
@@ -98,7 +98,7 @@ public:
 class CastDebuffSpellOnMeleeAttackerAction : public CastDebuffSpellAction
 {
 public:
-    CastDebuffSpellOnMeleeAttackerAction(PlayerbotAI* botAI, std::string const spell, bool isOwner = true,
+    CastDebuffSpellOnMeleeAttackerAction(ShadowAI* botAI, std::string const spell, bool isOwner = true,
                                          float needLifeTime = 8.0f)
         : CastDebuffSpellAction(botAI, spell, isOwner, needLifeTime)
     {
@@ -112,7 +112,7 @@ public:
 class CastBuffSpellAction : public CastAuraSpellAction
 {
 public:
-    CastBuffSpellAction(PlayerbotAI* botAI, std::string const spell, bool checkIsOwner = false, uint32 beforeDuration = 0);
+    CastBuffSpellAction(ShadowAI* botAI, std::string const spell, bool checkIsOwner = false, uint32 beforeDuration = 0);
 
     std::string const GetTargetName() override { return "self target"; }
 };
@@ -120,7 +120,7 @@ public:
 class CastEnchantItemAction : public CastSpellAction
 {
 public:
-    CastEnchantItemAction(PlayerbotAI* botAI, std::string const spell);
+    CastEnchantItemAction(ShadowAI* botAI, std::string const spell);
 
     bool isPossible() override;
     std::string const GetTargetName() override { return "self target"; }
@@ -129,7 +129,7 @@ public:
 class CastHealingSpellAction : public CastAuraSpellAction
 {
 public:
-    CastHealingSpellAction(PlayerbotAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
+    CastHealingSpellAction(ShadowAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
                            HealingManaEfficiency manaEfficiency = HealingManaEfficiency::MEDIUM, bool isOwner = true);
 
     std::string const GetTargetName() override { return "self target"; }
@@ -145,7 +145,7 @@ public:
 class CastAoeHealSpellAction : public CastHealingSpellAction
 {
 public:
-    CastAoeHealSpellAction(PlayerbotAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
+    CastAoeHealSpellAction(ShadowAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
                            HealingManaEfficiency manaEfficiency = HealingManaEfficiency::MEDIUM)
         : CastHealingSpellAction(botAI, spell, estAmount, manaEfficiency)
     {
@@ -158,7 +158,7 @@ public:
 class CastCureSpellAction : public CastSpellAction
 {
 public:
-    CastCureSpellAction(PlayerbotAI* botAI, std::string const spell);
+    CastCureSpellAction(ShadowAI* botAI, std::string const spell);
 
     std::string const GetTargetName() override { return "self target"; }
 };
@@ -177,7 +177,7 @@ private:
 class HealPartyMemberAction : public CastHealingSpellAction, public PartyMemberActionNameSupport
 {
 public:
-    HealPartyMemberAction(PlayerbotAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
+    HealPartyMemberAction(ShadowAI* botAI, std::string const spell, uint8 estAmount = 15.0f,
                           HealingManaEfficiency manaEfficiency = HealingManaEfficiency::MEDIUM, bool isOwner = true)
         : CastHealingSpellAction(botAI, spell, estAmount, manaEfficiency, isOwner), PartyMemberActionNameSupport(spell)
     {
@@ -190,7 +190,7 @@ public:
 class ResurrectPartyMemberAction : public CastSpellAction
 {
 public:
-    ResurrectPartyMemberAction(PlayerbotAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
+    ResurrectPartyMemberAction(ShadowAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
 
     std::string const GetTargetName() override { return "party member to resurrect"; }
     NextAction** getPrerequisites() override
@@ -203,7 +203,7 @@ public:
 class CurePartyMemberAction : public CastSpellAction, public PartyMemberActionNameSupport
 {
 public:
-    CurePartyMemberAction(PlayerbotAI* botAI, std::string const spell, uint32 dispelType)
+    CurePartyMemberAction(ShadowAI* botAI, std::string const spell, uint32 dispelType)
         : CastSpellAction(botAI, spell), PartyMemberActionNameSupport(spell), dispelType(dispelType)
     {
     }
@@ -219,7 +219,7 @@ protected:
 class BuffOnPartyAction : public CastBuffSpellAction, public PartyMemberActionNameSupport
 {
 public:
-    BuffOnPartyAction(PlayerbotAI* botAI, std::string const spell)
+    BuffOnPartyAction(ShadowAI* botAI, std::string const spell)
         : CastBuffSpellAction(botAI, spell), PartyMemberActionNameSupport(spell) { }
 
     Value<Unit*>* GetTargetValue() override;
@@ -231,7 +231,7 @@ public:
 class CastShootAction : public CastSpellAction
 {
 public:
-    CastShootAction(PlayerbotAI* botAI);
+    CastShootAction(ShadowAI* botAI);
 
     ActionThreatType getThreatType() override { return ActionThreatType::None; }
 };
@@ -239,49 +239,49 @@ public:
 class CastLifeBloodAction : public CastHealingSpellAction
 {
 public:
-    CastLifeBloodAction(PlayerbotAI* botAI) : CastHealingSpellAction(botAI, "lifeblood") {}
+    CastLifeBloodAction(ShadowAI* botAI) : CastHealingSpellAction(botAI, "lifeblood") {}
 };
 
 class CastGiftOfTheNaaruAction : public CastHealingSpellAction
 {
 public:
-    CastGiftOfTheNaaruAction(PlayerbotAI* botAI) : CastHealingSpellAction(botAI, "gift of the naaru") {}
+    CastGiftOfTheNaaruAction(ShadowAI* botAI) : CastHealingSpellAction(botAI, "gift of the naaru") {}
 };
 
 class CastArcaneTorrentAction : public CastBuffSpellAction
 {
 public:
-    CastArcaneTorrentAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "arcane torrent") {}
+    CastArcaneTorrentAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "arcane torrent") {}
 };
 
 class CastManaTapAction : public CastBuffSpellAction
 {
 public:
-    CastManaTapAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "mana tap") {}
+    CastManaTapAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "mana tap") {}
 };
 
 class CastWarStompAction : public CastMeleeSpellAction
 {
 public:
-    CastWarStompAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "war stomp") {}
+    CastWarStompAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "war stomp") {}
 };
 
 class CastBloodFuryAction : public CastBuffSpellAction
 {
 public:
-    CastBloodFuryAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "blood fury") {}
+    CastBloodFuryAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "blood fury") {}
 };
 
 class CastBerserkingAction : public CastBuffSpellAction
 {
 public:
-    CastBerserkingAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "berserking") {}
+    CastBerserkingAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "berserking") {}
 };
 
 class UseTrinketAction : public Action
 {
 public:
-    UseTrinketAction(PlayerbotAI* botAI) : Action(botAI, "use trinket") {}
+    UseTrinketAction(ShadowAI* botAI) : Action(botAI, "use trinket") {}
     bool Execute(Event event) override;
 protected:
     bool UseTrinket(Item* trinket);
@@ -290,7 +290,7 @@ protected:
 class CastSpellOnEnemyHealerAction : public CastSpellAction
 {
 public:
-    CastSpellOnEnemyHealerAction(PlayerbotAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
+    CastSpellOnEnemyHealerAction(ShadowAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
 
     Value<Unit*>* GetTargetValue() override;
     std::string const getName() override { return spell + " on enemy healer"; }
@@ -299,7 +299,7 @@ public:
 class CastSnareSpellAction : public CastDebuffSpellAction
 {
 public:
-    CastSnareSpellAction(PlayerbotAI* botAI, std::string const spell) : CastDebuffSpellAction(botAI, spell) {}
+    CastSnareSpellAction(ShadowAI* botAI, std::string const spell) : CastDebuffSpellAction(botAI, spell) {}
 
     Value<Unit*>* GetTargetValue() override;
     std::string const getName() override { return spell + " on snare target"; }
@@ -309,7 +309,7 @@ public:
 class CastCrowdControlSpellAction : public CastBuffSpellAction
 {
 public:
-    CastCrowdControlSpellAction(PlayerbotAI* botAI, std::string const spell) : CastBuffSpellAction(botAI, spell) {}
+    CastCrowdControlSpellAction(ShadowAI* botAI, std::string const spell) : CastBuffSpellAction(botAI, spell) {}
 
     Value<Unit*>* GetTargetValue() override;
     bool Execute(Event event) override;
@@ -321,7 +321,7 @@ public:
 class CastProtectSpellAction : public CastSpellAction
 {
 public:
-    CastProtectSpellAction(PlayerbotAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
+    CastProtectSpellAction(ShadowAI* botAI, std::string const spell) : CastSpellAction(botAI, spell) {}
 
     std::string const GetTargetName() override;
     bool isUseful() override;
@@ -331,7 +331,7 @@ public:
 class CastVehicleSpellAction : public CastSpellAction
 {
 public:
-    CastVehicleSpellAction(PlayerbotAI* botAI, std::string const& spell) : CastSpellAction(botAI, spell)
+    CastVehicleSpellAction(ShadowAI* botAI, std::string const& spell) : CastSpellAction(botAI, spell)
     {
         range = 120.0f;
     }
@@ -349,61 +349,61 @@ protected:
 class CastHurlBoulderAction : public CastVehicleSpellAction
 {
 public:
-    CastHurlBoulderAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "hurl boulder") {}
+    CastHurlBoulderAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "hurl boulder") {}
 };
 
 class CastSteamRushAction : public CastVehicleSpellAction
 {
 public:
-    CastSteamRushAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "steam rush") {}
+    CastSteamRushAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "steam rush") {}
 };
 
 class CastRamAction : public CastVehicleSpellAction
 {
 public:
-    CastRamAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "ram") {}
+    CastRamAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "ram") {}
 };
 
 class CastNapalmAction : public CastVehicleSpellAction
 {
 public:
-    CastNapalmAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "napalm") {}
+    CastNapalmAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "napalm") {}
 };
 
 class CastFireCannonAction : public CastVehicleSpellAction
 {
 public:
-    CastFireCannonAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "fire cannon") {}
+    CastFireCannonAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "fire cannon") {}
 };
 
 class CastSteamBlastAction : public CastVehicleSpellAction
 {
 public:
-    CastSteamBlastAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "steam blast") {}
+    CastSteamBlastAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "steam blast") {}
 };
 
 class CastIncendiaryRocketAction : public CastVehicleSpellAction
 {
 public:
-    CastIncendiaryRocketAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "incendiary rocket") {}
+    CastIncendiaryRocketAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "incendiary rocket") {}
 };
 
 class CastRocketBlastAction : public CastVehicleSpellAction
 {
 public:
-    CastRocketBlastAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "rocket blast") {}
+    CastRocketBlastAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "rocket blast") {}
 };
 
 class CastGlaiveThrowAction : public CastVehicleSpellAction
 {
 public:
-    CastGlaiveThrowAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "glaive throw") {}
+    CastGlaiveThrowAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "glaive throw") {}
 };
 
 class CastBladeSalvoAction : public CastVehicleSpellAction
 {
 public:
-    CastBladeSalvoAction(PlayerbotAI* botAI) : CastVehicleSpellAction(botAI, "blade salvo") {}
+    CastBladeSalvoAction(ShadowAI* botAI) : CastVehicleSpellAction(botAI, "blade salvo") {}
 };
 
 class MainTankActionNameSupport
@@ -420,7 +420,7 @@ private:
 class BuffOnMainTankAction : public CastBuffSpellAction, public MainTankActionNameSupport
 {
 public:
-    BuffOnMainTankAction(PlayerbotAI* ai, std::string spell, bool checkIsOwner = false)
+    BuffOnMainTankAction(ShadowAI* ai, std::string spell, bool checkIsOwner = false)
         : CastBuffSpellAction(ai, spell, checkIsOwner), MainTankActionNameSupport(spell)
     {
     }

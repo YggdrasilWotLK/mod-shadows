@@ -5,7 +5,7 @@
 
 #include "IsMovingValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool IsMovingValue::Calculate()
 {

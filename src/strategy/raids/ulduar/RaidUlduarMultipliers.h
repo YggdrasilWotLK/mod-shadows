@@ -8,7 +8,7 @@
 class FlameLeviathanMultiplier : public Multiplier
 {
 public:
-    FlameLeviathanMultiplier(PlayerbotAI* ai) : Multiplier(ai, "flame leviathan") {}
+    FlameLeviathanMultiplier(ShadowAI* ai) : Multiplier(ai, "flame leviathan") {}
 
 public:
     virtual float GetValue(Action* action);

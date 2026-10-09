@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PVPTRIGGERS_H
-#define _PLAYERBOT_PVPTRIGGERS_H
+#ifndef _SHADOW_PVPTRIGGERS_H
+#define _SHADOW_PVPTRIGGERS_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class EnemyPlayerNear : public Trigger
 {
 public:
-    EnemyPlayerNear(PlayerbotAI* botAI) : Trigger(botAI, "enemy player near", 3) {}
+    EnemyPlayerNear(ShadowAI* botAI) : Trigger(botAI, "enemy player near", 3) {}
 
     bool IsActive() override;
 };
@@ -21,7 +21,7 @@ public:
 class PlayerHasNoFlag : public Trigger
 {
 public:
-    PlayerHasNoFlag(PlayerbotAI* botAI) : Trigger(botAI, "player has no flag") {}
+    PlayerHasNoFlag(ShadowAI* botAI) : Trigger(botAI, "player has no flag") {}
 
     bool IsActive() override;
 };
@@ -31,7 +31,7 @@ public:
 class PlayerHasFlag : public Trigger
 {
 public:
-    PlayerHasFlag(PlayerbotAI* botAI) : Trigger(botAI, "player has flag") {}
+    PlayerHasFlag(ShadowAI* botAI) : Trigger(botAI, "player has flag") {}
 
     bool IsActive() override;
     static bool IsCapturingFlag(Player* bot);
@@ -40,7 +40,7 @@ public:
 class EnemyFlagCarrierNear : public Trigger
 {
 public:
-    EnemyFlagCarrierNear(PlayerbotAI* botAI) : Trigger(botAI, "enemy flagcarrier near") {}
+    EnemyFlagCarrierNear(ShadowAI* botAI) : Trigger(botAI, "enemy flagcarrier near") {}
 
     bool IsActive() override;
 };
@@ -48,7 +48,7 @@ public:
 class TeamFlagCarrierNear : public Trigger
 {
 public:
-    TeamFlagCarrierNear(PlayerbotAI* botAI) : Trigger(botAI, "team flagcarrier near") {}
+    TeamFlagCarrierNear(ShadowAI* botAI) : Trigger(botAI, "team flagcarrier near") {}
 
     bool IsActive() override;
 };
@@ -56,7 +56,7 @@ public:
 class TeamHasFlag : public Trigger
 {
 public:
-    TeamHasFlag(PlayerbotAI* botAI) : Trigger(botAI, "team has flag") {}
+    TeamHasFlag(ShadowAI* botAI) : Trigger(botAI, "team has flag") {}
 
     bool IsActive() override;
 };
@@ -64,7 +64,7 @@ public:
 class EnemyTeamHasFlag : public Trigger
 {
 public:
-    EnemyTeamHasFlag(PlayerbotAI* botAI) : Trigger(botAI, "enemy team has flag") {}
+    EnemyTeamHasFlag(ShadowAI* botAI) : Trigger(botAI, "enemy team has flag") {}
 
     bool IsActive() override;
 };
@@ -72,7 +72,7 @@ public:
 class PlayerIsInBattleground : public Trigger
 {
 public:
-    PlayerIsInBattleground(PlayerbotAI* botAI) : Trigger(botAI, "in Battleground") {}
+    PlayerIsInBattleground(ShadowAI* botAI) : Trigger(botAI, "in Battleground") {}
 
     bool IsActive() override;
 };
@@ -80,7 +80,7 @@ public:
 class BgWaitingTrigger : public Trigger
 {
 public:
-    BgWaitingTrigger(PlayerbotAI* botAI) : Trigger(botAI, "bg waiting", 30) {}
+    BgWaitingTrigger(ShadowAI* botAI) : Trigger(botAI, "bg waiting", 30) {}
 
     bool IsActive() override;
 };
@@ -88,7 +88,7 @@ public:
 class BgActiveTrigger : public Trigger
 {
 public:
-    BgActiveTrigger(PlayerbotAI* botAI) : Trigger(botAI, "bg active", 1) {}
+    BgActiveTrigger(ShadowAI* botAI) : Trigger(botAI, "bg active", 1) {}
 
     bool IsActive() override;
 };
@@ -96,7 +96,7 @@ public:
 class BgInviteActiveTrigger : public Trigger
 {
 public:
-    BgInviteActiveTrigger(PlayerbotAI* botAI) : Trigger(botAI, "bg invite active", 10) {}
+    BgInviteActiveTrigger(ShadowAI* botAI) : Trigger(botAI, "bg invite active", 10) {}
 
     bool IsActive() override;
 };
@@ -104,14 +104,14 @@ public:
 class InsideBGTrigger : public Trigger
 {
 public:
-    InsideBGTrigger(PlayerbotAI* botAI) : Trigger(botAI, "inside bg", 1) {}
+    InsideBGTrigger(ShadowAI* botAI) : Trigger(botAI, "inside bg", 1) {}
 
     bool IsActive() override;
 };
 class PlayerIsInBattlegroundWithoutFlag : public Trigger
 {
 public:
-    PlayerIsInBattlegroundWithoutFlag(PlayerbotAI* botAI) : Trigger(botAI, "in Battleground without flag") {}
+    PlayerIsInBattlegroundWithoutFlag(ShadowAI* botAI) : Trigger(botAI, "in Battleground without flag") {}
 
     bool IsActive() override;
 };
@@ -119,7 +119,7 @@ public:
 class PlayerWantsInBattlegroundTrigger : public Trigger
 {
 public:
-    PlayerWantsInBattlegroundTrigger(PlayerbotAI* botAI) : Trigger(botAI, "wants in bg") {}
+    PlayerWantsInBattlegroundTrigger(ShadowAI* botAI) : Trigger(botAI, "wants in bg") {}
 
     bool IsActive() override;
 };
@@ -127,7 +127,7 @@ public:
 class VehicleNearTrigger : public Trigger
 {
 public:
-    VehicleNearTrigger(PlayerbotAI* botAI) : Trigger(botAI, "vehicle near", 10) {}
+    VehicleNearTrigger(ShadowAI* botAI) : Trigger(botAI, "vehicle near", 10) {}
 
     bool IsActive() override;
 };
@@ -135,7 +135,7 @@ public:
 class InVehicleTrigger : public Trigger
 {
 public:
-    InVehicleTrigger(PlayerbotAI* botAI) : Trigger(botAI, "in vehicle") {}
+    InVehicleTrigger(ShadowAI* botAI) : Trigger(botAI, "in vehicle") {}
 
     bool IsActive() override;
 };
@@ -143,7 +143,7 @@ public:
 class AllianceNoSnowfallGY : public Trigger
 {
 public:
-    AllianceNoSnowfallGY(PlayerbotAI* botAI) : Trigger(botAI, "alliance no snowfall gy") {}
+    AllianceNoSnowfallGY(ShadowAI* botAI) : Trigger(botAI, "alliance no snowfall gy") {}
 
     bool IsActive() override;
 };

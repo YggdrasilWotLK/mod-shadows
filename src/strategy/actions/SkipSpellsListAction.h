@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SKIPSPELLSLISTACTION_H
-#define _PLAYERBOT_SKIPSPELLSLISTACTION_H
+#ifndef _SHADOW_SKIPSPELLSLISTACTION_H
+#define _SHADOW_SKIPSPELLSLISTACTION_H
 
 #include "Action.h"
 #include "ChatHelper.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SkipSpellsListAction : public Action
 {
 public:
-    SkipSpellsListAction(PlayerbotAI* botAI) : Action(botAI, "ss") {}
+    SkipSpellsListAction(ShadowAI* botAI) : Action(botAI, "ss") {}
 
     bool Execute(Event event) override;
 

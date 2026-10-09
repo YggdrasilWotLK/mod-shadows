@@ -9,7 +9,7 @@
 #include "Common.h"
 #include "ItemTemplate.h"
 #include "ObjectMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SpellInfo.h"
 
 #include <regex>
@@ -38,7 +38,7 @@ static bool substrContainsInMap(std::string const searchTerm, std::map<std::stri
     return false;
 }
 
-ChatHelper::ChatHelper(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
+ChatHelper::ChatHelper(ShadowAI* botAI) : ShadowAIAware(botAI)
 {
     itemQualities["poor"] = ITEM_QUALITY_POOR;
     itemQualities["gray"] = ITEM_QUALITY_POOR;
@@ -491,7 +491,7 @@ std::string const ChatHelper::FormatChat(ChatMsg chat)
 
 uint32 ChatHelper::parseSpell(std::string const text)
 {
-    PlayerbotChatHandler handler(botAI->GetBot());
+    ShadowChatHandler handler(botAI->GetBot());
     return handler.extractSpellId(text);
 }
 

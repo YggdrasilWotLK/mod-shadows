@@ -5,7 +5,7 @@
 
 #include "CancelChannelAction.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
 bool CancelChannelAction::Execute(Event event)
 {

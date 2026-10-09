@@ -8,7 +8,7 @@
 #include "ChatHelper.h"
 #include "CraftValue.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::map<uint32, SkillLineAbilityEntry const*> SetCraftAction::skillSpells;
 

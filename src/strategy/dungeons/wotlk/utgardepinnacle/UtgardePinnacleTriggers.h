@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUPTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONUPTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONUPTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONUPTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -30,21 +30,21 @@ enum UtgardePinnacleIDs
 class SkadiFreezingCloudTrigger : public Trigger
 {
 public:
-    SkadiFreezingCloudTrigger(PlayerbotAI* ai) : Trigger(ai, "skadi freezing cloud") {}
+    SkadiFreezingCloudTrigger(ShadowAI* ai) : Trigger(ai, "skadi freezing cloud") {}
     bool IsActive() override;
 };
 
 class SkadiWhirlwindTrigger : public Trigger
 {
 public:
-    SkadiWhirlwindTrigger(PlayerbotAI* ai) : Trigger(ai, "skadi whirlwind") {}
+    SkadiWhirlwindTrigger(ShadowAI* ai) : Trigger(ai, "skadi whirlwind") {}
     bool IsActive() override;
 };
 
 class YmironBaneTrigger : public Trigger
 {
 public:
-    YmironBaneTrigger(PlayerbotAI* ai) : Trigger(ai, "ymiron bane") {}
+    YmironBaneTrigger(ShadowAI* ai) : Trigger(ai, "ymiron bane") {}
     bool IsActive() override;
 };
 

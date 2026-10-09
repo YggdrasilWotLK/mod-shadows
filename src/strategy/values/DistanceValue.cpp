@@ -7,7 +7,7 @@
 
 #include "Formations.h"
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PositionValue.h"
 #include "ServerFacade.h"
 #include "Stances.h"

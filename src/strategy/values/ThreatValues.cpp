@@ -5,7 +5,7 @@
 
 #include "ThreatValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ThreatMgr.h"
 
 uint8 ThreatValue::Calculate()

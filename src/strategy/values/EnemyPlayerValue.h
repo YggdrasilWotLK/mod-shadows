@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ENEMYPLAYERVALUE_H
-#define _PLAYERBOT_ENEMYPLAYERVALUE_H
+#ifndef _SHADOW_ENEMYPLAYERVALUE_H
+#define _SHADOW_ENEMYPLAYERVALUE_H
 
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "PossibleTargetsValue.h"
 #include "TargetValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class NearestEnemyPlayersValue : public PossibleTargetsValue
 {
 public:
-    NearestEnemyPlayersValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->grindDistance)
+    NearestEnemyPlayersValue(ShadowAI* botAI, float range = sShadowAIConfig->grindDistance)
         : PossibleTargetsValue(botAI, "nearest enemy players", range)
     {
     }
@@ -28,7 +28,7 @@ public:
 class EnemyPlayerValue : public UnitCalculatedValue
 {
 public:
-    EnemyPlayerValue(PlayerbotAI* botAI, std::string const name = "enemy player")
+    EnemyPlayerValue(ShadowAI* botAI, std::string const name = "enemy player")
         : UnitCalculatedValue(botAI, name, 1 * 1000)
     {
     }

@@ -5,7 +5,7 @@
 
 #include "Strategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class ActionNodeFactoryInternal : public NamedObjectFactory<ActionNode>
 {
@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    static ActionNode* melee([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* melee([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("melee",
                               /*P*/ nullptr,
@@ -34,7 +34,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* healthstone([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* healthstone([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("healthstone",
                               /*P*/ nullptr,
@@ -42,7 +42,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* follow_master_random([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* follow_master_random([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("be near",
                               /*P*/ nullptr,
@@ -50,7 +50,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* attack_anything([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* attack_anything([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("attack anything",
                               /*P*/ nullptr,
@@ -58,7 +58,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* move_random([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* move_random([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("move random",
                               /*P*/ nullptr,
@@ -66,7 +66,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* move_to_loot([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* move_to_loot([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("move to loot",
                               /*P*/ nullptr,
@@ -74,7 +74,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* food([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* food([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("food",
                               /*P*/ nullptr,
@@ -82,7 +82,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* drink([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* drink([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("drink",
                               /*P*/ nullptr,
@@ -90,7 +90,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mana_potion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mana_potion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mana potion",
                               /*P*/ nullptr,
@@ -98,7 +98,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* healing_potion([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* healing_potion([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("healing potion",
                               /*P*/ nullptr,
@@ -106,7 +106,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* flee([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* flee([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("flee",
                               /*P*/ nullptr,
@@ -115,7 +115,7 @@ private:
     }
 };
 
-Strategy::Strategy(PlayerbotAI* botAI) : PlayerbotAIAware(botAI)
+Strategy::Strategy(ShadowAI* botAI) : ShadowAIAware(botAI)
 {
     actionNodeFactories.Add(new ActionNodeFactoryInternal());
 }

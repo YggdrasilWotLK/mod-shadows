@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_USEPOTIONSSTRATEGY_H
-#define _PLAYERBOT_USEPOTIONSSTRATEGY_H
+#ifndef _SHADOW_USEPOTIONSSTRATEGY_H
+#define _SHADOW_USEPOTIONSSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class UsePotionsStrategy : public Strategy
 {
 public:
-    UsePotionsStrategy(PlayerbotAI* botAI);
+    UsePotionsStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "potions"; }

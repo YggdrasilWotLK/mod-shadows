@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOCCMULTIPLIERS_H
-#define _PLAYERBOT_WOTLKDUNGEONOCCMULTIPLIERS_H
+#ifndef _SHADOW_WOTLKDUNGEONOCCMULTIPLIERS_H
+#define _SHADOW_WOTLKDUNGEONOCCMULTIPLIERS_H
 
 #include "Multiplier.h"
 #include "Unit.h"
@@ -15,7 +15,7 @@ const float uromCoords[4][4] =
 class MountingDrakeMultiplier : public Multiplier
 {
     public:
-        MountingDrakeMultiplier(PlayerbotAI* ai) : Multiplier(ai, "mounting drake") {}
+        MountingDrakeMultiplier(ShadowAI* ai) : Multiplier(ai, "mounting drake") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -24,7 +24,7 @@ class MountingDrakeMultiplier : public Multiplier
 class OccFlyingMultiplier : public Multiplier
 {
     public:
-        OccFlyingMultiplier(PlayerbotAI* ai) : Multiplier(ai, "occ flying drake") {}
+        OccFlyingMultiplier(ShadowAI* ai) : Multiplier(ai, "occ flying drake") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -33,7 +33,7 @@ class OccFlyingMultiplier : public Multiplier
 class UromMultiplier : public Multiplier
 {
     public:
-        UromMultiplier(PlayerbotAI* ai) : Multiplier(ai, "mage-lord urom") {}
+        UromMultiplier(ShadowAI* ai) : Multiplier(ai, "mage-lord urom") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -44,7 +44,7 @@ class UromMultiplier : public Multiplier
 class EregosMultiplier : public Multiplier
 {
     public:
-        EregosMultiplier(PlayerbotAI* ai) : Multiplier(ai, "ley-guardian eregos") {}
+        EregosMultiplier(ShadowAI* ai) : Multiplier(ai, "ley-guardian eregos") {}
 
     public:
         virtual float GetValue(Action* action);

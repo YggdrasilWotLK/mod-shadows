@@ -5,7 +5,7 @@
 
 #include "DpsHunterStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class DpsHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -17,14 +17,14 @@ public:
     }
 
 private:
-    static ActionNode* aimed_shot([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* aimed_shot([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("aimed shot",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("multi-shot"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* steady_shot([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* steady_shot([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("steady shot",
                               /*P*/ nullptr,
@@ -33,7 +33,7 @@ private:
     }
 };
 
-DpsHunterStrategy::DpsHunterStrategy(PlayerbotAI* botAI) : GenericHunterStrategy(botAI)
+DpsHunterStrategy::DpsHunterStrategy(ShadowAI* botAI) : GenericHunterStrategy(botAI)
 {
     actionNodeFactories.Add(new DpsHunterStrategyActionNodeFactory());
 }

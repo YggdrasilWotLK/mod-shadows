@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "ItemCountValue.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void InventoryAction::IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask)
 {

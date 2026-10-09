@@ -4,7 +4,7 @@
  */
 
 #include "BeastMasteryHunterStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class BeastMasteryHunterStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -25,20 +25,20 @@ public:
     }
 
 private:
-    static ActionNode* auto_shot(PlayerbotAI*) { return new ActionNode("auto shot", nullptr, nullptr, nullptr); }
-    static ActionNode* kill_command(PlayerbotAI*) { return new ActionNode("kill command", nullptr, nullptr, nullptr); }
-    static ActionNode* kill_shot(PlayerbotAI*) { return new ActionNode("kill shot", nullptr, nullptr, nullptr); }
-    static ActionNode* viper_sting(PlayerbotAI*) { return new ActionNode("viper sting", nullptr, nullptr, nullptr); }
-    static ActionNode* serpent_sting(PlayerbotAI*) { return new ActionNode("serpent sting", nullptr, nullptr, nullptr); }
-    static ActionNode* aimed_shot(PlayerbotAI*) { return new ActionNode("aimed shot", nullptr, nullptr, nullptr); }
-    static ActionNode* arcane_shot(PlayerbotAI*) { return new ActionNode("arcane shot", nullptr, nullptr, nullptr); }
-    static ActionNode* steady_shot(PlayerbotAI*) { return new ActionNode("steady shot", nullptr, nullptr, nullptr); }
-    static ActionNode* multi_shot(PlayerbotAI*) { return new ActionNode("multi shot", nullptr, nullptr, nullptr); }
-    static ActionNode* volley(PlayerbotAI*) { return new ActionNode("volley", nullptr, nullptr, nullptr); }
+    static ActionNode* auto_shot(ShadowAI*) { return new ActionNode("auto shot", nullptr, nullptr, nullptr); }
+    static ActionNode* kill_command(ShadowAI*) { return new ActionNode("kill command", nullptr, nullptr, nullptr); }
+    static ActionNode* kill_shot(ShadowAI*) { return new ActionNode("kill shot", nullptr, nullptr, nullptr); }
+    static ActionNode* viper_sting(ShadowAI*) { return new ActionNode("viper sting", nullptr, nullptr, nullptr); }
+    static ActionNode* serpent_sting(ShadowAI*) { return new ActionNode("serpent sting", nullptr, nullptr, nullptr); }
+    static ActionNode* aimed_shot(ShadowAI*) { return new ActionNode("aimed shot", nullptr, nullptr, nullptr); }
+    static ActionNode* arcane_shot(ShadowAI*) { return new ActionNode("arcane shot", nullptr, nullptr, nullptr); }
+    static ActionNode* steady_shot(ShadowAI*) { return new ActionNode("steady shot", nullptr, nullptr, nullptr); }
+    static ActionNode* multi_shot(ShadowAI*) { return new ActionNode("multi shot", nullptr, nullptr, nullptr); }
+    static ActionNode* volley(ShadowAI*) { return new ActionNode("volley", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-BeastMasteryHunterStrategy::BeastMasteryHunterStrategy(PlayerbotAI* botAI) : GenericHunterStrategy(botAI)
+BeastMasteryHunterStrategy::BeastMasteryHunterStrategy(ShadowAI* botAI) : GenericHunterStrategy(botAI)
 {
     actionNodeFactories.Add(new BeastMasteryHunterStrategyActionNodeFactory());
 }

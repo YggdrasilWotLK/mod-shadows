@@ -3,7 +3,7 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "WipeAction.h"
 
 bool WipeAction::Execute(Event event)

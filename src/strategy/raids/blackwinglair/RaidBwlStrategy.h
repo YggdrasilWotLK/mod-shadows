@@ -1,6 +1,6 @@
 
-#ifndef _PLAYERBOT_RAIDBWLSTRATEGY_H
-#define _PLAYERBOT_RAIDBWLSTRATEGY_H
+#ifndef _SHADOW_RAIDBWLSTRATEGY_H
+#define _SHADOW_RAIDBWLSTRATEGY_H
 
 #include "AiObjectContext.h"
 #include "Multiplier.h"
@@ -9,7 +9,7 @@
 class RaidBwlStrategy : public Strategy
 {
 public:
-    RaidBwlStrategy(PlayerbotAI* ai) : Strategy(ai) {}
+    RaidBwlStrategy(ShadowAI* ai) : Strategy(ai) {}
     virtual std::string const getName() override { return "bwl"; }
     virtual void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     // virtual void InitMultipliers(std::vector<Multiplier*> &multipliers) override;

@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUPACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONUPACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONUPACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONUPACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -14,9 +14,9 @@ class WotlkDungeonUPActionContext : public NamedObjectContext<Action>
             creators["avoid ymiron bane"] = &WotlkDungeonUPActionContext::avoid_ymiron_bane;
         }
     private:
-        static Action* avoid_freezing_cloud(PlayerbotAI* ai) { return new AvoidFreezingCloudAction(ai); }
-        static Action* avoid_whirlwind(PlayerbotAI* ai) { return new AvoidSkadiWhirlwindAction(ai); }
-        static Action* avoid_ymiron_bane(PlayerbotAI* ai) { return new AvoidYmironBaneAction(ai); }
+        static Action* avoid_freezing_cloud(ShadowAI* ai) { return new AvoidFreezingCloudAction(ai); }
+        static Action* avoid_whirlwind(ShadowAI* ai) { return new AvoidSkadiWhirlwindAction(ai); }
+        static Action* avoid_ymiron_bane(ShadowAI* ai) { return new AvoidYmironBaneAction(ai); }
 };
 
 #endif

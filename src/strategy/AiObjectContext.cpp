@@ -13,7 +13,7 @@
 #include "HunterAiObjectContext.h"
 #include "MageAiObjectContext.h"
 #include "PaladinAiObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PriestAiObjectContext.h"
 #include "RaidUlduarActionContext.h"
 #include "RaidUlduarTriggerContext.h"
@@ -57,11 +57,11 @@ SharedNamedObjectContextList<Action> AiObjectContext::sharedActionContexts;
 SharedNamedObjectContextList<Trigger> AiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> AiObjectContext::sharedValueContexts;
 
-AiObjectContext::AiObjectContext(PlayerbotAI* botAI, SharedNamedObjectContextList<Strategy>& sharedStrategyContext,
+AiObjectContext::AiObjectContext(ShadowAI* botAI, SharedNamedObjectContextList<Strategy>& sharedStrategyContext,
                                  SharedNamedObjectContextList<Action>& sharedActionContext,
                                  SharedNamedObjectContextList<Trigger>& sharedTriggerContext,
                                  SharedNamedObjectContextList<UntypedValue>& sharedValueContext)
-    : PlayerbotAIAware(botAI),
+    : ShadowAIAware(botAI),
       strategyContexts(sharedStrategyContext),
       actionContexts(sharedActionContext),
       triggerContexts(sharedTriggerContext),

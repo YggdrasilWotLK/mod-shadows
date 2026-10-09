@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RANDOMITEMMGR_H
-#define _PLAYERBOT_RANDOMITEMMGR_H
+#ifndef _SHADOW_RANDOMITEMMGR_H
+#define _SHADOW_RANDOMITEMMGR_H
 
 #include <map>
 #include <set>

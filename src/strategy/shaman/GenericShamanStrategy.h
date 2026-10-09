@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICSHAMANSTRATEGY_H
-#define _PLAYERBOT_GENERICSHAMANSTRATEGY_H
+#ifndef _SHADOW_GENERICSHAMANSTRATEGY_H
+#define _SHADOW_GENERICSHAMANSTRATEGY_H
 
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericShamanStrategy : public CombatStrategy
 {
 public:
-    GenericShamanStrategy(PlayerbotAI* botAI);
+    GenericShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
 };
@@ -21,7 +21,7 @@ public:
 class ShamanCureStrategy : public Strategy
 {
 public:
-    ShamanCureStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    ShamanCureStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cure"; }
@@ -30,7 +30,7 @@ public:
 class ShamanBoostStrategy : public Strategy
 {
 public:
-    ShamanBoostStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    ShamanBoostStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "boost"; }
@@ -39,7 +39,7 @@ public:
 class ShamanAoeStrategy : public CombatStrategy
 {
 public:
-    ShamanAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    ShamanAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "aoe"; }

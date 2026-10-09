@@ -5,7 +5,7 @@
 
 #include "WarriorActions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CastSunderArmorAction::isUseful()
 {

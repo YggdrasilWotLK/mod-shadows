@@ -6,8 +6,8 @@
 #include "MageActions.h"
 #include <cmath>
 #include "UseItemAction.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 
@@ -105,7 +105,7 @@ Unit* CastFocusMagicOnPartyAction::GetTarget()
         if (!member || member == bot || !member->IsAlive())
             continue;
 
-        if (member->GetMap() != bot->GetMap() || bot->GetDistance(member) > sPlayerbotAIConfig->spellDistance)
+        if (member->GetMap() != bot->GetMap() || bot->GetDistance(member) > sShadowAIConfig->spellDistance)
             continue;
 
         if (member->HasAura(54646))

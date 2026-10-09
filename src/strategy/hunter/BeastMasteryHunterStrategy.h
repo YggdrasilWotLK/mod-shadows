@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_BEASTMASTERYHUNTERSTRATEGY_H
-#define _PLAYERBOT_BEASTMASTERYHUNTERSTRATEGY_H
+#ifndef _SHADOW_BEASTMASTERYHUNTERSTRATEGY_H
+#define _SHADOW_BEASTMASTERYHUNTERSTRATEGY_H
 
 #include "GenericHunterStrategy.h"
 #include "CombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class BeastMasteryHunterStrategy : public GenericHunterStrategy
 {
 public:
-    BeastMasteryHunterStrategy(PlayerbotAI* botAI);
+    BeastMasteryHunterStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bm"; }

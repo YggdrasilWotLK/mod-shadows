@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICROGUENONCOMBATSTRATEGY_H
-#define _PLAYERBOT_GENERICROGUENONCOMBATSTRATEGY_H
+#ifndef _SHADOW_GENERICROGUENONCOMBATSTRATEGY_H
+#define _SHADOW_GENERICROGUENONCOMBATSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericRogueNonCombatStrategy : public NonCombatStrategy
 {
 public:
-    GenericRogueNonCombatStrategy(PlayerbotAI* botAI);
+    GenericRogueNonCombatStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "nc"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;

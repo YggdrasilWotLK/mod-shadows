@@ -5,7 +5,7 @@
 
 #include "ArmsWarriorStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class ArmsWarriorStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -29,7 +29,7 @@ private:
     ACTION_NODE_A(mocking_blow, "mocking blow", "hamstring");
     ACTION_NODE_A(heroic_strike, "heroic strike", "melee");
 
-    static ActionNode* enraged_regeneration(PlayerbotAI* botAI)
+    static ActionNode* enraged_regeneration(ShadowAI* botAI)
     {
         return new ActionNode("enraged regeneration",
                               /*P*/ nullptr,
@@ -37,7 +37,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* retaliation(PlayerbotAI* botAI)
+    static ActionNode* retaliation(ShadowAI* botAI)
     {
         return new ActionNode("retaliation",
                               /*P*/ nullptr,
@@ -45,7 +45,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* shattering_throw(PlayerbotAI* botAI)
+    static ActionNode* shattering_throw(ShadowAI* botAI)
     {
         return new ActionNode("shattering throw",
                               /*P*/ nullptr,
@@ -54,7 +54,7 @@ private:
     }
 };
 
-ArmsWarriorStrategy::ArmsWarriorStrategy(PlayerbotAI* botAI) : GenericWarriorStrategy(botAI)
+ArmsWarriorStrategy::ArmsWarriorStrategy(ShadowAI* botAI) : GenericWarriorStrategy(botAI)
 {
     actionNodeFactories.Add(new ArmsWarriorStrategyActionNodeFactory());
 }

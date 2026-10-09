@@ -6,12 +6,12 @@
 #include "LeastHpTargetValue.h"
 
 #include "AttackersValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class FindLeastHpTargetStrategy : public FindNonCcTargetStrategy
 {
 public:
-    FindLeastHpTargetStrategy(PlayerbotAI* botAI) : FindNonCcTargetStrategy(botAI), minHealth(0) {}
+    FindLeastHpTargetStrategy(ShadowAI* botAI) : FindNonCcTargetStrategy(botAI), minHealth(0) {}
 
     void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
     {

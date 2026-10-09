@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ROGUEOPENINGACTIONS_H
-#define _PLAYERBOT_ROGUEOPENINGACTIONS_H
+#ifndef _SHADOW_ROGUEOPENINGACTIONS_H
+#define _SHADOW_ROGUEOPENINGACTIONS_H
 
 #include "GenericSpellActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class CastSapAction : public CastMeleeSpellAction
 {
 public:
-    CastSapAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "sap") {}
+    CastSapAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "sap") {}
 
     Value<Unit*>* GetTargetValue() override;
     bool isUseful() override { return true; }
@@ -23,19 +23,19 @@ public:
 class CastGarroteAction : public CastDebuffSpellAction
 {
 public:
-    CastGarroteAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "garrote", true, 8.0f) {}
+    CastGarroteAction(ShadowAI* botAI) : CastDebuffSpellAction(botAI, "garrote", true, 8.0f) {}
 };
 
 class CastCheapShotAction : public CastMeleeSpellAction
 {
 public:
-    CastCheapShotAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "cheap shot") {}
+    CastCheapShotAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "cheap shot") {}
 };
 
 class CastAmbushAction : public CastMeleeSpellAction
 {
 public:
-    CastAmbushAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "ambush") {}
+    CastAmbushAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "ambush") {}
 };
 
 #endif

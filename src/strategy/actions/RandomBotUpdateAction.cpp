@@ -6,24 +6,24 @@
 #include "RandomBotUpdateAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool RandomBotUpdateAction::Execute(Event event)
 {
-    if (!sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (!sRandomShadowMgr->IsRandomBot(bot))
         return false;
 
     if (bot->GetGroup() && botAI->GetGroupMaster())
     {
-        auto groupMasterBotAI = GET_PLAYERBOT_AI(botAI->GetGroupMaster());
+        auto groupMasterBotAI = GET_SHADOW_AI(botAI->GetGroupMaster());
         if (!groupMasterBotAI || groupMasterBotAI->IsRealPlayer())
             return true;
     }
 
-    if (botAI->HasPlayerNearby(sPlayerbotAIConfig->grindDistance))
+    if (botAI->HasPlayerNearby(sShadowAIConfig->grindDistance))
         return true;
 
-    return sRandomPlayerbotMgr->ProcessBot(bot);
+    return sRandomShadowMgr->ProcessBot(bot);
 }
 
 bool RandomBotUpdateAction::isUseful() { return AI_VALUE(bool, "random bot update"); }

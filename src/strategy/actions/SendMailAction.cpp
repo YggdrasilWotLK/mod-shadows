@@ -9,12 +9,12 @@
 #include "Event.h"
 #include "ItemVisitors.h"
 #include "Mail.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool SendMailAction::Execute(Event event)
 {
     uint32 account = bot->GetSession()->GetAccountId();
-    bool randomBot = sPlayerbotAIConfig->IsInRandomAccountList(account);
+    bool randomBot = sShadowAIConfig->IsInRandomAccountList(account);
 
     GuidVector gos = *context->GetValue<GuidVector>("nearest game objects");
     bool mailboxFound = false;

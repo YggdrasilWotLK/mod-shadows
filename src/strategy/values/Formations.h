@@ -3,25 +3,25 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FORMATIONS_H
-#define _PLAYERBOT_FORMATIONS_H
+#ifndef _SHADOW_FORMATIONS_H
+#define _SHADOW_FORMATIONS_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "TravelMgr.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 class Formation : public AiNamedObject
 {
 public:
-    Formation(PlayerbotAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
+    Formation(ShadowAI* botAI, std::string const name) : AiNamedObject(botAI, name) {}
     virtual ~Formation() = default;
     virtual std::string const GetTargetName() { return ""; }
     virtual WorldLocation GetLocation() { return NullLocation; }
-    virtual float GetMaxDistance() { return sPlayerbotAIConfig->followDistance; }
+    virtual float GetMaxDistance() { return sShadowAIConfig->followDistance; }
     static WorldLocation NullLocation;
     static bool IsNullLocation(WorldLocation const& loc);
 
@@ -32,13 +32,13 @@ protected:
 class FollowFormation : public Formation
 {
 public:
-    FollowFormation(PlayerbotAI* botAI, std::string const name) : Formation(botAI, name) {}
+    FollowFormation(ShadowAI* botAI, std::string const name) : Formation(botAI, name) {}
 };
 
 class MoveFormation : public Formation
 {
 public:
-    MoveFormation(PlayerbotAI* botAI, std::string const name) : Formation(botAI, name) {}
+    MoveFormation(ShadowAI* botAI, std::string const name) : Formation(botAI, name) {}
 
 protected:
     WorldLocation MoveLine(std::vector<Player*> line, float diff, float cx, float cy, float cz, float orientation,
@@ -50,7 +50,7 @@ protected:
 class MoveAheadFormation : public MoveFormation
 {
 public:
-    MoveAheadFormation(PlayerbotAI* botAI, std::string const name) : MoveFormation(botAI, name) {}
+    MoveAheadFormation(ShadowAI* botAI, std::string const name) : MoveFormation(botAI, name) {}
 
     WorldLocation GetLocation() override;
     virtual WorldLocation GetLocationInternal() { return NullLocation; }
@@ -59,7 +59,7 @@ public:
 class FormationValue : public ManualSetValue<Formation*>
 {
 public:
-    FormationValue(PlayerbotAI* botAI);
+    FormationValue(ShadowAI* botAI);
     ~FormationValue();
 
     std::string const Save() override;
@@ -69,7 +69,7 @@ public:
 class SetFormationAction : public Action
 {
 public:
-    SetFormationAction(PlayerbotAI* botAI) : Action(botAI, "set formation") {}
+    SetFormationAction(ShadowAI* botAI) : Action(botAI, "set formation") {}
 
     bool Execute(Event event) override;
 };

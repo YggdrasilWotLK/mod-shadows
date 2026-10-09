@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHAMANNONCOMBATSTRATEGY_H
-#define _PLAYERBOT_SHAMANNONCOMBATSTRATEGY_H
+#ifndef _SHADOW_SHAMANNONCOMBATSTRATEGY_H
+#define _SHADOW_SHAMANNONCOMBATSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ShamanNonCombatStrategy : public NonCombatStrategy
 {
 public:
-    ShamanNonCombatStrategy(PlayerbotAI* botAI);
+    ShamanNonCombatStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     void InitMultipliers(std::vector<Multiplier*>& multipliers) override;

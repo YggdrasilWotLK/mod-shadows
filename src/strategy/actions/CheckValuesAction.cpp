@@ -6,10 +6,10 @@
 #include "CheckValuesAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
-CheckValuesAction::CheckValuesAction(PlayerbotAI* botAI) : Action(botAI, "check values") {}
+CheckValuesAction::CheckValuesAction(ShadowAI* botAI) : Action(botAI, "check values") {}
 
 bool CheckValuesAction::Execute(Event event)
 {

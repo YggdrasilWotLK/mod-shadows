@@ -5,7 +5,7 @@
 
 #include "RangedCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void RangedCombatStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

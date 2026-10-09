@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PETITIONSIGNACTION_H
-#define _PLAYERBOT_PETITIONSIGNACTION_H
+#ifndef _SHADOW_PETITIONSIGNACTION_H
+#define _SHADOW_PETITIONSIGNACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PetitionSignAction : public Action
 {
 public:
-    PetitionSignAction(PlayerbotAI* botAI) : Action(botAI, "petition sign") {}
+    PetitionSignAction(ShadowAI* botAI) : Action(botAI, "petition sign") {}
 
     bool Execute(Event event) override;
 };

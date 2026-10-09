@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RESETAIACTION_H
-#define _PLAYERBOT_RESETAIACTION_H
+#ifndef _SHADOW_RESETAIACTION_H
+#define _SHADOW_RESETAIACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ResetAiAction : public Action
 {
 public:
-    ResetAiAction(PlayerbotAI* botAI) : Action(botAI, "reset botAI") {}
+    ResetAiAction(ShadowAI* botAI) : Action(botAI, "reset botAI") {}
 
     bool Execute(Event event) override;
 };

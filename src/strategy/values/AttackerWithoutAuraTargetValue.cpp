@@ -5,7 +5,7 @@
 
 #include "AttackerWithoutAuraTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* AttackerWithoutAuraTargetValue::Calculate()
 {

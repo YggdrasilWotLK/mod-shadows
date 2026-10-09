@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEWPLAYERNEARBYVALUE_H
-#define _PLAYERBOT_NEWPLAYERNEARBYVALUE_H
+#ifndef _SHADOW_NEWPLAYERNEARBYVALUE_H
+#define _SHADOW_NEWPLAYERNEARBYVALUE_H
 
 #include "ObjectGuid.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NewPlayerNearbyValue : public CalculatedValue<ObjectGuid>
 {
 public:
-    NewPlayerNearbyValue(PlayerbotAI* botAI) : CalculatedValue<ObjectGuid>(botAI, "new player nearby") {}
+    NewPlayerNearbyValue(ShadowAI* botAI) : CalculatedValue<ObjectGuid>(botAI, "new player nearby") {}
 
     ObjectGuid Calculate() override;
 };
@@ -22,7 +22,7 @@ public:
 class AlreadySeenPlayersValue : public ManualSetValue<GuidSet&>
 {
 public:
-    AlreadySeenPlayersValue(PlayerbotAI* botAI) : ManualSetValue<GuidSet&>(botAI, data, "already seen players") {}
+    AlreadySeenPlayersValue(ShadowAI* botAI) : ManualSetValue<GuidSet&>(botAI, data, "already seen players") {}
 
     GuidSet data;
 };

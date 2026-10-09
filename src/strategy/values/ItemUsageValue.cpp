@@ -10,9 +10,9 @@
 #include "GuildTaskMgr.h"
 #include "Item.h"
 #include "LootObjectStack.h"
-#include "PlayerbotAIConfig.h"
-#include "PlayerbotFactory.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "ShadowFactory.h"
+#include "Shadows.h"
 #include "RandomItemMgr.h"
 #include "ServerFacade.h"
 #include "StatsWeightCalculator.h"
@@ -126,7 +126,7 @@ ItemUsage ItemUsageValue::Calculate()
     Player* master = botAI->GetMaster();
     bool isSelfBot = (master == bot);
     bool botNeedsItemForQuest = IsItemUsefulForQuest(bot, proto);
-    bool masterNeedsItemForQuest = master && sPlayerbotAIConfig->syncQuestWithPlayer && IsItemUsefulForQuest(master, proto);
+    bool masterNeedsItemForQuest = master && sShadowAIConfig->syncQuestWithPlayer && IsItemUsefulForQuest(master, proto);
 
     // Identify the source of loot
     LootObject lootObject = AI_VALUE(LootObject, "loot target");
@@ -397,7 +397,7 @@ ItemUsage ItemUsageValue::QueryItemUsageForEquip(ItemTemplate const* itemProto, 
             // uint32 oldStatWeight = sRandomItemMgr->GetLiveStatWeight(bot, oldItemProto->ItemId);
             if (itemScore || oldScore)
             {
-                shouldEquipInSlot = itemScore > oldScore * sPlayerbotAIConfig->equipUpgradeThreshold;
+                shouldEquipInSlot = itemScore > oldScore * sShadowAIConfig->equipUpgradeThreshold;
             }
         }
 
@@ -502,7 +502,7 @@ uint32 ItemUsageValue::GetSmallestBagSize()
 
 bool ItemUsageValue::IsItemUsefulForQuest(Player* player, ItemTemplate const* proto)
 {
-    auto botAI = GET_PLAYERBOT_AI(player);
+    auto botAI = GET_SHADOW_AI(player);
     if (!botAI)
         return false;
 

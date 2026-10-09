@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PERFORMANCEMONITOR_H
-#define _PLAYERBOT_PERFORMANCEMONITOR_H
+#ifndef _SHADOW_PERFORMANCEMONITOR_H
+#define _SHADOW_PERFORMANCEMONITOR_H
 
 #include <chrono>
 #include <ctime>

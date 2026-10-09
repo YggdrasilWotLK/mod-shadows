@@ -4,9 +4,9 @@
  */
 
 #include "PriestTriggers.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Player.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool PowerWordFortitudeOnPartyTrigger::IsActive()
 {
@@ -67,15 +67,15 @@ bool ShadowformTrigger::IsActive() { return !botAI->HasAura("shadowform", bot); 
 
 bool ShadowfiendTrigger::IsActive() { return BoostTrigger::IsActive() && !bot->HasSpellCooldown(34433); }
 
-BindingHealTrigger::BindingHealTrigger(PlayerbotAI* botAI)
-    : PartyMemberLowHealthTrigger(botAI, "binding heal", sPlayerbotAIConfig->lowHealth, 0)
+BindingHealTrigger::BindingHealTrigger(ShadowAI* botAI)
+    : PartyMemberLowHealthTrigger(botAI, "binding heal", sShadowAIConfig->lowHealth, 0)
 {
 }
 
 bool BindingHealTrigger::IsActive()
 {
     return PartyMemberLowHealthTrigger::IsActive() &&
-           AI_VALUE2(uint8, "health", "self target") < sPlayerbotAIConfig->mediumHealth;
+           AI_VALUE2(uint8, "health", "self target") < sShadowAIConfig->mediumHealth;
 }
 
 const std::set<uint32> MindSearChannelCheckTrigger::MIND_SEAR_SPELL_IDS = {

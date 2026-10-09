@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "LastMovementValue.h"
 #include "MotionMaster.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PositionValue.h"
 
 bool StayActionBase::Stay()
@@ -20,7 +20,7 @@ bool StayActionBase::Stay()
     if (bot->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE)
         return false;
 
-    uint32 sitDelay = sPlayerbotAIConfig->sitDelay / 1000;
+    uint32 sitDelay = sShadowAIConfig->sitDelay / 1000;
     time_t stayTime = AI_VALUE(time_t, "stay time");
     time_t now = time(nullptr);
     if (!stayTime)
@@ -50,7 +50,7 @@ bool StayAction::isUseful()
     if (stayPosition.isSet())
     {
         const float distance = bot->GetDistance(stayPosition.x, stayPosition.y, stayPosition.z);
-        if (sPlayerbotAIConfig->followDistance)
+        if (sShadowAIConfig->followDistance)
         {
             return false;
         }

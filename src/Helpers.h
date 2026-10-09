@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HELPERS_H
-#define _PLAYERBOT_HELPERS_H
+#ifndef _SHADOW_HELPERS_H
+#define _SHADOW_HELPERS_H
 
 #include <stdio.h>
 #include <string.h>

@@ -5,7 +5,7 @@
 
 #include "MaintenanceStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 NextAction** MaintenanceStrategy::getDefaultActions() { return nullptr; }
 

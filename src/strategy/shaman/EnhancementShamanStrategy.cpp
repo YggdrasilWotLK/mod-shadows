@@ -5,7 +5,7 @@
 
 #include "EnhancementShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class EnhancementShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -25,25 +25,25 @@ public:
     }
 
 private:
-    static ActionNode* stormstrike(PlayerbotAI*) { return new ActionNode("stormstrike", nullptr, nullptr, nullptr); }
-    static ActionNode* lava_lash([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* stormstrike(ShadowAI*) { return new ActionNode("stormstrike", nullptr, nullptr, nullptr); }
+    static ActionNode* lava_lash([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("lava lash",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("melee"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* feral_spirit(PlayerbotAI*) { return new ActionNode("feral spirit", nullptr, nullptr, nullptr); }
-    static ActionNode* lightning_bolt(PlayerbotAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* earth_shock(PlayerbotAI*) { return new ActionNode("earth shock", nullptr, nullptr, nullptr); }
-    static ActionNode* flame_shock(PlayerbotAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
-    static ActionNode* shamanistic_rage(PlayerbotAI*) { return new ActionNode("shamanistic rage", nullptr, nullptr, nullptr); }
-    static ActionNode* call_of_the_elements(PlayerbotAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
-    static ActionNode* lightning_shield(PlayerbotAI*) { return new ActionNode("lightning shield", nullptr, nullptr, nullptr); }
+    static ActionNode* feral_spirit(ShadowAI*) { return new ActionNode("feral spirit", nullptr, nullptr, nullptr); }
+    static ActionNode* lightning_bolt(ShadowAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* earth_shock(ShadowAI*) { return new ActionNode("earth shock", nullptr, nullptr, nullptr); }
+    static ActionNode* flame_shock(ShadowAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
+    static ActionNode* shamanistic_rage(ShadowAI*) { return new ActionNode("shamanistic rage", nullptr, nullptr, nullptr); }
+    static ActionNode* call_of_the_elements(ShadowAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
+    static ActionNode* lightning_shield(ShadowAI*) { return new ActionNode("lightning shield", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-EnhancementShamanStrategy::EnhancementShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+EnhancementShamanStrategy::EnhancementShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new EnhancementShamanStrategyActionNodeFactory());
 }

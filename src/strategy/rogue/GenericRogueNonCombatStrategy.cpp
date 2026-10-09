@@ -5,7 +5,7 @@
 
 #include "GenericRogueNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericRogueNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -16,7 +16,7 @@ public:
     }
 
 private:
-    static ActionNode* use_deadly_poison_on_off_hand([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* use_deadly_poison_on_off_hand([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("use deadly poison on off hand",
                               /*P*/ nullptr,
@@ -25,7 +25,7 @@ private:
     }
 };
 
-GenericRogueNonCombatStrategy::GenericRogueNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericRogueNonCombatStrategy::GenericRogueNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericRogueNonCombatStrategyActionNodeFactory());
 }

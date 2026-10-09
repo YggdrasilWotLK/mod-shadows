@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICHUNTERSTRATEGY_H
-#define _PLAYERBOT_GENERICHUNTERSTRATEGY_H
+#ifndef _SHADOW_GENERICHUNTERSTRATEGY_H
+#define _SHADOW_GENERICHUNTERSTRATEGY_H
 
 #include "CombatStrategy.h"
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericHunterStrategy : public CombatStrategy
 {
 public:
-    GenericHunterStrategy(PlayerbotAI* botAI);
+    GenericHunterStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "hunter"; }
@@ -25,7 +25,7 @@ public:
 class AoEHunterStrategy : public CombatStrategy
 {
 public:
-    AoEHunterStrategy(PlayerbotAI* botAI);
+    AoEHunterStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "aoe"; }
@@ -34,7 +34,7 @@ public:
 class HunterBoostStrategy : public Strategy
 {
 public:
-    HunterBoostStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    HunterBoostStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     std::string const getName() override { return "boost"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -43,7 +43,7 @@ public:
 class HunterCcStrategy : public Strategy
 {
 public:
-    HunterCcStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    HunterCcStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cc"; }
@@ -52,7 +52,7 @@ public:
 class HunterTrapWeaveStrategy : public Strategy
 {
 public:
-    HunterTrapWeaveStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    HunterTrapWeaveStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "trap weave"; }

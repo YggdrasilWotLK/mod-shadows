@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MAINTANCEVALUE_H
-#define _PLAYERBOT_MAINTANCEVALUE_H
+#ifndef _SHADOW_MAINTANCEVALUE_H
+#define _SHADOW_MAINTANCEVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CanMoveAroundValue : public BoolCalculatedValue
 {
 public:
-    CanMoveAroundValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can move around", 2 * 2000) {}
+    CanMoveAroundValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can move around", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -21,7 +21,7 @@ public:
 class ShouldHomeBindValue : public BoolCalculatedValue
 {
 public:
-    ShouldHomeBindValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "should home bind", 2 * 2000) {}
+    ShouldHomeBindValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "should home bind", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -29,7 +29,7 @@ public:
 class ShouldRepairValue : public BoolCalculatedValue
 {
 public:
-    ShouldRepairValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "should repair", 2 * 2000) {}
+    ShouldRepairValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "should repair", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -37,7 +37,7 @@ public:
 class CanRepairValue : public BoolCalculatedValue
 {
 public:
-    CanRepairValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can repair", 2 * 2000) {}
+    CanRepairValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can repair", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -45,7 +45,7 @@ public:
 class ShouldSellValue : public BoolCalculatedValue
 {
 public:
-    ShouldSellValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "should sell", 2 * 2000) {}
+    ShouldSellValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "should sell", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -53,7 +53,7 @@ public:
 class CanSellValue : public BoolCalculatedValue
 {
 public:
-    CanSellValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can sell", 2 * 2000) {}
+    CanSellValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can sell", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -61,7 +61,7 @@ public:
 class CanFightEqualValue : public BoolCalculatedValue
 {
 public:
-    CanFightEqualValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can fight equal", 2 * 2000) {}
+    CanFightEqualValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can fight equal", 2 * 2000) {}
 
     bool Calculate() override;
 };
@@ -69,7 +69,7 @@ public:
 class CanFightEliteValue : public BoolCalculatedValue
 {
 public:
-    CanFightEliteValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can fight elite") {}
+    CanFightEliteValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can fight elite") {}
 
     bool Calculate() override;
 };
@@ -77,7 +77,7 @@ public:
 class CanFightBossValue : public BoolCalculatedValue
 {
 public:
-    CanFightBossValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can fight boss") {}
+    CanFightBossValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can fight boss") {}
 
     bool Calculate() override;
 };

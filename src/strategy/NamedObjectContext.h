@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NAMEDOBJECTCONEXT_H
-#define _PLAYERBOT_NAMEDOBJECTCONEXT_H
+#ifndef _SHADOW_NAMEDOBJECTCONEXT_H
+#define _SHADOW_NAMEDOBJECTCONEXT_H
 
 #include <list>
 #include <set>
@@ -15,7 +15,7 @@
 
 #include "Common.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class Qualified
 {
@@ -43,13 +43,13 @@ template <class T>
 class NamedObjectFactory
 {
 public:
-    using ObjectCreator = std::function<T*(PlayerbotAI* ai)>;
+    using ObjectCreator = std::function<T*(ShadowAI* ai)>;
     std::unordered_map<std::string, ObjectCreator> creators;
 
 public:
     virtual ~NamedObjectFactory() = default;
 
-    virtual T* create(std::string name, PlayerbotAI* botAI)
+    virtual T* create(std::string name, ShadowAI* botAI)
     {
         size_t found = name.find("::");
         std::string qualifier;
@@ -94,7 +94,7 @@ public:
 
     virtual ~NamedObjectContext() { Clear(); }
 
-    virtual T* create(std::string name, PlayerbotAI* botAI) override
+    virtual T* create(std::string name, ShadowAI* botAI) override
     {
         if (created.find(name) == created.end())
             return created[name] = NamedObjectFactory<T>::create(name, botAI);
@@ -135,7 +135,7 @@ template <class T>
 class SharedNamedObjectContextList
 {
 public:
-    using ObjectCreator = std::function<T*(PlayerbotAI* ai)>;
+    using ObjectCreator = std::function<T*(ShadowAI* ai)>;
     std::unordered_map<std::string, ObjectCreator> creators;
     std::vector<NamedObjectContext<T>*> contexts;
 
@@ -157,7 +157,7 @@ template <class T>
 class NamedObjectContextList
 {
 public:
-    using ObjectCreator = std::function<T*(PlayerbotAI* ai)>;
+    using ObjectCreator = std::function<T*(ShadowAI* ai)>;
     const std::unordered_map<std::string, ObjectCreator>& creators;
     const std::vector<NamedObjectContext<T>*>& contexts;
     std::unordered_map<std::string, T*> created;
@@ -178,7 +178,7 @@ public:
         created.clear();
     }
 
-    T* create(std::string name, PlayerbotAI* botAI)
+    T* create(std::string name, ShadowAI* botAI)
     {
         size_t found = name.find("::");
         std::string qualifier;
@@ -201,7 +201,7 @@ public:
         return object;
     }
 
-    T* GetContextObject(const std::string& name, PlayerbotAI* botAI)
+    T* GetContextObject(const std::string& name, ShadowAI* botAI)
     {
         if (created.find(name) == created.end())
         {
@@ -258,7 +258,7 @@ template <class T>
 class NamedObjectFactoryList
 {
 public:
-    using ObjectCreator = std::function<T*(PlayerbotAI* ai)>;
+    using ObjectCreator = std::function<T*(ShadowAI* ai)>;
     std::vector<NamedObjectFactory<T>*> factories;
     std::unordered_map<std::string, ObjectCreator> creators;
 
@@ -268,7 +268,7 @@ public:
             delete *i;
     }
 
-    T* create(std::string name, PlayerbotAI* botAI)
+    T* create(std::string name, ShadowAI* botAI)
     {
         size_t found = name.find("::");
         std::string qualifier;
@@ -298,7 +298,7 @@ public:
             creators[iter.first] = iter.second;
     }
 
-    T* GetContextObject(const std::string& name, PlayerbotAI* botAI)
+    T* GetContextObject(const std::string& name, ShadowAI* botAI)
     {
         if (T* object = create(name, botAI))
             return object;

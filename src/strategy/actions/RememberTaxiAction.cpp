@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "LastMovementValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool RememberTaxiAction::Execute(Event event)
 {

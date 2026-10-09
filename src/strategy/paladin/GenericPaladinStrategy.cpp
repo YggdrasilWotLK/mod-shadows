@@ -6,9 +6,9 @@
 #include "GenericPaladinStrategy.h"
 
 #include "GenericPaladinStrategyActionNodeFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-GenericPaladinStrategy::GenericPaladinStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI)
+GenericPaladinStrategy::GenericPaladinStrategy(ShadowAI* botAI) : CombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericPaladinStrategyActionNodeFactory());
 }

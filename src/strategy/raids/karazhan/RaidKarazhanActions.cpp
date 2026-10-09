@@ -1,10 +1,10 @@
 #include "RaidKarazhanActions.h"
 #include "RaidKarazhanHelpers.h"
 #include "AiObjectContext.h"
-#include "PlayerbotAI.h"
-#include "PlayerbotMgr.h"
-#include "PlayerbotTextMgr.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "ShadowMgr.h"
+#include "ShadowTextMgr.h"
+#include "Shadows.h"
 #include "Position.h"
 
 namespace 
@@ -504,7 +504,7 @@ bool KarazhanNetherspiteBlockRedBeamAction::Execute(Event event)
         {
             std::map<std::string, std::string> ph;
             ph["%player"] = bot->GetName();
-            std::string text = sPlayerbotTextMgr->GetBotTextOrDefault(
+            std::string text = sShadowTextMgr->GetBotTextOrDefault(
                 "netherspite_beam_blocking_red", "%player is moving to block the red beam!", ph);
             bot->Yell(text, LANG_UNIVERSAL);
         }
@@ -598,7 +598,7 @@ bool KarazhanNetherspiteBlockBlueBeamAction::Execute(Event event)
     {
         std::map<std::string, std::string> ph;
         ph["%player"] = bot->GetName();
-        std::string text = sPlayerbotTextMgr->GetBotTextOrDefault(
+        std::string text = sShadowTextMgr->GetBotTextOrDefault(
             "netherspite_beam_leaving_blue", "%player is leaving the blue beam--next blocker up!", ph);
         bot->Yell(text, LANG_UNIVERSAL);
         wasBlockingBlueBeam[botGuid] = false;
@@ -612,7 +612,7 @@ bool KarazhanNetherspiteBlockBlueBeamAction::Execute(Event event)
         {
             std::map<std::string, std::string> ph;
             ph["%player"] = bot->GetName();
-            std::string text = sPlayerbotTextMgr->GetBotTextOrDefault(
+            std::string text = sShadowTextMgr->GetBotTextOrDefault(
                 "netherspite_beam_blocking_blue", "%player is moving to block the blue beam!", ph);
             bot->Yell(text, LANG_UNIVERSAL);
         }
@@ -708,7 +708,7 @@ bool KarazhanNetherspiteBlockGreenBeamAction::Execute(Event event)
     {
         std::map<std::string, std::string> ph;
         ph["%player"] = bot->GetName();
-        std::string text = sPlayerbotTextMgr->GetBotTextOrDefault(
+        std::string text = sShadowTextMgr->GetBotTextOrDefault(
             "netherspite_beam_leaving_green", "%player is leaving the green beam--next blocker up!", ph);
         bot->Yell(text, LANG_UNIVERSAL);
         wasBlockingGreenBeam[botGuid] = false;
@@ -722,7 +722,7 @@ bool KarazhanNetherspiteBlockGreenBeamAction::Execute(Event event)
         {
             std::map<std::string, std::string> ph;
             ph["%player"] = bot->GetName();
-            std::string text = sPlayerbotTextMgr->GetBotTextOrDefault(
+            std::string text = sShadowTextMgr->GetBotTextOrDefault(
                 "netherspite_beam_blocking_green", "%player is moving to block the green beam!", ph);
             bot->Yell(text, LANG_UNIVERSAL);
         }

@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "ItemCountValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::vector<std::string> split(std::string const s, char delim);
 
@@ -21,7 +21,7 @@ bool GiveItemAction::Execute(Event event)
     if (!receiver)
         return false;
 
-    auto receiverAi = GET_PLAYERBOT_AI(receiver);
+    auto receiverAi = GET_SHADOW_AI(receiver);
     if (!receiverAi)
         return false;
 
@@ -64,7 +64,7 @@ Unit* GiveItemAction::GetTarget() { return AI_VALUE2(Unit*, "party member withou
 
 bool GiveItemAction::isUseful()
 {
-    return GetTarget() && AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig->lowMana;
+    return GetTarget() && AI_VALUE2(uint8, "mana", "self target") > sShadowAIConfig->lowMana;
 }
 
 Unit* GiveFoodAction::GetTarget() { return AI_VALUE(Unit*, "party member without food"); }
@@ -74,7 +74,7 @@ bool GiveFoodAction::isUseful()
     if (!GetTarget())
         return false;
 
-    bool isRandomBot = GetTarget()->IsPlayer() && sRandomPlayerbotMgr->IsRandomBot((Player*)GetTarget());
+    bool isRandomBot = GetTarget()->IsPlayer() && sRandomShadowMgr->IsRandomBot((Player*)GetTarget());
 
     return !isRandomBot || (isRandomBot && !botAI->HasCheat(BotCheatMask::food));
 }
@@ -86,7 +86,7 @@ bool GiveWaterAction::isUseful()
     if (!GetTarget())
         return false;
 
-    bool isRandomBot = GetTarget()->IsPlayer() && sRandomPlayerbotMgr->IsRandomBot((Player*)GetTarget());
+    bool isRandomBot = GetTarget()->IsPlayer() && sRandomShadowMgr->IsRandomBot((Player*)GetTarget());
 
     return !isRandomBot || (isRandomBot && !botAI->HasCheat(BotCheatMask::food));
 }

@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ACCEPTINVITATIONACTION_H
-#define _PLAYERBOT_ACCEPTINVITATIONACTION_H
+#ifndef _SHADOW_ACCEPTINVITATIONACTION_H
+#define _SHADOW_ACCEPTINVITATIONACTION_H
 
 #include "Action.h"
 #include "UseMeetingStoneAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AcceptInvitationAction : public SummonAction
 {
 public:
-    AcceptInvitationAction(PlayerbotAI* botAI) : SummonAction(botAI, "accept invitation") {}
+    AcceptInvitationAction(ShadowAI* botAI) : SummonAction(botAI, "accept invitation") {}
 
     bool Execute(Event event) override;
 };

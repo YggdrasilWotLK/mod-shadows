@@ -5,6 +5,6 @@
 
 #include "DuelTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* DuelTargetValue::Calculate() { return bot->duel ? bot->duel->Opponent : nullptr; }

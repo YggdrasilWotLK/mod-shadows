@@ -3,12 +3,12 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LISTQUESTSACTIONS_H
-#define _PLAYERBOT_LISTQUESTSACTIONS_H
+#ifndef _SHADOW_LISTQUESTSACTIONS_H
+#define _SHADOW_LISTQUESTSACTIONS_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 enum QuestListFilter
 {
@@ -28,7 +28,7 @@ enum QuestTravelDetail
 class ListQuestsAction : public Action
 {
 public:
-    ListQuestsAction(PlayerbotAI* botAI) : Action(botAI, "quests") {}
+    ListQuestsAction(ShadowAI* botAI) : Action(botAI, "quests") {}
 
     bool Execute(Event event) override;
 

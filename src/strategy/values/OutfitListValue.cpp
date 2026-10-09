@@ -5,7 +5,7 @@
 
 #include "OutfitListValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::string const OutfitListValue::Save()
 {

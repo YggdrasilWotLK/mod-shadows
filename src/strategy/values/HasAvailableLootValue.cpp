@@ -6,10 +6,10 @@
 #include "HasAvailableLootValue.h"
 
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool HasAvailableLootValue::Calculate()
 {
     return !AI_VALUE(bool, "can loot") &&
-           AI_VALUE(LootObjectStack*, "available loot")->CanLoot(sPlayerbotAIConfig->lootDistance);
+           AI_VALUE(LootObjectStack*, "available loot")->CanLoot(sShadowAIConfig->lootDistance);
 }

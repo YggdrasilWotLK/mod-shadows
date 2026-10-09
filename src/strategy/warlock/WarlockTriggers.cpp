@@ -5,8 +5,8 @@
 
 #include "WarlockTriggers.h"
 #include "GenericTriggers.h"
-#include "Playerbots.h"
-#include "PlayerbotAI.h"
+#include "Shadows.h"
+#include "ShadowAI.h"
 #include "Player.h"
 
 static const uint32 SOUL_SHARD_ITEM_ID = 6265;
@@ -96,7 +96,7 @@ bool DecimationTrigger::IsActive()
 // Checks if the bot's mana is below 85% and health is above a low health threshold
 bool LifeTapTrigger::IsActive()
 {
-    if (AI_VALUE2(uint8, "health", "self target") <= sPlayerbotAIConfig->lowHealth)
+    if (AI_VALUE2(uint8, "health", "self target") <= sShadowAIConfig->lowHealth)
         return false;
 
     if (!AI_VALUE2(bool, "has mana", "self target"))

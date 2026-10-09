@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TAMEACTION_H
-#define _PLAYERBOT_TAMEACTION_H
+#ifndef _SHADOW_TAMEACTION_H
+#define _SHADOW_TAMEACTION_H
 
 #include <string>
 #include "Action.h"
-#include "PlayerbotFactory.h"
+#include "ShadowFactory.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TameAction : public Action
 {
 public:
-    TameAction(PlayerbotAI* botAI) : Action(botAI, "tame") {}
+    TameAction(ShadowAI* botAI) : Action(botAI, "tame") {}
 
     bool Execute(Event event) override;
 

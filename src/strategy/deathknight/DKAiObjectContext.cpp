@@ -11,7 +11,7 @@
 #include "FrostDKStrategy.h"
 #include "GenericDKNonCombatStrategy.h"
 #include "GenericTriggers.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PullStrategy.h"
 #include "UnholyDKStrategy.h"
 
@@ -27,10 +27,10 @@ public:
     }
 
 private:
-    static Strategy* nc(PlayerbotAI* botAI) { return new GenericDKNonCombatStrategy(botAI); }
-    static Strategy* pull(PlayerbotAI* botAI) { return new PullStrategy(botAI, "icy touch"); }
-    static Strategy* frost_aoe(PlayerbotAI* botAI) { return new FrostDKAoeStrategy(botAI); }
-    static Strategy* unholy_aoe(PlayerbotAI* botAI) { return new UnholyDKAoeStrategy(botAI); }
+    static Strategy* nc(ShadowAI* botAI) { return new GenericDKNonCombatStrategy(botAI); }
+    static Strategy* pull(ShadowAI* botAI) { return new PullStrategy(botAI, "icy touch"); }
+    static Strategy* frost_aoe(ShadowAI* botAI) { return new FrostDKAoeStrategy(botAI); }
+    static Strategy* unholy_aoe(ShadowAI* botAI) { return new UnholyDKAoeStrategy(botAI); }
 };
 
 class DeathKnightCombatStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -45,10 +45,10 @@ public:
     }
 
 private:
-    static Strategy* frost_dps(PlayerbotAI* botAI) { return new FrostDKStrategy(botAI); }
-    static Strategy* unholy_dps(PlayerbotAI* botAI) { return new UnholyDKStrategy(botAI); }
-    static Strategy* tank(PlayerbotAI* botAI) { return new BloodDKStrategy(botAI); }
-    static Strategy* blood(PlayerbotAI* botAI) { return new BloodDKStrategy(botAI); }
+    static Strategy* frost_dps(ShadowAI* botAI) { return new FrostDKStrategy(botAI); }
+    static Strategy* unholy_dps(ShadowAI* botAI) { return new UnholyDKStrategy(botAI); }
+    static Strategy* tank(ShadowAI* botAI) { return new BloodDKStrategy(botAI); }
+    static Strategy* blood(ShadowAI* botAI) { return new BloodDKStrategy(botAI); }
 };
 
 class DeathKnightDKBuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -60,7 +60,7 @@ public:
     }
 
 private:
-    static Strategy* bdps(PlayerbotAI* botAI) { return new DKBuffDpsStrategy(botAI); }
+    static Strategy* bdps(ShadowAI* botAI) { return new DKBuffDpsStrategy(botAI); }
 };
 
 class DeathKnightTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -103,55 +103,55 @@ public:
     }
 
 private:
-    static Trigger* bone_shield(PlayerbotAI* botAI) { return new BoneShieldTrigger(botAI); }
-    static Trigger* pestilence_glyph(PlayerbotAI* botAI) { return new PestilenceGlyphTrigger(botAI); }
-    static Trigger* blood_strike(PlayerbotAI* botAI) { return new BloodStrikeTrigger(botAI); }
-    static Trigger* plague_strike(PlayerbotAI* botAI) { return new PlagueStrikeDebuffTrigger(botAI); }
-    static Trigger* plague_strike_3s(PlayerbotAI* botAI) { return new PlagueStrike3sDebuffTrigger(botAI); }
-    static Trigger* dd_cd_and_plague_strike_3s(PlayerbotAI* botAI)
+    static Trigger* bone_shield(ShadowAI* botAI) { return new BoneShieldTrigger(botAI); }
+    static Trigger* pestilence_glyph(ShadowAI* botAI) { return new PestilenceGlyphTrigger(botAI); }
+    static Trigger* blood_strike(ShadowAI* botAI) { return new BloodStrikeTrigger(botAI); }
+    static Trigger* plague_strike(ShadowAI* botAI) { return new PlagueStrikeDebuffTrigger(botAI); }
+    static Trigger* plague_strike_3s(ShadowAI* botAI) { return new PlagueStrike3sDebuffTrigger(botAI); }
+    static Trigger* dd_cd_and_plague_strike_3s(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "death and decay cooldown", "plague strike 3s");
     }
-    static Trigger* plague_strike_on_attacker(PlayerbotAI* botAI)
+    static Trigger* plague_strike_on_attacker(ShadowAI* botAI)
     {
         return new PlagueStrikeDebuffOnAttackerTrigger(botAI);
     }
-    static Trigger* icy_touch(PlayerbotAI* botAI) { return new IcyTouchDebuffTrigger(botAI); }
-    static Trigger* icy_touch_3s(PlayerbotAI* botAI) { return new IcyTouch3sDebuffTrigger(botAI); }
-    static Trigger* dd_cd_and_icy_touch_3s(PlayerbotAI* botAI)
+    static Trigger* icy_touch(ShadowAI* botAI) { return new IcyTouchDebuffTrigger(botAI); }
+    static Trigger* icy_touch_3s(ShadowAI* botAI) { return new IcyTouch3sDebuffTrigger(botAI); }
+    static Trigger* dd_cd_and_icy_touch_3s(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "death and decay cooldown", "icy touch 3s");
     }
-    static Trigger* death_coil(PlayerbotAI* botAI) { return new DeathCoilTrigger(botAI); }
-    static Trigger* icy_touch_on_attacker(PlayerbotAI* botAI) { return new IcyTouchDebuffOnAttackerTrigger(botAI); }
-    static Trigger* improved_icy_talons(PlayerbotAI* botAI) { return new ImprovedIcyTalonsTrigger(botAI); }
-    static Trigger* horn_of_winter(PlayerbotAI* botAI) { return new HornOfWinterTrigger(botAI); }
-    static Trigger* mind_freeze(PlayerbotAI* botAI) { return new MindFreezeInterruptSpellTrigger(botAI); }
-    static Trigger* mind_freeze_on_enemy_healer(PlayerbotAI* botAI)
+    static Trigger* death_coil(ShadowAI* botAI) { return new DeathCoilTrigger(botAI); }
+    static Trigger* icy_touch_on_attacker(ShadowAI* botAI) { return new IcyTouchDebuffOnAttackerTrigger(botAI); }
+    static Trigger* improved_icy_talons(ShadowAI* botAI) { return new ImprovedIcyTalonsTrigger(botAI); }
+    static Trigger* horn_of_winter(ShadowAI* botAI) { return new HornOfWinterTrigger(botAI); }
+    static Trigger* mind_freeze(ShadowAI* botAI) { return new MindFreezeInterruptSpellTrigger(botAI); }
+    static Trigger* mind_freeze_on_enemy_healer(ShadowAI* botAI)
     {
         return new MindFreezeOnEnemyHealerTrigger(botAI);
     }
-    static Trigger* strangulate(PlayerbotAI* botAI) { return new StrangulateInterruptSpellTrigger(botAI); }
-    static Trigger* strangulate_on_enemy_healer(PlayerbotAI* botAI)
+    static Trigger* strangulate(ShadowAI* botAI) { return new StrangulateInterruptSpellTrigger(botAI); }
+    static Trigger* strangulate_on_enemy_healer(ShadowAI* botAI)
     {
         return new StrangulateOnEnemyHealerTrigger(botAI);
     }
-    static Trigger* blood_tap(PlayerbotAI* botAI) { return new BloodTapTrigger(botAI); }
-    static Trigger* raise_dead(PlayerbotAI* botAI) { return new RaiseDeadTrigger(botAI); }
-    static Trigger* chains_of_ice(PlayerbotAI* botAI) { return new ChainsOfIceSnareTrigger(botAI); }
-    static Trigger* unbreakable_armor(PlayerbotAI* botAI) { return new UnbreakableArmorTrigger(botAI); }
-    static Trigger* high_blood_rune(PlayerbotAI* botAI) { return new HighBloodRuneTrigger(botAI); }
-    static Trigger* high_frost_rune(PlayerbotAI* botAI) { return new HighFrostRuneTrigger(botAI); }
-    static Trigger* high_unholy_rune(PlayerbotAI* botAI) { return new HighUnholyRuneTrigger(botAI); }
-    static Trigger* no_rune(PlayerbotAI* botAI) { return new NoRuneTrigger(botAI); }
-    static Trigger* freezing_fog(PlayerbotAI* botAI) { return new FreezingFogTrigger(botAI); }
-    static Trigger* no_desolation(PlayerbotAI* botAI) { return new DesolationTrigger(botAI); }
-    static Trigger* dd_cd_and_no_desolation(PlayerbotAI* botAI)
+    static Trigger* blood_tap(ShadowAI* botAI) { return new BloodTapTrigger(botAI); }
+    static Trigger* raise_dead(ShadowAI* botAI) { return new RaiseDeadTrigger(botAI); }
+    static Trigger* chains_of_ice(ShadowAI* botAI) { return new ChainsOfIceSnareTrigger(botAI); }
+    static Trigger* unbreakable_armor(ShadowAI* botAI) { return new UnbreakableArmorTrigger(botAI); }
+    static Trigger* high_blood_rune(ShadowAI* botAI) { return new HighBloodRuneTrigger(botAI); }
+    static Trigger* high_frost_rune(ShadowAI* botAI) { return new HighFrostRuneTrigger(botAI); }
+    static Trigger* high_unholy_rune(ShadowAI* botAI) { return new HighUnholyRuneTrigger(botAI); }
+    static Trigger* no_rune(ShadowAI* botAI) { return new NoRuneTrigger(botAI); }
+    static Trigger* freezing_fog(ShadowAI* botAI) { return new FreezingFogTrigger(botAI); }
+    static Trigger* no_desolation(ShadowAI* botAI) { return new DesolationTrigger(botAI); }
+    static Trigger* dd_cd_and_no_desolation(ShadowAI* botAI)
     {
         return new TwoTriggers(botAI, "death and decay cooldown", "no desolation");
     }
-    static Trigger* death_and_decay_cooldown(PlayerbotAI* botAI) { return new DeathAndDecayCooldownTrigger(botAI); }
-    static Trigger* army_of_the_dead(PlayerbotAI* botAI) { return new ArmyOfTheDeadTrigger(botAI); }
+    static Trigger* death_and_decay_cooldown(ShadowAI* botAI) { return new DeathAndDecayCooldownTrigger(botAI); }
+    static Trigger* army_of_the_dead(ShadowAI* botAI) { return new ArmyOfTheDeadTrigger(botAI); }
 };
 
 class DeathKnightAiObjectContextInternal : public NamedObjectContext<Action>
@@ -216,59 +216,59 @@ public:
 
 private:
     // Unholy
-    static Action* bone_shield(PlayerbotAI* botAI) { return new CastBoneShieldAction(botAI); }
-    static Action* plague_strike(PlayerbotAI* botAI) { return new CastPlagueStrikeAction(botAI); }
-    static Action* plague_strike_on_attacker(PlayerbotAI* botAI) { return new CastPlagueStrikeOnAttackerAction(botAI); }
-    static Action* death_grip(PlayerbotAI* botAI) { return new CastDeathGripAction(botAI); }
-    static Action* death_coil(PlayerbotAI* botAI) { return new CastDeathCoilAction(botAI); }
-    static Action* death_strike(PlayerbotAI* botAI) { return new CastDeathStrikeAction(botAI); }
-    static Action* unholy_blight(PlayerbotAI* botAI) { return new CastUnholyBlightAction(botAI); }
-    static Action* scourge_strike(PlayerbotAI* botAI) { return new CastScourgeStrikeAction(botAI); }
-    static Action* death_and_decay(PlayerbotAI* botAI) { return new CastDeathAndDecayAction(botAI); }
-    static Action* unholy_presence(PlayerbotAI* botAI) { return new CastUnholyPresenceAction(botAI); }
-    static Action* raise_dead(PlayerbotAI* botAI) { return new CastRaiseDeadAction(botAI); }
-    static Action* army_of_the_dead(PlayerbotAI* botAI) { return new CastArmyOfTheDeadAction(botAI); }
-    static Action* summon_gargoyle(PlayerbotAI* botAI) { return new CastSummonGargoyleAction(botAI); }
-    static Action* anti_magic_shell(PlayerbotAI* botAI) { return new CastAntiMagicShellAction(botAI); }
-    static Action* anti_magic_zone(PlayerbotAI* botAI) { return new CastAntiMagicZoneAction(botAI); }
-    static Action* ghoul_frenzy(PlayerbotAI* botAI) { return new CastGhoulFrenzyAction(botAI); }
-    static Action* corpse_explosion(PlayerbotAI* botAI) { return new CastCorpseExplosionAction(botAI); }
+    static Action* bone_shield(ShadowAI* botAI) { return new CastBoneShieldAction(botAI); }
+    static Action* plague_strike(ShadowAI* botAI) { return new CastPlagueStrikeAction(botAI); }
+    static Action* plague_strike_on_attacker(ShadowAI* botAI) { return new CastPlagueStrikeOnAttackerAction(botAI); }
+    static Action* death_grip(ShadowAI* botAI) { return new CastDeathGripAction(botAI); }
+    static Action* death_coil(ShadowAI* botAI) { return new CastDeathCoilAction(botAI); }
+    static Action* death_strike(ShadowAI* botAI) { return new CastDeathStrikeAction(botAI); }
+    static Action* unholy_blight(ShadowAI* botAI) { return new CastUnholyBlightAction(botAI); }
+    static Action* scourge_strike(ShadowAI* botAI) { return new CastScourgeStrikeAction(botAI); }
+    static Action* death_and_decay(ShadowAI* botAI) { return new CastDeathAndDecayAction(botAI); }
+    static Action* unholy_presence(ShadowAI* botAI) { return new CastUnholyPresenceAction(botAI); }
+    static Action* raise_dead(ShadowAI* botAI) { return new CastRaiseDeadAction(botAI); }
+    static Action* army_of_the_dead(ShadowAI* botAI) { return new CastArmyOfTheDeadAction(botAI); }
+    static Action* summon_gargoyle(ShadowAI* botAI) { return new CastSummonGargoyleAction(botAI); }
+    static Action* anti_magic_shell(ShadowAI* botAI) { return new CastAntiMagicShellAction(botAI); }
+    static Action* anti_magic_zone(ShadowAI* botAI) { return new CastAntiMagicZoneAction(botAI); }
+    static Action* ghoul_frenzy(ShadowAI* botAI) { return new CastGhoulFrenzyAction(botAI); }
+    static Action* corpse_explosion(ShadowAI* botAI) { return new CastCorpseExplosionAction(botAI); }
     // Frost
-    static Action* icy_touch(PlayerbotAI* botAI) { return new CastIcyTouchAction(botAI); }
-    static Action* icy_touch_on_attacker(PlayerbotAI* botAI) { return new CastIcyTouchOnAttackerAction(botAI); }
-    static Action* obliterate(PlayerbotAI* botAI) { return new CastObliterateAction(botAI); }
-    static Action* howling_blast(PlayerbotAI* botAI) { return new CastHowlingBlastAction(botAI); }
-    static Action* frost_strike(PlayerbotAI* botAI) { return new CastFrostStrikeAction(botAI); }
-    static Action* chains_of_ice(PlayerbotAI* botAI) { return new CastChainsOfIceAction(botAI); }
-    static Action* rune_strike(PlayerbotAI* botAI) { return new CastRuneStrikeAction(botAI); }
-    // static Action* icy_clutch(PlayerbotAI* botAI) { return new CastIcyClutchAction(botAI); }
-    static Action* horn_of_winter(PlayerbotAI* botAI) { return new CastHornOfWinterAction(botAI); }
-    static Action* killing_machine(PlayerbotAI* botAI) { return new CastKillingMachineAction(botAI); }
-    static Action* frost_presence(PlayerbotAI* botAI) { return new CastFrostPresenceAction(botAI); }
-    static Action* deathchill(PlayerbotAI* botAI) { return new CastDeathchillAction(botAI); }
-    static Action* icebound_fortitude(PlayerbotAI* botAI) { return new CastIceboundFortitudeAction(botAI); }
-    static Action* mind_freeze(PlayerbotAI* botAI) { return new CastMindFreezeAction(botAI); }
-    static Action* empower_rune_weapon(PlayerbotAI* botAI) { return new CastEmpowerRuneWeaponAction(botAI); }
-    static Action* hungering_cold(PlayerbotAI* botAI) { return new CastHungeringColdAction(botAI); }
-    static Action* unbreakable_armor(PlayerbotAI* botAI) { return new CastUnbreakableArmorAction(botAI); }
-    static Action* improved_icy_talons(PlayerbotAI* botAI) { return new CastImprovedIcyTalonsAction(botAI); }
+    static Action* icy_touch(ShadowAI* botAI) { return new CastIcyTouchAction(botAI); }
+    static Action* icy_touch_on_attacker(ShadowAI* botAI) { return new CastIcyTouchOnAttackerAction(botAI); }
+    static Action* obliterate(ShadowAI* botAI) { return new CastObliterateAction(botAI); }
+    static Action* howling_blast(ShadowAI* botAI) { return new CastHowlingBlastAction(botAI); }
+    static Action* frost_strike(ShadowAI* botAI) { return new CastFrostStrikeAction(botAI); }
+    static Action* chains_of_ice(ShadowAI* botAI) { return new CastChainsOfIceAction(botAI); }
+    static Action* rune_strike(ShadowAI* botAI) { return new CastRuneStrikeAction(botAI); }
+    // static Action* icy_clutch(ShadowAI* botAI) { return new CastIcyClutchAction(botAI); }
+    static Action* horn_of_winter(ShadowAI* botAI) { return new CastHornOfWinterAction(botAI); }
+    static Action* killing_machine(ShadowAI* botAI) { return new CastKillingMachineAction(botAI); }
+    static Action* frost_presence(ShadowAI* botAI) { return new CastFrostPresenceAction(botAI); }
+    static Action* deathchill(ShadowAI* botAI) { return new CastDeathchillAction(botAI); }
+    static Action* icebound_fortitude(ShadowAI* botAI) { return new CastIceboundFortitudeAction(botAI); }
+    static Action* mind_freeze(ShadowAI* botAI) { return new CastMindFreezeAction(botAI); }
+    static Action* empower_rune_weapon(ShadowAI* botAI) { return new CastEmpowerRuneWeaponAction(botAI); }
+    static Action* hungering_cold(ShadowAI* botAI) { return new CastHungeringColdAction(botAI); }
+    static Action* unbreakable_armor(ShadowAI* botAI) { return new CastUnbreakableArmorAction(botAI); }
+    static Action* improved_icy_talons(ShadowAI* botAI) { return new CastImprovedIcyTalonsAction(botAI); }
     // blood
-    static Action* blood_strike(PlayerbotAI* botAI) { return new CastBloodStrikeAction(botAI); }
-    static Action* blood_tap(PlayerbotAI* botAI) { return new CastBloodTapAction(botAI); }
-    static Action* pestilence(PlayerbotAI* botAI) { return new CastPestilenceAction(botAI); }
-    static Action* strangulate(PlayerbotAI* botAI) { return new CastStrangulateAction(botAI); }
-    static Action* blood_boil(PlayerbotAI* botAI) { return new CastBloodBoilAction(botAI); }
-    static Action* heart_strike(PlayerbotAI* botAI) { return new CastHeartStrikeAction(botAI); }
-    static Action* mark_of_blood(PlayerbotAI* botAI) { return new CastMarkOfBloodAction(botAI); }
-    static Action* blood_presence(PlayerbotAI* botAI) { return new CastBloodPresenceAction(botAI); }
-    static Action* rune_tap(PlayerbotAI* botAI) { return new CastRuneTapAction(botAI); }
-    static Action* vampiric_blood(PlayerbotAI* botAI) { return new CastVampiricBloodAction(botAI); }
-    static Action* death_pact(PlayerbotAI* botAI) { return new CastDeathPactAction(botAI); }
-    static Action* death_rune_mastery(PlayerbotAI* botAI) { return new CastDeathRuneMasteryAction(botAI); }
-    // static Action* hysteria(PlayerbotAI* botAI) { return new CastHysteriaAction(botAI); }
-    static Action* dancing_rune_weapon(PlayerbotAI* botAI) { return new CastDancingRuneWeaponAction(botAI); }
-    static Action* dark_command(PlayerbotAI* botAI) { return new CastDarkCommandAction(botAI); }
-    static Action* mind_freeze_on_enemy_healer(PlayerbotAI* botAI)
+    static Action* blood_strike(ShadowAI* botAI) { return new CastBloodStrikeAction(botAI); }
+    static Action* blood_tap(ShadowAI* botAI) { return new CastBloodTapAction(botAI); }
+    static Action* pestilence(ShadowAI* botAI) { return new CastPestilenceAction(botAI); }
+    static Action* strangulate(ShadowAI* botAI) { return new CastStrangulateAction(botAI); }
+    static Action* blood_boil(ShadowAI* botAI) { return new CastBloodBoilAction(botAI); }
+    static Action* heart_strike(ShadowAI* botAI) { return new CastHeartStrikeAction(botAI); }
+    static Action* mark_of_blood(ShadowAI* botAI) { return new CastMarkOfBloodAction(botAI); }
+    static Action* blood_presence(ShadowAI* botAI) { return new CastBloodPresenceAction(botAI); }
+    static Action* rune_tap(ShadowAI* botAI) { return new CastRuneTapAction(botAI); }
+    static Action* vampiric_blood(ShadowAI* botAI) { return new CastVampiricBloodAction(botAI); }
+    static Action* death_pact(ShadowAI* botAI) { return new CastDeathPactAction(botAI); }
+    static Action* death_rune_mastery(ShadowAI* botAI) { return new CastDeathRuneMasteryAction(botAI); }
+    // static Action* hysteria(ShadowAI* botAI) { return new CastHysteriaAction(botAI); }
+    static Action* dancing_rune_weapon(ShadowAI* botAI) { return new CastDancingRuneWeaponAction(botAI); }
+    static Action* dark_command(ShadowAI* botAI) { return new CastDarkCommandAction(botAI); }
+    static Action* mind_freeze_on_enemy_healer(ShadowAI* botAI)
     {
         return new CastMindFreezeOnEnemyHealerAction(botAI);
     }
@@ -279,7 +279,7 @@ SharedNamedObjectContextList<Action> DKAiObjectContext::sharedActionContexts;
 SharedNamedObjectContextList<Trigger> DKAiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> DKAiObjectContext::sharedValueContexts;
 
-DKAiObjectContext::DKAiObjectContext(PlayerbotAI* botAI)
+DKAiObjectContext::DKAiObjectContext(ShadowAI* botAI)
     : AiObjectContext(botAI, sharedStrategyContexts, sharedActionContexts, sharedTriggerContexts, sharedValueContexts)
 {
 }

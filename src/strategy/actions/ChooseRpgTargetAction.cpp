@@ -12,7 +12,7 @@
 #include "Event.h"
 #include "Formations.h"
 #include "GuildCreateActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RpgSubActions.h"
 #include "Util.h"
 #include "ServerFacade.h"
@@ -31,7 +31,7 @@ bool ChooseRpgTargetAction::HasSameTarget(ObjectGuid guid, uint32 max, GuidVecto
         if (!player)
             continue;
 
-        auto botAI = GET_PLAYERBOT_AI(player);
+        auto botAI = GET_SHADOW_AI(player);
         if (!botAI)
             continue;
 
@@ -120,7 +120,7 @@ bool ChooseRpgTargetAction::Execute(Event event)
     //TravelTarget* travelTarget = AI_VALUE(TravelTarget*, "travel target"); //not used, line marked for removal.
     Player* master = botAI->GetMaster();
     GuidPosition masterRpgTarget;
-    if (master && master != bot && GET_PLAYERBOT_AI(master) && master->GetMapId() == bot->GetMapId() && !master->IsBeingTeleported())
+    if (master && master != bot && GET_SHADOW_AI(master) && master->GetMapId() == bot->GetMapId() && !master->IsBeingTeleported())
     {
         Player* player = botAI->GetMaster();
         //GuidPosition masterRpgTarget = PAI_VALUE(GuidPosition, "rpg target"); //not used, line marked for removal.
@@ -186,7 +186,7 @@ bool ChooseRpgTargetAction::Execute(Event event)
             if (!player)
                 continue;
 
-            if (GET_PLAYERBOT_AI(player))
+            if (GET_SHADOW_AI(player))
             {
                 GuidPosition guidPP = PAI_VALUE(GuidPosition, "rpg target");
                 if (guidPP.IsPlayer())
@@ -227,7 +227,7 @@ bool ChooseRpgTargetAction::Execute(Event event)
 
     if (targets.empty())
     {
-        LOG_DEBUG("playerbots", "{} can't choose RPG target: all {} targets are not available", bot->GetName().c_str(), possibleTargets.size());
+        LOG_DEBUG("shadows", "{} can't choose RPG target: all {} targets are not available", bot->GetName().c_str(), possibleTargets.size());
         RESET_AI_VALUE(GuidSet&, "ignore rpg target");
         RESET_AI_VALUE(GuidPosition, "rpg target");
         return false;
@@ -282,7 +282,7 @@ bool ChooseRpgTargetAction::isUseful()
 
     GuidPosition guidP = AI_VALUE(GuidPosition, "rpg target");
 
-    if (guidP && guidP.distance(bot) < sPlayerbotAIConfig->reactDistance * 2)
+    if (guidP && guidP.distance(bot) < sShadowAIConfig->reactDistance * 2)
         return false;
 
     // TravelTarget* travelTarget = AI_VALUE(TravelTarget*, "travel target"); //not used, line marked for removal.
@@ -310,7 +310,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldObject* target)
 
 bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
 {
-    auto followBotAI = GET_PLAYERBOT_AI(bot);
+    auto followBotAI = GET_SHADOW_AI(bot);
     if (!followBotAI)
         return false;
     Player* gmaster = followBotAI->GetGroupMaster();
@@ -336,7 +336,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
     if (!followBotAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
         return true;
 
-    if (bot->GetDistance(gmaster) > sPlayerbotAIConfig->rpgDistance * 2)
+    if (bot->GetDistance(gmaster) > sShadowAIConfig->rpgDistance * 2)
         return false;
 
     Formation* formation = AI_VALUE(Formation*, "formation");
@@ -346,7 +346,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
     {
         Player* player = gmaster;
         if (gmaster && !gmaster->isMoving() ||
-            PAI_VALUE(WorldPosition, "last long move").distance(pos) < sPlayerbotAIConfig->reactDistance)
+            PAI_VALUE(WorldPosition, "last long move").distance(pos) < sShadowAIConfig->reactDistance)
             return true;
     }
 

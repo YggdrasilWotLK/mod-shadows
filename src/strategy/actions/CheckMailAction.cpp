@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "GuildTaskMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CheckMailAction::Execute(Event event)
 {
@@ -28,7 +28,7 @@ bool CheckMailAction::Execute(Event event)
             continue;
 
         uint32 account = owner->GetSession()->GetAccountId();
-        if (sPlayerbotAIConfig->IsInRandomAccountList(account))
+        if (sShadowAIConfig->IsInRandomAccountList(account))
             continue;
 
         ProcessMail(mail, owner, trans);

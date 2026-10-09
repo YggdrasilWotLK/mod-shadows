@@ -3,31 +3,31 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_AVAILABLELOOTVALUE_H
-#define _PLAYERBOT_AVAILABLELOOTVALUE_H
+#ifndef _SHADOW_AVAILABLELOOTVALUE_H
+#define _SHADOW_AVAILABLELOOTVALUE_H
 
 #include "LootObjectStack.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AvailableLootValue : public ManualSetValue<LootObjectStack*>
 {
 public:
-    AvailableLootValue(PlayerbotAI* botAI, std::string const name = "available loot");
+    AvailableLootValue(ShadowAI* botAI, std::string const name = "available loot");
     virtual ~AvailableLootValue();
 };
 
 class LootTargetValue : public ManualSetValue<LootObject>
 {
 public:
-    LootTargetValue(PlayerbotAI* botAI, std::string const name = "loot target");
+    LootTargetValue(ShadowAI* botAI, std::string const name = "loot target");
 };
 
 class CanLootValue : public BoolCalculatedValue
 {
 public:
-    CanLootValue(PlayerbotAI* botAI, std::string const name = "can loot") : BoolCalculatedValue(botAI, name) {}
+    CanLootValue(ShadowAI* botAI, std::string const name = "can loot") : BoolCalculatedValue(botAI, name) {}
 
     bool Calculate() override;
 };

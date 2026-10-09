@@ -5,7 +5,7 @@
 
 #include "Action.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Timer.h"
 
 uint32 NextAction::size(NextAction** actions)

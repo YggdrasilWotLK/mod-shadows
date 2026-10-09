@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOSACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONHOSACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONHOSACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONHOSACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -13,8 +13,8 @@ class WotlkDungeonHoSActionContext : public NamedObjectContext<Action>
             creators["avoid lightning ring"] = &WotlkDungeonHoSActionContext::avoid_lightning_ring;
         }
     private:
-        static Action* shatter_spread(PlayerbotAI* ai) { return new ShatterSpreadAction(ai); }
-        static Action* avoid_lightning_ring(PlayerbotAI* ai) { return new AvoidLightningRingAction(ai); }
+        static Action* shatter_spread(ShadowAI* ai) { return new ShatterSpreadAction(ai); }
+        static Action* avoid_lightning_ring(ShadowAI* ai) { return new AvoidLightningRingAction(ai); }
 };
 
 #endif

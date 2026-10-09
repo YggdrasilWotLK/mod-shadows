@@ -5,7 +5,7 @@
 #include "Group.h"
 #include "ObjectGuid.h"
 #include "Player.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Unit.h"
 
 const Position VOA_EMALON_RESTORE_POSITION = Position(-221.8f, -243.8f, 96.8f, 4.7f);
@@ -22,12 +22,12 @@ bool EmalonMarkBossAction::Execute(Event event)
     Unit* mainTankUnit = AI_VALUE(Unit*, "main tank");
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         // Iterate through the first 3 bot tanks to assign the Skull marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group && boss)
@@ -123,12 +123,12 @@ bool EmalonOverchargeAction::Execute(Event event)
     Unit* mainTankUnit = AI_VALUE(Unit*, "main tank");
     Player* mainTank = mainTankUnit ? mainTankUnit->ToPlayer() : nullptr;
 
-    if (mainTank && !GET_PLAYERBOT_AI(mainTank))  // Main tank is a real player
+    if (mainTank && !GET_SHADOW_AI(mainTank))  // Main tank is a real player
     {
         // Iterate through the first 3 bot tanks to assign the Skull marker
         for (int i = 0; i < 3; ++i)
         {
-            if (botAI->IsAssistTankOfIndex(bot, i) && GET_PLAYERBOT_AI(bot))  // Bot is a valid tank
+            if (botAI->IsAssistTankOfIndex(bot, i) && GET_SHADOW_AI(bot))  // Bot is a valid tank
             {
                 Group* group = bot->GetGroup();
                 if (group && minion)

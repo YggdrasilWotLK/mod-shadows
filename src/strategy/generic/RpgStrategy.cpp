@@ -5,7 +5,7 @@
 
 #include "RpgStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RpgSubActions.h"
 
 float RpgActionMultiplier::GetValue(Action* action)
@@ -22,7 +22,7 @@ float RpgActionMultiplier::GetValue(Action* action)
     return 1.0f;
 }
 
-RpgStrategy::RpgStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+RpgStrategy::RpgStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 NextAction** RpgStrategy::getDefaultActions() { return NextAction::array(0, new NextAction("rpg", 1.0f), nullptr); }
 

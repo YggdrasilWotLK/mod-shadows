@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOKTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONOKTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONOKTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONOKTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -15,9 +15,9 @@ class WotlkDungeonOKTriggerContext : public NamedObjectContext<Trigger>
             creators["shadow crash"] = &WotlkDungeonOKTriggerContext::shadow_crash;
         }
     private:
-        static Trigger* nadox_guardian(PlayerbotAI* ai) { return new NadoxGuardianTrigger(ai); }
-        static Trigger* jedoga_volunteer(PlayerbotAI* ai) { return new JedogaVolunteerTrigger(ai); }
-        static Trigger* shadow_crash(PlayerbotAI* ai) { return new ShadowCrashTrigger(ai); }
+        static Trigger* nadox_guardian(ShadowAI* ai) { return new NadoxGuardianTrigger(ai); }
+        static Trigger* jedoga_volunteer(ShadowAI* ai) { return new JedogaVolunteerTrigger(ai); }
+        static Trigger* shadow_crash(ShadowAI* ai) { return new ShadowCrashTrigger(ai); }
 };
 
 #endif

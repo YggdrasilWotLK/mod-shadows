@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "NexusActions.h"
 #include "NexusStrategy.h"
 
@@ -162,7 +162,7 @@ bool DodgeSpikesAction::Execute(Event event)
 
 bool IntenseColdJumpAction::Execute(Event event)
 {
-    // This needs improving but maybe it should be done in the playerbot core.
+    // This needs improving but maybe it should be done in the shadow core.
     // Jump doesn't seem to support zero offset (eg. jump on the spot) so need to add a tiny delta.
     // This does a tiny bunnyhop that takes a couple of ms, it doesn't do a natural jump.
     // Adding extra Z offset causes floating, and appears to scale the jump speed based on Z difference.

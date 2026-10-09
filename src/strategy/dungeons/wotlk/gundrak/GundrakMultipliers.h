@@ -1,12 +1,12 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONGDMULTIPLIERS_H
-#define _PLAYERBOT_WOTLKDUNGEONGDMULTIPLIERS_H
+#ifndef _SHADOW_WOTLKDUNGEONGDMULTIPLIERS_H
+#define _SHADOW_WOTLKDUNGEONGDMULTIPLIERS_H
 
 #include "Multiplier.h"
 
 class SladranMultiplier : public Multiplier
 {
     public:
-        SladranMultiplier(PlayerbotAI* ai) : Multiplier(ai, "slad'ran") {}
+        SladranMultiplier(ShadowAI* ai) : Multiplier(ai, "slad'ran") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -15,7 +15,7 @@ class SladranMultiplier : public Multiplier
 class GaldarahMultiplier : public Multiplier
 {
     public:
-        GaldarahMultiplier(PlayerbotAI* ai) : Multiplier(ai, "gal'darah") {}
+        GaldarahMultiplier(ShadowAI* ai) : Multiplier(ai, "gal'darah") {}
 
     public:
         virtual float GetValue(Action* action);

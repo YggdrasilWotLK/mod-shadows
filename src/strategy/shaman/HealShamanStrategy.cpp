@@ -5,7 +5,7 @@
 
 #include "HealShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class HealShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -17,7 +17,7 @@ public:
     }
 
 private:
-    static ActionNode* earthliving_weapon([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* earthliving_weapon([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("earthliving weapon",
                               /*P*/ nullptr,
@@ -25,7 +25,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mana_tide_totem([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mana_tide_totem([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mana tide totem",
                               /*P*/ nullptr,
@@ -34,7 +34,7 @@ private:
     }
 };
 
-HealShamanStrategy::HealShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+HealShamanStrategy::HealShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new HealShamanStrategyActionNodeFactory());
 }

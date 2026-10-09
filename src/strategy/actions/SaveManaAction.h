@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SAVEMANAACTION_H
-#define _PLAYERBOT_SAVEMANAACTION_H
+#ifndef _SHADOW_SAVEMANAACTION_H
+#define _SHADOW_SAVEMANAACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SaveManaAction : public Action
 {
 public:
-    SaveManaAction(PlayerbotAI* botAI) : Action(botAI, "save mana") {}
+    SaveManaAction(ShadowAI* botAI) : Action(botAI, "save mana") {}
 
     bool Execute(Event event) override;
 

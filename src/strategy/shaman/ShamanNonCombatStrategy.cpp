@@ -6,7 +6,7 @@
 #include "ShamanNonCombatStrategy.h"
 #include "AiFactory.h"
 #include "Strategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class ShamanNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -22,39 +22,39 @@ public:
     }
 
 private:
-    static ActionNode* flametongue_weapon(PlayerbotAI* botAI)
+    static ActionNode* flametongue_weapon(ShadowAI* botAI)
     {
         return new ActionNode("flametongue weapon",
                               /*P*/ nullptr,
                               /*A*/ botAI->GetBot()->HasSpell(8024) ? nullptr : NextAction::array(0, new NextAction("rockbiter weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* frostbrand_weapon(PlayerbotAI* botAI)
+    static ActionNode* frostbrand_weapon(ShadowAI* botAI)
     {
         return new ActionNode("frostbrand weapon",
                               /*P*/ nullptr,
                               /*A*/ botAI->GetBot()->HasSpell(8033) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* windfury_weapon(PlayerbotAI* botAI)
+    static ActionNode* windfury_weapon(ShadowAI* botAI)
     {
         return new ActionNode("windfury weapon",
                               /*P*/ nullptr,
                               /*A*/ botAI->GetBot()->HasSpell(8232) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* earthliving_weapon(PlayerbotAI* botAI)
+    static ActionNode* earthliving_weapon(ShadowAI* botAI)
     {
         return new ActionNode("earthliving weapon",
                               /*P*/ nullptr,
                               /*A*/ botAI->GetBot()->HasSpell(51730) ? nullptr : NextAction::array(0, new NextAction("flametongue weapon"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* wind_shear(PlayerbotAI*) { return new ActionNode("wind shear", nullptr, nullptr, nullptr); }
-    static ActionNode* purge(PlayerbotAI*) { return new ActionNode("purge", nullptr, nullptr, nullptr); }
+    static ActionNode* wind_shear(ShadowAI*) { return new ActionNode("wind shear", nullptr, nullptr, nullptr); }
+    static ActionNode* purge(ShadowAI*) { return new ActionNode("purge", nullptr, nullptr, nullptr); }
 };
 
-ShamanNonCombatStrategy::ShamanNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+ShamanNonCombatStrategy::ShamanNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new ShamanNonCombatStrategyActionNodeFactory());
 }

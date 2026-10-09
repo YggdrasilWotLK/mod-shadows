@@ -6,11 +6,11 @@
 #include "DelayAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool DelayAction::Execute(Event event)
 {
-    uint32 delay = sPlayerbotAIConfig->passiveDelay + sPlayerbotAIConfig->globalCoolDown;
+    uint32 delay = sShadowAIConfig->passiveDelay + sShadowAIConfig->globalCoolDown;
 
     botAI->SetNextCheckDelay(delay);
 

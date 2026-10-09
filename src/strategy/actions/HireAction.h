@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HIREACTION_H
-#define _PLAYERBOT_HIREACTION_H
+#ifndef _SHADOW_HIREACTION_H
+#define _SHADOW_HIREACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HireAction : public Action
 {
 public:
-    HireAction(PlayerbotAI* botAI) : Action(botAI, "hire") {}
+    HireAction(ShadowAI* botAI) : Action(botAI, "hire") {}
 
     bool Execute(Event event) override;
 };

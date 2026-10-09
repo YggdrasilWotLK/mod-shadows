@@ -1,14 +1,14 @@
-#ifndef _PLAYERBOT_UNLOCKTRADEDITEMACTION_H
-#define _PLAYERBOT_UNLOCKTRADEDITEMACTION_H
+#ifndef _SHADOW_UNLOCKTRADEDITEMACTION_H
+#define _SHADOW_UNLOCKTRADEDITEMACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class UnlockTradedItemAction : public Action
 {
 public:
-    UnlockTradedItemAction(PlayerbotAI* botAI) : Action(botAI, "unlock traded item") {}
+    UnlockTradedItemAction(ShadowAI* botAI) : Action(botAI, "unlock traded item") {}
 
     bool Execute(Event event) override;
 

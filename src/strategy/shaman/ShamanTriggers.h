@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHAMANTRIGGERS_H
-#define _PLAYERBOT_SHAMANTRIGGERS_H
+#ifndef _SHADOW_SHAMANTRIGGERS_H
+#define _SHADOW_SHAMANTRIGGERS_H
 
 #include "CureTriggers.h"
 #include "GenericTriggers.h"
@@ -13,10 +13,10 @@
 #include <set>
 #include "TotemsShamanStrategy.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include <ctime>
 
-class PlayerbotAI;
+class ShadowAI;
 
 // Buff and Out of Combat Triggers
 
@@ -43,33 +43,33 @@ const uint32 SPELL_CALL_OF_THE_ELEMENTS = 66842;
 class MainHandWeaponNoImbueTrigger : public BuffTrigger
 {
 public:
-    MainHandWeaponNoImbueTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "main hand", 1) {}
+    MainHandWeaponNoImbueTrigger(ShadowAI* ai) : BuffTrigger(ai, "main hand", 1) {}
     virtual bool IsActive();
 };
 
 class OffHandWeaponNoImbueTrigger : public BuffTrigger
 {
 public:
-    OffHandWeaponNoImbueTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "off hand", 1) {}
+    OffHandWeaponNoImbueTrigger(ShadowAI* ai) : BuffTrigger(ai, "off hand", 1) {}
     virtual bool IsActive();
 };
 
 class WaterShieldTrigger : public BuffTrigger
 {
 public:
-    WaterShieldTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "water shield") {}
+    WaterShieldTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "water shield") {}
 };
 
 class LightningShieldTrigger : public BuffTrigger
 {
 public:
-    LightningShieldTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "lightning shield") {}
+    LightningShieldTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "lightning shield") {}
 };
 
 class WaterWalkingTrigger : public BuffTrigger
 {
 public:
-    WaterWalkingTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "water walking", 7) {}
+    WaterWalkingTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "water walking", 7) {}
 
     bool IsActive() override;
 };
@@ -77,7 +77,7 @@ public:
 class WaterBreathingTrigger : public BuffTrigger
 {
 public:
-    WaterBreathingTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "water breathing", 5 * 2000) {}
+    WaterBreathingTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "water breathing", 5 * 2000) {}
 
     bool IsActive() override;
 };
@@ -85,7 +85,7 @@ public:
 class WaterWalkingOnPartyTrigger : public BuffOnPartyTrigger
 {
 public:
-    WaterWalkingOnPartyTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "water walking on party", 2 * 2000) {}
+    WaterWalkingOnPartyTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "water walking on party", 2 * 2000) {}
 
     bool IsActive() override;
 };
@@ -93,7 +93,7 @@ public:
 class WaterBreathingOnPartyTrigger : public BuffOnPartyTrigger
 {
 public:
-    WaterBreathingOnPartyTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "water breathing on party", 2 * 2000) {}
+    WaterBreathingOnPartyTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "water breathing on party", 2 * 2000) {}
 
     bool IsActive() override;
 };
@@ -103,19 +103,19 @@ public:
 class HeroismTrigger : public BoostTrigger
 {
 public:
-    HeroismTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "heroism") {}
+    HeroismTrigger(ShadowAI* botAI) : BoostTrigger(botAI, "heroism") {}
 };
 
 class BloodlustTrigger : public BoostTrigger
 {
 public:
-    BloodlustTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "bloodlust") {}
+    BloodlustTrigger(ShadowAI* botAI) : BoostTrigger(botAI, "bloodlust") {}
 };
 
 class ElementalMasteryTrigger : public BuffTrigger
 {
 public:
-    ElementalMasteryTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "elemental mastery") {}
+    ElementalMasteryTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "elemental mastery") {}
 
     bool IsActive() override;
 };
@@ -123,7 +123,7 @@ public:
 class SpiritWalkTrigger : public Trigger
 {
 public:
-    SpiritWalkTrigger(PlayerbotAI* ai) : Trigger(ai, "spirit walk ready") {}
+    SpiritWalkTrigger(ShadowAI* ai) : Trigger(ai, "spirit walk ready") {}
 
     bool IsActive() override;
 
@@ -134,7 +134,7 @@ private:
 class FireElementalTotemTrigger : public BoostTrigger
 {
 public:
-    FireElementalTotemTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "fire elemental totem") {}
+    FireElementalTotemTrigger(ShadowAI* botAI) : BoostTrigger(botAI, "fire elemental totem") {}
 };
 
     // CC, Interrupt, and Dispel Triggers
@@ -142,31 +142,31 @@ public:
 class WindShearInterruptSpellTrigger : public InterruptSpellTrigger
 {
 public:
-    WindShearInterruptSpellTrigger(PlayerbotAI* botAI) : InterruptSpellTrigger(botAI, "wind shear") {}
+    WindShearInterruptSpellTrigger(ShadowAI* botAI) : InterruptSpellTrigger(botAI, "wind shear") {}
 };
 
 class WindShearInterruptEnemyHealerSpellTrigger : public InterruptEnemyHealerTrigger
 {
 public:
-    WindShearInterruptEnemyHealerSpellTrigger(PlayerbotAI* botAI) : InterruptEnemyHealerTrigger(botAI, "wind shear") {}
+    WindShearInterruptEnemyHealerSpellTrigger(ShadowAI* botAI) : InterruptEnemyHealerTrigger(botAI, "wind shear") {}
 };
 
 class PurgeTrigger : public TargetAuraDispelTrigger
 {
 public:
-    PurgeTrigger(PlayerbotAI* botAI) : TargetAuraDispelTrigger(botAI, "purge", DISPEL_MAGIC) {}
+    PurgeTrigger(ShadowAI* botAI) : TargetAuraDispelTrigger(botAI, "purge", DISPEL_MAGIC) {}
 };
 
 class CleanseSpiritPoisonTrigger : public NeedCureTrigger
 {
 public:
-    CleanseSpiritPoisonTrigger(PlayerbotAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_POISON) {}
+    CleanseSpiritPoisonTrigger(ShadowAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_POISON) {}
 };
 
 class PartyMemberCleanseSpiritPoisonTrigger : public PartyMemberNeedCureTrigger
 {
 public:
-    PartyMemberCleanseSpiritPoisonTrigger(PlayerbotAI* botAI)
+    PartyMemberCleanseSpiritPoisonTrigger(ShadowAI* botAI)
         : PartyMemberNeedCureTrigger(botAI, "cleanse spirit", DISPEL_POISON)
     {
     }
@@ -175,13 +175,13 @@ public:
 class CleanseSpiritCurseTrigger : public NeedCureTrigger
 {
 public:
-    CleanseSpiritCurseTrigger(PlayerbotAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_CURSE) {}
+    CleanseSpiritCurseTrigger(ShadowAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_CURSE) {}
 };
 
 class PartyMemberCleanseSpiritCurseTrigger : public PartyMemberNeedCureTrigger
 {
 public:
-    PartyMemberCleanseSpiritCurseTrigger(PlayerbotAI* botAI)
+    PartyMemberCleanseSpiritCurseTrigger(ShadowAI* botAI)
         : PartyMemberNeedCureTrigger(botAI, "cleanse spirit", DISPEL_CURSE)
     {
     }
@@ -190,13 +190,13 @@ public:
 class CleanseSpiritDiseaseTrigger : public NeedCureTrigger
 {
 public:
-    CleanseSpiritDiseaseTrigger(PlayerbotAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_DISEASE) {}
+    CleanseSpiritDiseaseTrigger(ShadowAI* botAI) : NeedCureTrigger(botAI, "cleanse spirit", DISPEL_DISEASE) {}
 };
 
 class PartyMemberCleanseSpiritDiseaseTrigger : public PartyMemberNeedCureTrigger
 {
 public:
-    PartyMemberCleanseSpiritDiseaseTrigger(PlayerbotAI* botAI)
+    PartyMemberCleanseSpiritDiseaseTrigger(ShadowAI* botAI)
         : PartyMemberNeedCureTrigger(botAI, "cleanse spirit", DISPEL_DISEASE)
     {
     }
@@ -205,25 +205,25 @@ public:
 class CurePoisonTrigger : public NeedCureTrigger
 {
 public:
-    CurePoisonTrigger(PlayerbotAI* botAI) : NeedCureTrigger(botAI, "cure poison", DISPEL_POISON) {}
+    CurePoisonTrigger(ShadowAI* botAI) : NeedCureTrigger(botAI, "cure poison", DISPEL_POISON) {}
 };
 
 class PartyMemberCurePoisonTrigger : public PartyMemberNeedCureTrigger
 {
 public:
-    PartyMemberCurePoisonTrigger(PlayerbotAI* botAI) : PartyMemberNeedCureTrigger(botAI, "cure poison", DISPEL_POISON) {}
+    PartyMemberCurePoisonTrigger(ShadowAI* botAI) : PartyMemberNeedCureTrigger(botAI, "cure poison", DISPEL_POISON) {}
 };
 
 class CureDiseaseTrigger : public NeedCureTrigger
 {
 public:
-    CureDiseaseTrigger(PlayerbotAI* botAI) : NeedCureTrigger(botAI, "cure disease", DISPEL_DISEASE) {}
+    CureDiseaseTrigger(ShadowAI* botAI) : NeedCureTrigger(botAI, "cure disease", DISPEL_DISEASE) {}
 };
 
 class PartyMemberCureDiseaseTrigger : public PartyMemberNeedCureTrigger
 {
 public:
-    PartyMemberCureDiseaseTrigger(PlayerbotAI* botAI)
+    PartyMemberCureDiseaseTrigger(ShadowAI* botAI)
         : PartyMemberNeedCureTrigger(botAI, "cure disease", DISPEL_DISEASE) {}
 };
 
@@ -232,7 +232,7 @@ public:
 class ShockTrigger : public DebuffTrigger
 {
 public:
-    ShockTrigger(PlayerbotAI* botAI) : DebuffTrigger(botAI, "earth shock", 1, true) {}
+    ShockTrigger(ShadowAI* botAI) : DebuffTrigger(botAI, "earth shock", 1, true) {}
 
     bool IsActive() override;
 };
@@ -240,26 +240,26 @@ public:
 class FrostShockSnareTrigger : public SnareTargetTrigger
 {
 public:
-    FrostShockSnareTrigger(PlayerbotAI* botAI) : SnareTargetTrigger(botAI, "frost shock") {}
+    FrostShockSnareTrigger(ShadowAI* botAI) : SnareTargetTrigger(botAI, "frost shock") {}
 };
 
 class MaelstromWeaponTrigger : public HasAuraStackTrigger
 {
 public:
-    MaelstromWeaponTrigger(PlayerbotAI* botAI, int stack = 5) : HasAuraStackTrigger(botAI, "maelstrom weapon", stack) {}
+    MaelstromWeaponTrigger(ShadowAI* botAI, int stack = 5) : HasAuraStackTrigger(botAI, "maelstrom weapon", stack) {}
 };
 
 class FlameShockTrigger : public DebuffTrigger
 {
 public:
-    FlameShockTrigger(PlayerbotAI* ai) : DebuffTrigger(ai, "flame shock", 1, true, 6.0f) {}
+    FlameShockTrigger(ShadowAI* ai) : DebuffTrigger(ai, "flame shock", 1, true, 6.0f) {}
     bool IsActive() override { return BuffTrigger::IsActive(); }
 };
 
 class EarthShockExecuteTrigger : public Trigger
 {
 public:
-    EarthShockExecuteTrigger(PlayerbotAI* botAI) : Trigger(botAI, "earth shock execute") {}
+    EarthShockExecuteTrigger(ShadowAI* botAI) : Trigger(botAI, "earth shock execute") {}
 
     bool IsActive() override;
 };
@@ -267,19 +267,19 @@ public:
 class MaelstromWeapon5AndMediumAoeTrigger : public TwoTriggers
 {
 public:
-    MaelstromWeapon5AndMediumAoeTrigger(PlayerbotAI* ai) : TwoTriggers(ai, "maelstrom weapon 5", "medium aoe") {}
+    MaelstromWeapon5AndMediumAoeTrigger(ShadowAI* ai) : TwoTriggers(ai, "maelstrom weapon 5", "medium aoe") {}
 };
 
 class MaelstromWeapon4AndMediumAoeTrigger : public TwoTriggers
 {
 public:
-    MaelstromWeapon4AndMediumAoeTrigger(PlayerbotAI* ai) : TwoTriggers(ai, "maelstrom weapon 4", "medium aoe") {}
+    MaelstromWeapon4AndMediumAoeTrigger(ShadowAI* ai) : TwoTriggers(ai, "maelstrom weapon 4", "medium aoe") {}
 };
 
 class ChainLightningNoCdTrigger : public SpellNoCooldownTrigger
 {
 public:
-    ChainLightningNoCdTrigger(PlayerbotAI* ai) : SpellNoCooldownTrigger(ai, "chain lightning") {}
+    ChainLightningNoCdTrigger(ShadowAI* ai) : SpellNoCooldownTrigger(ai, "chain lightning") {}
 };
 
 // Healing Triggers
@@ -287,7 +287,7 @@ public:
 class EarthShieldOnMainTankTrigger : public BuffOnMainTankTrigger
 {
 public:
-    EarthShieldOnMainTankTrigger(PlayerbotAI* botAI) : BuffOnMainTankTrigger(botAI, "earth shield", false) {}
+    EarthShieldOnMainTankTrigger(ShadowAI* botAI) : BuffOnMainTankTrigger(botAI, "earth shield", false) {}
 };
 
 // Totem Triggers
@@ -295,7 +295,7 @@ public:
 class TotemTrigger : public Trigger
 {
 public:
-    TotemTrigger(PlayerbotAI* botAI, std::string const spell, uint32 attackerCount = 0)
+    TotemTrigger(ShadowAI* botAI, std::string const spell, uint32 attackerCount = 0)
         : Trigger(botAI, spell), attackerCount(attackerCount)
     {
     }
@@ -309,49 +309,49 @@ protected:
 class CallOfTheElementsTrigger : public Trigger
 {
 public:
-    CallOfTheElementsTrigger(PlayerbotAI* ai) : Trigger(ai, "call of the elements") {}
+    CallOfTheElementsTrigger(ShadowAI* ai) : Trigger(ai, "call of the elements") {}
     bool IsActive() override;
 };
 
 class TotemicRecallTrigger : public Trigger
 {
 public:
-    TotemicRecallTrigger(PlayerbotAI* ai) : Trigger(ai, "totemic recall") {}
+    TotemicRecallTrigger(ShadowAI* ai) : Trigger(ai, "totemic recall") {}
     bool IsActive() override;
 };
 
 class NoEarthTotemTrigger : public Trigger
 {
 public:
-    NoEarthTotemTrigger(PlayerbotAI* ai) : Trigger(ai, "no earth totem") {}
+    NoEarthTotemTrigger(ShadowAI* ai) : Trigger(ai, "no earth totem") {}
     bool IsActive() override;
 };
 
 class NoFireTotemTrigger : public Trigger
 {
 public:
-    NoFireTotemTrigger(PlayerbotAI* ai) : Trigger(ai, "no fire totem") {}
+    NoFireTotemTrigger(ShadowAI* ai) : Trigger(ai, "no fire totem") {}
     bool IsActive() override;
 };
 
 class NoWaterTotemTrigger : public Trigger
 {
 public:
-    NoWaterTotemTrigger(PlayerbotAI* ai) : Trigger(ai, "no water totem") {}
+    NoWaterTotemTrigger(ShadowAI* ai) : Trigger(ai, "no water totem") {}
     bool IsActive() override;
 };
 
 class NoAirTotemTrigger : public Trigger
 {
 public:
-    NoAirTotemTrigger(PlayerbotAI* ai) : Trigger(ai, "no air totem") {}
+    NoAirTotemTrigger(ShadowAI* ai) : Trigger(ai, "no air totem") {}
     bool IsActive() override;
 };
 
 class CallOfTheElementsAndEnemyWithinMeleeTrigger : public TwoTriggers
 {
 public:
-    CallOfTheElementsAndEnemyWithinMeleeTrigger(PlayerbotAI* ai) : TwoTriggers(ai, "call of the elements", "enemy within melee") {}
+    CallOfTheElementsAndEnemyWithinMeleeTrigger(ShadowAI* ai) : TwoTriggers(ai, "call of the elements", "enemy within melee") {}
 };
 
 // Set Strategy Assigned Totems
@@ -361,7 +361,7 @@ class SetTotemTrigger : public Trigger
 public:
     // Template constructor: infers N (size of the id array) at compile time
     template <size_t N>
-    SetTotemTrigger(PlayerbotAI* ai, std::string const& spellName, uint32 requiredSpellId,
+    SetTotemTrigger(ShadowAI* ai, std::string const& spellName, uint32 requiredSpellId,
                     const uint32 (&ids)[N], int actionButtonId)
         : Trigger(ai, "set " + spellName)
         , requiredSpellId(requiredSpellId)
@@ -381,119 +381,119 @@ private:
 class SetStrengthOfEarthTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetStrengthOfEarthTotemTrigger(PlayerbotAI* ai)
+    SetStrengthOfEarthTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "strength of earth totem", SPELL_STRENGTH_OF_EARTH_TOTEM_RANK_1, STRENGTH_OF_EARTH_TOTEM, TOTEM_BAR_SLOT_EARTH) {}
 };
 
 class SetStoneskinTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetStoneskinTotemTrigger(PlayerbotAI* ai)
+    SetStoneskinTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "stoneskin totem", SPELL_STONESKIN_TOTEM_RANK_1, STONESKIN_TOTEM, TOTEM_BAR_SLOT_EARTH) {}
 };
 
 class SetTremorTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetTremorTotemTrigger(PlayerbotAI* ai)
+    SetTremorTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "tremor totem", SPELL_TREMOR_TOTEM_RANK_1, TREMOR_TOTEM, TOTEM_BAR_SLOT_EARTH) {}
 };
 
 class SetEarthbindTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetEarthbindTotemTrigger(PlayerbotAI* ai)
+    SetEarthbindTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "earthbind totem", SPELL_EARTHBIND_TOTEM_RANK_1, EARTHBIND_TOTEM, TOTEM_BAR_SLOT_EARTH) {}
 };
 
 class SetSearingTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetSearingTotemTrigger(PlayerbotAI* ai)
+    SetSearingTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "searing totem", SPELL_SEARING_TOTEM_RANK_1, SEARING_TOTEM, TOTEM_BAR_SLOT_FIRE) {}
 };
 
 class SetMagmaTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetMagmaTotemTrigger(PlayerbotAI* ai)
+    SetMagmaTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "magma totem", SPELL_MAGMA_TOTEM_RANK_1, MAGMA_TOTEM, TOTEM_BAR_SLOT_FIRE) {}
 };
 
 class SetFlametongueTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetFlametongueTotemTrigger(PlayerbotAI* ai)
+    SetFlametongueTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "flametongue totem", SPELL_FLAMETONGUE_TOTEM_RANK_1, FLAMETONGUE_TOTEM, TOTEM_BAR_SLOT_FIRE) {}
 };
 
 class SetTotemOfWrathTrigger : public SetTotemTrigger
 {
 public:
-    SetTotemOfWrathTrigger(PlayerbotAI* ai)
+    SetTotemOfWrathTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "totem of wrath", SPELL_TOTEM_OF_WRATH_RANK_1, TOTEM_OF_WRATH, TOTEM_BAR_SLOT_FIRE) {}
 };
 
 class SetFrostResistanceTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetFrostResistanceTotemTrigger(PlayerbotAI* ai)
+    SetFrostResistanceTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "frost resistance totem", SPELL_FROST_RESISTANCE_TOTEM_RANK_1, FROST_RESISTANCE_TOTEM, TOTEM_BAR_SLOT_FIRE) {}
 };
 
 class SetHealingStreamTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetHealingStreamTotemTrigger(PlayerbotAI* ai)
+    SetHealingStreamTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "healing stream totem", SPELL_HEALING_STREAM_TOTEM_RANK_1, HEALING_STREAM_TOTEM, TOTEM_BAR_SLOT_WATER) {}
 };
 
 class SetManaSpringTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetManaSpringTotemTrigger(PlayerbotAI* ai)
+    SetManaSpringTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "mana spring totem", SPELL_MANA_SPRING_TOTEM_RANK_1, MANA_SPRING_TOTEM, TOTEM_BAR_SLOT_WATER) {}
 };
 
 class SetCleansingTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetCleansingTotemTrigger(PlayerbotAI* ai)
+    SetCleansingTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "cleansing totem", SPELL_CLEANSING_TOTEM_RANK_1, CLEANSING_TOTEM, TOTEM_BAR_SLOT_WATER) {}
 };
 
 class SetFireResistanceTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetFireResistanceTotemTrigger(PlayerbotAI* ai)
+    SetFireResistanceTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "fire resistance totem", SPELL_FIRE_RESISTANCE_TOTEM_RANK_1, FIRE_RESISTANCE_TOTEM, TOTEM_BAR_SLOT_WATER) {}
 };
 
 class SetWrathOfAirTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetWrathOfAirTotemTrigger(PlayerbotAI* ai)
+    SetWrathOfAirTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "wrath of air totem", SPELL_WRATH_OF_AIR_TOTEM_RANK_1, WRATH_OF_AIR_TOTEM, TOTEM_BAR_SLOT_AIR) {}
 };
 
 class SetWindfuryTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetWindfuryTotemTrigger(PlayerbotAI* ai)
+    SetWindfuryTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "windfury totem", SPELL_WINDFURY_TOTEM_RANK_1, WINDFURY_TOTEM, TOTEM_BAR_SLOT_AIR) {}
 };
 
 class SetNatureResistanceTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetNatureResistanceTotemTrigger(PlayerbotAI* ai)
+    SetNatureResistanceTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "nature resistance totem", SPELL_NATURE_RESISTANCE_TOTEM_RANK_1, NATURE_RESISTANCE_TOTEM, TOTEM_BAR_SLOT_AIR) {}
 };
 
 class SetGroundingTotemTrigger : public SetTotemTrigger
 {
 public:
-    SetGroundingTotemTrigger(PlayerbotAI* ai)
+    SetGroundingTotemTrigger(ShadowAI* ai)
         : SetTotemTrigger(ai, "grounding totem", SPELL_GROUNDING_TOTEM_RANK_1, GROUNDING_TOTEM, TOTEM_BAR_SLOT_AIR) {}
 };
 

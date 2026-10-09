@@ -5,7 +5,7 @@
 
 #include "GenericMageNonCombatStrategy.h"
 #include "AiFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericMageNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -18,7 +18,7 @@ public:
     }
 
 private:
-    static ActionNode* molten_armor([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* molten_armor([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("molten armor",
                               /*P*/ nullptr,
@@ -26,7 +26,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mage_armor([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mage_armor([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mage armor",
                               /*P*/ nullptr,
@@ -34,7 +34,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* ice_armor([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* ice_armor([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("ice armor",
                               /*P*/ nullptr,
@@ -43,7 +43,7 @@ private:
     }
 };
 
-GenericMageNonCombatStrategy::GenericMageNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericMageNonCombatStrategy::GenericMageNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericMageNonCombatStrategyActionNodeFactory());
 }

@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DEBUGACTION_H
-#define _PLAYERBOT_DEBUGACTION_H
+#ifndef _SHADOW_DEBUGACTION_H
+#define _SHADOW_DEBUGACTION_H
 
 #include "Action.h"
 #include "ObjectGuid.h"
 #include "TravelMgr.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class DebugAction : public Action
 {
 public:
-    DebugAction(PlayerbotAI* botAI) : Action(botAI, "Debug") {}
+    DebugAction(ShadowAI* botAI) : Action(botAI, "Debug") {}
 
     bool Execute(Event event) override;
 

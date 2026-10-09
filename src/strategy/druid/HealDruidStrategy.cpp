@@ -5,7 +5,7 @@
 
 #include "HealDruidStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class HealDruidStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -18,28 +18,28 @@ public:
     }
 
 private:
-    static ActionNode* nourtish_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* nourtish_on_party([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("nourish on party",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("healing touch on party"), nullptr),
                               /*C*/ nullptr);
     }
-    // static ActionNode* wild_growth_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    // static ActionNode* wild_growth_on_party([[maybe_unused]] ShadowAI* botAI)
     // {
     //     return new ActionNode("wild growth on party",
     //                           /*P*/ NextAction::array(0, new NextAction("tree form"), nullptr),
     //                           /*A*/ nullptr,
     //                           /*C*/ nullptr);
     // }
-    // static ActionNode* rejuvenation_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    // static ActionNode* rejuvenation_on_party([[maybe_unused]] ShadowAI* botAI)
     // {
     //     return new ActionNode("rejuvenation on party",
     //                           /*P*/ NextAction::array(0, new NextAction("tree form"), nullptr),
     //                           /*A*/ nullptr,
     //                           /*C*/ nullptr);
     // }
-    // static ActionNode* regrowth_on_party([[maybe_unused]] PlayerbotAI* botAI)
+    // static ActionNode* regrowth_on_party([[maybe_unused]] ShadowAI* botAI)
     // {
     //     return new ActionNode("regrowth on party",
     //                           /*P*/ NextAction::array(0, new NextAction("tree form"), nullptr),
@@ -48,7 +48,7 @@ private:
     // }
 };
 
-HealDruidStrategy::HealDruidStrategy(PlayerbotAI* botAI) : GenericDruidStrategy(botAI)
+HealDruidStrategy::HealDruidStrategy(ShadowAI* botAI) : GenericDruidStrategy(botAI)
 {
     actionNodeFactories.Add(new HealDruidStrategyActionNodeFactory());
 }

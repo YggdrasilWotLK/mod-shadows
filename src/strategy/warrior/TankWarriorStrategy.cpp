@@ -5,7 +5,7 @@
 
 #include "TankWarriorStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class TankWarriorStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -34,7 +34,7 @@ private:
     ACTION_NODE_A(last_stand, "last stand", "intimidating shout");
     ACTION_NODE_A(heroic_throw_on_snare_target, "heroic throw on snare target", "taunt on snare target");
     ACTION_NODE_A(heroic_throw_taunt, "heroic throw", "shield slam");
-    static ActionNode* taunt(PlayerbotAI* botAI)
+    static ActionNode* taunt(ShadowAI* botAI)
     {
         return new ActionNode("taunt",
                               /*P*/ nullptr,
@@ -42,7 +42,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* vigilance(PlayerbotAI* botAI)
+    static ActionNode* vigilance(ShadowAI* botAI)
     {
         return new ActionNode("vigilance",
                               /*P*/ nullptr,
@@ -50,7 +50,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* enraged_regeneration(PlayerbotAI* botAI)
+    static ActionNode* enraged_regeneration(ShadowAI* botAI)
     {
         return new ActionNode("enraged regeneration",
                               /*P*/ nullptr,
@@ -59,7 +59,7 @@ private:
     }
 };
 
-TankWarriorStrategy::TankWarriorStrategy(PlayerbotAI* botAI) : GenericWarriorStrategy(botAI)
+TankWarriorStrategy::TankWarriorStrategy(ShadowAI* botAI) : GenericWarriorStrategy(botAI)
 {
     actionNodeFactories.Add(new TankWarriorStrategyActionNodeFactory());
 }

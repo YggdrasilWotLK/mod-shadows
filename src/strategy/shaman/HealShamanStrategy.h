@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HEALSHAMANSTRATEGY_H
-#define _PLAYERBOT_HEALSHAMANSTRATEGY_H
+#ifndef _SHADOW_HEALSHAMANSTRATEGY_H
+#define _SHADOW_HEALSHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HealShamanStrategy : public GenericShamanStrategy
 {
 public:
-    HealShamanStrategy(PlayerbotAI* botAI);
+    HealShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "heal"; }

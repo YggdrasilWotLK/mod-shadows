@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_HEALPRIESTSTRATEGY_H
-#define _PLAYERBOT_HEALPRIESTSTRATEGY_H
+#ifndef _SHADOW_HEALPRIESTSTRATEGY_H
+#define _SHADOW_HEALPRIESTSTRATEGY_H
 
 #include "GenericPriestStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class HealPriestStrategy : public GenericPriestStrategy
 {
 public:
-    HealPriestStrategy(PlayerbotAI* botAI);
+    HealPriestStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     NextAction** getDefaultActions() override;

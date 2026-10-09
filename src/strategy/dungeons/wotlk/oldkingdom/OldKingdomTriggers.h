@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONOKTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONOKTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONOKTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONOKTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -24,21 +24,21 @@ enum OldKingdomIDs
 class NadoxGuardianTrigger : public Trigger
 {
 public:
-    NadoxGuardianTrigger(PlayerbotAI* ai) : Trigger(ai, "elder nadox guardian") {}
+    NadoxGuardianTrigger(ShadowAI* ai) : Trigger(ai, "elder nadox guardian") {}
     bool IsActive() override;
 };
 
 class JedogaVolunteerTrigger : public Trigger
 {
 public:
-    JedogaVolunteerTrigger(PlayerbotAI* ai) : Trigger(ai, "jedoga volunteer") {}
+    JedogaVolunteerTrigger(ShadowAI* ai) : Trigger(ai, "jedoga volunteer") {}
     bool IsActive() override;
 };
 
 class ShadowCrashTrigger : public Trigger
 {
 public:
-    ShadowCrashTrigger(PlayerbotAI* ai) : Trigger(ai, "shadow crash") {}
+    ShadowCrashTrigger(ShadowAI* ai) : Trigger(ai, "shadow crash") {}
     bool IsActive() override;
 };
 

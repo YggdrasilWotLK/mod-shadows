@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_INVALIDTARGETVALUE_H
-#define _PLAYERBOT_INVALIDTARGETVALUE_H
+#ifndef _SHADOW_INVALIDTARGETVALUE_H
+#define _SHADOW_INVALIDTARGETVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class InvalidTargetValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    InvalidTargetValue(PlayerbotAI* botAI, std::string const name = "invalid target") : BoolCalculatedValue(botAI, name)
+    InvalidTargetValue(ShadowAI* botAI, std::string const name = "invalid target") : BoolCalculatedValue(botAI, name)
     {
     }
 

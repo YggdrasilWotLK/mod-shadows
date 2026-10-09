@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDULDUARBOSSHELPER_H
-#define _PLAYERBOT_RAIDULDUARBOSSHELPER_H
+#ifndef _SHADOW_RAIDULDUARBOSSHELPER_H
+#define _SHADOW_RAIDULDUARBOSSHELPER_H
 
 #include <string>
 #include <unordered_map>
@@ -14,8 +14,8 @@
 #include "Log.h"
 #include "ObjectGuid.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "ScriptedCreature.h"
 #include "SharedDefines.h"
 
@@ -71,7 +71,7 @@ public:
         uint32 chainSpellId;
     };
 
-    explicit RazorscaleBossHelper(PlayerbotAI* botAI)
+    explicit RazorscaleBossHelper(ShadowAI* botAI)
         : AiObject(botAI), _boss(nullptr) {}
 
     bool UpdateBossAI();
@@ -107,7 +107,7 @@ private:
 // class GenericBossHelper : public AiObject
 // {
 // public:
-//     GenericBossHelper(PlayerbotAI* botAI, std::string name) : AiObject(botAI), _name(name) {}
+//     GenericBossHelper(ShadowAI* botAI, std::string name) : AiObject(botAI), _name(name) {}
 //     virtual bool UpdateBossAI()
 //     {
 //         if (!bot->IsInCombat())

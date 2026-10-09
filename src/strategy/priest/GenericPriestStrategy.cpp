@@ -7,9 +7,9 @@
 
 #include "GenericPriestStrategyActionNodeFactory.h"
 #include "HealPriestStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-GenericPriestStrategy::GenericPriestStrategy(PlayerbotAI* botAI) : RangedCombatStrategy(botAI)
+GenericPriestStrategy::GenericPriestStrategy(ShadowAI* botAI) : RangedCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericPriestStrategyActionNodeFactory());
 }
@@ -61,7 +61,7 @@ void GenericPriestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(new TriggerNode("new pet", NextAction::array(0, new NextAction("set pet stance", 60.0f), nullptr)));
 }
 
-PriestCureStrategy::PriestCureStrategy(PlayerbotAI* botAI) : Strategy(botAI)
+PriestCureStrategy::PriestCureStrategy(ShadowAI* botAI) : Strategy(botAI)
 {
     actionNodeFactories.Add(new CurePriestStrategyActionNodeFactory());
 }

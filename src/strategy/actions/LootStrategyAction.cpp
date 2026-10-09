@@ -10,7 +10,7 @@
 #include "LootAction.h"
 #include "LootObjectStack.h"
 #include "LootStrategyValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool LootStrategyAction::Execute(Event event)
 {

@@ -5,13 +5,13 @@
 
 #include "DpsTargetValue.h"
 
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 class FindMaxThreatGapTargetStrategy : public FindTargetStrategy
 {
 public:
-    FindMaxThreatGapTargetStrategy(PlayerbotAI* botAI) : FindTargetStrategy(botAI), minThreat(0) {}
+    FindMaxThreatGapTargetStrategy(ShadowAI* botAI) : FindTargetStrategy(botAI), minThreat(0) {}
 
     void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
     {
@@ -47,7 +47,7 @@ protected:
 class CasterFindTargetSmartStrategy : public FindTargetStrategy
 {
 public:
-    CasterFindTargetSmartStrategy(PlayerbotAI* botAI, float dps)
+    CasterFindTargetSmartStrategy(ShadowAI* botAI, float dps)
         : FindTargetStrategy(botAI), dps_(dps), targetExpectedLifeTime(1000000)
     {
         result = nullptr;
@@ -116,7 +116,7 @@ public:
         float time = unit->GetHealth() / dps_;
         float dis = unit->GetDistance(botAI->GetBot());
         float attackRange =
-            botAI->IsRanged(botAI->GetBot()) ? sPlayerbotAIConfig->spellDistance : sPlayerbotAIConfig->meleeDistance;
+            botAI->IsRanged(botAI->GetBot()) ? sShadowAIConfig->spellDistance : sShadowAIConfig->meleeDistance;
         attackRange += 5.0f;
         int level = dis < attackRange ? 10 : 0;
         if (time >= 5 && time <= 30)
@@ -139,7 +139,7 @@ protected:
 class GeneralFindTargetSmartStrategy : public FindTargetStrategy
 {
 public:
-    GeneralFindTargetSmartStrategy(PlayerbotAI* botAI, float dps)
+    GeneralFindTargetSmartStrategy(ShadowAI* botAI, float dps)
         : FindTargetStrategy(botAI), dps_(dps), targetExpectedLifeTime(1000000)
     {
     }
@@ -198,7 +198,7 @@ public:
         float time = unit->GetHealth() / dps_;
         float dis = unit->GetDistance(botAI->GetBot());
         float attackRange =
-            botAI->IsRanged(botAI->GetBot()) ? sPlayerbotAIConfig->spellDistance : sPlayerbotAIConfig->meleeDistance;
+            botAI->IsRanged(botAI->GetBot()) ? sShadowAIConfig->spellDistance : sShadowAIConfig->meleeDistance;
         attackRange += 5.0f;
         int level = dis < attackRange ? 10 : 0;
         return level;
@@ -213,7 +213,7 @@ protected:
 class ComboFindTargetSmartStrategy : public FindTargetStrategy
 {
 public:
-    ComboFindTargetSmartStrategy(PlayerbotAI* botAI, float dps)
+    ComboFindTargetSmartStrategy(ShadowAI* botAI, float dps)
         : FindTargetStrategy(botAI), dps_(dps), targetExpectedLifeTime(1000000)
     {
     }
@@ -279,7 +279,7 @@ public:
         float time = unit->GetHealth() / dps_;
         float dis = unit->GetDistance(botAI->GetBot());
         float attackRange =
-            botAI->IsRanged(botAI->GetBot()) ? sPlayerbotAIConfig->spellDistance : sPlayerbotAIConfig->meleeDistance;
+            botAI->IsRanged(botAI->GetBot()) ? sShadowAIConfig->spellDistance : sShadowAIConfig->meleeDistance;
         attackRange += 5.0f;
         int level = dis < attackRange ? 10 : 0;
         return level;
@@ -320,7 +320,7 @@ Unit* DpsTargetValue::Calculate()
 class FindMaxHpTargetStrategy : public FindTargetStrategy
 {
 public:
-    FindMaxHpTargetStrategy(PlayerbotAI* botAI) : FindTargetStrategy(botAI), maxHealth(0) {}
+    FindMaxHpTargetStrategy(ShadowAI* botAI) : FindTargetStrategy(botAI), maxHealth(0) {}
 
     void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
     {

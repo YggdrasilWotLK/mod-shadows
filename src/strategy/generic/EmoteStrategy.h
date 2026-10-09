@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_EMOTESTRATEGY_H
-#define _PLAYERBOT_EMOTESTRATEGY_H
+#ifndef _SHADOW_EMOTESTRATEGY_H
+#define _SHADOW_EMOTESTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class EmoteStrategy : public Strategy
 {
 public:
-    EmoteStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    EmoteStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "emote"; }

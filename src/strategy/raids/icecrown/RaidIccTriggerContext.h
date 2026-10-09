@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDICCTRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDICCTRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDICCTRIGGERCONTEXT_H
+#define _SHADOW_RAIDICCTRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -75,68 +75,68 @@ public:
     }
 
 private:
-    static Trigger* icc_lm(PlayerbotAI* ai) { return new IccLmTrigger(ai); }
+    static Trigger* icc_lm(ShadowAI* ai) { return new IccLmTrigger(ai); }
 
-    static Trigger* icc_dark_reckoning(PlayerbotAI* ai) { return new IccDarkReckoningTrigger(ai); }
-    static Trigger* icc_lady_deathwhisper(PlayerbotAI* ai) { return new IccLadyDeathwhisperTrigger(ai); }
+    static Trigger* icc_dark_reckoning(ShadowAI* ai) { return new IccDarkReckoningTrigger(ai); }
+    static Trigger* icc_lady_deathwhisper(ShadowAI* ai) { return new IccLadyDeathwhisperTrigger(ai); }
 
-    static Trigger* icc_rotting_frost_giant_tank_position(PlayerbotAI* ai) { return new IccRottingFrostGiantTankPositionTrigger(ai); }
-    static Trigger* icc_in_cannon(PlayerbotAI* ai) { return new IccInCannonTrigger(ai); }
-    static Trigger* icc_gunship_cannon_near(PlayerbotAI* ai) { return new IccGunshipCannonNearTrigger(ai); }
-    static Trigger* icc_gunship_teleport_ally(PlayerbotAI* ai) { return new IccGunshipTeleportAllyTrigger(ai); }
-    static Trigger* icc_gunship_teleport_horde(PlayerbotAI* ai) { return new IccGunshipTeleportHordeTrigger(ai); }
+    static Trigger* icc_rotting_frost_giant_tank_position(ShadowAI* ai) { return new IccRottingFrostGiantTankPositionTrigger(ai); }
+    static Trigger* icc_in_cannon(ShadowAI* ai) { return new IccInCannonTrigger(ai); }
+    static Trigger* icc_gunship_cannon_near(ShadowAI* ai) { return new IccGunshipCannonNearTrigger(ai); }
+    static Trigger* icc_gunship_teleport_ally(ShadowAI* ai) { return new IccGunshipTeleportAllyTrigger(ai); }
+    static Trigger* icc_gunship_teleport_horde(ShadowAI* ai) { return new IccGunshipTeleportHordeTrigger(ai); }
 
-    static Trigger* icc_dbs(PlayerbotAI* ai) { return new IccDbsTrigger(ai); }
-    static Trigger* icc_dbs_main_tank_rune_of_blood(PlayerbotAI* ai) { return new IccDbsMainTankRuneOfBloodTrigger(ai); }
+    static Trigger* icc_dbs(ShadowAI* ai) { return new IccDbsTrigger(ai); }
+    static Trigger* icc_dbs_main_tank_rune_of_blood(ShadowAI* ai) { return new IccDbsMainTankRuneOfBloodTrigger(ai); }
 
-    static Trigger* icc_stinky_precious_main_tank_mortal_wound(PlayerbotAI* ai) { return new IccStinkyPreciousMainTankMortalWoundTrigger(ai); }
+    static Trigger* icc_stinky_precious_main_tank_mortal_wound(ShadowAI* ai) { return new IccStinkyPreciousMainTankMortalWoundTrigger(ai); }
 
-    static Trigger* icc_festergut_group_position(PlayerbotAI* ai) { return new IccFestergutGroupPositionTrigger(ai); }
-    static Trigger* icc_festergut_main_tank_gastric_bloat(PlayerbotAI* ai) { return new IccFestergutMainTankGastricBloatTrigger(ai); }
-    static Trigger* icc_festergut_spore(PlayerbotAI* ai) { return new IccFestergutSporeTrigger(ai); }
+    static Trigger* icc_festergut_group_position(ShadowAI* ai) { return new IccFestergutGroupPositionTrigger(ai); }
+    static Trigger* icc_festergut_main_tank_gastric_bloat(ShadowAI* ai) { return new IccFestergutMainTankGastricBloatTrigger(ai); }
+    static Trigger* icc_festergut_spore(ShadowAI* ai) { return new IccFestergutSporeTrigger(ai); }
 
-    static Trigger* icc_rotface_tank_position(PlayerbotAI* ai) { return new IccRotfaceTankPositionTrigger(ai); }
-    static Trigger* icc_rotface_group_position(PlayerbotAI* ai) { return new IccRotfaceGroupPositionTrigger(ai); }
-    static Trigger* icc_rotface_move_away_from_explosion(PlayerbotAI* ai) { return new IccRotfaceMoveAwayFromExplosionTrigger(ai); }
+    static Trigger* icc_rotface_tank_position(ShadowAI* ai) { return new IccRotfaceTankPositionTrigger(ai); }
+    static Trigger* icc_rotface_group_position(ShadowAI* ai) { return new IccRotfaceGroupPositionTrigger(ai); }
+    static Trigger* icc_rotface_move_away_from_explosion(ShadowAI* ai) { return new IccRotfaceMoveAwayFromExplosionTrigger(ai); }
 
-    static Trigger* icc_putricide_volatile_ooze(PlayerbotAI* ai) { return new IccPutricideVolatileOozeTrigger(ai); }
-    static Trigger* icc_putricide_gas_cloud(PlayerbotAI* ai) { return new IccPutricideGasCloudTrigger(ai); }
-    static Trigger* icc_putricide_growing_ooze_puddle(PlayerbotAI* ai) { return new IccPutricideGrowingOozePuddleTrigger(ai); }
-    static Trigger* icc_putricide_main_tank_mutated_plague(PlayerbotAI* ai) { return new IccPutricideMainTankMutatedPlagueTrigger(ai); }
-    static Trigger* icc_putricide_malleable_goo(PlayerbotAI* ai) { return new IccPutricideMalleableGooTrigger(ai); }
+    static Trigger* icc_putricide_volatile_ooze(ShadowAI* ai) { return new IccPutricideVolatileOozeTrigger(ai); }
+    static Trigger* icc_putricide_gas_cloud(ShadowAI* ai) { return new IccPutricideGasCloudTrigger(ai); }
+    static Trigger* icc_putricide_growing_ooze_puddle(ShadowAI* ai) { return new IccPutricideGrowingOozePuddleTrigger(ai); }
+    static Trigger* icc_putricide_main_tank_mutated_plague(ShadowAI* ai) { return new IccPutricideMainTankMutatedPlagueTrigger(ai); }
+    static Trigger* icc_putricide_malleable_goo(ShadowAI* ai) { return new IccPutricideMalleableGooTrigger(ai); }
 
-    static Trigger* icc_bpc_keleseth_tank(PlayerbotAI* ai) { return new IccBpcKelesethTankTrigger(ai); }
-    static Trigger* icc_bpc_main_tank(PlayerbotAI* ai) { return new IccBpcMainTankTrigger(ai); }
-    static Trigger* icc_bpc_empowered_vortex(PlayerbotAI* ai) { return new IccBpcEmpoweredVortexTrigger(ai); }
-    static Trigger* icc_bpc_kinetic_bomb(PlayerbotAI* ai) { return new IccBpcKineticBombTrigger(ai); }
-    static Trigger* icc_bpc_ball_of_flame(PlayerbotAI* ai) { return new IccBpcBallOfFlameTrigger(ai); }
+    static Trigger* icc_bpc_keleseth_tank(ShadowAI* ai) { return new IccBpcKelesethTankTrigger(ai); }
+    static Trigger* icc_bpc_main_tank(ShadowAI* ai) { return new IccBpcMainTankTrigger(ai); }
+    static Trigger* icc_bpc_empowered_vortex(ShadowAI* ai) { return new IccBpcEmpoweredVortexTrigger(ai); }
+    static Trigger* icc_bpc_kinetic_bomb(ShadowAI* ai) { return new IccBpcKineticBombTrigger(ai); }
+    static Trigger* icc_bpc_ball_of_flame(ShadowAI* ai) { return new IccBpcBallOfFlameTrigger(ai); }
 
-    static Trigger* icc_bql_group_position(PlayerbotAI* ai) { return new IccBqlGroupPositionTrigger(ai); }
-    static Trigger* icc_bql_pact_of_darkfallen(PlayerbotAI* ai) { return new IccBqlPactOfDarkfallenTrigger(ai); }
-    static Trigger* icc_bql_vampiric_bite(PlayerbotAI* ai) { return new IccBqlVampiricBiteTrigger(ai); }
+    static Trigger* icc_bql_group_position(ShadowAI* ai) { return new IccBqlGroupPositionTrigger(ai); }
+    static Trigger* icc_bql_pact_of_darkfallen(ShadowAI* ai) { return new IccBqlPactOfDarkfallenTrigger(ai); }
+    static Trigger* icc_bql_vampiric_bite(ShadowAI* ai) { return new IccBqlVampiricBiteTrigger(ai); }
 
-    static Trigger* icc_valkyre_spear(PlayerbotAI* ai) { return new IccValkyreSpearTrigger(ai); }
-    static Trigger* icc_sister_svalna(PlayerbotAI* ai) { return new IccSisterSvalnaTrigger(ai); }
+    static Trigger* icc_valkyre_spear(ShadowAI* ai) { return new IccValkyreSpearTrigger(ai); }
+    static Trigger* icc_sister_svalna(ShadowAI* ai) { return new IccSisterSvalnaTrigger(ai); }
 
-    static Trigger* icc_valithria_group(PlayerbotAI* ai) { return new IccValithriaGroupTrigger(ai); }
-    static Trigger* icc_valithria_portal(PlayerbotAI* ai) { return new IccValithriaPortalTrigger(ai); }
-    static Trigger* icc_valithria_heal(PlayerbotAI* ai) { return new IccValithriaHealTrigger(ai); }
-    static Trigger* icc_valithria_dream_cloud(PlayerbotAI* ai) { return new IccValithriaDreamCloudTrigger(ai); }
+    static Trigger* icc_valithria_group(ShadowAI* ai) { return new IccValithriaGroupTrigger(ai); }
+    static Trigger* icc_valithria_portal(ShadowAI* ai) { return new IccValithriaPortalTrigger(ai); }
+    static Trigger* icc_valithria_heal(ShadowAI* ai) { return new IccValithriaHealTrigger(ai); }
+    static Trigger* icc_valithria_dream_cloud(ShadowAI* ai) { return new IccValithriaDreamCloudTrigger(ai); }
 
-    static Trigger* icc_sindragosa_group_position(PlayerbotAI* ai) { return new IccSindragosaGroupPositionTrigger(ai); }
-    static Trigger* icc_sindragosa_frost_beacon(PlayerbotAI* ai) { return new IccSindragosaFrostBeaconTrigger(ai); }
-    static Trigger* icc_sindragosa_blistering_cold(PlayerbotAI* ai) { return new IccSindragosaBlisteringColdTrigger(ai); }
-    static Trigger* icc_sindragosa_unchained_magic(PlayerbotAI* ai) { return new IccSindragosaUnchainedMagicTrigger(ai); }
-    static Trigger* icc_sindragosa_chilled_to_the_bone(PlayerbotAI* ai) { return new IccSindragosaChilledToTheBoneTrigger(ai); }
-    static Trigger* icc_sindragosa_mystic_buffet(PlayerbotAI* ai) { return new IccSindragosaMysticBuffetTrigger(ai); }
-    static Trigger* icc_sindragosa_main_tank_mystic_buffet(PlayerbotAI* ai) { return new IccSindragosaMainTankMysticBuffetTrigger(ai); }
-    static Trigger* icc_sindragosa_frost_bomb(PlayerbotAI* ai) { return new IccSindragosaFrostBombTrigger(ai); }
-    static Trigger* icc_sindragosa_tank_swap_position(PlayerbotAI* ai) { return new IccSindragosaTankSwapPositionTrigger(ai); }
+    static Trigger* icc_sindragosa_group_position(ShadowAI* ai) { return new IccSindragosaGroupPositionTrigger(ai); }
+    static Trigger* icc_sindragosa_frost_beacon(ShadowAI* ai) { return new IccSindragosaFrostBeaconTrigger(ai); }
+    static Trigger* icc_sindragosa_blistering_cold(ShadowAI* ai) { return new IccSindragosaBlisteringColdTrigger(ai); }
+    static Trigger* icc_sindragosa_unchained_magic(ShadowAI* ai) { return new IccSindragosaUnchainedMagicTrigger(ai); }
+    static Trigger* icc_sindragosa_chilled_to_the_bone(ShadowAI* ai) { return new IccSindragosaChilledToTheBoneTrigger(ai); }
+    static Trigger* icc_sindragosa_mystic_buffet(ShadowAI* ai) { return new IccSindragosaMysticBuffetTrigger(ai); }
+    static Trigger* icc_sindragosa_main_tank_mystic_buffet(ShadowAI* ai) { return new IccSindragosaMainTankMysticBuffetTrigger(ai); }
+    static Trigger* icc_sindragosa_frost_bomb(ShadowAI* ai) { return new IccSindragosaFrostBombTrigger(ai); }
+    static Trigger* icc_sindragosa_tank_swap_position(ShadowAI* ai) { return new IccSindragosaTankSwapPositionTrigger(ai); }
 
-    static Trigger* icc_lich_king_shadow_trap(PlayerbotAI* ai) { return new IccLichKingShadowTrapTrigger(ai); }
-    static Trigger* icc_lich_king_necrotic_plague(PlayerbotAI* ai) { return new IccLichKingNecroticPlagueTrigger(ai); }
-    static Trigger* icc_lich_king_winter(PlayerbotAI* ai) { return new IccLichKingWinterTrigger(ai); }
-    static Trigger* icc_lich_king_adds(PlayerbotAI* ai) { return new IccLichKingAddsTrigger(ai); }
+    static Trigger* icc_lich_king_shadow_trap(ShadowAI* ai) { return new IccLichKingShadowTrapTrigger(ai); }
+    static Trigger* icc_lich_king_necrotic_plague(ShadowAI* ai) { return new IccLichKingNecroticPlagueTrigger(ai); }
+    static Trigger* icc_lich_king_winter(ShadowAI* ai) { return new IccLichKingWinterTrigger(ai); }
+    static Trigger* icc_lich_king_adds(ShadowAI* ai) { return new IccLichKingAddsTrigger(ai); }
 
 };
 

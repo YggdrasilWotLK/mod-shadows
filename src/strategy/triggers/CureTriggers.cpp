@@ -5,7 +5,7 @@
 
 #include "CureTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "WorldBuffAction.h"
 
 bool NeedCureTrigger::IsActive()

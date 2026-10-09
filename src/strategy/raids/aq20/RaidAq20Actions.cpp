@@ -1,6 +1,6 @@
 #include "RaidAq20Actions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RaidAq20Utils.h"
 
 

@@ -13,7 +13,7 @@
 #include "HunterTriggers.h"
 #include "MarksmanshipHunterStrategy.h"
 #include "NamedObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SurvivalHunterStrategy.h"
 
 class HunterStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -33,15 +33,15 @@ public:
     }
 
 private:
-    static Strategy* nc(PlayerbotAI* botAI) { return new GenericHunterNonCombatStrategy(botAI); }
-    static Strategy* boost(PlayerbotAI* botAI) { return new HunterBoostStrategy(botAI); }
-    static Strategy* pet(PlayerbotAI* botAI) { return new HunterPetStrategy(botAI); }
-    static Strategy* cc(PlayerbotAI* botAI) { return new HunterCcStrategy(botAI); }
-    static Strategy* trap_weave(PlayerbotAI* botAI) { return new HunterTrapWeaveStrategy(botAI); }
-    static Strategy* beast_mastery(PlayerbotAI* botAI) { return new BeastMasteryHunterStrategy(botAI); }
-    static Strategy* marksmanship(PlayerbotAI* botAI) { return new MarksmanshipHunterStrategy(botAI); }
-    static Strategy* survival(PlayerbotAI* botAI) { return new SurvivalHunterStrategy(botAI); }
-    static Strategy* aoe(PlayerbotAI* botAI) { return new AoEHunterStrategy(botAI); }
+    static Strategy* nc(ShadowAI* botAI) { return new GenericHunterNonCombatStrategy(botAI); }
+    static Strategy* boost(ShadowAI* botAI) { return new HunterBoostStrategy(botAI); }
+    static Strategy* pet(ShadowAI* botAI) { return new HunterPetStrategy(botAI); }
+    static Strategy* cc(ShadowAI* botAI) { return new HunterCcStrategy(botAI); }
+    static Strategy* trap_weave(ShadowAI* botAI) { return new HunterTrapWeaveStrategy(botAI); }
+    static Strategy* beast_mastery(ShadowAI* botAI) { return new BeastMasteryHunterStrategy(botAI); }
+    static Strategy* marksmanship(ShadowAI* botAI) { return new MarksmanshipHunterStrategy(botAI); }
+    static Strategy* survival(ShadowAI* botAI) { return new SurvivalHunterStrategy(botAI); }
+    static Strategy* aoe(ShadowAI* botAI) { return new AoEHunterStrategy(botAI); }
 };
 
 class HunterBuffStrategyFactoryInternal : public NamedObjectContext<Strategy>
@@ -56,10 +56,10 @@ public:
     }
 
 private:
-    static Strategy* bspeed(PlayerbotAI* botAI) { return new HunterBuffSpeedStrategy(botAI); }
-    static Strategy* bdps(PlayerbotAI* botAI) { return new HunterBuffDpsStrategy(botAI); }
-    static Strategy* bmana(PlayerbotAI* botAI) { return new HunterBuffManaStrategy(botAI); }
-    static Strategy* rnature(PlayerbotAI* botAI) { return new HunterNatureResistanceStrategy(botAI); }
+    static Strategy* bspeed(ShadowAI* botAI) { return new HunterBuffSpeedStrategy(botAI); }
+    static Strategy* bdps(ShadowAI* botAI) { return new HunterBuffDpsStrategy(botAI); }
+    static Strategy* bmana(ShadowAI* botAI) { return new HunterBuffManaStrategy(botAI); }
+    static Strategy* rnature(ShadowAI* botAI) { return new HunterNatureResistanceStrategy(botAI); }
 };
 
 class HunterTriggerFactoryInternal : public NamedObjectContext<Trigger>
@@ -105,44 +105,44 @@ public:
     }
 
 private:
-    static Trigger* auto_shot(PlayerbotAI* botAI) { return new AutoShotTrigger(botAI); }
-    static Trigger* scare_beast(PlayerbotAI* botAI) { return new ScareBeastTrigger(botAI); }
-    static Trigger* concussive_shot_on_snare_target(PlayerbotAI* botAI)
+    static Trigger* auto_shot(ShadowAI* botAI) { return new AutoShotTrigger(botAI); }
+    static Trigger* scare_beast(ShadowAI* botAI) { return new ScareBeastTrigger(botAI); }
+    static Trigger* concussive_shot_on_snare_target(ShadowAI* botAI)
     {
         return new ConsussiveShotSnareTrigger(botAI);
     }
-    static Trigger* pet_not_happy(PlayerbotAI* botAI) { return new HunterPetNotHappy(botAI); }
-    static Trigger* serpent_sting_on_attacker(PlayerbotAI* botAI) { return new SerpentStingOnAttackerTrigger(botAI); }
-    static Trigger* trueshot_aura(PlayerbotAI* botAI) { return new TrueshotAuraTrigger(botAI); }
-    static Trigger* no_track(PlayerbotAI* botAI) { return new NoTrackTrigger(botAI); }
-    static Trigger* aspect_of_the_viper(PlayerbotAI* botAI) { return new HunterAspectOfTheViperTrigger(botAI); }
-    static Trigger* black_arrow(PlayerbotAI* botAI) { return new BlackArrowTrigger(botAI); }
-    static Trigger* NoStings(PlayerbotAI* botAI) { return new HunterNoStingsActiveTrigger(botAI); }
-    static Trigger* hunters_pet_dead(PlayerbotAI* botAI) { return new HuntersPetDeadTrigger(botAI); }
-    static Trigger* hunters_pet_low_health(PlayerbotAI* botAI) { return new HuntersPetLowHealthTrigger(botAI); }
-    static Trigger* hunters_pet_medium_health(PlayerbotAI* botAI) { return new HuntersPetMediumHealthTrigger(botAI); }
-    static Trigger* hunters_mark(PlayerbotAI* botAI) { return new HuntersMarkTrigger(botAI); }
-    static Trigger* freezing_trap(PlayerbotAI* botAI) { return new FreezingTrapTrigger(botAI); }
-    static Trigger* aspect_of_the_pack(PlayerbotAI* botAI) { return new HunterAspectOfThePackTrigger(botAI); }
-    static Trigger* rapid_fire(PlayerbotAI* botAI) { return new RapidFireTrigger(botAI); }
-    static Trigger* aspect_of_the_hawk(PlayerbotAI* botAI) { return new HunterAspectOfTheHawkTrigger(botAI); }
-    static Trigger* aspect_of_the_monkey(PlayerbotAI* botAI) { return new HunterAspectOfTheMonkeyTrigger(botAI); }
-    static Trigger* aspect_of_the_wild(PlayerbotAI* botAI) { return new HunterAspectOfTheWildTrigger(botAI); }
-    static Trigger* low_ammo(PlayerbotAI* botAI) { return new HunterLowAmmoTrigger(botAI); }
-    static Trigger* no_ammo(PlayerbotAI* botAI) { return new HunterNoAmmoTrigger(botAI); }
-    static Trigger* has_ammo(PlayerbotAI* botAI) { return new HunterHasAmmoTrigger(botAI); }
-    static Trigger* switch_to_melee(PlayerbotAI* botAI) { return new SwitchToMeleeTrigger(botAI); }
-    static Trigger* switch_to_ranged(PlayerbotAI* botAI) { return new SwitchToRangedTrigger(botAI); }
-    static Trigger* misdirection_on_main_tank(PlayerbotAI* ai) { return new MisdirectionOnMainTankTrigger(ai); }
-    static Trigger* remove_enrage(PlayerbotAI* ai) { return new TargetRemoveEnrageTrigger(ai); }
-    static Trigger* remove_magic(PlayerbotAI* ai) { return new TargetRemoveMagicTrigger(ai); }
-    static Trigger* immolation_trap_no_cd(PlayerbotAI* ai) { return new ImmolationTrapNoCdTrigger(ai); }
-    static Trigger* kill_command(PlayerbotAI* botAI) { return new KillCommandTrigger(botAI); }
-    static Trigger* explosive_shot(PlayerbotAI* botAI) { return new ExplosiveShotTrigger(botAI); }
-    static Trigger* lock_and_load(PlayerbotAI* botAI) { return new LockAndLoadTrigger(botAI); }
-    static Trigger* silencing_shot(PlayerbotAI* botAI) { return new SilencingShotTrigger(botAI); }
-    static Trigger* intimidation(PlayerbotAI* botAI) { return new IntimidationTrigger(botAI); }
-    static Trigger* volley_channel_check(PlayerbotAI* botAI) { return new VolleyChannelCheckTrigger(botAI); }
+    static Trigger* pet_not_happy(ShadowAI* botAI) { return new HunterPetNotHappy(botAI); }
+    static Trigger* serpent_sting_on_attacker(ShadowAI* botAI) { return new SerpentStingOnAttackerTrigger(botAI); }
+    static Trigger* trueshot_aura(ShadowAI* botAI) { return new TrueshotAuraTrigger(botAI); }
+    static Trigger* no_track(ShadowAI* botAI) { return new NoTrackTrigger(botAI); }
+    static Trigger* aspect_of_the_viper(ShadowAI* botAI) { return new HunterAspectOfTheViperTrigger(botAI); }
+    static Trigger* black_arrow(ShadowAI* botAI) { return new BlackArrowTrigger(botAI); }
+    static Trigger* NoStings(ShadowAI* botAI) { return new HunterNoStingsActiveTrigger(botAI); }
+    static Trigger* hunters_pet_dead(ShadowAI* botAI) { return new HuntersPetDeadTrigger(botAI); }
+    static Trigger* hunters_pet_low_health(ShadowAI* botAI) { return new HuntersPetLowHealthTrigger(botAI); }
+    static Trigger* hunters_pet_medium_health(ShadowAI* botAI) { return new HuntersPetMediumHealthTrigger(botAI); }
+    static Trigger* hunters_mark(ShadowAI* botAI) { return new HuntersMarkTrigger(botAI); }
+    static Trigger* freezing_trap(ShadowAI* botAI) { return new FreezingTrapTrigger(botAI); }
+    static Trigger* aspect_of_the_pack(ShadowAI* botAI) { return new HunterAspectOfThePackTrigger(botAI); }
+    static Trigger* rapid_fire(ShadowAI* botAI) { return new RapidFireTrigger(botAI); }
+    static Trigger* aspect_of_the_hawk(ShadowAI* botAI) { return new HunterAspectOfTheHawkTrigger(botAI); }
+    static Trigger* aspect_of_the_monkey(ShadowAI* botAI) { return new HunterAspectOfTheMonkeyTrigger(botAI); }
+    static Trigger* aspect_of_the_wild(ShadowAI* botAI) { return new HunterAspectOfTheWildTrigger(botAI); }
+    static Trigger* low_ammo(ShadowAI* botAI) { return new HunterLowAmmoTrigger(botAI); }
+    static Trigger* no_ammo(ShadowAI* botAI) { return new HunterNoAmmoTrigger(botAI); }
+    static Trigger* has_ammo(ShadowAI* botAI) { return new HunterHasAmmoTrigger(botAI); }
+    static Trigger* switch_to_melee(ShadowAI* botAI) { return new SwitchToMeleeTrigger(botAI); }
+    static Trigger* switch_to_ranged(ShadowAI* botAI) { return new SwitchToRangedTrigger(botAI); }
+    static Trigger* misdirection_on_main_tank(ShadowAI* ai) { return new MisdirectionOnMainTankTrigger(ai); }
+    static Trigger* remove_enrage(ShadowAI* ai) { return new TargetRemoveEnrageTrigger(ai); }
+    static Trigger* remove_magic(ShadowAI* ai) { return new TargetRemoveMagicTrigger(ai); }
+    static Trigger* immolation_trap_no_cd(ShadowAI* ai) { return new ImmolationTrapNoCdTrigger(ai); }
+    static Trigger* kill_command(ShadowAI* botAI) { return new KillCommandTrigger(botAI); }
+    static Trigger* explosive_shot(ShadowAI* botAI) { return new ExplosiveShotTrigger(botAI); }
+    static Trigger* lock_and_load(ShadowAI* botAI) { return new LockAndLoadTrigger(botAI); }
+    static Trigger* silencing_shot(ShadowAI* botAI) { return new SilencingShotTrigger(botAI); }
+    static Trigger* intimidation(ShadowAI* botAI) { return new IntimidationTrigger(botAI); }
+    static Trigger* volley_channel_check(ShadowAI* botAI) { return new VolleyChannelCheckTrigger(botAI); }
 };
 
 class HunterAiObjectContextInternal : public NamedObjectContext<Action>
@@ -208,60 +208,60 @@ public:
     }
 
 private:
-    static Action* scare_beast(PlayerbotAI* botAI) { return new CastScareBeastAction(botAI); }
-    static Action* scare_beast_on_cc(PlayerbotAI* botAI) { return new CastScareBeastCcAction(botAI); }
-    static Action* bestial_wrath(PlayerbotAI* botAI) { return new CastBestialWrathAction(botAI); }
-    static Action* feed_pet(PlayerbotAI* botAI) { return new FeedPetAction(botAI); }
-    static Action* feign_death(PlayerbotAI* botAI) { return new CastFeignDeathAction(botAI); }
-    static Action* trueshot_aura(PlayerbotAI* botAI) { return new CastTrueshotAuraAction(botAI); }
-    static Action* track_humanoids(PlayerbotAI* botAI) { return new CastBuffSpellAction(botAI, "track humanoids"); }
-    static Action* auto_shot(PlayerbotAI* botAI) { return new CastAutoShotAction(botAI); }
-    static Action* aimed_shot(PlayerbotAI* botAI) { return new CastAimedShotAction(botAI); }
-    static Action* chimera_shot(PlayerbotAI* botAI) { return new CastChimeraShotAction(botAI); }
-    static Action* explosive_shot(PlayerbotAI* botAI) { return new CastExplosiveShotAction(botAI); }
-    static Action* arcane_shot(PlayerbotAI* botAI) { return new CastArcaneShotAction(botAI); }
-    static Action* concussive_shot(PlayerbotAI* botAI) { return new CastConcussiveShotAction(botAI); }
-    static Action* distracting_shot(PlayerbotAI* botAI) { return new CastDistractingShotAction(botAI); }
-    static Action* multi_shot(PlayerbotAI* botAI) { return new CastMultiShotAction(botAI); }
-    static Action* volley(PlayerbotAI* botAI) { return new CastVolleyAction(botAI); }
-    static Action* serpent_sting(PlayerbotAI* botAI) { return new CastSerpentStingAction(botAI); }
-    static Action* serpent_sting_on_attacker(PlayerbotAI* botAI) { return new CastSerpentStingOnAttackerAction(botAI); }
-    static Action* wyvern_sting(PlayerbotAI* botAI) { return new CastWyvernStingAction(botAI); }
-    static Action* viper_sting(PlayerbotAI* botAI) { return new CastViperStingAction(botAI); }
-    static Action* scorpid_sting(PlayerbotAI* botAI) { return new CastScorpidStingAction(botAI); }
-    static Action* hunters_mark(PlayerbotAI* botAI) { return new CastHuntersMarkAction(botAI); }
-    static Action* mend_pet(PlayerbotAI* botAI) { return new CastMendPetAction(botAI); }
-    static Action* kill_command(PlayerbotAI* botAI) { return new CastKillCommandAction(botAI); }
-    static Action* revive_pet(PlayerbotAI* botAI) { return new CastRevivePetAction(botAI); }
-    static Action* call_pet(PlayerbotAI* botAI) { return new CastCallPetAction(botAI); }
-    static Action* black_arrow(PlayerbotAI* botAI) { return new CastBlackArrow(botAI); }
-    static Action* freezing_trap(PlayerbotAI* botAI) { return new CastFreezingTrap(botAI); }
-    static Action* rapid_fire(PlayerbotAI* botAI) { return new CastRapidFireAction(botAI); }
-    static Action* deterrence(PlayerbotAI* botAI) { return new CastDeterrenceAction(botAI); }
-    static Action* readiness(PlayerbotAI* botAI) { return new CastReadinessAction(botAI); }
-    static Action* aspect_of_the_hawk(PlayerbotAI* botAI) { return new CastAspectOfTheHawkAction(botAI); }
-    static Action* aspect_of_the_monkey(PlayerbotAI* botAI) { return new CastAspectOfTheMonkeyAction(botAI); }
-    static Action* aspect_of_the_wild(PlayerbotAI* botAI) { return new CastAspectOfTheWildAction(botAI); }
-    static Action* aspect_of_the_viper(PlayerbotAI* botAI) { return new CastAspectOfTheViperAction(botAI); }
-    static Action* aspect_of_the_pack(PlayerbotAI* botAI) { return new CastAspectOfThePackAction(botAI); }
-    static Action* aspect_of_the_cheetah(PlayerbotAI* botAI) { return new CastAspectOfTheCheetahAction(botAI); }
-    static Action* wing_clip(PlayerbotAI* botAI) { return new CastWingClipAction(botAI); }
-    static Action* raptor_strike(PlayerbotAI* botAI) { return new CastRaptorStrikeAction(botAI); }
-    static Action* mongoose_bite(PlayerbotAI* botAI) { return new CastMongooseBiteAction(botAI); }
-    static Action* aspect_of_the_dragonhawk(PlayerbotAI* ai) { return new CastAspectOfTheDragonhawkAction(ai); }
-    static Action* tranquilizing_shot(PlayerbotAI* ai) { return new CastTranquilizingShotAction(ai); }
-    static Action* steady_shot(PlayerbotAI* ai) { return new CastSteadyShotAction(ai); }
-    static Action* kill_shot(PlayerbotAI* ai) { return new CastKillShotAction(ai); }
-    static Action* misdirection_on_main_tank(PlayerbotAI* ai) { return new CastMisdirectionOnMainTankAction(ai); }
-    static Action* silencing_shot(PlayerbotAI* ai) { return new CastSilencingShotAction(ai); }
-    static Action* disengage(PlayerbotAI* ai) { return new CastDisengageAction(ai); }
-    static Action* immolation_trap(PlayerbotAI* ai) { return new CastImmolationTrapAction(ai); }
-    static Action* explosive_trap(PlayerbotAI* ai) { return new CastExplosiveTrapAction(ai); }
-    static Action* explosive_shot_rank_4(PlayerbotAI* ai) { return new CastExplosiveShotRank4Action(ai); }
-    static Action* explosive_shot_rank_3(PlayerbotAI* ai) { return new CastExplosiveShotRank3Action(ai); }
-    static Action* explosive_shot_rank_2(PlayerbotAI* ai) { return new CastExplosiveShotRank2Action(ai); }
-    static Action* explosive_shot_rank_1(PlayerbotAI* ai) { return new CastExplosiveShotRank1Action(ai); }
-    static Action* intimidation(PlayerbotAI* ai) { return new CastIntimidationAction(ai); }
+    static Action* scare_beast(ShadowAI* botAI) { return new CastScareBeastAction(botAI); }
+    static Action* scare_beast_on_cc(ShadowAI* botAI) { return new CastScareBeastCcAction(botAI); }
+    static Action* bestial_wrath(ShadowAI* botAI) { return new CastBestialWrathAction(botAI); }
+    static Action* feed_pet(ShadowAI* botAI) { return new FeedPetAction(botAI); }
+    static Action* feign_death(ShadowAI* botAI) { return new CastFeignDeathAction(botAI); }
+    static Action* trueshot_aura(ShadowAI* botAI) { return new CastTrueshotAuraAction(botAI); }
+    static Action* track_humanoids(ShadowAI* botAI) { return new CastBuffSpellAction(botAI, "track humanoids"); }
+    static Action* auto_shot(ShadowAI* botAI) { return new CastAutoShotAction(botAI); }
+    static Action* aimed_shot(ShadowAI* botAI) { return new CastAimedShotAction(botAI); }
+    static Action* chimera_shot(ShadowAI* botAI) { return new CastChimeraShotAction(botAI); }
+    static Action* explosive_shot(ShadowAI* botAI) { return new CastExplosiveShotAction(botAI); }
+    static Action* arcane_shot(ShadowAI* botAI) { return new CastArcaneShotAction(botAI); }
+    static Action* concussive_shot(ShadowAI* botAI) { return new CastConcussiveShotAction(botAI); }
+    static Action* distracting_shot(ShadowAI* botAI) { return new CastDistractingShotAction(botAI); }
+    static Action* multi_shot(ShadowAI* botAI) { return new CastMultiShotAction(botAI); }
+    static Action* volley(ShadowAI* botAI) { return new CastVolleyAction(botAI); }
+    static Action* serpent_sting(ShadowAI* botAI) { return new CastSerpentStingAction(botAI); }
+    static Action* serpent_sting_on_attacker(ShadowAI* botAI) { return new CastSerpentStingOnAttackerAction(botAI); }
+    static Action* wyvern_sting(ShadowAI* botAI) { return new CastWyvernStingAction(botAI); }
+    static Action* viper_sting(ShadowAI* botAI) { return new CastViperStingAction(botAI); }
+    static Action* scorpid_sting(ShadowAI* botAI) { return new CastScorpidStingAction(botAI); }
+    static Action* hunters_mark(ShadowAI* botAI) { return new CastHuntersMarkAction(botAI); }
+    static Action* mend_pet(ShadowAI* botAI) { return new CastMendPetAction(botAI); }
+    static Action* kill_command(ShadowAI* botAI) { return new CastKillCommandAction(botAI); }
+    static Action* revive_pet(ShadowAI* botAI) { return new CastRevivePetAction(botAI); }
+    static Action* call_pet(ShadowAI* botAI) { return new CastCallPetAction(botAI); }
+    static Action* black_arrow(ShadowAI* botAI) { return new CastBlackArrow(botAI); }
+    static Action* freezing_trap(ShadowAI* botAI) { return new CastFreezingTrap(botAI); }
+    static Action* rapid_fire(ShadowAI* botAI) { return new CastRapidFireAction(botAI); }
+    static Action* deterrence(ShadowAI* botAI) { return new CastDeterrenceAction(botAI); }
+    static Action* readiness(ShadowAI* botAI) { return new CastReadinessAction(botAI); }
+    static Action* aspect_of_the_hawk(ShadowAI* botAI) { return new CastAspectOfTheHawkAction(botAI); }
+    static Action* aspect_of_the_monkey(ShadowAI* botAI) { return new CastAspectOfTheMonkeyAction(botAI); }
+    static Action* aspect_of_the_wild(ShadowAI* botAI) { return new CastAspectOfTheWildAction(botAI); }
+    static Action* aspect_of_the_viper(ShadowAI* botAI) { return new CastAspectOfTheViperAction(botAI); }
+    static Action* aspect_of_the_pack(ShadowAI* botAI) { return new CastAspectOfThePackAction(botAI); }
+    static Action* aspect_of_the_cheetah(ShadowAI* botAI) { return new CastAspectOfTheCheetahAction(botAI); }
+    static Action* wing_clip(ShadowAI* botAI) { return new CastWingClipAction(botAI); }
+    static Action* raptor_strike(ShadowAI* botAI) { return new CastRaptorStrikeAction(botAI); }
+    static Action* mongoose_bite(ShadowAI* botAI) { return new CastMongooseBiteAction(botAI); }
+    static Action* aspect_of_the_dragonhawk(ShadowAI* ai) { return new CastAspectOfTheDragonhawkAction(ai); }
+    static Action* tranquilizing_shot(ShadowAI* ai) { return new CastTranquilizingShotAction(ai); }
+    static Action* steady_shot(ShadowAI* ai) { return new CastSteadyShotAction(ai); }
+    static Action* kill_shot(ShadowAI* ai) { return new CastKillShotAction(ai); }
+    static Action* misdirection_on_main_tank(ShadowAI* ai) { return new CastMisdirectionOnMainTankAction(ai); }
+    static Action* silencing_shot(ShadowAI* ai) { return new CastSilencingShotAction(ai); }
+    static Action* disengage(ShadowAI* ai) { return new CastDisengageAction(ai); }
+    static Action* immolation_trap(ShadowAI* ai) { return new CastImmolationTrapAction(ai); }
+    static Action* explosive_trap(ShadowAI* ai) { return new CastExplosiveTrapAction(ai); }
+    static Action* explosive_shot_rank_4(ShadowAI* ai) { return new CastExplosiveShotRank4Action(ai); }
+    static Action* explosive_shot_rank_3(ShadowAI* ai) { return new CastExplosiveShotRank3Action(ai); }
+    static Action* explosive_shot_rank_2(ShadowAI* ai) { return new CastExplosiveShotRank2Action(ai); }
+    static Action* explosive_shot_rank_1(ShadowAI* ai) { return new CastExplosiveShotRank1Action(ai); }
+    static Action* intimidation(ShadowAI* ai) { return new CastIntimidationAction(ai); }
 };
 
 SharedNamedObjectContextList<Strategy> HunterAiObjectContext::sharedStrategyContexts;
@@ -269,7 +269,7 @@ SharedNamedObjectContextList<Action> HunterAiObjectContext::sharedActionContexts
 SharedNamedObjectContextList<Trigger> HunterAiObjectContext::sharedTriggerContexts;
 SharedNamedObjectContextList<UntypedValue> HunterAiObjectContext::sharedValueContexts;
 
-HunterAiObjectContext::HunterAiObjectContext(PlayerbotAI* botAI)
+HunterAiObjectContext::HunterAiObjectContext(ShadowAI* botAI)
     : AiObjectContext(botAI, sharedStrategyContexts, sharedActionContexts, sharedTriggerContexts, sharedValueContexts)
 {
 }

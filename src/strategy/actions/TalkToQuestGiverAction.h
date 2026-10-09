@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TALKTOQUESTGIVERACTION_H
-#define _PLAYERBOT_TALKTOQUESTGIVERACTION_H
+#ifndef _SHADOW_TALKTOQUESTGIVERACTION_H
+#define _SHADOW_TALKTOQUESTGIVERACTION_H
 
 #include "QuestAction.h"
 
 class Quest;
-class PlayerbotAI;
+class ShadowAI;
 class WorldObject;
 
 class TalkToQuestGiverAction : public QuestAction
 {
 public:
-    TalkToQuestGiverAction(PlayerbotAI* botAI, std::string name = "talk to quest giver") : QuestAction(botAI, name) { }
+    TalkToQuestGiverAction(ShadowAI* botAI, std::string name = "talk to quest giver") : QuestAction(botAI, name) { }
 
 protected:
     bool ProcessQuest(Quest const* quest, Object* questGiver) override;
@@ -32,7 +32,7 @@ private:
 class TurnInQueryQuestAction : public TalkToQuestGiverAction
 {
 public:
-    TurnInQueryQuestAction(PlayerbotAI* botAI) : TalkToQuestGiverAction(botAI, "turn in query quest") {}
+    TurnInQueryQuestAction(ShadowAI* botAI) : TalkToQuestGiverAction(botAI, "turn in query quest") {}
     bool Execute(Event event) override;
 };
 #endif

@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_AIOBJECTCONTEXT_H
-#define _PLAYERBOT_AIOBJECTCONTEXT_H
+#ifndef _SHADOW_AIOBJECTCONTEXT_H
+#define _SHADOW_AIOBJECTCONTEXT_H
 
 #include <sstream>
 #include <string>
@@ -12,23 +12,23 @@
 #include "Common.h"
 #include "DynamicObject.h"
 #include "NamedObjectContext.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 #include "Strategy.h"
 #include "Trigger.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
-typedef Strategy* (*StrategyCreator)(PlayerbotAI* botAI);
-typedef Action* (*ActionCreator)(PlayerbotAI* botAI);
-typedef Trigger* (*TriggerCreator)(PlayerbotAI* botAI);
-typedef UntypedValue* (*ValueCreator)(PlayerbotAI* botAI);
+typedef Strategy* (*StrategyCreator)(ShadowAI* botAI);
+typedef Action* (*ActionCreator)(ShadowAI* botAI);
+typedef Trigger* (*TriggerCreator)(ShadowAI* botAI);
+typedef UntypedValue* (*ValueCreator)(ShadowAI* botAI);
 
-class AiObjectContext : public PlayerbotAIAware
+class AiObjectContext : public ShadowAIAware
 {
 public:
-    static BoolCalculatedValue* custom_glyphs(PlayerbotAI* ai); // Added for cutom glyphs
-    AiObjectContext(PlayerbotAI* botAI,
+    static BoolCalculatedValue* custom_glyphs(ShadowAI* ai); // Added for cutom glyphs
+    AiObjectContext(ShadowAI* botAI,
                     SharedNamedObjectContextList<Strategy>& sharedStrategyContext = sharedStrategyContexts,
                     SharedNamedObjectContextList<Action>& sharedActionContext = sharedActionContexts,
                     SharedNamedObjectContextList<Trigger>& sharedTriggerContext = sharedTriggerContexts,

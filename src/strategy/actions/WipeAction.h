@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WIPEACTION_H
-#define _PLAYERBOT_WIPEACTION_H
+#ifndef _SHADOW_WIPEACTION_H
+#define _SHADOW_WIPEACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class WipeAction : public Action
 {
 public:
-    WipeAction(PlayerbotAI* botAI) : Action(botAI, "wipe") {}
+    WipeAction(ShadowAI* botAI) : Action(botAI, "wipe") {}
 
     bool Execute(Event event) override;
 

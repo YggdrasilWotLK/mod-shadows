@@ -10,7 +10,7 @@
 #include "Event.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 class AnyGameObjectInObjectRangeCheck
@@ -37,16 +37,16 @@ bool RevealGatheringItemAction::Execute(Event event)
         return false;
 
     std::list<GameObject*> targets;
-    AnyGameObjectInObjectRangeCheck u_check(bot, sPlayerbotAIConfig->grindDistance);
+    AnyGameObjectInObjectRangeCheck u_check(bot, sShadowAIConfig->grindDistance);
     Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
-    Cell::VisitObjects(bot, searcher, sPlayerbotAIConfig->reactDistance);
+    Cell::VisitObjects(bot, searcher, sShadowAIConfig->reactDistance);
 
     std::vector<GameObject*> result;
     for (GameObject* go : targets)
     {
         if (!go || !go->isSpawned() ||
             sServerFacade->IsDistanceLessOrEqualThan(sServerFacade->GetDistance2d(bot, go),
-                                                     sPlayerbotAIConfig->lootDistance))
+                                                     sShadowAIConfig->lootDistance))
             continue;
 
         if (LockEntry const* lockInfo = sLockStore.LookupEntry(go->GetGOInfo()->GetLockId()))

@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "ItemUsageValue.h"
 #include "Object.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "QuestDef.h"
 #include "StatsWeightCalculator.h"
 #include "WorldPacket.h"
@@ -24,9 +24,9 @@ bool TalkToQuestGiverAction::ProcessQuest(Quest const* quest, Object* questGiver
     QuestStatus status = bot->GetQuestStatus(quest->GetQuestId());
     Player* master = GetMaster();
 
-    if (sPlayerbotAIConfig->syncQuestForPlayer && master)
+    if (sShadowAIConfig->syncQuestForPlayer && master)
     {
-        auto masterBotAI = GET_PLAYERBOT_AI(master);
+        auto masterBotAI = GET_SHADOW_AI(master);
         if (!masterBotAI || masterBotAI->IsRealPlayer())
         {
             QuestStatus masterStatus = master->GetQuestStatus(quest->GetQuestId());
@@ -35,7 +35,7 @@ bool TalkToQuestGiverAction::ProcessQuest(Quest const* quest, Object* questGiver
         }
     }
 
-    if (sPlayerbotAIConfig->syncQuestWithPlayer)
+    if (sShadowAIConfig->syncQuestWithPlayer)
     {
         if (master && master->GetQuestStatus(quest->GetQuestId()) == QUEST_STATUS_COMPLETE &&
             (status == QUEST_STATUS_INCOMPLETE || status == QUEST_STATUS_FAILED))
@@ -91,7 +91,7 @@ bool TalkToQuestGiverAction::TurnInQuest(Quest const* quest, Object* questGiver,
     {
         const Quest* pQuest = sObjectMgr->GetQuestTemplate(questID);
         const std::string text_quest = ChatHelper::FormatQuest(pQuest);
-        LOG_INFO("playerbots", "{} => Quest [ {} ] completed", bot->GetName(), pQuest->GetTitle());
+        LOG_INFO("shadows", "{} => Quest [ {} ] completed", bot->GetName(), pQuest->GetTitle());
         bot->Say("Quest [ " + text_quest + " ] completed", LANG_UNIVERSAL);
     }
 
@@ -171,7 +171,7 @@ void TalkToQuestGiverAction::RewardMultipleItem(Quest const* quest, Object* ques
     std::set<uint32> bestIds;
 
     std::ostringstream outid;
-    if (!botAI->IsAlt() || sPlayerbotAIConfig->autoPickReward == "yes")
+    if (!botAI->IsAlt() || sShadowAIConfig->autoPickReward == "yes")
     {
         bestIds = BestRewards(quest);
         if (!bestIds.empty())
@@ -198,7 +198,7 @@ void TalkToQuestGiverAction::RewardMultipleItem(Quest const* quest, Object* ques
             AskToSelectReward(quest, out, true);
         }
     }
-    else if (sPlayerbotAIConfig->autoPickReward == "no")
+    else if (sShadowAIConfig->autoPickReward == "no")
     {
         // Old functionality, list rewards.
         AskToSelectReward(quest, out, false);
@@ -260,9 +260,9 @@ bool TurnInQueryQuestAction::Execute(Event event)
     QuestStatus status = bot->GetQuestStatus(quest->GetQuestId());
     Player* master = GetMaster();
 
-    if (sPlayerbotAIConfig->syncQuestForPlayer && master)
+    if (sShadowAIConfig->syncQuestForPlayer && master)
     {
-        auto masterBotAI = GET_PLAYERBOT_AI(master);
+        auto masterBotAI = GET_SHADOW_AI(master);
         if (!masterBotAI || masterBotAI->IsRealPlayer())
         {
             QuestStatus masterStatus = master->GetQuestStatus(quest->GetQuestId());
@@ -271,7 +271,7 @@ bool TurnInQueryQuestAction::Execute(Event event)
         }
     }
 
-    if (sPlayerbotAIConfig->syncQuestWithPlayer)
+    if (sShadowAIConfig->syncQuestWithPlayer)
     {
         if (status == QUEST_STATUS_INCOMPLETE || status == QUEST_STATUS_FAILED)
         {

@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PETTARGETVALUE_H
-#define _PLAYERBOT_PETTARGETVALUE_H
+#ifndef _SHADOW_PETTARGETVALUE_H
+#define _SHADOW_PETTARGETVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class PetTargetValue : public UnitCalculatedValue
 {
 public:
-    PetTargetValue(PlayerbotAI* botAI, std::string const name = "pet target") : UnitCalculatedValue(botAI, name) {}
+    PetTargetValue(ShadowAI* botAI, std::string const name = "pet target") : UnitCalculatedValue(botAI, name) {}
 
     Unit* Calculate() override;
 };

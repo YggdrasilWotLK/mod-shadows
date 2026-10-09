@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHATTRIGGERCONTEXT_H
-#define _PLAYERBOT_CHATTRIGGERCONTEXT_H
+#ifndef _SHADOW_CHATTRIGGERCONTEXT_H
+#define _SHADOW_CHATTRIGGERCONTEXT_H
 
 #include "ChatCommandTrigger.h"
 #include "NamedObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ChatTriggerContext : public NamedObjectContext<Trigger>
 {
@@ -142,121 +142,121 @@ public:
     }
 
 private:
-    static Trigger* open_items(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "open items"); }
-    static Trigger* unlock_items(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "unlock items"); }
-    static Trigger* unlock_traded_item(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "unlock traded item"); }
-    static Trigger* ra(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ra"); }
-    static Trigger* range(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "range"); }
-    static Trigger* flag(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "flag"); }
-    static Trigger* craft(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "craft"); }
-    static Trigger* hire(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "hire"); }
-    static Trigger* wts(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "wts"); }
-    static Trigger* cs(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "cs"); }
-    static Trigger* debug(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "debug"); }
-    static Trigger* cdebug(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "cdebug"); }
-    static Trigger* go(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "go"); }
-    static Trigger* outfit(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "outfit"); }
-    static Trigger* mail(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "mail"); }
-    static Trigger* sendmail(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "sendmail"); }
-    static Trigger* formation(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "formation"); }
-    static Trigger* stance(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "stance"); }
-    static Trigger* attackers(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "attackers"); }
-    static Trigger* target(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "target"); }
-    static Trigger* max_dps(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "max dps"); }
-    static Trigger* save_mana(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "save mana"); }
-    static Trigger* who(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "who"); }
-    static Trigger* summon(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "summon"); }
-    static Trigger* position(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "position"); }
-    static Trigger* runaway(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "runaway"); }
-    static Trigger* warning(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "warning"); }
-    static Trigger* revive(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "revive"); }
-    static Trigger* rti(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "rti"); }
-    static Trigger* invite(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "invite"); }
-    static Trigger* lfg(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "lfg"); }
-    static Trigger* cast(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "cast"); }
-    static Trigger* castnc(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "castnc"); }
-    static Trigger* talk(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "talk"); }
-    static Trigger* enter_vehicle(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "enter vehicle"); }
-    static Trigger* leave_vehicle(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "leave vehicle"); }
-    static Trigger* flee(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "flee"); }
-    static Trigger* grind(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "grind"); }
-    static Trigger* tank_attack(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "tank attack"); }
-    static Trigger* stay(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "stay"); }
-    static Trigger* follow(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "follow"); }
-    static Trigger* move_from_group(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "move from group"); }
-    static Trigger* gb(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "gb"); }
-    static Trigger* bank(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "bank"); }
-    static Trigger* help(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "help"); }
-    static Trigger* buff(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "buff"); }
-    static Trigger* emote(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "emote"); }
-    static Trigger* destroy(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "destroy"); }
-    static Trigger* home(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "home"); }
-    static Trigger* accept(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "accept"); }
-    static Trigger* chat(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "chat"); }
-    static Trigger* attack(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "attack"); }
-    static Trigger* trainer(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "trainer"); }
-    static Trigger* maintenance(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "maintenance"); }
-    static Trigger* remove_glyph(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "remove glyph"); }
-    static Trigger* autogear(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "autogear"); }
-    static Trigger* equip_upgrade(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "equip upgrade"); }
-    static Trigger* co(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "co"); }
-    static Trigger* nc(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "nc"); }
-    static Trigger* dead(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "de"); }
-    static Trigger* spells(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "spells"); }
-    static Trigger* talents(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "talents"); }
-    static Trigger* equip(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "e"); }
-    static Trigger* uneqip(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ue"); }
-    static Trigger* sell(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "s"); }
-    static Trigger* buy(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "b"); }
-    static Trigger* reward(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "r"); }
-    static Trigger* trade(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "t"); }
-    static Trigger* nontrade(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "nt"); }
-    static Trigger* item_count(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "c"); }
-    static Trigger* use(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "use"); }
-    static Trigger* repair(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "repair"); }
-    static Trigger* taxi(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "taxi"); }
-    static Trigger* teleport(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "teleport"); }
-    static Trigger* q(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "q"); }
-    static Trigger* ll(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ll"); }
-    static Trigger* ss(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ss"); }
-    static Trigger* drop(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "drop"); }
-    static Trigger* share(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "share"); }
-    static Trigger* quests(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "quests"); }
-    static Trigger* stats(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "stats"); }
-    static Trigger* leave(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "leave"); }
-    static Trigger* reputation(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "reputation"); }
-    static Trigger* log(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "log"); }
-    static Trigger* los(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "los"); }
-    static Trigger* rpg_status(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "rpg status"); }
-    static Trigger* rpg_do_quest(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "rpg do quest"); }
-    static Trigger* aura(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "aura"); }
-    static Trigger* loot_all(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "add all loot"); }
-    static Trigger* release(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "release"); }
-    static Trigger* reset_ai(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "reset botAI"); }
-    static Trigger* spell(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "spell"); }
-    static Trigger* ready_check(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ready check"); }
-    static Trigger* give_leader(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "give leader"); }
-    static Trigger* cheat(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "cheat"); }
-    static Trigger* ginvite(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "ginvite"); }
-    static Trigger* guild_promote(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "guild promote"); }
-    static Trigger* guild_demote(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "guild demote"); }
-    static Trigger* guild_remove(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "guild remove"); }
-    static Trigger* guild_leave(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "guild leave"); }
-    static Trigger* rtsc(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "rtsc"); }
-    static Trigger* drink(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "drink"); }
-    // static Trigger* naxx(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "naxx"); }
-    // static Trigger* bwl(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "bwl"); }
-    static Trigger* dps(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "dps"); }
-    static Trigger* disperse(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "disperse"); }
-    static Trigger* calc(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "calc"); }
-    static Trigger* qi(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "qi"); }
-    static Trigger* wipe(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "wipe"); }
-    static Trigger* tame(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "tame"); }
-    static Trigger* glyphs(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "glyphs"); } // Added for custom Glyphs
-    static Trigger* glyph_equip(PlayerbotAI* ai) { return new ChatCommandTrigger(ai, "glyph equip"); } // Added for custom Glyphs
-    static Trigger* pet(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "pet"); }
-    static Trigger* pet_attack(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "pet attack"); }
-    static Trigger* roll_action(PlayerbotAI* botAI) { return new ChatCommandTrigger(botAI, "roll"); }
+    static Trigger* open_items(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "open items"); }
+    static Trigger* unlock_items(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "unlock items"); }
+    static Trigger* unlock_traded_item(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "unlock traded item"); }
+    static Trigger* ra(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ra"); }
+    static Trigger* range(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "range"); }
+    static Trigger* flag(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "flag"); }
+    static Trigger* craft(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "craft"); }
+    static Trigger* hire(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "hire"); }
+    static Trigger* wts(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "wts"); }
+    static Trigger* cs(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "cs"); }
+    static Trigger* debug(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "debug"); }
+    static Trigger* cdebug(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "cdebug"); }
+    static Trigger* go(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "go"); }
+    static Trigger* outfit(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "outfit"); }
+    static Trigger* mail(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "mail"); }
+    static Trigger* sendmail(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "sendmail"); }
+    static Trigger* formation(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "formation"); }
+    static Trigger* stance(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "stance"); }
+    static Trigger* attackers(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "attackers"); }
+    static Trigger* target(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "target"); }
+    static Trigger* max_dps(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "max dps"); }
+    static Trigger* save_mana(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "save mana"); }
+    static Trigger* who(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "who"); }
+    static Trigger* summon(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "summon"); }
+    static Trigger* position(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "position"); }
+    static Trigger* runaway(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "runaway"); }
+    static Trigger* warning(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "warning"); }
+    static Trigger* revive(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "revive"); }
+    static Trigger* rti(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "rti"); }
+    static Trigger* invite(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "invite"); }
+    static Trigger* lfg(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "lfg"); }
+    static Trigger* cast(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "cast"); }
+    static Trigger* castnc(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "castnc"); }
+    static Trigger* talk(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "talk"); }
+    static Trigger* enter_vehicle(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "enter vehicle"); }
+    static Trigger* leave_vehicle(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "leave vehicle"); }
+    static Trigger* flee(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "flee"); }
+    static Trigger* grind(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "grind"); }
+    static Trigger* tank_attack(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "tank attack"); }
+    static Trigger* stay(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "stay"); }
+    static Trigger* follow(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "follow"); }
+    static Trigger* move_from_group(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "move from group"); }
+    static Trigger* gb(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "gb"); }
+    static Trigger* bank(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "bank"); }
+    static Trigger* help(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "help"); }
+    static Trigger* buff(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "buff"); }
+    static Trigger* emote(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "emote"); }
+    static Trigger* destroy(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "destroy"); }
+    static Trigger* home(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "home"); }
+    static Trigger* accept(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "accept"); }
+    static Trigger* chat(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "chat"); }
+    static Trigger* attack(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "attack"); }
+    static Trigger* trainer(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "trainer"); }
+    static Trigger* maintenance(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "maintenance"); }
+    static Trigger* remove_glyph(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "remove glyph"); }
+    static Trigger* autogear(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "autogear"); }
+    static Trigger* equip_upgrade(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "equip upgrade"); }
+    static Trigger* co(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "co"); }
+    static Trigger* nc(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "nc"); }
+    static Trigger* dead(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "de"); }
+    static Trigger* spells(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "spells"); }
+    static Trigger* talents(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "talents"); }
+    static Trigger* equip(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "e"); }
+    static Trigger* uneqip(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ue"); }
+    static Trigger* sell(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "s"); }
+    static Trigger* buy(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "b"); }
+    static Trigger* reward(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "r"); }
+    static Trigger* trade(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "t"); }
+    static Trigger* nontrade(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "nt"); }
+    static Trigger* item_count(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "c"); }
+    static Trigger* use(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "use"); }
+    static Trigger* repair(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "repair"); }
+    static Trigger* taxi(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "taxi"); }
+    static Trigger* teleport(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "teleport"); }
+    static Trigger* q(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "q"); }
+    static Trigger* ll(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ll"); }
+    static Trigger* ss(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ss"); }
+    static Trigger* drop(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "drop"); }
+    static Trigger* share(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "share"); }
+    static Trigger* quests(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "quests"); }
+    static Trigger* stats(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "stats"); }
+    static Trigger* leave(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "leave"); }
+    static Trigger* reputation(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "reputation"); }
+    static Trigger* log(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "log"); }
+    static Trigger* los(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "los"); }
+    static Trigger* rpg_status(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "rpg status"); }
+    static Trigger* rpg_do_quest(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "rpg do quest"); }
+    static Trigger* aura(ShadowAI* ai) { return new ChatCommandTrigger(ai, "aura"); }
+    static Trigger* loot_all(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "add all loot"); }
+    static Trigger* release(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "release"); }
+    static Trigger* reset_ai(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "reset botAI"); }
+    static Trigger* spell(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "spell"); }
+    static Trigger* ready_check(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ready check"); }
+    static Trigger* give_leader(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "give leader"); }
+    static Trigger* cheat(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "cheat"); }
+    static Trigger* ginvite(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "ginvite"); }
+    static Trigger* guild_promote(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "guild promote"); }
+    static Trigger* guild_demote(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "guild demote"); }
+    static Trigger* guild_remove(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "guild remove"); }
+    static Trigger* guild_leave(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "guild leave"); }
+    static Trigger* rtsc(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "rtsc"); }
+    static Trigger* drink(ShadowAI* ai) { return new ChatCommandTrigger(ai, "drink"); }
+    // static Trigger* naxx(ShadowAI* ai) { return new ChatCommandTrigger(ai, "naxx"); }
+    // static Trigger* bwl(ShadowAI* ai) { return new ChatCommandTrigger(ai, "bwl"); }
+    static Trigger* dps(ShadowAI* ai) { return new ChatCommandTrigger(ai, "dps"); }
+    static Trigger* disperse(ShadowAI* ai) { return new ChatCommandTrigger(ai, "disperse"); }
+    static Trigger* calc(ShadowAI* ai) { return new ChatCommandTrigger(ai, "calc"); }
+    static Trigger* qi(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "qi"); }
+    static Trigger* wipe(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "wipe"); }
+    static Trigger* tame(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "tame"); }
+    static Trigger* glyphs(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "glyphs"); } // Added for custom Glyphs
+    static Trigger* glyph_equip(ShadowAI* ai) { return new ChatCommandTrigger(ai, "glyph equip"); } // Added for custom Glyphs
+    static Trigger* pet(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "pet"); }
+    static Trigger* pet_attack(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "pet attack"); }
+    static Trigger* roll_action(ShadowAI* botAI) { return new ChatCommandTrigger(botAI, "roll"); }
 };
 
 #endif

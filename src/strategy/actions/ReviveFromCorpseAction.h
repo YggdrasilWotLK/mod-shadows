@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REVIVEFROMCORPSEACTION_H
-#define _PLAYERBOT_REVIVEFROMCORPSEACTION_H
+#ifndef _SHADOW_REVIVEFROMCORPSEACTION_H
+#define _SHADOW_REVIVEFROMCORPSEACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct GraveyardStruct;
 
 class ReviveFromCorpseAction : public MovementAction
 {
 public:
-    ReviveFromCorpseAction(PlayerbotAI* botAI) : MovementAction(botAI, "revive from corpse") {}
+    ReviveFromCorpseAction(ShadowAI* botAI) : MovementAction(botAI, "revive from corpse") {}
 
     bool Execute(Event event) override;
 };
@@ -23,7 +23,7 @@ public:
 class FindCorpseAction : public MovementAction
 {
 public:
-    FindCorpseAction(PlayerbotAI* botAI) : MovementAction(botAI, "find corpse") {}
+    FindCorpseAction(ShadowAI* botAI) : MovementAction(botAI, "find corpse") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -32,7 +32,7 @@ public:
 class SpiritHealerAction : public MovementAction
 {
 public:
-    SpiritHealerAction(PlayerbotAI* botAI, std::string const name = "spirit healer") : MovementAction(botAI, name) {}
+    SpiritHealerAction(ShadowAI* botAI, std::string const name = "spirit healer") : MovementAction(botAI, name) {}
 
     GraveyardStruct const* GetGrave(bool startZone);
     bool Execute(Event event) override;

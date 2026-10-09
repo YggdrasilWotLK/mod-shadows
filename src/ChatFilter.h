@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHATFILTER_H
-#define _PLAYERBOT_CHATFILTER_H
+#ifndef _SHADOW_CHATFILTER_H
+#define _SHADOW_CHATFILTER_H
 
 #include <vector>
 
 #include "Common.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
-class ChatFilter : public PlayerbotAIAware
+class ChatFilter : public ShadowAIAware
 {
 public:
-    ChatFilter(PlayerbotAI* botAI) : PlayerbotAIAware(botAI) {}
+    ChatFilter(ShadowAI* botAI) : ShadowAIAware(botAI) {}
     virtual ~ChatFilter() {}
 
     virtual std::string const Filter(std::string& message);
@@ -25,7 +25,7 @@ public:
 class CompositeChatFilter : public ChatFilter
 {
 public:
-    CompositeChatFilter(PlayerbotAI* botAI);
+    CompositeChatFilter(ShadowAI* botAI);
 
     virtual ~CompositeChatFilter();
     std::string const Filter(std::string& message) override;

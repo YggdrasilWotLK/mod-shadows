@@ -3,22 +3,22 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHOOSERPGTARGETACTION_H
-#define _PLAYERBOT_CHOOSERPGTARGETACTION_H
+#ifndef _SHADOW_CHOOSERPGTARGETACTION_H
+#define _SHADOW_CHOOSERPGTARGETACTION_H
 
 #include "ObjectGuid.h"
 #include "RpgAction.h"
 
 class GuidPosition;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class WorldObject;
 class WorldPosition;
 
 class ChooseRpgTargetAction : public Action
 {
 public:
-    ChooseRpgTargetAction(PlayerbotAI* botAI, std::string const name = "choose rpg target") : Action(botAI, name) {}
+    ChooseRpgTargetAction(ShadowAI* botAI, std::string const name = "choose rpg target") : Action(botAI, name) {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -36,7 +36,7 @@ private:
 class ClearRpgTargetAction : public ChooseRpgTargetAction
 {
 public:
-    ClearRpgTargetAction(PlayerbotAI* botAI) : ChooseRpgTargetAction(botAI, "clear rpg target") {}
+    ClearRpgTargetAction(ShadowAI* botAI) : ChooseRpgTargetAction(botAI, "clear rpg target") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

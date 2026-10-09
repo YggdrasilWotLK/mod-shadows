@@ -5,8 +5,8 @@
 
 #include "AoeHealValues.h"
 
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 uint8 AoeHealValue::Calculate()
 {
@@ -16,13 +16,13 @@ uint8 AoeHealValue::Calculate()
 
     float range = 0;
     if (qualifier == "low")
-        range = sPlayerbotAIConfig->lowHealth;
+        range = sShadowAIConfig->lowHealth;
     else if (qualifier == "medium")
-        range = sPlayerbotAIConfig->mediumHealth;
+        range = sShadowAIConfig->mediumHealth;
     else if (qualifier == "critical")
-        range = sPlayerbotAIConfig->criticalHealth;
+        range = sShadowAIConfig->criticalHealth;
     else if (qualifier == "almost full")
-        range = sPlayerbotAIConfig->almostFullHealth;
+        range = sShadowAIConfig->almostFullHealth;
 
     uint8 count = 0;
     Group::MemberSlotList const& groupSlot = group->GetMemberSlots();
@@ -32,7 +32,7 @@ uint8 AoeHealValue::Calculate()
         if (!player || !player->IsAlive())
             continue;
 
-        if (player->GetDistance(bot) >= sPlayerbotAIConfig->sightDistance)
+        if (player->GetDistance(bot) >= sShadowAIConfig->sightDistance)
             continue;
 
         float percent = (static_cast<float>(player->GetHealth()) / player->GetMaxHealth()) * 100;

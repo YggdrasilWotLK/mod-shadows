@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WORLDPACKETHANDLERSTRATEGY_H
-#define _PLAYERBOT_WORLDPACKETHANDLERSTRATEGY_H
+#ifndef _SHADOW_WORLDPACKETHANDLERSTRATEGY_H
+#define _SHADOW_WORLDPACKETHANDLERSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class WorldPacketHandlerStrategy : public PassTroughStrategy
 {
 public:
-    WorldPacketHandlerStrategy(PlayerbotAI* botAI);
+    WorldPacketHandlerStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "default"; }
@@ -22,7 +22,7 @@ public:
 class ReadyCheckStrategy : public PassTroughStrategy
 {
 public:
-    ReadyCheckStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) { }
+    ReadyCheckStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) { }
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "ready check"; }

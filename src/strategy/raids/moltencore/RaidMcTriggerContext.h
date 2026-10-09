@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDMCTRIGGERCONTEXT_H
-#define _PLAYERBOT_RAIDMCTRIGGERCONTEXT_H
+#ifndef _SHADOW_RAIDMCTRIGGERCONTEXT_H
+#define _SHADOW_RAIDMCTRIGGERCONTEXT_H
 
 #include "AiObjectContext.h"
 #include "NamedObjectContext.h"
@@ -15,8 +15,8 @@ public:
     }
 
 private:
-    static Trigger* living_bomb_debuff(PlayerbotAI* ai) { return new McLivingBombDebuffTrigger(ai); }
-    static Trigger* baron_geddon_inferno(PlayerbotAI* ai) { return new McBaronGeddonInfernoTrigger(ai); }
+    static Trigger* living_bomb_debuff(ShadowAI* ai) { return new McLivingBombDebuffTrigger(ai); }
+    static Trigger* baron_geddon_inferno(ShadowAI* ai) { return new McBaronGeddonInfernoTrigger(ai); }
 };
 
 #endif

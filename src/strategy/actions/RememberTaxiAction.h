@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REMEMBERTAXIACTION_H
-#define _PLAYERBOT_REMEMBERTAXIACTION_H
+#ifndef _SHADOW_REMEMBERTAXIACTION_H
+#define _SHADOW_REMEMBERTAXIACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RememberTaxiAction : public Action
 {
 public:
-    RememberTaxiAction(PlayerbotAI* botAI) : Action(botAI, "remember taxi") {}
+    RememberTaxiAction(ShadowAI* botAI) : Action(botAI, "remember taxi") {}
 
     bool Execute(Event event) override;
 };

@@ -5,7 +5,7 @@
 
 #include "PartyMemberValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 Unit* PartyMemberValue::FindPartyMember(std::vector<Player*>* party, FindPlayerPredicate& predicate)
@@ -102,10 +102,10 @@ Unit* PartyMemberValue::FindPartyMember(FindPlayerPredicate& predicate, bool ign
 bool PartyMemberValue::Check(Unit* player)
 {
     // return player && player != bot && player->GetMapId() == bot->GetMapId() && bot->IsWithinDistInMap(player,
-    // sPlayerbotAIConfig->sightDistance, false);
+    // sShadowAIConfig->sightDistance, false);
     bool isGM = player->ToPlayer() && player->ToPlayer()->IsGameMaster();
     return player && player->GetMapId() == bot->GetMapId() && !isGM &&
-           bot->GetDistance(player) < sPlayerbotAIConfig->spellDistance * 2 &&
+           bot->GetDistance(player) < sShadowAIConfig->spellDistance * 2 &&
            bot->IsWithinLOS(player->GetPositionX(), player->GetPositionY(), player->GetPositionZ());
 }
 
@@ -150,7 +150,7 @@ bool PartyMemberValue::IsTargetOfSpellCast(Player* target, SpellEntryPredicate& 
 class FindMainTankPlayer : public FindPlayerPredicate
 {
 public:
-    FindMainTankPlayer(PlayerbotAI* botAI) : botAI(botAI) {}
+    FindMainTankPlayer(ShadowAI* botAI) : botAI(botAI) {}
 
     virtual bool Check(Unit* unit)
     {
@@ -163,7 +163,7 @@ public:
     }
 
 private:
-    PlayerbotAI* botAI;
+    ShadowAI* botAI;
 };
 
 Unit* PartyMemberMainTankValue::Calculate()

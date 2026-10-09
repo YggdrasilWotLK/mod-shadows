@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_NEWRPGINFO_H
-#define _PLAYERBOT_NEWRPGINFO_H
+#ifndef _SHADOW_NEWRPGINFO_H
+#define _SHADOW_NEWRPGINFO_H
 
 #include "Define.h"
 #include "ObjectGuid.h"

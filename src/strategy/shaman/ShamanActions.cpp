@@ -5,9 +5,9 @@
 
 #include "ShamanActions.h"
 #include "TotemsShamanStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Totem.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Action.h"
 
 bool CastTotemAction::isUseful()
@@ -70,7 +70,7 @@ bool CastLavaBurstAction::isUseful()
 }
 
 // Logic for making a guardian (spirit wolf) use a spell (spirit walk)
-// There is no existing code for guardians casting spells in the AC/Playerbots repo.
+// There is no existing code for guardians casting spells in the AC/Shadows repo.
 bool CastSpiritWalkAction::Execute(Event event)
 {
     constexpr uint32 SPIRIT_WOLF = 29264;

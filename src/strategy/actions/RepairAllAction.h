@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_REPAIRALLACTION_H
-#define _PLAYERBOT_REPAIRALLACTION_H
+#ifndef _SHADOW_REPAIRALLACTION_H
+#define _SHADOW_REPAIRALLACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RepairAllAction : public Action
 {
 public:
-    RepairAllAction(PlayerbotAI* botAI) : Action(botAI, "repair") {}
+    RepairAllAction(ShadowAI* botAI) : Action(botAI, "repair") {}
 
     bool Execute(Event event) override;
 };

@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_INVENTORYACTION_H
-#define _PLAYERBOT_INVENTORYACTION_H
+#ifndef _SHADOW_INVENTORYACTION_H
+#define _SHADOW_INVENTORYACTION_H
 
 #include "Action.h"
 #include "ItemVisitors.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct ItemTemplate;
 
 class InventoryAction : public Action
 {
 public:
-    InventoryAction(PlayerbotAI* botAI, std::string const name) : Action(botAI, name) {}
+    InventoryAction(ShadowAI* botAI, std::string const name) : Action(botAI, name) {}
 
 protected:
     void IterateItems(IterateItemsVisitor* visitor, IterateItemsMask mask = ITERATE_ITEMS_IN_BAGS);

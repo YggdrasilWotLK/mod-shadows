@@ -5,7 +5,7 @@
 
 #include "DeadStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void DeadStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -29,4 +29,4 @@ void DeadStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         "can self resurrect", NextAction::array(0, new NextAction("self resurrect", relevance + 2.0f), nullptr)));
 }
 
-DeadStrategy::DeadStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) {}
+DeadStrategy::DeadStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) {}

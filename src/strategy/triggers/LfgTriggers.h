@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LFGTRIGGERS_H
-#define _PLAYERBOT_LFGTRIGGERS_H
+#ifndef _SHADOW_LFGTRIGGERS_H
+#define _SHADOW_LFGTRIGGERS_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LfgProposalActiveTrigger : public Trigger
 {
 public:
-    LfgProposalActiveTrigger(PlayerbotAI* botAI) : Trigger(botAI, "lfg proposal active", 20 * 2000) {}
+    LfgProposalActiveTrigger(ShadowAI* botAI) : Trigger(botAI, "lfg proposal active", 20 * 2000) {}
 
     bool IsActive() override;
 };
@@ -21,7 +21,7 @@ public:
 class UnknownDungeonTrigger : public Trigger
 {
 public:
-    UnknownDungeonTrigger(PlayerbotAI* botAI) : Trigger(botAI, "unknown dungeon", 20 * 2000) {}
+    UnknownDungeonTrigger(ShadowAI* botAI) : Trigger(botAI, "unknown dungeon", 20 * 2000) {}
 
     bool IsActive() override;
 };

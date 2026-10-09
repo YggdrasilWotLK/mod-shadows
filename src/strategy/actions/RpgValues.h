@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RPGVALUES_H
-#define _PLAYERBOT_RPGVALUES_H
+#ifndef _SHADOW_RPGVALUES_H
+#define _SHADOW_RPGVALUES_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NextRpgActionValue : public ManualSetValue<std::string>
 {
 public:
-    NextRpgActionValue(PlayerbotAI* botAI, std::string const defaultValue = "",
+    NextRpgActionValue(ShadowAI* botAI, std::string const defaultValue = "",
                        std::string const name = "next rpg action")
         : ManualSetValue(botAI, defaultValue, name){};
 };

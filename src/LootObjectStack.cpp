@@ -8,7 +8,7 @@
 #include "LootMgr.h"
 #include "Object.h"
 #include "ObjectAccessor.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Unit.h"
 
 #define MAX_LOOT_OBJECT_COUNT 200
@@ -57,7 +57,7 @@ void LootObject::Refresh(Player* bot, ObjectGuid lootGUID)
     reqItem = 0;
     guid.Clear();
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return;
@@ -248,7 +248,7 @@ WorldObject* LootObject::GetWorldObject(Player* bot)
 {
     Refresh(bot, guid);
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return nullptr;
@@ -281,7 +281,7 @@ bool LootObject::IsLootPossible(Player* bot)
     if (!worldObj)
         return false;
 
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
     if (!botAI)
     {
         return false;

@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SELFTARGETVALUE_H
-#define _PLAYERBOT_SELFTARGETVALUE_H
+#ifndef _SHADOW_SELFTARGETVALUE_H
+#define _SHADOW_SELFTARGETVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class SelfTargetValue : public UnitCalculatedValue
 {
 public:
-    SelfTargetValue(PlayerbotAI* botAI, std::string const name = "self target") : UnitCalculatedValue(botAI, name) {}
+    SelfTargetValue(ShadowAI* botAI, std::string const name = "self target") : UnitCalculatedValue(botAI, name) {}
 
     Unit* Calculate() override;
 };

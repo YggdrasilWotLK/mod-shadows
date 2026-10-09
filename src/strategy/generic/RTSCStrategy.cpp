@@ -5,8 +5,8 @@
 
 #include "RTSCStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-RTSCStrategy::RTSCStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+RTSCStrategy::RTSCStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 void RTSCStrategy::InitTriggers(std::vector<TriggerNode*>& triggers) {}

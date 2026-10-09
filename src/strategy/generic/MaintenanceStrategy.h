@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_MAINTANCESTRATEGY_H
-#define _PLAYERBOT_MAINTANCESTRATEGY_H
+#ifndef _SHADOW_MAINTANCESTRATEGY_H
+#define _SHADOW_MAINTANCESTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class MaintenanceStrategy : public NonCombatStrategy
 {
 public:
-    MaintenanceStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    MaintenanceStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "maintenance"; }
     uint32 GetType() const override { return STRATEGY_TYPE_NONCOMBAT; }

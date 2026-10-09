@@ -5,7 +5,7 @@
 
 #include "CombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 void CombatStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
@@ -30,12 +30,12 @@ void CombatStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     // new NextAction("repop", 0.8f), nullptr)));
 }
 
-AvoidAoeStrategy::AvoidAoeStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+AvoidAoeStrategy::AvoidAoeStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 // class AvoidAoeStrategyMultiplier : public Multiplier
 // {
 // public:
-//     AvoidAoeStrategyMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "run away on area debuff") {}
+//     AvoidAoeStrategyMultiplier(ShadowAI* botAI) : Multiplier(botAI, "run away on area debuff") {}
 
 // public:
 //     virtual float GetValue(Action* action);
@@ -85,7 +85,7 @@ void AvoidAoeStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
     // multipliers.push_back(new AvoidAoeStrategyMultiplier(botAI));
 }
 
-TankFaceStrategy::TankFaceStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+TankFaceStrategy::TankFaceStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 NextAction** TankFaceStrategy::getDefaultActions()
 {

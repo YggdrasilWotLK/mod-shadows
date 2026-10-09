@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "ItemCountValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool BankAction::Execute(Event event)
 {

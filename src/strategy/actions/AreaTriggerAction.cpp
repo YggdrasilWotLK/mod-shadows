@@ -10,7 +10,7 @@
 
 #include "Event.h"
 #include "LastMovementValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Transport.h"
 
 static std::unordered_map<ObjectGuid, time_t> remoteTriggerSince;
@@ -61,7 +61,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
     bot->GetMotionMaster()->MovePoint(at->map, at->x, at->y, at->z);
 
     float distance = bot->GetDistance(at->x, at->y, at->z);
-    float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN) + sPlayerbotAIConfig->reactDelay;
+    float delay = 1000.0f * distance / bot->GetSpeed(MOVE_RUN) + sShadowAIConfig->reactDelay;
     botAI->TellError("Wait for me");
     botAI->SetNextCheckDelay(delay);
     context->GetValue<LastMovement&>("last area trigger")->Get().lastAreaTrigger = triggerId;

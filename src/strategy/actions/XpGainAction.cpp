@@ -7,8 +7,8 @@
 
 #include "Event.h"
 #include "GuildMgr.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "BroadcastHelper.h"
 
 bool XpGainAction::Execute(Event event)
@@ -41,14 +41,14 @@ bool XpGainAction::Execute(Event event)
     }
 
     // randomBotXPRate is now implemented in OnPlayerGiveXP script
-    // if (!sRandomPlayerbotMgr->IsRandomBot(bot) || sPlayerbotAIConfig->randomBotXPRate == 1)
+    // if (!sRandomShadowMgr->IsRandomBot(bot) || sShadowAIConfig->randomBotXPRate == 1)
     //     return true;
 
     // Unit* victim = nullptr;
     // if (guid)
     //     victim = botAI->GetUnit(guid);
 
-    // xpgain = xpgain * (sPlayerbotAIConfig->randomBotXPRate - 1);
+    // xpgain = xpgain * (sShadowAIConfig->randomBotXPRate - 1);
     // GiveXP(xpgain, victim);
 
     return true;

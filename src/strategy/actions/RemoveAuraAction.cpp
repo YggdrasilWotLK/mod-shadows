@@ -6,9 +6,9 @@
 #include "RemoveAuraAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-RemoveAuraAction::RemoveAuraAction(PlayerbotAI* botAI) : Action(botAI, "ra") {}
+RemoveAuraAction::RemoveAuraAction(ShadowAI* botAI) : Action(botAI, "ra") {}
 
 bool RemoveAuraAction::Execute(Event event)
 {

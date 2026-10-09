@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUILDMAMANEGEMENTACTION_H
-#define _PLAYERBOT_GUILDMAMANEGEMENTACTION_H
+#ifndef _SHADOW_GUILDMAMANEGEMENTACTION_H
+#define _SHADOW_GUILDMAMANEGEMENTACTION_H
 
 #include "Action.h"
 #include "Opcodes.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class WorldPacket;
 
 class GuidManageAction : public Action
 {
 public:
-    GuidManageAction(PlayerbotAI* botAI, std::string const name = "guild manage", uint16 opcode = CMSG_GUILD_INVITE)
+    GuidManageAction(ShadowAI* botAI, std::string const name = "guild manage", uint16 opcode = CMSG_GUILD_INVITE)
         : Action(botAI, name), opcode(opcode)
     {
     }
@@ -36,7 +36,7 @@ protected:
 class GuildInviteAction : public GuidManageAction
 {
 public:
-    GuildInviteAction(PlayerbotAI* botAI, std::string const name = "guild invite", uint16 opcode = CMSG_GUILD_INVITE)
+    GuildInviteAction(ShadowAI* botAI, std::string const name = "guild invite", uint16 opcode = CMSG_GUILD_INVITE)
         : GuidManageAction(botAI, name, opcode)
     {
     }
@@ -51,7 +51,7 @@ protected:
 class GuildPromoteAction : public GuidManageAction
 {
 public:
-    GuildPromoteAction(PlayerbotAI* botAI, std::string const name = "guild promote", uint16 opcode = CMSG_GUILD_PROMOTE)
+    GuildPromoteAction(ShadowAI* botAI, std::string const name = "guild promote", uint16 opcode = CMSG_GUILD_PROMOTE)
         : GuidManageAction(botAI, name, opcode)
     {
     }
@@ -66,7 +66,7 @@ protected:
 class GuildDemoteAction : public GuidManageAction
 {
 public:
-    GuildDemoteAction(PlayerbotAI* botAI, std::string const name = "guild demote", uint16 opcode = CMSG_GUILD_DEMOTE)
+    GuildDemoteAction(ShadowAI* botAI, std::string const name = "guild demote", uint16 opcode = CMSG_GUILD_DEMOTE)
         : GuidManageAction(botAI, name, opcode)
     {
     }
@@ -81,7 +81,7 @@ protected:
 class GuildRemoveAction : public GuidManageAction
 {
 public:
-    GuildRemoveAction(PlayerbotAI* botAI, std::string const name = "guild remove", uint16 opcode = CMSG_GUILD_REMOVE)
+    GuildRemoveAction(ShadowAI* botAI, std::string const name = "guild remove", uint16 opcode = CMSG_GUILD_REMOVE)
         : GuidManageAction(botAI, name, opcode)
     {
     }
@@ -96,7 +96,7 @@ protected:
 class GuildManageNearbyAction : public Action
 {
 public:
-    GuildManageNearbyAction(PlayerbotAI* botAI) : Action(botAI, "guild manage nearby") {}
+    GuildManageNearbyAction(ShadowAI* botAI) : Action(botAI, "guild manage nearby") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -105,7 +105,7 @@ public:
 class GuildLeaveAction : public Action
 {
 public:
-    GuildLeaveAction(PlayerbotAI* botAI) : Action(botAI, "guild leave") {}
+    GuildLeaveAction(ShadowAI* botAI) : Action(botAI, "guild leave") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

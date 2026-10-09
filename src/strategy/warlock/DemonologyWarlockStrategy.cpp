@@ -4,7 +4,7 @@
  */
 
 #include "DemonologyWarlockStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class DemonologyWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -31,26 +31,26 @@ public:
     }
 
 private:
-    static ActionNode* metamorphosis(PlayerbotAI*) { return new ActionNode("metamorphosis", nullptr, nullptr, nullptr); }
-    static ActionNode* demonic_empowerment(PlayerbotAI*) { return new ActionNode("demonic empowerment", nullptr, nullptr, nullptr); }
-    static ActionNode* corruption(PlayerbotAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* corruption_on_attacker(PlayerbotAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* immolate(PlayerbotAI*) { return new ActionNode("immolate", nullptr, nullptr, nullptr); }
-    static ActionNode* immolate_on_attacker(PlayerbotAI*) { return new ActionNode("immolate on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* incinerate(PlayerbotAI*) { return new ActionNode("incinerate", nullptr, nullptr, nullptr); }
-    static ActionNode* soul_fire(PlayerbotAI*) { return new ActionNode("soul fire", nullptr, nullptr, nullptr); }
-    static ActionNode* shadow_bolt(PlayerbotAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* life_tap(PlayerbotAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
-    static ActionNode* immolation_aura(PlayerbotAI*) { return new ActionNode("immolation aura", nullptr, nullptr, nullptr); }
-    static ActionNode* shadowflame(PlayerbotAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption_on_attacker(PlayerbotAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption(PlayerbotAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* rain_of_fire(PlayerbotAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
-    static ActionNode* demon_charge(PlayerbotAI*) { return new ActionNode("demon charge", nullptr, nullptr, nullptr); }
+    static ActionNode* metamorphosis(ShadowAI*) { return new ActionNode("metamorphosis", nullptr, nullptr, nullptr); }
+    static ActionNode* demonic_empowerment(ShadowAI*) { return new ActionNode("demonic empowerment", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption(ShadowAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption_on_attacker(ShadowAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* immolate(ShadowAI*) { return new ActionNode("immolate", nullptr, nullptr, nullptr); }
+    static ActionNode* immolate_on_attacker(ShadowAI*) { return new ActionNode("immolate on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* incinerate(ShadowAI*) { return new ActionNode("incinerate", nullptr, nullptr, nullptr); }
+    static ActionNode* soul_fire(ShadowAI*) { return new ActionNode("soul fire", nullptr, nullptr, nullptr); }
+    static ActionNode* shadow_bolt(ShadowAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* life_tap(ShadowAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
+    static ActionNode* immolation_aura(ShadowAI*) { return new ActionNode("immolation aura", nullptr, nullptr, nullptr); }
+    static ActionNode* shadowflame(ShadowAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption_on_attacker(ShadowAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption(ShadowAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* rain_of_fire(ShadowAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
+    static ActionNode* demon_charge(ShadowAI*) { return new ActionNode("demon charge", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-DemonologyWarlockStrategy::DemonologyWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
+DemonologyWarlockStrategy::DemonologyWarlockStrategy(ShadowAI* botAI) : GenericWarlockStrategy(botAI)
 {
     actionNodeFactories.Add(new DemonologyWarlockStrategyActionNodeFactory());
 }
@@ -96,7 +96,7 @@ void DemonologyWarlockStrategy::InitTriggers(std::vector<TriggerNode*>& triggers
 // Enabled by default for the Demonology spec
 // To enable, type "co +meta melee"
 // To disable, type "co -meta melee"
-MetaMeleeAoeStrategy::MetaMeleeAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+MetaMeleeAoeStrategy::MetaMeleeAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 void MetaMeleeAoeStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

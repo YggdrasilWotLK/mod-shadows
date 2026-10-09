@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONHOLACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONHOLACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONHOLACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONHOLACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -20,15 +20,15 @@ class WotlkDungeonHoLActionContext : public NamedObjectContext<Action>
             creators["avoid lightning nova"] = &WotlkDungeonHoLActionContext::avoid_lightning_nova;
         }
     private:
-        static Action* bjarngrim_target(PlayerbotAI* ai) { return new BjarngrimTargetAction(ai); }
-        static Action* avoid_whirlwind(PlayerbotAI* ai) { return new AvoidWhirlwindAction(ai); }
-        static Action* volkhan_target(PlayerbotAI* ai) { return new VolkhanTargetAction(ai); }
-        static Action* static_overload_spread(PlayerbotAI* ai) { return new StaticOverloadSpreadAction(ai); }
-        static Action* ball_lightning_spread(PlayerbotAI* ai) { return new BallLightningSpreadAction(ai); }
-        static Action* ionar_tank_position(PlayerbotAI* ai) { return new IonarTankPositionAction(ai); }
-        static Action* disperse_position(PlayerbotAI* ai) { return new DispersePositionAction(ai); }
-        static Action* loken_stack(PlayerbotAI* ai) { return new LokenStackAction(ai); }
-        static Action* avoid_lightning_nova(PlayerbotAI* ai) { return new AvoidLightningNovaAction(ai); }
+        static Action* bjarngrim_target(ShadowAI* ai) { return new BjarngrimTargetAction(ai); }
+        static Action* avoid_whirlwind(ShadowAI* ai) { return new AvoidWhirlwindAction(ai); }
+        static Action* volkhan_target(ShadowAI* ai) { return new VolkhanTargetAction(ai); }
+        static Action* static_overload_spread(ShadowAI* ai) { return new StaticOverloadSpreadAction(ai); }
+        static Action* ball_lightning_spread(ShadowAI* ai) { return new BallLightningSpreadAction(ai); }
+        static Action* ionar_tank_position(ShadowAI* ai) { return new IonarTankPositionAction(ai); }
+        static Action* disperse_position(ShadowAI* ai) { return new DispersePositionAction(ai); }
+        static Action* loken_stack(ShadowAI* ai) { return new LokenStackAction(ai); }
+        static Action* avoid_lightning_nova(ShadowAI* ai) { return new AvoidLightningNovaAction(ai); }
 };
 
 #endif

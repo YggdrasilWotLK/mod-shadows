@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONGDTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONGDTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONGDTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONGDTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -24,21 +24,21 @@ enum GundrakIDs
 class SladranPoisonNovaTrigger : public Trigger
 {
 public:
-    SladranPoisonNovaTrigger(PlayerbotAI* ai) : Trigger(ai, "slad'ran poison nova") {}
+    SladranPoisonNovaTrigger(ShadowAI* ai) : Trigger(ai, "slad'ran poison nova") {}
     bool IsActive() override;
 };
 
 class SladranSnakeWrapTrigger : public Trigger
 {
 public:
-    SladranSnakeWrapTrigger(PlayerbotAI* ai) : Trigger(ai, "slad'ran snake wrap") {}
+    SladranSnakeWrapTrigger(ShadowAI* ai) : Trigger(ai, "slad'ran snake wrap") {}
     bool IsActive() override;
 };
 
 class GaldarahWhirlingSlashTrigger : public Trigger
 {
 public:
-    GaldarahWhirlingSlashTrigger(PlayerbotAI* ai) : Trigger(ai, "gal'darah whirling slash") {}
+    GaldarahWhirlingSlashTrigger(ShadowAI* ai) : Trigger(ai, "gal'darah whirling slash") {}
     bool IsActive() override;
 };
 

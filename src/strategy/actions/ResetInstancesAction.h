@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RESETINSTANCESACTION_H
-#define _PLAYERBOT_RESETINSTANCESACTION_H
+#ifndef _SHADOW_RESETINSTANCESACTION_H
+#define _SHADOW_RESETINSTANCESACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ResetInstancesAction : public Action
 {
 public:
-    ResetInstancesAction(PlayerbotAI* botAI) : Action(botAI, "reset instances") {}
+    ResetInstancesAction(ShadowAI* botAI) : Action(botAI, "reset instances") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;

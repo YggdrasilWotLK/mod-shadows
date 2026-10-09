@@ -3,12 +3,12 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LASTSPELLCASTVALUE_H
-#define _PLAYERBOT_LASTSPELLCASTVALUE_H
+#ifndef _SHADOW_LASTSPELLCASTVALUE_H
+#define _SHADOW_LASTSPELLCASTVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LastSpellCast
 {
@@ -26,7 +26,7 @@ public:
 class LastSpellCastValue : public ManualSetValue<LastSpellCast&>
 {
 public:
-    LastSpellCastValue(PlayerbotAI* botAI, std::string const name = "last spell cast")
+    LastSpellCastValue(ShadowAI* botAI, std::string const name = "last spell cast")
         : ManualSetValue<LastSpellCast&>(botAI, data, name)
     {
     }

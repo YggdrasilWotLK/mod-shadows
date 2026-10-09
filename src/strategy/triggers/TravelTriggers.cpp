@@ -5,7 +5,7 @@
 
 #include "TravelTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool NoTravelTargetTrigger::IsActive() { return !context->GetValue<TravelTarget*>("travel target")->Get()->isActive(); }

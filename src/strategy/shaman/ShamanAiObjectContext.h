@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHAMANAIOBJECTCONTEXT_H
-#define _PLAYERBOT_SHAMANAIOBJECTCONTEXT_H
+#ifndef _SHADOW_SHAMANAIOBJECTCONTEXT_H
+#define _SHADOW_SHAMANAIOBJECTCONTEXT_H
 
 #include "AiObjectContext.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ShamanAiObjectContext : public AiObjectContext
 {
 public:
-    ShamanAiObjectContext(PlayerbotAI* botAI);
+    ShamanAiObjectContext(ShadowAI* botAI);
 
     static void BuildSharedContexts();
     static void BuildSharedStrategyContexts(SharedNamedObjectContextList<Strategy>& strategyContexts);

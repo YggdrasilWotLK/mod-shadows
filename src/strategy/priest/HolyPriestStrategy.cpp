@@ -5,7 +5,7 @@
 
 #include "HolyPriestStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class HolyPriestStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -13,7 +13,7 @@ public:
     HolyPriestStrategyActionNodeFactory() { creators["smite"] = &smite; }
 
 private:
-    static ActionNode* smite([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* smite([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("smite",
                               /*P*/ nullptr,
@@ -22,7 +22,7 @@ private:
     }
 };
 
-HolyPriestStrategy::HolyPriestStrategy(PlayerbotAI* botAI) : HealPriestStrategy(botAI)
+HolyPriestStrategy::HolyPriestStrategy(ShadowAI* botAI) : HealPriestStrategy(botAI)
 {
     actionNodeFactories.Add(new HolyPriestStrategyActionNodeFactory());
 }
@@ -48,7 +48,7 @@ void HolyPriestStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         new TriggerNode("low mana", NextAction::array(0, new NextAction("mana burn", ACTION_HIGH), nullptr)));
 }
 
-HolyHealPriestStrategy::HolyHealPriestStrategy(PlayerbotAI* botAI) : GenericPriestStrategy(botAI)
+HolyHealPriestStrategy::HolyHealPriestStrategy(ShadowAI* botAI) : GenericPriestStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericPriestStrategyActionNodeFactory());
 }

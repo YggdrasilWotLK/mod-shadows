@@ -1,12 +1,12 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONPOSMULTIPLIERS_H
-#define _PLAYERBOT_WOTLKDUNGEONPOSMULTIPLIERS_H
+#ifndef _SHADOW_WOTLKDUNGEONPOSMULTIPLIERS_H
+#define _SHADOW_WOTLKDUNGEONPOSMULTIPLIERS_H
 
 #include "Multiplier.h"
 
 class IckAndKrickMultiplier : public Multiplier
 {
     public:
-    IckAndKrickMultiplier(PlayerbotAI* ai) : Multiplier(ai, "ick and krick") {}
+    IckAndKrickMultiplier(ShadowAI* ai) : Multiplier(ai, "ick and krick") {}
 
     public:
         virtual float GetValue(Action* action);
@@ -15,7 +15,7 @@ class IckAndKrickMultiplier : public Multiplier
 class GarfrostMultiplier : public Multiplier
 {
 public:
-    GarfrostMultiplier(PlayerbotAI* ai) : Multiplier(ai, "garfrost") { }
+    GarfrostMultiplier(ShadowAI* ai) : Multiplier(ai, "garfrost") { }
 
     float GetValue(Action* action) override;
 };

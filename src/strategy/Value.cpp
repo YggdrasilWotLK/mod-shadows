@@ -6,10 +6,10 @@
 #include "Value.h"
 
 #include "PerformanceMonitor.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Timer.h"
 
-UnitCalculatedValue::UnitCalculatedValue(PlayerbotAI* botAI, std::string const name, int32 checkInterval)
+UnitCalculatedValue::UnitCalculatedValue(ShadowAI* botAI, std::string const name, int32 checkInterval)
     : CalculatedValue<Unit*>(botAI, name, checkInterval)
 {
 }
@@ -47,7 +47,7 @@ std::string const FloatCalculatedValue::Format()
     return out.str();
 }
 
-CDPairCalculatedValue::CDPairCalculatedValue(PlayerbotAI* botAI, std::string const name, int32 checkInterval)
+CDPairCalculatedValue::CDPairCalculatedValue(ShadowAI* botAI, std::string const name, int32 checkInterval)
     : CalculatedValue<CreatureData const*>(botAI, name, checkInterval)
 {
     // lastCheckTime = getMSTime() - checkInterval / 2;
@@ -65,7 +65,7 @@ std::string const CDPairCalculatedValue::Format()
     return "<none>";
 }
 
-CDPairListCalculatedValue::CDPairListCalculatedValue(PlayerbotAI* botAI, std::string const name, int32 checkInterval)
+CDPairListCalculatedValue::CDPairListCalculatedValue(ShadowAI* botAI, std::string const name, int32 checkInterval)
     : CalculatedValue<std::vector<CreatureData const*>>(botAI, name, checkInterval)
 {
     // lastCheckTime = time(nullptr) - checkInterval / 2;
@@ -85,7 +85,7 @@ std::string const CDPairListCalculatedValue::Format()
     return out.str();
 }
 
-ObjectGuidCalculatedValue::ObjectGuidCalculatedValue(PlayerbotAI* botAI, std::string const name, int32 checkInterval)
+ObjectGuidCalculatedValue::ObjectGuidCalculatedValue(ShadowAI* botAI, std::string const name, int32 checkInterval)
     : CalculatedValue<ObjectGuid>(botAI, name, checkInterval)
 {
     // lastCheckTime = time(nullptr) - checkInterval / 2;
@@ -97,7 +97,7 @@ std::string const ObjectGuidCalculatedValue::Format()
     return guid ? std::to_string(guid.GetRawValue()) : "<none>";
 }
 
-ObjectGuidListCalculatedValue::ObjectGuidListCalculatedValue(PlayerbotAI* botAI, std::string const name,
+ObjectGuidListCalculatedValue::ObjectGuidListCalculatedValue(ShadowAI* botAI, std::string const name,
                                                              int32 checkInterval)
     : CalculatedValue<GuidVector>(botAI, name, checkInterval)
 {

@@ -7,9 +7,9 @@
 
 #include "ChatActionContext.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-HelpAction::HelpAction(PlayerbotAI* botAI) : Action(botAI, "help") { chatContext = new ChatActionContext(); }
+HelpAction::HelpAction(ShadowAI* botAI) : Action(botAI, "help") { chatContext = new ChatActionContext(); }
 
 HelpAction::~HelpAction() { delete chatContext; }
 

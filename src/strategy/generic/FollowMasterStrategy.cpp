@@ -5,7 +5,7 @@
 
 #include "FollowMasterStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 NextAction** FollowMasterStrategy::getDefaultActions()
 {

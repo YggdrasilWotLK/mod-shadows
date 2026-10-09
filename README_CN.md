@@ -8,21 +8,21 @@
 
 ## 安装
 
-请注意，此模块需要对AzerothCore进行特定的自定义更改。为了确保兼容性，您必须使用我fork的自定义分支来编译它，可以在这里找到：[mod-playerbots/azerothcore-wotlk/tree/Playerbot](https://github.com/mod-playerbots/azerothcore-wotlk/tree/Playerbot)。
+请注意，此模块需要对AzerothCore进行特定的自定义更改。为了确保兼容性，您必须使用我fork的自定义分支来编译它，可以在这里找到：[mod-shadows/azerothcore-wotlk/tree/master-shadows](https://github.com/YggdrasilWotLK/yggdrasilcore/tree/master-shadows)。
 
 要安装此模块，请参考AzerothCore Wiki的详细说明：[AzerothCore安装指南](https://www.azerothcore.org/wiki/installation)。
 
 我们提供了一个简单的方法来克隆该模块：
 
 ```bash
-git clone https://github.com/mod-playerbots/azerothcore-wotlk.git --branch=Playerbot
+git clone https://github.com/YggdrasilWotLK/yggdrasilcore.git --branch=master-shadows
 cd azerothcore-wotlk/modules
-git clone https://github.com/mod-playerbots/mod-playerbots.git --branch=master
+git clone https://github.com/YggdrasilWotLK/mod-shadows.git --branch=master
 ```
 
 ## 快速开始与文档
 
-要快速开始并了解一系列命令，您可以参考ike3原版playerbots的手册。该模块提供了大部分基本命令。您可以在此找到文档：[IKE3 Playerbots 文档](https://ike3.github.io/mangosbot-docs/)。请注意，在我们的模块中，您需要将文档中所有的 `.bot` 替换为 `.playerbot bot`。
+要快速开始并了解一系列命令，您可以参考ike3原版shadows的手册。该模块提供了大部分基本命令。您可以在此找到文档：[IKE3 Shadows 文档](https://ike3.github.io/mangosbot-docs/)。请注意，在我们的模块中，您需要将文档中所有的 `.bot` 替换为 `.shadow bot`。
 
 请注意，由于项目仍在开发中，新添加的命令的文档目前尚不完善。
 
@@ -40,7 +40,7 @@ git clone https://github.com/mod-playerbots/mod-playerbots.git --branch=master
 
 - **玩家进阶路径：** 我们设计了一个改进的玩家进阶路径，辅以机器人，为玩家提供了一种替代且引人入胜的游戏体验。
 
-- **稳定性：** 我们的努力主要集中在增强使用Playerbots模块时AzerothCore的整体稳定性。这些改进旨在防止服务器崩溃，并确保所有用户都能获得更流畅的体验。
+- **稳定性：** 我们的努力主要集中在增强使用Shadows模块时AzerothCore的整体稳定性。这些改进旨在防止服务器崩溃，并确保所有用户都能获得更流畅的体验。
 
 - **配置：** 我们引入了一系列可配置的选项，以满足不同需求的玩家，从而提供更个性化的体验。
 
@@ -60,12 +60,12 @@ git clone https://github.com/mod-playerbots/mod-playerbots.git --branch=master
 
 - 我们支持Ubuntu、Windows和macOS。
 
-- 我们建立了持续集成工作流。您可以在[GitHub Actions](https://github.com/mod-playerbots/mod-playerbots/actions)中查看构建状态。
+- 我们建立了持续集成工作流。您可以在[GitHub Actions](https://github.com/YggdrasilWotLK/mod-shadows/actions)中查看构建状态。
 
 - 如果最新的构建状态失败，请恢复到上一个提交。我们将尽快解决此问题。
 
 ## 致谢
 
-该模块的代码来自[ZhengPeiRu21/mod-playerbots](https://github.com/ZhengPeiRu21/mod-playerbots)和[celguar/mangosbot-bots](https://github.com/celguar/mangosbot-bots)。我们衷心感谢@ZhengPeiRu21和@celguar对维护该模块的持续努力。
+该模块的代码来自[ZhengPeiRu21/mod-shadows](https://github.com/ZhengPeiRu21/mod-shadows)和[celguar/mangosbot-bots](https://github.com/celguar/mangosbot-bots)。我们衷心感谢@ZhengPeiRu21和@celguar对维护该模块的持续努力。
 
-我们还要向所有为playerbot开发做出贡献的个人表示诚挚的感谢。您的奉献和努力对塑造这个项目至关重要，我们对您的贡献表示感谢。
+我们还要向所有为shadow开发做出贡献的个人表示诚挚的感谢。您的奉献和努力对塑造这个项目至关重要，我们对您的贡献表示感谢。

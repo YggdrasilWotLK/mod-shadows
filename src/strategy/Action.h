@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ACTION_H
-#define _PLAYERBOT_ACTION_H
+#ifndef _SHADOW_ACTION_H
+#define _SHADOW_ACTION_H
 
 #include "AiObject.h"
 #include "Common.h"
 #include "Event.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class NextAction
@@ -45,7 +45,7 @@ public:
         Aoe = 2
     };
 
-    Action(PlayerbotAI* botAI, std::string const name = "action")
+    Action(ShadowAI* botAI, std::string const name = "action")
         : AiNamedObject(botAI, name), verbose(false) {}  // verbose after ainamedobject - whipowill
     virtual ~Action(void) {}
 

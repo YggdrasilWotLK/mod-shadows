@@ -3,16 +3,16 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHAREDVALUECONTEXT_H
-#define _PLAYERBOT_SHAREDVALUECONTEXT_H
+#ifndef _SHADOW_SHAREDVALUECONTEXT_H
+#define _SHADOW_SHAREDVALUECONTEXT_H
 
 #include "LootValues.h"
 #include "NamedObjectContext.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PvpValues.h"
 #include "QuestValues.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SharedValueContext : public NamedObjectContext<UntypedValue>
 {
@@ -30,14 +30,14 @@ public:
     }
 
 private:
-    static UntypedValue* bg_masters(PlayerbotAI* botAI) { return new BgMastersValue(botAI); }
-    static UntypedValue* drop_map(PlayerbotAI* botAI) { return new DropMapValue(botAI); }
-    static UntypedValue* item_drop_list(PlayerbotAI* botAI) { return new ItemDropListValue(botAI); }
-    static UntypedValue* entry_loot_list(PlayerbotAI* botAI) { return new EntryLootListValue(botAI); }
+    static UntypedValue* bg_masters(ShadowAI* botAI) { return new BgMastersValue(botAI); }
+    static UntypedValue* drop_map(ShadowAI* botAI) { return new DropMapValue(botAI); }
+    static UntypedValue* item_drop_list(ShadowAI* botAI) { return new ItemDropListValue(botAI); }
+    static UntypedValue* entry_loot_list(ShadowAI* botAI) { return new EntryLootListValue(botAI); }
 
-    static UntypedValue* entry_quest_relation(PlayerbotAI* botAI) { return new EntryQuestRelationMapValue(botAI); }
-    static UntypedValue* quest_guidp_map(PlayerbotAI* botAI) { return new QuestGuidpMapValue(botAI); }
-    static UntypedValue* quest_givers(PlayerbotAI* botAI) { return new QuestGiversValue(botAI); }
+    static UntypedValue* entry_quest_relation(ShadowAI* botAI) { return new EntryQuestRelationMapValue(botAI); }
+    static UntypedValue* quest_guidp_map(ShadowAI* botAI) { return new QuestGuidpMapValue(botAI); }
+    static UntypedValue* quest_givers(ShadowAI* botAI) { return new QuestGiversValue(botAI); }
 
     // Global acess functions
 public:
@@ -54,7 +54,7 @@ public:
         SharedNamedObjectContextList<UntypedValue> sValueContexts;
         sValueContexts.Add(this);
         NamedObjectContextList<UntypedValue> valueContexts(sValueContexts);
-        PlayerbotAI* botAI = new PlayerbotAI();
+        ShadowAI* botAI = new ShadowAI();
 
         UntypedValue* value = valueContexts.GetContextObject(name, botAI);
         delete botAI;

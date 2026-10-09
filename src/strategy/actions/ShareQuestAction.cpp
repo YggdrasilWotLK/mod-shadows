@@ -6,7 +6,7 @@
 #include "ShareQuestAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool ShareQuestAction::Execute(Event event)
 {
@@ -14,7 +14,7 @@ bool ShareQuestAction::Execute(Event event)
     if (!GetMaster())
         return false;
 
-    PlayerbotChatHandler handler(GetMaster());
+    ShadowChatHandler handler(GetMaster());
     uint32 entry = handler.extractQuestId(link);
     if (!entry)
         return false;
@@ -80,7 +80,7 @@ bool AutoShareQuestAction::Execute(Event event)
             if (player->GetDivider())
                 continue;
 
-            if (auto ai = GET_PLAYERBOT_AI(player))
+            if (auto ai = GET_SHADOW_AI(player))
             {
                 if (PAI_VALUE(uint8, "free quest log slots") < 15 || !urand(0,5))
                 {

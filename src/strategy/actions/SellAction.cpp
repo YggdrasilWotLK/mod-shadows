@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "ItemUsageValue.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ItemPackets.h"
 
 class SellItemsVisitor : public IterateItemsVisitor

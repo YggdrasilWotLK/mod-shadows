@@ -5,7 +5,7 @@
 
 #include "GrindingStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 NextAction** GrindingStrategy::getDefaultActions()
 {

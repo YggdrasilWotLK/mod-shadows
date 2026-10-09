@@ -8,7 +8,7 @@
 #include "BattlegroundIC.h"
 #include "ItemVisitors.h"
 #include "ObjectDefines.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "QuestValues.h"
 #include "ServerFacade.h"
 #include "Unit.h"

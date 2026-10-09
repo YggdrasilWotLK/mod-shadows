@@ -7,7 +7,7 @@
 
 #include "ChooseTravelTargetAction.h"
 #include "MapMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool DebugAction::Execute(Event event)
 {
@@ -19,7 +19,7 @@ bool DebugAction::Execute(Event event)
 
     if (text == "scan")
     {
-        sPlayerbotAIConfig->openLog("scan.csv", "w");
+        sShadowAIConfig->openLog("scan.csv", "w");
 
         uint32 i = 0;
         for (auto p : WorldPosition().getCreaturesNear())
@@ -36,15 +36,15 @@ bool DebugAction::Execute(Event event)
 
             pos.printWKT(out);
 
-            sPlayerbotAIConfig->log("scan.csv", out.str().c_str());
+            sShadowAIConfig->log("scan.csv", out.str().c_str());
 
             if (zoneId == 0 && areaId == 0)
             {
-                sPlayerbotAIConfig->log("x", out.str().c_str());
+                sShadowAIConfig->log("x", out.str().c_str());
             }
             else
             {
-                sPlayerbotAIConfig->log("y", out.str().c_str());
+                sShadowAIConfig->log("y", out.str().c_str());
             }
 
             i = zoneId;

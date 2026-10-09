@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "GossipDef.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool GossipHelloAction::Execute(Event event)
 {
@@ -108,8 +108,8 @@ bool GossipHelloAction::Execute(ObjectGuid guid, int32 menuToSelect, bool silent
     Creature* pCreature = bot->GetNPCIfCanInteractWith(guid, UNIT_NPC_FLAG_NONE);
     if (!pCreature)
     {
-        LOG_DEBUG("playerbots",
-                  "[PlayerbotMgr]: HandleMasterIncomingPacket - Received  CMSG_GOSSIP_HELLO {} not found or you can't "
+        LOG_DEBUG("shadows",
+                  "[ShadowMgr]: HandleMasterIncomingPacket - Received  CMSG_GOSSIP_HELLO {} not found or you can't "
                   "interact with him.",
                   guid.ToString().c_str());
         return false;

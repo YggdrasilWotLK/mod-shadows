@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DISCPRIESTSTRATEGY_H
-#define _PLAYERBOT_DISCPRIESTSTRATEGY_H
+#ifndef _SHADOW_DISCPRIESTSTRATEGY_H
+#define _SHADOW_DISCPRIESTSTRATEGY_H
 
 #include "GenericPriestStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DiscPriestStrategy : public GenericPriestStrategy
 {
 public:
-    DiscPriestStrategy(PlayerbotAI* botAI);
+    DiscPriestStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     NextAction** getDefaultActions() override;

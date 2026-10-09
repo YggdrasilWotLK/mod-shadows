@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONNEXTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONNEXTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONNEXTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONNEXTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -20,14 +20,14 @@ class WotlkDungeonNexTriggerContext : public NamedObjectContext<Trigger>
             creators["keristrasza positioning"] = &WotlkDungeonNexTriggerContext::keristrasza_positioning;
         }
     private:
-        static Trigger* faction_commander_whirlwind(PlayerbotAI* ai) { return new FactionCommanderWhirlwindTrigger(ai); }
-        static Trigger* telestra_firebomb(PlayerbotAI* ai) { return new TelestraFirebombTrigger(ai); }
-        static Trigger* telestra_split_phase(PlayerbotAI* ai) { return new TelestraSplitPhaseTrigger(ai); }
-        static Trigger* chaotic_rift(PlayerbotAI* ai) { return new ChaoticRiftTrigger(ai); }
-        static Trigger* ormorok_spikes(PlayerbotAI* ai) { return new OrmorokSpikesTrigger(ai); }
-        static Trigger* ormorok_stack(PlayerbotAI* ai) { return new OrmorokStackTrigger(ai); }
-        static Trigger* intense_cold(PlayerbotAI* ai) { return new IntenseColdTrigger(ai); }
-        static Trigger* keristrasza_positioning(PlayerbotAI* ai) { return new KeristraszaPositioningTrigger(ai); }
+        static Trigger* faction_commander_whirlwind(ShadowAI* ai) { return new FactionCommanderWhirlwindTrigger(ai); }
+        static Trigger* telestra_firebomb(ShadowAI* ai) { return new TelestraFirebombTrigger(ai); }
+        static Trigger* telestra_split_phase(ShadowAI* ai) { return new TelestraSplitPhaseTrigger(ai); }
+        static Trigger* chaotic_rift(ShadowAI* ai) { return new ChaoticRiftTrigger(ai); }
+        static Trigger* ormorok_spikes(ShadowAI* ai) { return new OrmorokSpikesTrigger(ai); }
+        static Trigger* ormorok_stack(ShadowAI* ai) { return new OrmorokStackTrigger(ai); }
+        static Trigger* intense_cold(ShadowAI* ai) { return new IntenseColdTrigger(ai); }
+        static Trigger* keristrasza_positioning(ShadowAI* ai) { return new KeristraszaPositioningTrigger(ai); }
 };
 
 #endif

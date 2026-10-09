@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DUELSTRATEGY_H
-#define _PLAYERBOT_DUELSTRATEGY_H
+#ifndef _SHADOW_DUELSTRATEGY_H
+#define _SHADOW_DUELSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DuelStrategy : public PassTroughStrategy
 {
 public:
-    DuelStrategy(PlayerbotAI* botAI);
+    DuelStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "duel"; }
@@ -22,7 +22,7 @@ public:
 class StartDuelStrategy : public Strategy
 {
 public:
-    StartDuelStrategy(PlayerbotAI* botAI);
+    StartDuelStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "start duel"; }

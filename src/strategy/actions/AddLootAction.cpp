@@ -10,7 +10,7 @@
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool AddLootAction::Execute(Event event)

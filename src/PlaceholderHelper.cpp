@@ -6,8 +6,8 @@
 #include "PlaceholderHelper.h"
 
 #include "AiFactory.h"
-#include "PlayerbotTextMgr.h"
-#include "Playerbots.h"
+#include "ShadowTextMgr.h"
+#include "Shadows.h"
 #include "Util.h"
 
 void PlaceholderHelper::MapDungeon(PlaceholderMap& placeholders, DungeonSuggestion const* dungeonSuggestion,

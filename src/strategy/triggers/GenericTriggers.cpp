@@ -13,26 +13,26 @@
 #include "ItemVisitors.h"
 #include "LastSpellCastValue.h"
 #include "ObjectGuid.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "PositionValue.h"
 #include "SharedDefines.h"
 #include "TemporarySummon.h"
 #include "ThreatMgr.h"
 #include "Timer.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Player.h"
 
 bool LowManaTrigger::IsActive()
 {
     return AI_VALUE2(bool, "has mana", "self target") &&
-           AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->lowMana;
+           AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->lowMana;
 }
 
 bool MediumManaTrigger::IsActive()
 {
     return AI_VALUE2(bool, "has mana", "self target") &&
-           AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->mediumMana;
+           AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->mediumMana;
 }
 
 bool NoPetTrigger::IsActive()
@@ -72,7 +72,7 @@ bool PetAttackTrigger::IsActive()
 
 bool HighManaTrigger::IsActive()
 {
-    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->highMana;
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->highMana;
 }
 
 bool AlmostFullManaTrigger::IsActive()
@@ -82,7 +82,7 @@ bool AlmostFullManaTrigger::IsActive()
 
 bool EnoughManaTrigger::IsActive()
 {
-    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") > sPlayerbotAIConfig->highMana;
+    return AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") > sShadowAIConfig->highMana;
 }
 
 bool RageAvailable::IsActive() { return AI_VALUE2(uint8, "rage", "self target") >= amount; }
@@ -110,9 +110,9 @@ bool HasAggroTrigger::IsActive() { return AI_VALUE2(bool, "has aggro", "current 
 
 bool PanicTrigger::IsActive()
 {
-    return AI_VALUE2(uint8, "health", "self target") < sPlayerbotAIConfig->criticalHealth &&
+    return AI_VALUE2(uint8, "health", "self target") < sShadowAIConfig->criticalHealth &&
            (!AI_VALUE2(bool, "has mana", "self target") ||
-            AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->lowMana);
+            AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->lowMana);
 }
 
 bool OutNumberedTrigger::IsActive()
@@ -248,7 +248,7 @@ bool AoeTrigger::IsActive()
 
 bool NoFoodTrigger::IsActive()
 {
-    bool isRandomBot = sRandomPlayerbotMgr->IsRandomBot(bot);
+    bool isRandomBot = sRandomShadowMgr->IsRandomBot(bot);
     if (isRandomBot && botAI->HasCheat(BotCheatMask::food))
         return false;
 
@@ -257,7 +257,7 @@ bool NoFoodTrigger::IsActive()
 
 bool NoDrinkTrigger::IsActive()
 {
-    bool isRandomBot = sRandomPlayerbotMgr->IsRandomBot(bot);
+    bool isRandomBot = sRandomShadowMgr->IsRandomBot(bot);
     if (isRandomBot && botAI->HasCheat(BotCheatMask::food))
         return false;
 
@@ -312,18 +312,18 @@ bool SpellCooldownTrigger::IsActive()
     return bot->HasSpellCooldown(spellId);
 }
 
-RandomTrigger::RandomTrigger(PlayerbotAI* botAI, std::string const name, int32 probability)
+RandomTrigger::RandomTrigger(ShadowAI* botAI, std::string const name, int32 probability)
     : Trigger(botAI, name), probability(probability), lastCheck(getMSTime())
 {
 }
 
 bool RandomTrigger::IsActive()
 {
-    if (getMSTime() - lastCheck < sPlayerbotAIConfig->repeatDelay)
+    if (getMSTime() - lastCheck < sShadowAIConfig->repeatDelay)
         return false;
 
     lastCheck = getMSTime();
-    int32 k = (int32)(probability / sPlayerbotAIConfig->randomChangeMultiplier);
+    int32 k = (int32)(probability / sShadowAIConfig->randomChangeMultiplier);
     if (k < 1)
         k = 1;
     return (rand() % k) == 0;
@@ -381,10 +381,10 @@ bool GenericBoostTrigger::IsActive()
 bool HealerShouldAttackTrigger::IsActive()
 {
     // nobody can help me
-    if (botAI->GetNearGroupMemberCount(sPlayerbotAIConfig->sightDistance) <= 1)
+    if (botAI->GetNearGroupMemberCount(sShadowAIConfig->sightDistance) <= 1)
         return true;
 
-    if (AI_VALUE2(uint8, "health", "party member to heal") < sPlayerbotAIConfig->almostFullHealth)
+    if (AI_VALUE2(uint8, "health", "party member to heal") < sShadowAIConfig->almostFullHealth)
         return false;
 
     // special check for resto druid (dont remove tree of life frequently)
@@ -401,9 +401,9 @@ bool HealerShouldAttackTrigger::IsActive()
     if (balance <= 50)
         manaThreshold = 85;
     else if (balance <= 100)
-        manaThreshold = sPlayerbotAIConfig->highMana;
+        manaThreshold = sShadowAIConfig->highMana;
     else
-        manaThreshold = sPlayerbotAIConfig->mediumMana;
+        manaThreshold = sShadowAIConfig->mediumMana;
 
     if (AI_VALUE2(bool, "has mana", "self target") && AI_VALUE2(uint8, "mana", "self target") < manaThreshold)
         return false;
@@ -468,7 +468,7 @@ bool HasAuraTrigger::IsActive() { return botAI->HasAura(getName(), GetTarget(), 
 bool HasAuraStackTrigger::IsActive()
 {
     Aura* aura = botAI->GetAura(getName(), GetTarget(), false, true, stack);
-    // sLog->outMessage("playerbot", LOG_LEVEL_DEBUG, "HasAuraStackTrigger::IsActive %s %d", getName(), aura ?
+    // sLog->outMessage("shadow", LOG_LEVEL_DEBUG, "HasAuraStackTrigger::IsActive %s %d", getName(), aura ?
     // aura->GetStackAmount() : -1);
     return aura;
 }
@@ -632,7 +632,7 @@ bool ReturnToStayPositionTrigger::IsActive()
     if (stayPosition.isSet())
     {
         const float distance = bot->GetDistance(stayPosition.x, stayPosition.y, stayPosition.z);
-        return distance > sPlayerbotAIConfig->followDistance;
+        return distance > sShadowAIConfig->followDistance;
     }
 
     return false;

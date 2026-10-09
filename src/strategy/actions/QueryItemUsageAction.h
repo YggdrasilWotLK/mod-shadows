@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_QUERYITEMUSAGEACTION_H
-#define _PLAYERBOT_QUERYITEMUSAGEACTION_H
+#ifndef _SHADOW_QUERYITEMUSAGEACTION_H
+#define _SHADOW_QUERYITEMUSAGEACTION_H
 
 #include "InventoryAction.h"
 
 class Quest;
-class PlayerbotAI;
+class ShadowAI;
 
 struct ItemTemplate;
 struct QuestStatusData;
@@ -17,7 +17,7 @@ struct QuestStatusData;
 class QueryItemUsageAction : public InventoryAction
 {
 public:
-    QueryItemUsageAction(PlayerbotAI* botAI, std::string const name = "query item usage") : InventoryAction(botAI, name)
+    QueryItemUsageAction(ShadowAI* botAI, std::string const name = "query item usage") : InventoryAction(botAI, name)
     {
     }
 

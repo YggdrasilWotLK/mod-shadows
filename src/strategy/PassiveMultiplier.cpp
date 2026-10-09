@@ -11,7 +11,7 @@
 std::vector<std::string> PassiveMultiplier::allowedActions;
 std::vector<std::string> PassiveMultiplier::allowedParts;
 
-PassiveMultiplier::PassiveMultiplier(PlayerbotAI* botAI) : Multiplier(botAI, "passive")
+PassiveMultiplier::PassiveMultiplier(ShadowAI* botAI) : Multiplier(botAI, "passive")
 {
     if (allowedActions.empty())
     {

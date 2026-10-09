@@ -7,7 +7,7 @@
 
 #include "CustomStrategy.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CustomStrategyEditAction::Execute(Event event)
 {
@@ -35,10 +35,10 @@ bool CustomStrategyEditAction::PrintHelp()
 
     uint32 owner = botAI->GetBot()->GetGUID().GetCounter();
 
-    PlayerbotsDatabasePreparedStatement* stmt =
-        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_CUSTOM_STRATEGY_BY_OWNER);
+    ShadowsDatabasePreparedStatement* stmt =
+        ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_CUSTOM_STRATEGY_BY_OWNER);
     stmt->SetData(0, owner);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         do
         {
@@ -60,11 +60,11 @@ bool CustomStrategyEditAction::Print(std::string const name)
 
     uint32 owner = botAI->GetBot()->GetGUID().GetCounter();
 
-    PlayerbotsDatabasePreparedStatement* stmt =
-        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME);
+    ShadowsDatabasePreparedStatement* stmt =
+        ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME);
     stmt->SetData(0, owner);
     stmt->SetData(1, name);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         do
         {
@@ -83,39 +83,39 @@ bool CustomStrategyEditAction::Edit(std::string const name, uint32 idx, std::str
 {
     uint32 owner = botAI->GetBot()->GetGUID().GetCounter();
 
-    PlayerbotsDatabasePreparedStatement* stmt =
-        PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME_AND_IDX);
+    ShadowsDatabasePreparedStatement* stmt =
+        ShadowsDatabase.GetPreparedStatement(SHADOWS_SEL_CUSTOM_STRATEGY_BY_OWNER_AND_NAME_AND_IDX);
     stmt->SetData(0, owner);
     stmt->SetData(1, name);
     stmt->SetData(2, idx);
-    if (PreparedQueryResult result = PlayerbotsDatabase.Query(stmt))
+    if (PreparedQueryResult result = ShadowsDatabase.Query(stmt))
     {
         if (command.empty())
         {
-            stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_DEL_CUSTOM_STRATEGY);
+            stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_DEL_CUSTOM_STRATEGY);
             stmt->SetData(0, name);
             stmt->SetData(1, owner);
             stmt->SetData(2, idx);
-            PlayerbotsDatabase.Execute(stmt);
+            ShadowsDatabase.Execute(stmt);
         }
         else
         {
-            stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_UPD_CUSTOM_STRATEGY);
+            stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_UPD_CUSTOM_STRATEGY);
             stmt->SetData(0, command);
             stmt->SetData(1, name);
             stmt->SetData(2, owner);
             stmt->SetData(3, idx);
-            PlayerbotsDatabase.Execute(stmt);
+            ShadowsDatabase.Execute(stmt);
         }
     }
     else
     {
-        stmt = PlayerbotsDatabase.GetPreparedStatement(PLAYERBOTS_INS_CUSTOM_STRATEGY);
+        stmt = ShadowsDatabase.GetPreparedStatement(SHADOWS_INS_CUSTOM_STRATEGY);
         stmt->SetData(0, name);
         stmt->SetData(1, owner);
         stmt->SetData(2, idx);
         stmt->SetData(3, command);
-        PlayerbotsDatabase.Execute(stmt);
+        ShadowsDatabase.Execute(stmt);
     }
 
     PrintActionLine(idx, command);

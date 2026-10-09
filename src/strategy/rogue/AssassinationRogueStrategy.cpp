@@ -1,7 +1,7 @@
 
 #include "AssassinationRogueStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class AssassinationRogueStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -15,28 +15,28 @@ public:
     }
 
 private:
-    static ActionNode* mutilate([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mutilate([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mutilate",
                               /*P*/ NULL,
                               /*A*/ NextAction::array(0, new NextAction("backstab"), nullptr),
                               /*C*/ NULL);
     }
-    static ActionNode* envenom([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* envenom([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("envenom",
                               /*P*/ NULL,
                               /*A*/ NextAction::array(0, new NextAction("rupture"), nullptr),
                               /*C*/ NULL);
     }
-    static ActionNode* backstab([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* backstab([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("backstab",
                               /*P*/ NULL,
                               /*A*/ NextAction::array(0, new NextAction("sinister strike"), nullptr),
                               /*C*/ NULL);
     }
-    static ActionNode* rupture([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rupture([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rupture",
                               /*P*/ nullptr,
@@ -45,7 +45,7 @@ private:
     }
 };
 
-AssassinationRogueStrategy::AssassinationRogueStrategy(PlayerbotAI* ai) : MeleeCombatStrategy(ai)
+AssassinationRogueStrategy::AssassinationRogueStrategy(ShadowAI* ai) : MeleeCombatStrategy(ai)
 {
     actionNodeFactories.Add(new AssassinationRogueStrategyActionNodeFactory());
 }

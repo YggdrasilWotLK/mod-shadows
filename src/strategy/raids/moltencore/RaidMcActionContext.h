@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDMCACTIONCONTEXT_H
-#define _PLAYERBOT_RAIDMCACTIONCONTEXT_H
+#ifndef _SHADOW_RAIDMCACTIONCONTEXT_H
+#define _SHADOW_RAIDMCACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -15,8 +15,8 @@ public:
     }
 
 private:
-    static Action* check_should_move_from_group(PlayerbotAI* ai) { return new McCheckShouldMoveFromGroupAction(ai); }
-    static Action* move_from_baron_geddon(PlayerbotAI* ai) { return new McMoveFromBaronGeddonAction(ai); }
+    static Action* check_should_move_from_group(ShadowAI* ai) { return new McCheckShouldMoveFromGroupAction(ai); }
+    static Action* move_from_baron_geddon(ShadowAI* ai) { return new McMoveFromBaronGeddonAction(ai); }
 };
 
 #endif

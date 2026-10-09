@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_RAIDNAXXSCRIPTS_H
-#define _PLAYERBOT_RAIDNAXXSCRIPTS_H
+#ifndef _SHADOW_RAIDNAXXSCRIPTS_H
+#define _SHADOW_RAIDNAXXSCRIPTS_H
 
 #include "../../../../src/server/scripts/Northrend/Naxxramas/boss_anubrekhan.h"
 #include "../../../../src/server/scripts/Northrend/Naxxramas/boss_faerlina.h"

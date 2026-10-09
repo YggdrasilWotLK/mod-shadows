@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRAVELSTRATEGY_H
-#define _PLAYERBOT_TRAVELSTRATEGY_H
+#ifndef _SHADOW_TRAVELSTRATEGY_H
+#define _SHADOW_TRAVELSTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TravelStrategy : public Strategy
 {
 public:
-    TravelStrategy(PlayerbotAI* botAI);
+    TravelStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "travel"; }
 
@@ -24,7 +24,7 @@ public:
 class ExploreStrategy : public Strategy
 {
 public:
-    ExploreStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    ExploreStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     std::string const getName() override { return "explore"; }
 };
@@ -32,7 +32,7 @@ public:
 class MapStrategy : public Strategy
 {
 public:
-    MapStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    MapStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     std::string const getName() override { return "map"; }
 };
@@ -40,7 +40,7 @@ public:
 class MapFullStrategy : public Strategy
 {
 public:
-    MapFullStrategy(PlayerbotAI* botAI) : Strategy(botAI){};
+    MapFullStrategy(ShadowAI* botAI) : Strategy(botAI){};
 
     std::string const getName() override { return "map full"; }
 };

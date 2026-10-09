@@ -5,7 +5,7 @@
 
 #include "DuelStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void DuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -17,8 +17,8 @@ void DuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         new TriggerNode("no attackers", NextAction::array(0, new NextAction("attack duel opponent", 70.0f), nullptr)));
 }
 
-DuelStrategy::DuelStrategy(PlayerbotAI* botAI) : PassTroughStrategy(botAI) {}
+DuelStrategy::DuelStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) {}
 
 void StartDuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers) {}
 
-StartDuelStrategy::StartDuelStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+StartDuelStrategy::StartDuelStrategy(ShadowAI* botAI) : Strategy(botAI) {}

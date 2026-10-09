@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONACTIONCONTEXT_H
 
 #include "utgardekeep/UtgardeKeepActionContext.h"
 #include "nexus/NexusActionContext.h"

@@ -4,7 +4,7 @@
  */
 
 #include "DestructionWarlockStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class DestructionWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -29,24 +29,24 @@ public:
     }
 
 private:
-    static ActionNode* immolate(PlayerbotAI*) { return new ActionNode("immolate", nullptr, nullptr, nullptr); }
-    static ActionNode* conflagrate(PlayerbotAI*) { return new ActionNode("conflagrate", nullptr, nullptr, nullptr); }
-    static ActionNode* chaos_bolt(PlayerbotAI*) { return new ActionNode("chaos bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* incinerate(PlayerbotAI*) { return new ActionNode("incinerate", nullptr, nullptr, nullptr); }
-    static ActionNode* corruption(PlayerbotAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* corruption_on_attacker(PlayerbotAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* shadow_bolt(PlayerbotAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* shadowburn(PlayerbotAI*) { return new ActionNode("shadowburn", nullptr, nullptr, nullptr); }
-    static ActionNode* life_tap(PlayerbotAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
-    static ActionNode* shadowfury(PlayerbotAI*) { return new ActionNode("shadowfury", nullptr, nullptr, nullptr); }
-    static ActionNode* shadowflame(PlayerbotAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption(PlayerbotAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption_on_attacker(PlayerbotAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* rain_of_fire(PlayerbotAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
+    static ActionNode* immolate(ShadowAI*) { return new ActionNode("immolate", nullptr, nullptr, nullptr); }
+    static ActionNode* conflagrate(ShadowAI*) { return new ActionNode("conflagrate", nullptr, nullptr, nullptr); }
+    static ActionNode* chaos_bolt(ShadowAI*) { return new ActionNode("chaos bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* incinerate(ShadowAI*) { return new ActionNode("incinerate", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption(ShadowAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption_on_attacker(ShadowAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* shadow_bolt(ShadowAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* shadowburn(ShadowAI*) { return new ActionNode("shadowburn", nullptr, nullptr, nullptr); }
+    static ActionNode* life_tap(ShadowAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
+    static ActionNode* shadowfury(ShadowAI*) { return new ActionNode("shadowfury", nullptr, nullptr, nullptr); }
+    static ActionNode* shadowflame(ShadowAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption(ShadowAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption_on_attacker(ShadowAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* rain_of_fire(ShadowAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-DestructionWarlockStrategy::DestructionWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
+DestructionWarlockStrategy::DestructionWarlockStrategy(ShadowAI* botAI) : GenericWarlockStrategy(botAI)
 {
     actionNodeFactories.Add(new DestructionWarlockStrategyActionNodeFactory());
 }

@@ -5,7 +5,7 @@
 
 #include "GenericHunterNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericHunterNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -18,7 +18,7 @@ public:
     }
 
 private:
-    static ActionNode* rapid_fire([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rapid_fire([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rapid fire",
                               /*P*/ nullptr,
@@ -26,7 +26,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* aspect_of_the_pack([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* aspect_of_the_pack([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("aspect of the pack",
                               /*P*/ nullptr,
@@ -35,7 +35,7 @@ private:
     }
 };
 
-GenericHunterNonCombatStrategy::GenericHunterNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericHunterNonCombatStrategy::GenericHunterNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericHunterNonCombatStrategyActionNodeFactory());
 }

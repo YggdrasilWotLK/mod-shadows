@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PALADINBUFFSTRATEGIES_H
-#define _PLAYERBOT_PALADINBUFFSTRATEGIES_H
+#ifndef _SHADOW_PALADINBUFFSTRATEGIES_H
+#define _SHADOW_PALADINBUFFSTRATEGIES_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PaladinBuffManaStrategy : public Strategy
 {
 public:
-    PaladinBuffManaStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffManaStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bmana"; }
@@ -22,7 +22,7 @@ public:
 class PaladinBuffHealthStrategy : public Strategy
 {
 public:
-    PaladinBuffHealthStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffHealthStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bhealth"; }
@@ -31,7 +31,7 @@ public:
 class PaladinBuffDpsStrategy : public Strategy
 {
 public:
-    PaladinBuffDpsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffDpsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bdps"; }
@@ -40,7 +40,7 @@ public:
 class PaladinBuffArmorStrategy : public Strategy
 {
 public:
-    PaladinBuffArmorStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffArmorStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "barmor"; }
@@ -49,7 +49,7 @@ public:
 class PaladinBuffAoeStrategy : public Strategy
 {
 public:
-    PaladinBuffAoeStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffAoeStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "baoe"; }
@@ -58,7 +58,7 @@ public:
 class PaladinBuffCastStrategy : public Strategy
 {
 public:
-    PaladinBuffCastStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffCastStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bcast"; }
@@ -67,7 +67,7 @@ public:
 class PaladinBuffSpeedStrategy : public Strategy
 {
 public:
-    PaladinBuffSpeedStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffSpeedStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bspeed"; }
@@ -76,7 +76,7 @@ public:
 class PaladinBuffThreatStrategy : public Strategy
 {
 public:
-    PaladinBuffThreatStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffThreatStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bthreat"; }
@@ -85,7 +85,7 @@ public:
 class PaladinBuffStatsStrategy : public Strategy
 {
 public:
-    PaladinBuffStatsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinBuffStatsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bstats"; }
@@ -94,7 +94,7 @@ public:
 class PaladinShadowResistanceStrategy : public Strategy
 {
 public:
-    PaladinShadowResistanceStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinShadowResistanceStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "rshadow"; }
@@ -103,7 +103,7 @@ public:
 class PaladinFrostResistanceStrategy : public Strategy
 {
 public:
-    PaladinFrostResistanceStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinFrostResistanceStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "rfrost"; }
@@ -112,7 +112,7 @@ public:
 class PaladinFireResistanceStrategy : public Strategy
 {
 public:
-    PaladinFireResistanceStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PaladinFireResistanceStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "rfire"; }

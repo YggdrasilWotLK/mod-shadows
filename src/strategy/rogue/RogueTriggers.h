@@ -3,35 +3,35 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ROGUETRIGGERS_H
-#define _PLAYERBOT_ROGUETRIGGERS_H
+#ifndef _SHADOW_ROGUETRIGGERS_H
+#define _SHADOW_ROGUETRIGGERS_H
 
 #include "GenericTriggers.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class KickInterruptSpellTrigger : public InterruptSpellTrigger
 {
 public:
-    KickInterruptSpellTrigger(PlayerbotAI* botAI) : InterruptSpellTrigger(botAI, "kick") {}
+    KickInterruptSpellTrigger(ShadowAI* botAI) : InterruptSpellTrigger(botAI, "kick") {}
 };
 
 class SliceAndDiceTrigger : public BuffTrigger
 {
 public:
-    SliceAndDiceTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "slice and dice") {}
+    SliceAndDiceTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "slice and dice") {}
 };
 
 class HungerForBloodTrigger : public BuffTrigger
 {
 public:
-    HungerForBloodTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "hunger for blood") {}
+    HungerForBloodTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "hunger for blood") {}
 };
 
 class AdrenalineRushTrigger : public BoostTrigger
 {
 public:
-    AdrenalineRushTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "adrenaline rush") {}
+    AdrenalineRushTrigger(ShadowAI* botAI) : BoostTrigger(botAI, "adrenaline rush") {}
 
     // bool isPossible();
 };
@@ -39,45 +39,45 @@ public:
 class BladeFuryTrigger : public BoostTrigger
 {
 public:
-    BladeFuryTrigger(PlayerbotAI* botAI) : BoostTrigger(botAI, "blade fury") {}
+    BladeFuryTrigger(ShadowAI* botAI) : BoostTrigger(botAI, "blade fury") {}
 };
 
 
 class RuptureTrigger : public DebuffTrigger
 {
 public:
-    RuptureTrigger(PlayerbotAI* botAI) : DebuffTrigger(botAI, "rupture", 1, true) {}
+    RuptureTrigger(ShadowAI* botAI) : DebuffTrigger(botAI, "rupture", 1, true) {}
 };
 
 class ExposeArmorTrigger : public DebuffTrigger
 {
 public:
-    ExposeArmorTrigger(PlayerbotAI* botAI) : DebuffTrigger(botAI, "expose armor") {}
+    ExposeArmorTrigger(ShadowAI* botAI) : DebuffTrigger(botAI, "expose armor") {}
     virtual bool IsActive() override;
 };
 
 class KickInterruptEnemyHealerSpellTrigger : public InterruptEnemyHealerTrigger
 {
 public:
-    KickInterruptEnemyHealerSpellTrigger(PlayerbotAI* botAI) : InterruptEnemyHealerTrigger(botAI, "kick") {}
+    KickInterruptEnemyHealerSpellTrigger(ShadowAI* botAI) : InterruptEnemyHealerTrigger(botAI, "kick") {}
 };
 
 class InStealthTrigger : public HasAuraTrigger
 {
 public:
-    InStealthTrigger(PlayerbotAI* botAI) : HasAuraTrigger(botAI, "stealth") {}
+    InStealthTrigger(ShadowAI* botAI) : HasAuraTrigger(botAI, "stealth") {}
 };
 
 class NoStealthTrigger : public HasNoAuraTrigger
 {
 public:
-    NoStealthTrigger(PlayerbotAI* botAI) : HasNoAuraTrigger(botAI, "stealth") {}
+    NoStealthTrigger(ShadowAI* botAI) : HasNoAuraTrigger(botAI, "stealth") {}
 };
 
 class UnstealthTrigger : public BuffTrigger
 {
 public:
-    UnstealthTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "stealth", 3) {}
+    UnstealthTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "stealth", 3) {}
 
     bool IsActive() override;
 };
@@ -85,7 +85,7 @@ public:
 class StealthTrigger : public Trigger
 {
 public:
-    StealthTrigger(PlayerbotAI* botAI) : Trigger(botAI, "stealth") {}
+    StealthTrigger(ShadowAI* botAI) : Trigger(botAI, "stealth") {}
 
     bool IsActive() override;
 };
@@ -93,7 +93,7 @@ public:
 class SapTrigger : public HasCcTargetTrigger
 {
 public:
-    SapTrigger(PlayerbotAI* botAI) : HasCcTargetTrigger(botAI, "sap") {}
+    SapTrigger(ShadowAI* botAI) : HasCcTargetTrigger(botAI, "sap") {}
 
     bool IsPossible();
 };
@@ -101,7 +101,7 @@ public:
 class SprintTrigger : public BuffTrigger
 {
 public:
-    SprintTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "sprint", 3) {}
+    SprintTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "sprint", 3) {}
 
     bool IsPossible();
     bool IsActive() override;
@@ -110,21 +110,21 @@ public:
 class MainHandWeaponNoEnchantTrigger : public BuffTrigger
 {
 public:
-    MainHandWeaponNoEnchantTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "main hand", 1) {}
+    MainHandWeaponNoEnchantTrigger(ShadowAI* ai) : BuffTrigger(ai, "main hand", 1) {}
     virtual bool IsActive();
 };
 
 class OffHandWeaponNoEnchantTrigger : public BuffTrigger
 {
 public:
-    OffHandWeaponNoEnchantTrigger(PlayerbotAI* ai) : BuffTrigger(ai, "off hand", 1) {}
+    OffHandWeaponNoEnchantTrigger(ShadowAI* ai) : BuffTrigger(ai, "off hand", 1) {}
     virtual bool IsActive();
 };
 
 class TricksOfTheTradeOnMainTankTrigger : public BuffOnMainTankTrigger
 {
 public:
-    TricksOfTheTradeOnMainTankTrigger(PlayerbotAI* ai) : BuffOnMainTankTrigger(ai, "tricks of the trade", true) {}
+    TricksOfTheTradeOnMainTankTrigger(ShadowAI* ai) : BuffOnMainTankTrigger(ai, "tricks of the trade", true) {}
 };
 
 

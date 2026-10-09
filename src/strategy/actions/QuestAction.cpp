@@ -12,7 +12,7 @@
 #include "ItemTemplate.h"
 #include "ObjectGuid.h"
 #include "ObjectMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ReputationMgr.h"
 #include "ServerFacade.h"
 #include "BroadcastHelper.h"
@@ -155,7 +155,7 @@ bool QuestAction::CompleteQuest(Player* player, uint32 entry)
     const std::string text_quest = ChatHelper::FormatQuest(pQuest);
     if (botAI->HasStrategy("debug quest", BotState::BOT_STATE_NON_COMBAT) || botAI->HasStrategy("debug rpg", BotState::BOT_STATE_COMBAT))
     {
-        LOG_INFO("playerbots", "{} => Quest [ {} ] completed", bot->GetName(), pQuest->GetTitle());
+        LOG_INFO("shadows", "{} => Quest [ {} ] completed", bot->GetName(), pQuest->GetTitle());
         bot->Say("Quest [ " + text_quest + " ] completed", LANG_UNIVERSAL);
     }
     botAI->TellMasterNoFacing("Quest completed " + text_quest);
@@ -182,7 +182,7 @@ bool QuestAction::ProcessQuests(WorldObject* questGiver)
 {
     ObjectGuid guid = questGiver->GetGUID();
 
-    if (bot->GetDistance(questGiver) > INTERACTION_DISTANCE && !sPlayerbotAIConfig->syncQuestWithPlayer)
+    if (bot->GetDistance(questGiver) > INTERACTION_DISTANCE && !sShadowAIConfig->syncQuestWithPlayer)
     {
         //if (botAI->HasStrategy("debug", BotState::BOT_STATE_COMBAT) || botAI->HasStrategy("debug", BotState::BOT_STATE_NON_COMBAT))
 
@@ -190,7 +190,7 @@ bool QuestAction::ProcessQuests(WorldObject* questGiver)
         return false;
     }
 
-    if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, questGiver, sPlayerbotAIConfig->sightDistance))
+    if (!bot->HasInArc(CAST_ANGLE_IN_FRONT, questGiver, sShadowAIConfig->sightDistance))
         bot->SetFacingToObject(questGiver);
 
     bot->SetTarget(guid);
@@ -238,7 +238,7 @@ bool QuestAction::AcceptQuest(Quest const* quest, ObjectGuid questGiver)
         p.rpos(0);
         bot->GetSession()->HandleQuestgiverAcceptQuestOpcode(p);
 
-        if (bot->GetQuestStatus(questId) == QUEST_STATUS_NONE && sPlayerbotAIConfig->syncQuestWithPlayer)
+        if (bot->GetQuestStatus(questId) == QUEST_STATUS_NONE && sShadowAIConfig->syncQuestWithPlayer)
         {
             Object* pObject = ObjectAccessor::GetObjectByTypeMask(*bot, questGiver,
                                                                   TYPEMASK_UNIT | TYPEMASK_GAMEOBJECT | TYPEMASK_ITEM);
@@ -271,7 +271,7 @@ bool QuestUpdateCompleteAction::Execute(Event event)
     p >> questId;
 
     p.print_storage();
-    // LOG_INFO("playerbots", "Packet: empty{} questId{}", p.empty(), questId);
+    // LOG_INFO("shadows", "Packet: empty{} questId{}", p.empty(), questId);
 
     Quest const* qInfo = sObjectMgr->GetQuestTemplate(questId);
     if (qInfo)
@@ -281,7 +281,7 @@ bool QuestUpdateCompleteAction::Execute(Event event)
 
         // if (botAI->HasStrategy("debug quest", BotState::BOT_STATE_NON_COMBAT) || botAI->HasStrategy("debug rpg", BotState::BOT_STATE_COMBAT))
         // {
-            //     LOG_INFO("playerbots", "{} => Quest [ {} ] completed", bot->GetName(), qInfo->GetTitle());
+            //     LOG_INFO("shadows", "{} => Quest [ {} ] completed", bot->GetName(), qInfo->GetTitle());
             //     bot->Say("Quest [ " + format + " ] completed", LANG_UNIVERSAL);
             // }
         const auto format = ChatHelper::FormatQuest(qInfo);
@@ -289,7 +289,7 @@ bool QuestUpdateCompleteAction::Execute(Event event)
             botAI->TellMasterNoFacing("Quest completed " + format);
         BroadcastHelper::BroadcastQuestUpdateComplete(botAI, bot, qInfo);
         botAI->rpgStatistic.questCompleted++;
-        // LOG_DEBUG("playerbots", "[New rpg] {} complete quest {}", bot->GetName(), qInfo->GetQuestId());
+        // LOG_DEBUG("shadows", "[New rpg] {} complete quest {}", bot->GetName(), qInfo->GetQuestId());
         // botAI->rpgStatistic.questCompleted++;
     }
 
@@ -306,7 +306,7 @@ bool QuestUpdateAddKillAction::Execute(Event event)
 
     uint32 entry, questId, available, required;
     p >> questId >> entry >> available >> required;
-    // LOG_INFO("playerbots", "[New rpg] Quest {} -> Creature {} ({}/{})", questId, entry, available, required);
+    // LOG_INFO("shadows", "[New rpg] Quest {} -> Creature {} ({}/{})", questId, entry, available, required);
     const Quest* qInfo = sObjectMgr->GetQuestTemplate(questId);
     if (qInfo && (entry & 0x80000000))
     {
@@ -368,7 +368,7 @@ bool QuestUpdateAddItemAction::Execute(Event event)
             {
                 const auto text = BOT_TEXT2("%quest_link - %item_link %quest_obj_available/%quest_obj_required", placeholders);
                 botAI->Say(text);
-                LOG_INFO("playerbots", "{} => {}", bot->GetName(), text);
+                LOG_INFO("shadows", "{} => {}", bot->GetName(), text);
             }
 
             BroadcastHelper::BroadcastQuestUpdateAddItem(botAI, bot, pair.first, availableItemsCount, requiredItemsCount, itemPrototype);

@@ -5,14 +5,14 @@
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 enum class BotCheatMask : uint32;
 
 class CheatAction : public Action
 {
 public:
-    CheatAction(PlayerbotAI* botAI) : Action(botAI, "cheat") {}
+    CheatAction(ShadowAI* botAI) : Action(botAI, "cheat") {}
 
     bool Execute(Event event) override;
 

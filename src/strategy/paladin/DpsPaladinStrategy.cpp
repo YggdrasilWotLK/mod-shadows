@@ -5,7 +5,7 @@
 
 #include "DpsPaladinStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 class DpsPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -27,7 +27,7 @@ public:
     }
 
 private:
-    static ActionNode* seal_of_corruption([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_corruption([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of corruption",
                               /*P*/ nullptr,
@@ -35,7 +35,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_vengeance([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_vengeance([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of vengeance",
                               /*P*/ nullptr,
@@ -43,7 +43,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_command([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_command([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of command",
                               /*P*/ nullptr,
@@ -51,7 +51,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* blessing_of_might([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* blessing_of_might([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("blessing of might",
                               /*P*/ nullptr,
@@ -59,7 +59,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* crusader_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* crusader_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("crusader strike",
                               /*P*/ nullptr,
@@ -75,7 +75,7 @@ private:
     ACTION_NODE_A(repentance_or_shield, "repentance", "divine shield");
 };
 
-DpsPaladinStrategy::DpsPaladinStrategy(PlayerbotAI* botAI) : GenericPaladinStrategy(botAI)
+DpsPaladinStrategy::DpsPaladinStrategy(ShadowAI* botAI) : GenericPaladinStrategy(botAI)
 {
     actionNodeFactories.Add(new DpsPaladinStrategyActionNodeFactory());
 }

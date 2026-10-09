@@ -26,7 +26,7 @@ public:
     }
 
 private:
-    static ActionNode* faerie_fire([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* faerie_fire([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("faerie fire",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -34,7 +34,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* hibernate([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* hibernate([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("hibernate",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -42,7 +42,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* entangling_roots([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* entangling_roots([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("entangling roots",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -50,7 +50,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* entangling_roots_on_cc([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* entangling_roots_on_cc([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("entangling roots on cc",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -58,7 +58,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* wrath([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* wrath([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("wrath",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -66,7 +66,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* starfall([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* starfall([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("starfall",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -74,7 +74,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* insect_swarm([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* insect_swarm([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("insect swarm",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -82,7 +82,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* moonfire([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* moonfire([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("moonfire",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -90,7 +90,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* starfire([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* starfire([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("starfire",
                               /*P*/ NextAction::array(0, new NextAction("moonkin form"), nullptr),
@@ -98,7 +98,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* moonkin_form([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* moonkin_form([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("moonkin form",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -107,7 +107,7 @@ private:
     }
 };
 
-CasterDruidStrategy::CasterDruidStrategy(PlayerbotAI* botAI) : GenericDruidStrategy(botAI)
+CasterDruidStrategy::CasterDruidStrategy(ShadowAI* botAI) : GenericDruidStrategy(botAI)
 {
     actionNodeFactories.Add(new CasterDruidStrategyActionNodeFactory());
     actionNodeFactories.Add(new ShapeshiftDruidStrategyActionNodeFactory());

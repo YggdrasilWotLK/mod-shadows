@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SPELLIDVALUE_H
-#define _PLAYERBOT_SPELLIDVALUE_H
+#ifndef _SHADOW_SPELLIDVALUE_H
+#define _SHADOW_SPELLIDVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SpellIdValue : public CalculatedValue<uint32>, public Qualified
 {
 public:
-    SpellIdValue(PlayerbotAI* botAI);
+    SpellIdValue(ShadowAI* botAI);
 
     uint32 Calculate() override;
 };
@@ -22,7 +22,7 @@ public:
 class VehicleSpellIdValue : public CalculatedValue<uint32>, public Qualified
 {
 public:
-    VehicleSpellIdValue(PlayerbotAI* botAI);
+    VehicleSpellIdValue(ShadowAI* botAI);
 
     uint32 Calculate() override;
 };

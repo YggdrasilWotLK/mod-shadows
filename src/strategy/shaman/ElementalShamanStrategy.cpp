@@ -5,7 +5,7 @@
 
 #include "ElementalShamanStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class ElementalShamanStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -25,19 +25,19 @@ public:
     }
 
 private:
-    static ActionNode* flame_shock(PlayerbotAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
-    static ActionNode* earth_shock(PlayerbotAI*) { return new ActionNode("earth shock", nullptr, nullptr, nullptr); }
-    static ActionNode* lava_burst(PlayerbotAI*) { return new ActionNode("lava burst", nullptr, nullptr, nullptr); }
-    static ActionNode* lightning_bolt(PlayerbotAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* call_of_the_elements(PlayerbotAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
-    static ActionNode* elemental_mastery(PlayerbotAI*) { return new ActionNode("elemental mastery", nullptr, nullptr, nullptr); }
-    static ActionNode* stoneclaw_totem(PlayerbotAI*) { return new ActionNode("stoneclaw totem", nullptr, nullptr, nullptr); }
-    static ActionNode* water_shield(PlayerbotAI*) { return new ActionNode("water shield", nullptr, nullptr, nullptr); }
-    static ActionNode* thunderstorm(PlayerbotAI*) { return new ActionNode("thunderstorm", nullptr, nullptr, nullptr); }
+    static ActionNode* flame_shock(ShadowAI*) { return new ActionNode("flame shock", nullptr, nullptr, nullptr); }
+    static ActionNode* earth_shock(ShadowAI*) { return new ActionNode("earth shock", nullptr, nullptr, nullptr); }
+    static ActionNode* lava_burst(ShadowAI*) { return new ActionNode("lava burst", nullptr, nullptr, nullptr); }
+    static ActionNode* lightning_bolt(ShadowAI*) { return new ActionNode("lightning bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* call_of_the_elements(ShadowAI*) { return new ActionNode("call of the elements", nullptr, nullptr, nullptr); }
+    static ActionNode* elemental_mastery(ShadowAI*) { return new ActionNode("elemental mastery", nullptr, nullptr, nullptr); }
+    static ActionNode* stoneclaw_totem(ShadowAI*) { return new ActionNode("stoneclaw totem", nullptr, nullptr, nullptr); }
+    static ActionNode* water_shield(ShadowAI*) { return new ActionNode("water shield", nullptr, nullptr, nullptr); }
+    static ActionNode* thunderstorm(ShadowAI*) { return new ActionNode("thunderstorm", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-ElementalShamanStrategy::ElementalShamanStrategy(PlayerbotAI* botAI) : GenericShamanStrategy(botAI)
+ElementalShamanStrategy::ElementalShamanStrategy(ShadowAI* botAI) : GenericShamanStrategy(botAI)
 {
     actionNodeFactories.Add(new ElementalShamanStrategyActionNodeFactory());
 }

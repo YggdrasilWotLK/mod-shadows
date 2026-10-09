@@ -5,7 +5,7 @@
 
 #include "SnareTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 Unit* SnareTargetValue::Calculate()

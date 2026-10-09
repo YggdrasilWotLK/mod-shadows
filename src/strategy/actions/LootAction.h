@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOOTACTION_H
-#define _PLAYERBOT_LOOTACTION_H
+#ifndef _SHADOW_LOOTACTION_H
+#define _SHADOW_LOOTACTION_H
 
 #include "InventoryAction.h"
 #include "MovementActions.h"
 
 class GameObject;
 class LootObject;
-class PlayerbotAI;
+class ShadowAI;
 class SpellInfo;
 
 class LootAction : public MovementAction
 {
 public:
-    LootAction(PlayerbotAI* botAI) : MovementAction(botAI, "loot") {}
+    LootAction(ShadowAI* botAI) : MovementAction(botAI, "loot") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -26,7 +26,7 @@ public:
 class OpenLootAction : public MovementAction
 {
 public:
-    OpenLootAction(PlayerbotAI* botAI) : MovementAction(botAI, "open loot") {}
+    OpenLootAction(ShadowAI* botAI) : MovementAction(botAI, "open loot") {}
 
     bool Execute(Event event) override;
 
@@ -41,16 +41,16 @@ private:
 class StoreLootAction : public InventoryAction
 {
 public:
-    StoreLootAction(PlayerbotAI* botAI) : InventoryAction(botAI, "store loot") {}
+    StoreLootAction(ShadowAI* botAI) : InventoryAction(botAI, "store loot") {}
 
     bool Execute(Event event) override;
-    static bool IsLootAllowed(uint32 itemid, PlayerbotAI* botAI);
+    static bool IsLootAllowed(uint32 itemid, ShadowAI* botAI);
 };
 
 class ReleaseLootAction : public InventoryAction
 {
 public:
-    ReleaseLootAction(PlayerbotAI* botAI) : InventoryAction(botAI, "release loot") {}
+    ReleaseLootAction(ShadowAI* botAI) : InventoryAction(botAI, "release loot") {}
 
     bool Execute(Event event) override;
 };

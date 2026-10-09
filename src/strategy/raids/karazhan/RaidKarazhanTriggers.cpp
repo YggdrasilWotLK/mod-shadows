@@ -1,7 +1,7 @@
 #include "RaidKarazhanTriggers.h"
 #include "RaidKarazhanHelpers.h"
 #include "RaidKarazhanActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool KarazhanAttumenTheHuntsmanTrigger::IsActive()
 {

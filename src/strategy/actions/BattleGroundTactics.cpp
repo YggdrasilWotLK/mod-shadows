@@ -23,7 +23,7 @@
 #include "BattlegroundWS.h"
 #include "Event.h"
 #include "IVMapMgr.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PositionValue.h"
 #include "PvpTriggers.h"
 #include "PathGenerator.h"
@@ -1273,9 +1273,9 @@ static std::pair<uint32, uint32> IC_AttackObjectives[] = {
 // useful commands for fixing BG bugs and checking waypoints/paths
 bool BGTactics::HandleConsoleCommand(ChatHandler* handler, char const* args)
 {
-    if (!sPlayerbotAIConfig->enabled)
+    if (!sShadowAIConfig->enabled)
     {
-        handler->PSendSysMessage("|cffff0000Playerbot system is currently disabled!");
+        handler->PSendSysMessage("|cffff0000Shadow system is currently disabled!");
         return true;
     }
     WorldSession* session = handler->GetSession();
@@ -1427,7 +1427,7 @@ std::string const BGTactics::HandleConsoleCommandPrivate(WorldSession* session, 
     return "usage: showpath(=[num]) / showcreature=[num] / showobject=[num]";
 }
 
-// Depends on OnBattlegroundStart in playerbots.cpp
+// Depends on OnBattlegroundStart in shadows.cpp
 uint8 BGTactics::GetBotStrategyForTeam(Battleground* bg, TeamId teamId)
 {
     auto itr = bgStrategies.find(bg->GetInstanceID());
@@ -2875,7 +2875,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (enemyBoss->IsVisible())
                         {
                             BgObjective = enemyBoss;
-                            // LOG_INFO("playerbots", "bot={} attack boss", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack boss", bot->GetName());
                         }
                     }
                 }
@@ -2885,7 +2885,7 @@ bool BGTactics::selectObjective(bool reset)
                     if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_ALLIANCE_BANNER))  // capture flag within keep
                     {
                         BgObjective = pGO;
-                        // LOG_INFO("playerbots", "bot={} attack keep", bot->GetName());
+                        // LOG_INFO("shadows", "bot={} attack keep", bot->GetName());
                     }
                 }
 
@@ -2897,7 +2897,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (vehicleId == NPC_SIEGE_ENGINE_H)  // target gate directly if siege engine
                         {
                             BgObjective = gate;
-                            // LOG_INFO("playerbots", "bot={} (in siege-engine) attack gate", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} (in siege-engine) attack gate", bot->GetName());
                         }
                         else  // target gate directly at range if other vehicle
                         {
@@ -2915,7 +2915,7 @@ bool BGTactics::selectObjective(bool reset)
                             siegePos.Set(gate->GetPositionX(), gate->GetPositionY(), gate->GetPositionZ(),
                                          bot->GetMapId());
                             posMap["bg siege"] = siegePos;
-                            // LOG_INFO("playerbots", "bot={} (in vehicle={}) attack gate", bot->GetName(), vehicleId);
+                            // LOG_INFO("shadows", "bot={} (in vehicle={}) attack gate", bot->GetName(), vehicleId);
                             return true;
                         }
                     }
@@ -2929,7 +2929,7 @@ bool BGTactics::selectObjective(bool reset)
                     if (nodePoint.nodeState != NODE_STATE_CONFLICT_H && nodePoint.nodeState != NODE_STATE_CONTROLLED_H)
                     {
                         BgObjective = bg->GetBGObject(BG_IC_GO_REFINERY_BANNER);
-                        // LOG_INFO("playerbots", "bot={} attack refinery", bot->GetName());
+                        // LOG_INFO("shadows", "bot={} attack refinery", bot->GetName());
                     }
                 }
 
@@ -2941,7 +2941,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_DOCKS_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack docks", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack docks", bot->GetName());
                         }
                     }
                 }
@@ -2953,7 +2953,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_HANGAR_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack hangar", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack hangar", bot->GetName());
                         }
                     }
                 }
@@ -2965,7 +2965,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_WORKSHOP_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack workshop", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack workshop", bot->GetName());
                         }
                     }
                 }
@@ -2982,7 +2982,7 @@ bool BGTactics::selectObjective(bool reset)
                             if (GameObject* pGO = bg->GetBGObject(objective.second))
                             {
                                 BgObjective = pGO;
-                                // LOG_INFO("playerbots", "bot={} guard point while it captures", bot->GetName());
+                                // LOG_INFO("shadows", "bot={} guard point while it captures", bot->GetName());
                                 break;
                             }
                         }
@@ -2999,7 +2999,7 @@ bool BGTactics::selectObjective(bool reset)
                                 IC_GATE_ATTACK_POS_HORDE.GetPositionY() + frand(-5.0f, +5.0f),
                                 IC_GATE_ATTACK_POS_HORDE.GetPositionZ(), bot->GetMapId());
                     posMap["bg objective"] = pos;
-                    // LOG_INFO("playerbots", "bot={} guard vehicles as they attack gate", bot->GetName());
+                    // LOG_INFO("shadows", "bot={} guard vehicles as they attack gate", bot->GetName());
                     return true;
                 }
             }
@@ -3027,7 +3027,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (enemyBoss->IsVisible())
                         {
                             BgObjective = enemyBoss;
-                            // LOG_INFO("playerbots", "bot={} attack boss", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack boss", bot->GetName());
                         }
                     }
                 }
@@ -3037,7 +3037,7 @@ bool BGTactics::selectObjective(bool reset)
                     if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_HORDE_BANNER))  // capture flag within keep
                     {
                         BgObjective = pGO;
-                        // LOG_INFO("playerbots", "bot={} attack keep", bot->GetName());
+                        // LOG_INFO("shadows", "bot={} attack keep", bot->GetName());
                     }
                 }
 
@@ -3049,7 +3049,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (vehicleId == NPC_SIEGE_ENGINE_A)  // target gate directly if siege engine
                         {
                             BgObjective = gate;
-                            // LOG_INFO("playerbots", "bot={} (in siege-engine) attack gate", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} (in siege-engine) attack gate", bot->GetName());
                         }
                         else  // target gate directly at range if other vehicle
                         {
@@ -3067,7 +3067,7 @@ bool BGTactics::selectObjective(bool reset)
                             siegePos.Set(gate->GetPositionX(), gate->GetPositionY(), gate->GetPositionZ(),
                                          bot->GetMapId());
                             posMap["bg siege"] = siegePos;
-                            // LOG_INFO("playerbots", "bot={} (in vehicle={}) attack gate", bot->GetName(), vehicleId);
+                            // LOG_INFO("shadows", "bot={} (in vehicle={}) attack gate", bot->GetName(), vehicleId);
                             return true;
                         }
                     }
@@ -3081,7 +3081,7 @@ bool BGTactics::selectObjective(bool reset)
                     if (nodePoint.nodeState != NODE_STATE_CONFLICT_A && nodePoint.nodeState != NODE_STATE_CONTROLLED_A)
                     {
                         BgObjective = bg->GetBGObject(BG_IC_GO_QUARRY_BANNER);
-                        // LOG_INFO("playerbots", "bot={} attack quarry", bot->GetName());
+                        // LOG_INFO("shadows", "bot={} attack quarry", bot->GetName());
                     }
                 }
 
@@ -3093,7 +3093,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_DOCKS_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack docks", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack docks", bot->GetName());
                         }
                     }
                 }
@@ -3105,7 +3105,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_HANGAR_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack hangar", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack hangar", bot->GetName());
                         }
                     }
                 }
@@ -3117,7 +3117,7 @@ bool BGTactics::selectObjective(bool reset)
                         if (GameObject* pGO = bg->GetBGObject(BG_IC_GO_WORKSHOP_BANNER))
                         {
                             BgObjective = pGO;
-                            // LOG_INFO("playerbots", "bot={} attack workshop", bot->GetName());
+                            // LOG_INFO("shadows", "bot={} attack workshop", bot->GetName());
                         }
                     }
                 }
@@ -3134,7 +3134,7 @@ bool BGTactics::selectObjective(bool reset)
                             if (GameObject* pGO = bg->GetBGObject(objective.second))
                             {
                                 BgObjective = pGO;
-                                // LOG_INFO("playerbots", "bot={} guard point while it captures", bot->GetName());
+                                // LOG_INFO("shadows", "bot={} guard point while it captures", bot->GetName());
                                 break;
                             }
                         }
@@ -3151,7 +3151,7 @@ bool BGTactics::selectObjective(bool reset)
                                 IC_GATE_ATTACK_POS_ALLIANCE.GetPositionY() + frand(-5.0f, +5.0f),
                                 IC_GATE_ATTACK_POS_ALLIANCE.GetPositionZ(), bot->GetMapId());
                     posMap["bg objective"] = pos;
-                    // LOG_INFO("playerbots", "bot={} guard vehicles as they attack gate", bot->GetName());
+                    // LOG_INFO("shadows", "bot={} guard vehicles as they attack gate", bot->GetName());
                     return true;
                 }
             }
@@ -3336,7 +3336,7 @@ bool BGTactics::selectObjectiveWp(std::vector<BattleBotPath*> const& vPaths)
                                : ((closestPointDistToBot - botDistanceScoreSubtract) * botDistanceScoreMultiply)) +
                           distToDestination;
 
-        // LOG_INFO("playerbots", "bot={}\t{:6.1f}\t{:4.1f}\t{:4.1f}\t{}", bot->GetName(), pathScore,
+        // LOG_INFO("shadows", "bot={}\t{:6.1f}\t{:4.1f}\t{:4.1f}\t{}", bot->GetName(), pathScore,
         // closestPointDistToBot, distToDestination, vPaths_AB_name[pathNum]);
 
         if (chosenPathScore > pathScore)
@@ -3352,7 +3352,7 @@ bool BGTactics::selectObjectiveWp(std::vector<BattleBotPath*> const& vPaths)
     if (!chosenPath)
         return false;
 
-    // LOG_INFO("playerbots", "{} bot={} path={}", (bot->GetTeamId() == TEAM_HORDE ? "HORDE" : "ALLIANCE"),
+    // LOG_INFO("shadows", "{} bot={} path={}", (bot->GetTeamId() == TEAM_HORDE ? "HORDE" : "ALLIANCE"),
     // bot->GetName(), chosenPathIndex);
 
     return moveToObjectiveWp(chosenPath, chosenPathPoint, chosenPathReverse);
@@ -3916,9 +3916,9 @@ bool BGTactics::useBuff()
     if (closeObjects.empty())
         return false;
 
-    bool needRegen = bot->GetHealthPct() < sPlayerbotAIConfig->mediumHealth ||
+    bool needRegen = bot->GetHealthPct() < sShadowAIConfig->mediumHealth ||
                      (AI_VALUE2(bool, "has mana", "self target") &&
-                      AI_VALUE2(uint8, "mana", "self target") < sPlayerbotAIConfig->mediumMana);
+                      AI_VALUE2(uint8, "mana", "self target") < sShadowAIConfig->mediumMana);
     bool needSpeed = (bgType != BATTLEGROUND_WS || bot->HasAura(BG_WS_SPELL_WARSONG_FLAG) ||
                       bot->HasAura(BG_WS_SPELL_SILVERWING_FLAG) || bot->HasAura(BG_EY_NETHERSTORM_FLAG_SPELL)) ||
                      !(teamFlagTaken() || flagTaken());
@@ -4130,7 +4130,7 @@ bool ArenaTactics::Execute(Event event)
 {
     if (!bot->InBattleground())
     {
-        bool IsRandomBot = sRandomPlayerbotMgr->IsRandomBot(bot->GetGUID().GetCounter());
+        bool IsRandomBot = sRandomShadowMgr->IsRandomBot(bot->GetGUID().GetCounter());
         botAI->ChangeStrategy("-arena", BOT_STATE_COMBAT);
         botAI->ChangeStrategy("-arena", BOT_STATE_NON_COMBAT);
         botAI->ResetStrategies(!IsRandomBot);

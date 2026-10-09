@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_XPGAINACTION_H
-#define _PLAYERBOT_XPGAINACTION_H
+#ifndef _SHADOW_XPGAINACTION_H
+#define _SHADOW_XPGAINACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class XpGainAction : public Action
 {
 public:
-    XpGainAction(PlayerbotAI* botAI) : Action(botAI, "xp gain") {}
+    XpGainAction(ShadowAI* botAI) : Action(botAI, "xp gain") {}
 
     bool Execute(Event event) override;
 

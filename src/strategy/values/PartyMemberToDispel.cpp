@@ -5,13 +5,13 @@
 
 #include "PartyMemberToDispel.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-class PartyMemberToDispelPredicate : public FindPlayerPredicate, public PlayerbotAIAware
+class PartyMemberToDispelPredicate : public FindPlayerPredicate, public ShadowAIAware
 {
 public:
-    PartyMemberToDispelPredicate(PlayerbotAI* botAI, uint32 dispelType)
-        : PlayerbotAIAware(botAI), FindPlayerPredicate(), dispelType(dispelType)
+    PartyMemberToDispelPredicate(ShadowAI* botAI, uint32 dispelType)
+        : ShadowAIAware(botAI), FindPlayerPredicate(), dispelType(dispelType)
     {
     }
 

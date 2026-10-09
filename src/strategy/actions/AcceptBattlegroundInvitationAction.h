@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ACCEPTBATTLEGROUNDINVITATIONACTION_H
-#define _PLAYERBOT_ACCEPTBATTLEGROUNDINVITATIONACTION_H
+#ifndef _SHADOW_ACCEPTBATTLEGROUNDINVITATIONACTION_H
+#define _SHADOW_ACCEPTBATTLEGROUNDINVITATIONACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AcceptBgInvitationAction : public Action
 {
 public:
-    AcceptBgInvitationAction(PlayerbotAI* botAI) : Action(botAI, "accept bg invitation") {}
+    AcceptBgInvitationAction(ShadowAI* botAI) : Action(botAI, "accept bg invitation") {}
 
     bool Execute(Event event) override;
 };

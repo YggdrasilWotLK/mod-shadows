@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEARESTNPCSVALUE_H
-#define _PLAYERBOT_NEARESTNPCSVALUE_H
+#ifndef _SHADOW_NEARESTNPCSVALUE_H
+#define _SHADOW_NEARESTNPCSVALUE_H
 
 #include "NearestUnitsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NearestNpcsValue : public NearestUnitsValue
 {
 public:
-    NearestNpcsValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestNpcsValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest npcs", range)
     {
     }
@@ -27,7 +27,7 @@ protected:
 class NearestHostileNpcsValue : public NearestUnitsValue
 {
 public:
-    NearestHostileNpcsValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestHostileNpcsValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest hostile npcs", range)
     {
     }
@@ -40,7 +40,7 @@ protected:
 class NearestVehiclesValue : public NearestUnitsValue
 {
 public:
-    NearestVehiclesValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestVehiclesValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest vehicles", range)
     {
     }
@@ -53,7 +53,7 @@ protected:
 class NearestTriggersValue : public NearestUnitsValue
 {
 public:
-    NearestTriggersValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->sightDistance)
+    NearestTriggersValue(ShadowAI* botAI, float range = sShadowAIConfig->sightDistance)
         : NearestUnitsValue(botAI, "nearest triggers", range)
     {
     }
@@ -66,7 +66,7 @@ protected:
 class NearestTotemsValue : public NearestUnitsValue
 {
 public:
-    NearestTotemsValue(PlayerbotAI* botAI, float range = 30.0f)
+    NearestTotemsValue(ShadowAI* botAI, float range = 30.0f)
         : NearestUnitsValue(botAI, "nearest totems", range, true)
     {
     }

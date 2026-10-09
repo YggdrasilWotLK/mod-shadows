@@ -1,9 +1,9 @@
-#ifndef _PLAYERBOT_RAIDVOATRIGGERS_H
-#define _PLAYERBOT_RAIDVOATRIGGERS_H
+#ifndef _SHADOW_RAIDVOATRIGGERS_H
+#define _SHADOW_RAIDVOATRIGGERS_H
 
 #include "EventMap.h"
 #include "GenericTriggers.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "Trigger.h"
 
 enum VoAIDs
@@ -22,28 +22,28 @@ enum VoAIDs
 class EmalonMarkBossTrigger : public Trigger
 {
 public:
-    EmalonMarkBossTrigger(PlayerbotAI* ai) : Trigger(ai, "emalon mark boss trigger") {}
+    EmalonMarkBossTrigger(ShadowAI* ai) : Trigger(ai, "emalon mark boss trigger") {}
     bool IsActive() override;
 };
 
 class EmalonLightingNovaTrigger : public Trigger
 {
 public:
-    EmalonLightingNovaTrigger(PlayerbotAI* ai) : Trigger(ai, "emalon lighting nova trigger") {}
+    EmalonLightingNovaTrigger(ShadowAI* ai) : Trigger(ai, "emalon lighting nova trigger") {}
     bool IsActive() override;
 };
 
 class EmalonOverchargeTrigger : public Trigger
 {
 public:
-    EmalonOverchargeTrigger(PlayerbotAI* ai) : Trigger(ai, "emalon overcharge trigger") {}
+    EmalonOverchargeTrigger(ShadowAI* ai) : Trigger(ai, "emalon overcharge trigger") {}
     bool IsActive() override;
 };
 
 class EmalonFallFromFloorTrigger : public Trigger
 {
 public:
-    EmalonFallFromFloorTrigger(PlayerbotAI* ai) : Trigger(ai, "emalon fall from floor trigger") {}
+    EmalonFallFromFloorTrigger(ShadowAI* ai) : Trigger(ai, "emalon fall from floor trigger") {}
     bool IsActive() override;
 };
 

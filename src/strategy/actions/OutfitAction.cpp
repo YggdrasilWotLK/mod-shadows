@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ItemPackets.h"
 
 bool OutfitAction::Execute(Event event)

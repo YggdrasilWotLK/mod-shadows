@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_EQUIPACTION_H
-#define _PLAYERBOT_EQUIPACTION_H
+#ifndef _SHADOW_EQUIPACTION_H
+#define _SHADOW_EQUIPACTION_H
 
 #include "ChatHelper.h"
 #include "InventoryAction.h"
 
 class FindItemVisitor;
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 
 class EquipAction : public InventoryAction
 {
 public:
-    EquipAction(PlayerbotAI* botAI, std::string const name = "equip") : InventoryAction(botAI, name) {}
+    EquipAction(ShadowAI* botAI, std::string const name = "equip") : InventoryAction(botAI, name) {}
 
     bool Execute(Event event) override;
     void EquipItems(ItemIds ids);
@@ -30,7 +30,7 @@ private:
 class EquipUpgradesAction : public EquipAction
 {
 public:
-    EquipUpgradesAction(PlayerbotAI* botAI, std::string const name = "equip upgrades") : EquipAction(botAI, name) {}
+    EquipUpgradesAction(ShadowAI* botAI, std::string const name = "equip upgrades") : EquipAction(botAI, name) {}
 
     bool Execute(Event event) override;
 };
@@ -38,7 +38,7 @@ public:
 class EquipUpgradeAction : public EquipAction
 {
 public:
-    EquipUpgradeAction(PlayerbotAI* botAI, std::string const name = "equip upgrade") : EquipAction(botAI, name) {}
+    EquipUpgradeAction(ShadowAI* botAI, std::string const name = "equip upgrade") : EquipAction(botAI, name) {}
 
     bool Execute(Event event) override;
 };

@@ -3,37 +3,37 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ROGUEACTIONS_H
-#define _PLAYERBOT_ROGUEACTIONS_H
+#ifndef _SHADOW_ROGUEACTIONS_H
+#define _SHADOW_ROGUEACTIONS_H
 
 #include "GenericSpellActions.h"
 #include "UseItemAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CastEvasionAction : public CastBuffSpellAction
 {
 public:
-    CastEvasionAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "evasion") {}
+    CastEvasionAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "evasion") {}
 };
 
 class CastCloakOfShadowsAction : public CastBuffSpellAction
 {
 public:
-    CastCloakOfShadowsAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "cloak of shadows") {}
+    CastCloakOfShadowsAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "cloak of shadows") {}
 };
 
 class CastHungerForBloodAction : public CastBuffSpellAction
 {
 public:
-    CastHungerForBloodAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "hunger for blood") {}
+    CastHungerForBloodAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "hunger for blood") {}
     std::string const GetTargetName() override { return "current target"; }
 };
 
 class CastSprintAction : public CastBuffSpellAction
 {
 public:
-    CastSprintAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "sprint") {}
+    CastSprintAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "sprint") {}
 
     std::string const GetTargetName() override { return "self target"; }
 };
@@ -41,7 +41,7 @@ public:
 class CastStealthAction : public CastBuffSpellAction
 {
 public:
-    CastStealthAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "stealth") {}
+    CastStealthAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "stealth") {}
 
     std::string const GetTargetName() override { return "self target"; }
     bool isUseful() override;
@@ -51,7 +51,7 @@ public:
 class UnstealthAction : public Action
 {
 public:
-    UnstealthAction(PlayerbotAI* botAI) : Action(botAI, "unstealth") {}
+    UnstealthAction(ShadowAI* botAI) : Action(botAI, "unstealth") {}
 
     bool Execute(Event event) override;
 };
@@ -59,7 +59,7 @@ public:
 class CheckStealthAction : public Action
 {
 public:
-    CheckStealthAction(PlayerbotAI* botAI) : Action(botAI, "check stealth") {}
+    CheckStealthAction(ShadowAI* botAI) : Action(botAI, "check stealth") {}
 
     bool isPossible() override { return true; }
     bool Execute(Event event) override;
@@ -68,31 +68,31 @@ public:
 class CastKickAction : public CastSpellAction
 {
 public:
-    CastKickAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "kick") {}
+    CastKickAction(ShadowAI* botAI) : CastSpellAction(botAI, "kick") {}
 };
 
 class CastFeintAction : public CastBuffSpellAction
 {
 public:
-    CastFeintAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "feint") {}
+    CastFeintAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "feint") {}
 };
 
 class CastDismantleAction : public CastSpellAction
 {
 public:
-    CastDismantleAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "dismantle") {}
+    CastDismantleAction(ShadowAI* botAI) : CastSpellAction(botAI, "dismantle") {}
 };
 
 class CastDistractAction : public CastSpellAction
 {
 public:
-    CastDistractAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "distract") {}
+    CastDistractAction(ShadowAI* botAI) : CastSpellAction(botAI, "distract") {}
 };
 
 class CastVanishAction : public CastBuffSpellAction
 {
 public:
-    CastVanishAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "vanish") {}
+    CastVanishAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "vanish") {}
 
     bool isUseful() override;
 };
@@ -100,37 +100,37 @@ public:
 class CastBlindAction : public CastDebuffSpellAction
 {
 public:
-    CastBlindAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "blind") {}
+    CastBlindAction(ShadowAI* botAI) : CastDebuffSpellAction(botAI, "blind") {}
 };
 
 class CastBladeFlurryAction : public CastBuffSpellAction
 {
 public:
-    CastBladeFlurryAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "blade flurry") {}
+    CastBladeFlurryAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "blade flurry") {}
 };
 
 class CastAdrenalineRushAction : public CastBuffSpellAction
 {
 public:
-    CastAdrenalineRushAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "adrenaline rush") {}
+    CastAdrenalineRushAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "adrenaline rush") {}
 };
 
 class CastKillingSpreeAction : public CastMeleeSpellAction
 {
 public:
-    CastKillingSpreeAction(PlayerbotAI* botAI) : CastMeleeSpellAction(botAI, "killing spree") {}
+    CastKillingSpreeAction(ShadowAI* botAI) : CastMeleeSpellAction(botAI, "killing spree") {}
 };
 
 class CastKickOnEnemyHealerAction : public CastSpellOnEnemyHealerAction
 {
 public:
-    CastKickOnEnemyHealerAction(PlayerbotAI* botAI) : CastSpellOnEnemyHealerAction(botAI, "kick") {}
+    CastKickOnEnemyHealerAction(ShadowAI* botAI) : CastSpellOnEnemyHealerAction(botAI, "kick") {}
 };
 
 class CastEnvenomAction : public CastMeleeSpellAction
 {
 public:
-    CastEnvenomAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "envenom") {}
+    CastEnvenomAction(ShadowAI* ai) : CastMeleeSpellAction(ai, "envenom") {}
     bool isUseful() override;
     bool isPossible() override;
 };
@@ -138,14 +138,14 @@ public:
 class CastTricksOfTheTradeOnMainTankAction : public BuffOnMainTankAction
 {
 public:
-    CastTricksOfTheTradeOnMainTankAction(PlayerbotAI* ai) : BuffOnMainTankAction(ai, "tricks of the trade", true) {}
+    CastTricksOfTheTradeOnMainTankAction(ShadowAI* ai) : BuffOnMainTankAction(ai, "tricks of the trade", true) {}
     virtual bool isUseful() override;
 };
 
 class UseDeadlyPoisonAction : public UseItemAction
 {
 public:
-    UseDeadlyPoisonAction(PlayerbotAI* ai) : UseItemAction(ai, "Deadly Poison") {}
+    UseDeadlyPoisonAction(ShadowAI* ai) : UseItemAction(ai, "Deadly Poison") {}
     virtual bool Execute(Event event) override;
     virtual bool isPossible() override;
 };
@@ -153,7 +153,7 @@ public:
 class UseInstantPoisonAction : public UseItemAction
 {
 public:
-    UseInstantPoisonAction(PlayerbotAI* ai) : UseItemAction(ai, "Instant Poison") {}
+    UseInstantPoisonAction(ShadowAI* ai) : UseItemAction(ai, "Instant Poison") {}
     virtual bool Execute(Event event) override;
     virtual bool isPossible() override;
 };
@@ -161,7 +161,7 @@ public:
 class UseInstantPoisonOffHandAction : public UseItemAction
 {
 public:
-    UseInstantPoisonOffHandAction(PlayerbotAI* ai) : UseItemAction(ai, "Instant Poison Off Hand") {}
+    UseInstantPoisonOffHandAction(ShadowAI* ai) : UseItemAction(ai, "Instant Poison Off Hand") {}
     virtual bool Execute(Event event) override;
     virtual bool isPossible() override;
 };
@@ -169,7 +169,7 @@ public:
 class FanOfKnivesAction : public CastMeleeSpellAction
 {
 public:
-    FanOfKnivesAction(PlayerbotAI* ai) : CastMeleeSpellAction(ai, "fan of knives") {}
+    FanOfKnivesAction(ShadowAI* ai) : CastMeleeSpellAction(ai, "fan of knives") {}
     ActionThreatType getThreatType() override { return ActionThreatType::Aoe; }
 };
 

@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ISMOVINGVALUE_H
-#define _PLAYERBOT_ISMOVINGVALUE_H
+#ifndef _SHADOW_ISMOVINGVALUE_H
+#define _SHADOW_ISMOVINGVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class IsMovingValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    IsMovingValue(PlayerbotAI* botAI, std::string const name = "is moving") : BoolCalculatedValue(botAI, name) {}
+    IsMovingValue(ShadowAI* botAI, std::string const name = "is moving") : BoolCalculatedValue(botAI, name) {}
 
     bool Calculate() override;
 };
@@ -22,7 +22,7 @@ public:
 class IsSwimmingValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    IsSwimmingValue(PlayerbotAI* botAI, std::string const name = "is swimming") : BoolCalculatedValue(botAI, name) {}
+    IsSwimmingValue(ShadowAI* botAI, std::string const name = "is swimming") : BoolCalculatedValue(botAI, name) {}
 
     bool Calculate() override;
 };

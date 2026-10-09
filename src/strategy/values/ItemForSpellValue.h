@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ITEMFORSPELLVALUE_H
-#define _PLAYERBOT_ITEMFORSPELLVALUE_H
+#ifndef _SHADOW_ITEMFORSPELLVALUE_H
+#define _SHADOW_ITEMFORSPELLVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
 class Item;
-class PlayerbotAI;
+class ShadowAI;
 class SpellInfo;
 
 class ItemForSpellValue : public CalculatedValue<Item*>, public Qualified
 {
 public:
-    ItemForSpellValue(PlayerbotAI* botAI, std::string const name = "item for spell")
+    ItemForSpellValue(ShadowAI* botAI, std::string const name = "item for spell")
         : CalculatedValue<Item*>(botAI, name, 1)
     {
     }

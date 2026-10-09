@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PRIESTTRIGGERS_H
-#define _PLAYERBOT_PRIESTTRIGGERS_H
+#ifndef _SHADOW_PRIESTTRIGGERS_H
+#define _SHADOW_PRIESTTRIGGERS_H
 
 #include "CureTriggers.h"
 #include "SharedDefines.h"
 #include "Trigger.h"
 #include <set>
 
-class PlayerbotAI;
+class ShadowAI;
 
 DEBUFF_CHECKISOWNER_TRIGGER(HolyFireTrigger, "holy fire");
 DEBUFF_CHECKISOWNER_TRIGGER(PowerWordPainTrigger, "shadow word: pain");
@@ -47,7 +47,7 @@ BOOST_TRIGGER_A(ShadowfiendTrigger, "shadowfiend");
 class PowerWordFortitudeOnPartyTrigger : public BuffOnPartyTrigger
 {
 public:
-    PowerWordFortitudeOnPartyTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "power word: fortitude", 4 * 2000)
+    PowerWordFortitudeOnPartyTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "power word: fortitude", 4 * 2000)
     {
     }
 
@@ -57,7 +57,7 @@ public:
 class PowerWordFortitudeTrigger : public BuffTrigger
 {
 public:
-    PowerWordFortitudeTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "power word: fortitude", 4 * 2000) {}
+    PowerWordFortitudeTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "power word: fortitude", 4 * 2000) {}
 
     bool IsActive() override;
 };
@@ -65,7 +65,7 @@ public:
 class DivineSpiritOnPartyTrigger : public BuffOnPartyTrigger
 {
 public:
-    DivineSpiritOnPartyTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "divine spirit", 4 * 2000) {}
+    DivineSpiritOnPartyTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "divine spirit", 4 * 2000) {}
 
     bool IsActive() override;
 };
@@ -73,7 +73,7 @@ public:
 class DivineSpiritTrigger : public BuffTrigger
 {
 public:
-    DivineSpiritTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "divine spirit", 4 * 2000) {}
+    DivineSpiritTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "divine spirit", 4 * 2000) {}
 
     bool IsActive() override;
 };
@@ -81,7 +81,7 @@ public:
 class PrayerOfFortitudeTrigger : public BuffOnPartyTrigger
 {
 public:
-    PrayerOfFortitudeTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "prayer of fortitude", 3 * 2000) {}
+    PrayerOfFortitudeTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "prayer of fortitude", 3 * 2000) {}
 
     bool IsActive() override;
 };
@@ -89,7 +89,7 @@ public:
 class PrayerOfSpiritTrigger : public BuffOnPartyTrigger
 {
 public:
-    PrayerOfSpiritTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "prayer of spirit", 2 * 2000) {}
+    PrayerOfSpiritTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "prayer of spirit", 2 * 2000) {}
 
     bool IsActive() override;
 };
@@ -97,7 +97,7 @@ public:
 class BindingHealTrigger : public PartyMemberLowHealthTrigger
 {
 public:
-    BindingHealTrigger(PlayerbotAI* botAI);
+    BindingHealTrigger(ShadowAI* botAI);
 
     bool IsActive() override;
 };
@@ -105,7 +105,7 @@ public:
 class MindSearChannelCheckTrigger : public Trigger
 {
 public:
-    MindSearChannelCheckTrigger(PlayerbotAI* botAI, uint32 minEnemies = 2)
+    MindSearChannelCheckTrigger(ShadowAI* botAI, uint32 minEnemies = 2)
         : Trigger(botAI, "mind sear channel check"), minEnemies(minEnemies)
     {
     }

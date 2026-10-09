@@ -1,6 +1,6 @@
 #include "RaidBwlActions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool BwlOnyxiaScaleCloakAuraCheckAction::Execute(Event event)
 {

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHATCOMMANDHANDLERSTRATEGY_H
-#define _PLAYERBOT_CHATCOMMANDHANDLERSTRATEGY_H
+#ifndef _SHADOW_CHATCOMMANDHANDLERSTRATEGY_H
+#define _SHADOW_CHATCOMMANDHANDLERSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ChatCommandHandlerStrategy : public PassTroughStrategy
 {
 public:
-    ChatCommandHandlerStrategy(PlayerbotAI* botAI);
+    ChatCommandHandlerStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "chat"; }

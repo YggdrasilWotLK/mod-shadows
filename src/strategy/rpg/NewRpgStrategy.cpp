@@ -5,9 +5,9 @@
 
 #include "NewRpgStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-NewRpgStrategy::NewRpgStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+NewRpgStrategy::NewRpgStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
 NextAction** NewRpgStrategy::getDefaultActions()
 {

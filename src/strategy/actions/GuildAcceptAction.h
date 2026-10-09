@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUILDACCEPTACTION_H
-#define _PLAYERBOT_GUILDACCEPTACTION_H
+#ifndef _SHADOW_GUILDACCEPTACTION_H
+#define _SHADOW_GUILDACCEPTACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GuildAcceptAction : public Action
 {
 public:
-    GuildAcceptAction(PlayerbotAI* botAI) : Action(botAI, "guild accept") {}
+    GuildAcceptAction(ShadowAI* botAI) : Action(botAI, "guild accept") {}
 
     bool Execute(Event event) override;
 };

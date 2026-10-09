@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DUELTARGETVALUE_H
-#define _PLAYERBOT_DUELTARGETVALUE_H
+#ifndef _SHADOW_DUELTARGETVALUE_H
+#define _SHADOW_DUELTARGETVALUE_H
 
 #include "TargetValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class DuelTargetValue : public TargetValue
 {
 public:
-    DuelTargetValue(PlayerbotAI* botAI, std::string const name = "duel target") : TargetValue(botAI, name) {}
+    DuelTargetValue(ShadowAI* botAI, std::string const name = "duel target") : TargetValue(botAI, name) {}
 
     Unit* Calculate() override;
 };

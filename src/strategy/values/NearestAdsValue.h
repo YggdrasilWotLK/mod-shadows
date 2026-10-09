@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_NEARESTADSVALUE_H
-#define _PLAYERBOT_NEARESTADSVALUE_H
+#ifndef _SHADOW_NEARESTADSVALUE_H
+#define _SHADOW_NEARESTADSVALUE_H
 
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "PossibleTargetsValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class NearestAddsValue : public PossibleTargetsValue
 {
 public:
-    NearestAddsValue(PlayerbotAI* botAI, float range = sPlayerbotAIConfig->tooCloseDistance)
+    NearestAddsValue(ShadowAI* botAI, float range = sShadowAIConfig->tooCloseDistance)
         : PossibleTargetsValue(botAI, "nearest adds", range, true)
     {
     }

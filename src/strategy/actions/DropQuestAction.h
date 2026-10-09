@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DROPQUESTACTION_H
-#define _PLAYERBOT_DROPQUESTACTION_H
+#ifndef _SHADOW_DROPQUESTACTION_H
+#define _SHADOW_DROPQUESTACTION_H
 
 #include "Action.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 class Quest;
 
 class DropQuestAction : public Action
 {
 public:
-    DropQuestAction(PlayerbotAI* botAI) : Action(botAI, "drop quest") {}
+    DropQuestAction(ShadowAI* botAI) : Action(botAI, "drop quest") {}
 
     bool Execute(Event event) override;
 };
@@ -23,7 +23,7 @@ public:
 class CleanQuestLogAction : public Action
 {
 public:
-    CleanQuestLogAction(PlayerbotAI* botAI) : Action(botAI, "clean quest log") {}
+    CleanQuestLogAction(ShadowAI* botAI) : Action(botAI, "clean quest log") {}
 
     bool Execute(Event event) override;
     void DropQuestType(uint8& numQuest, uint8 wantNum = 100, bool isGreen = false, bool hasProgress = false,

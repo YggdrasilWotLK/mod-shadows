@@ -5,6 +5,6 @@
 
 #include "RtiTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool NoRtiTrigger::IsActive() { return !AI_VALUE(Unit*, "rti target"); }

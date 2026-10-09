@@ -7,7 +7,7 @@
 class SartharionMultiplier : public Multiplier
 {
 public:
-    SartharionMultiplier(PlayerbotAI* ai) : Multiplier(ai, "sartharion") {}
+    SartharionMultiplier(ShadowAI* ai) : Multiplier(ai, "sartharion") {}
 
 public:
     virtual float GetValue(Action* action);

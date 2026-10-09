@@ -3,8 +3,8 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_EQUIPGLYPHSACTION_H
-#define _PLAYERBOT_EQUIPGLYPHSACTION_H
+#ifndef _SHADOW_EQUIPGLYPHSACTION_H
+#define _SHADOW_EQUIPGLYPHSACTION_H
 
 #include "Action.h"
 
@@ -14,7 +14,7 @@ enum class GlyphKind : uint32 { MAJOR = 1, MINOR = 2 };
 class EquipGlyphsAction : public Action
 {
 public:
-    EquipGlyphsAction(PlayerbotAI* ai) : Action(ai, "glyph equip") {}
+    EquipGlyphsAction(ShadowAI* ai) : Action(ai, "glyph equip") {}
     bool Execute(Event event) override;
 
     /// ---- Rendu public pour être utilisable par le cache global ----

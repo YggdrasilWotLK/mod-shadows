@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ATTACKERWITHOUTAURATARGETVALUE_H
-#define _PLAYERBOT_ATTACKERWITHOUTAURATARGETVALUE_H
+#ifndef _SHADOW_ATTACKERWITHOUTAURATARGETVALUE_H
+#define _SHADOW_ATTACKERWITHOUTAURATARGETVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class AttackerWithoutAuraTargetValue : public UnitCalculatedValue, public Qualified
 {
 public:
-    AttackerWithoutAuraTargetValue(PlayerbotAI* botAI, std::string range = "spell")
+    AttackerWithoutAuraTargetValue(ShadowAI* botAI, std::string range = "spell")
         : UnitCalculatedValue(botAI, "attacker without aura"), range(range)
     {
     }
@@ -28,7 +28,7 @@ protected:
 class MeleeAttackerWithoutAuraTargetValue : public AttackerWithoutAuraTargetValue
 {
 public:
-    MeleeAttackerWithoutAuraTargetValue(PlayerbotAI* botAI, bool checkArc = true) : AttackerWithoutAuraTargetValue(botAI, "melee"), checkArc(checkArc) {}
+    MeleeAttackerWithoutAuraTargetValue(ShadowAI* botAI, bool checkArc = true) : AttackerWithoutAuraTargetValue(botAI, "melee"), checkArc(checkArc) {}
     Unit* Calculate() override;
     bool checkArc;
 };

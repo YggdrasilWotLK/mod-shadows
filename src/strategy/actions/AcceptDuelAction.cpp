@@ -6,7 +6,7 @@
 #include "AcceptDuelAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool AcceptDuelAction::Execute(Event event)
 {

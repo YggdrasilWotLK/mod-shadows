@@ -6,12 +6,12 @@
 #include "PullStrategy.h"
 
 #include "PassiveMultiplier.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class MagePullMultiplier : public PassiveMultiplier
 {
 public:
-    MagePullMultiplier(PlayerbotAI* botAI, std::string const action) : PassiveMultiplier(botAI), actionName(action) {}
+    MagePullMultiplier(ShadowAI* botAI, std::string const action) : PassiveMultiplier(botAI), actionName(action) {}
 
     float GetValue(Action* action) override;
 

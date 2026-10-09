@@ -6,10 +6,10 @@
 #include "AvailableLootValue.h"
 
 #include "LootObjectStack.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
-AvailableLootValue::AvailableLootValue(PlayerbotAI* botAI, std::string const name)
+AvailableLootValue::AvailableLootValue(ShadowAI* botAI, std::string const name)
     : ManualSetValue<LootObjectStack*>(botAI, nullptr, name)
 {
     value = new LootObjectStack(botAI->GetBot());
@@ -17,7 +17,7 @@ AvailableLootValue::AvailableLootValue(PlayerbotAI* botAI, std::string const nam
 
 AvailableLootValue::~AvailableLootValue() { delete value; }
 
-LootTargetValue::LootTargetValue(PlayerbotAI* botAI, std::string const name)
+LootTargetValue::LootTargetValue(ShadowAI* botAI, std::string const name)
     : ManualSetValue<LootObject>(botAI, LootObject(), name)
 {
 }

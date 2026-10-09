@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "HallsOfLightningActions.h"
 #include "HallsOfLightningStrategy.h"
 

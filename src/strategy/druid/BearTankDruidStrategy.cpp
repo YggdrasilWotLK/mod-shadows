@@ -5,7 +5,7 @@
 
 #include "BearTankDruidStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class BearTankDruidStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -28,7 +28,7 @@ public:
     }
 
 private:
-    static ActionNode* melee([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* melee([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("melee",
                               /*P*/ NextAction::array(0, new NextAction("feral charge - bear"), nullptr),
@@ -36,7 +36,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* feral_charge_bear([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* feral_charge_bear([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("feral charge - bear",
                               /*P*/ nullptr,
@@ -44,7 +44,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* swipe_bear([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* swipe_bear([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("swipe (bear)",
                               /*P*/ nullptr,
@@ -52,7 +52,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* faerie_fire_feral([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* faerie_fire_feral([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("faerie fire (feral)",
                               /*P*/ NextAction::array(0, new NextAction("feral charge - bear"), nullptr),
@@ -60,7 +60,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* bear_form([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* bear_form([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("bear form",
                               /*P*/ nullptr,
@@ -68,7 +68,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* dire_bear_form([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* dire_bear_form([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("dire bear form",
                               /*P*/ NextAction::array(0, new NextAction("caster form"), nullptr),
@@ -76,7 +76,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* mangle_bear([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mangle_bear([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mangle (bear)",
                               /*P*/ nullptr,
@@ -85,7 +85,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* maul([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* maul([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("maul",
                               /*P*/ nullptr,
@@ -93,7 +93,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* bash([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* bash([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("bash",
                               /*P*/ nullptr,
@@ -101,7 +101,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* swipe([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* swipe([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("swipe",
                               /*P*/ nullptr,
@@ -109,7 +109,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* lacerate([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* lacerate([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("lacerate",
                               /*P*/ nullptr,
@@ -117,7 +117,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* growl([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* growl([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("growl",
                               /*P*/ nullptr,
@@ -125,7 +125,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* demoralizing_roar([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* demoralizing_roar([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("demoralizing roar",
                               /*P*/ nullptr,
@@ -134,7 +134,7 @@ private:
     }
 };
 
-BearTankDruidStrategy::BearTankDruidStrategy(PlayerbotAI* botAI) : FeralDruidStrategy(botAI)
+BearTankDruidStrategy::BearTankDruidStrategy(ShadowAI* botAI) : FeralDruidStrategy(botAI)
 {
     actionNodeFactories.Add(new BearTankDruidStrategyActionNodeFactory());
 }

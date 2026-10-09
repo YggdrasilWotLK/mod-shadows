@@ -5,7 +5,7 @@
 
 #include "DruidBearActions.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool CastMaulAction::isUseful()
 {

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICMAGENONCOMBATSTRATEGY_H
-#define _PLAYERBOT_GENERICMAGENONCOMBATSTRATEGY_H
+#ifndef _SHADOW_GENERICMAGENONCOMBATSTRATEGY_H
+#define _SHADOW_GENERICMAGENONCOMBATSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericMageNonCombatStrategy : public NonCombatStrategy
 {
 public:
-    GenericMageNonCombatStrategy(PlayerbotAI* botAI);
+    GenericMageNonCombatStrategy(ShadowAI* botAI);
 
     std::string const getName() override { return "nc"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -22,7 +22,7 @@ public:
 class MageBuffManaStrategy : public Strategy
 {
 public:
-    MageBuffManaStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageBuffManaStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bmana"; }
@@ -31,7 +31,7 @@ public:
 class MageBuffDpsStrategy : public Strategy
 {
 public:
-    MageBuffDpsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageBuffDpsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "bdps"; }
@@ -40,7 +40,7 @@ public:
 class MageBuffStrategy : public Strategy
 {
 public:
-    MageBuffStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    MageBuffStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "buff"; }

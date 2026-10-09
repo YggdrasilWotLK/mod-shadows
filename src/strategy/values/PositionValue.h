@@ -3,14 +3,14 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_POSITIONVALUE_H
-#define _PLAYERBOT_POSITIONVALUE_H
+#ifndef _SHADOW_POSITIONVALUE_H
+#define _SHADOW_POSITIONVALUE_H
 
 #include "NamedObjectContext.h"
 #include "TravelMgr.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PositionInfo
 {
@@ -50,7 +50,7 @@ typedef std::map<std::string, PositionInfo> PositionMap;
 class PositionValue : public ManualSetValue<PositionMap&>
 {
 public:
-    PositionValue(PlayerbotAI* botAI, std::string const name = "position");
+    PositionValue(ShadowAI* botAI, std::string const name = "position");
 
     std::string const Save() override;
     bool Load(std::string const value) override;
@@ -62,7 +62,7 @@ private:
 class CurrentPositionValue : public LogCalculatedValue<WorldPosition>
 {
 public:
-    CurrentPositionValue(PlayerbotAI* botAI, std::string const name = "current position", uint32 checkInterval = 1)
+    CurrentPositionValue(ShadowAI* botAI, std::string const name = "current position", uint32 checkInterval = 1)
         : LogCalculatedValue<WorldPosition>(botAI, name, checkInterval)
     {
         minChangeInterval = 60;
@@ -71,7 +71,7 @@ public:
 
     bool EqualToLast(WorldPosition value) override
     {
-        return value.fDist(lastValue) < sPlayerbotAIConfig->tooCloseDistance;
+        return value.fDist(lastValue) < sShadowAIConfig->tooCloseDistance;
     }
 
     WorldPosition Calculate() override;
@@ -80,7 +80,7 @@ public:
 class SinglePositionValue : public CalculatedValue<PositionInfo>, public Qualified
 {
 public:
-    SinglePositionValue(PlayerbotAI* ai, std::string name = "pos") : CalculatedValue(ai, name), Qualified() {};
+    SinglePositionValue(ShadowAI* ai, std::string name = "pos") : CalculatedValue(ai, name), Qualified() {};
     virtual PositionInfo Calculate() override;
     virtual void Set(PositionInfo value) override;
     virtual void Reset() override;

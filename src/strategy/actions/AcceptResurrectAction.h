@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ACCEPTRESURRECTACTION_H
-#define _PLAYERBOT_ACCEPTRESURRECTACTION_H
+#ifndef _SHADOW_ACCEPTRESURRECTACTION_H
+#define _SHADOW_ACCEPTRESURRECTACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AcceptResurrectAction : public Action
 {
 public:
-    AcceptResurrectAction(PlayerbotAI* botAI) : Action(botAI, "accept resurrect") {}
+    AcceptResurrectAction(ShadowAI* botAI) : Action(botAI, "accept resurrect") {}
 
     bool Execute(Event event) override;
 };

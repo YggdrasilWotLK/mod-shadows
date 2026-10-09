@@ -4,7 +4,7 @@
  */
 
 #include "TankWarlockStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // Combat strategy for a Warlock Tank, for certain bosses like Twin Emperors
 // Priority is set to spam Searing Pain and use Shadow Ward on CD
@@ -23,12 +23,12 @@ public:
     }
 
 private:
-    static ActionNode* shadow_ward(PlayerbotAI*) { return new ActionNode("shadow ward", nullptr, nullptr, nullptr); }
-    static ActionNode* searing_pain(PlayerbotAI*) { return new ActionNode("searing pain", nullptr, nullptr, nullptr); }
+    static ActionNode* shadow_ward(ShadowAI*) { return new ActionNode("shadow ward", nullptr, nullptr, nullptr); }
+    static ActionNode* searing_pain(ShadowAI*) { return new ActionNode("searing pain", nullptr, nullptr, nullptr); }
 };
 
 // ===== Warlock Tank Combat Strategy =====
-TankWarlockStrategy::TankWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
+TankWarlockStrategy::TankWarlockStrategy(ShadowAI* botAI) : GenericWarlockStrategy(botAI)
 {
     actionNodeFactories.Add(new TankWarlockStrategyActionNodeFactory());
 }

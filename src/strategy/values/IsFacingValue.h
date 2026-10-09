@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ISFACINGVALUE_H
-#define _PLAYERBOT_ISFACINGVALUE_H
+#ifndef _SHADOW_ISFACINGVALUE_H
+#define _SHADOW_ISFACINGVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class IsFacingValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    IsFacingValue(PlayerbotAI* botAI, std::string const name = "is facing") : BoolCalculatedValue(botAI, name) {}
+    IsFacingValue(ShadowAI* botAI, std::string const name = "is facing") : BoolCalculatedValue(botAI, name) {}
 
     bool Calculate() override;
 };

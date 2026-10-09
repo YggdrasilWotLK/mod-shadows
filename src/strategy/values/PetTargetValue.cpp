@@ -5,6 +5,6 @@
 
 #include "PetTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* PetTargetValue::Calculate() { return botAI->GetBot()->GetPet(); }

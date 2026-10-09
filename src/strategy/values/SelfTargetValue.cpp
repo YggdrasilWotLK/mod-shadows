@@ -5,6 +5,6 @@
 
 #include "SelfTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* SelfTargetValue::Calculate() { return botAI->GetBot(); }

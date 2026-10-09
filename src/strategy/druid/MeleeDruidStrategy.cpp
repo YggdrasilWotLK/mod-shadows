@@ -5,9 +5,9 @@
 
 #include "MeleeDruidStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-MeleeDruidStrategy::MeleeDruidStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+MeleeDruidStrategy::MeleeDruidStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
 NextAction** MeleeDruidStrategy::getDefaultActions()
 {

@@ -1,18 +1,18 @@
 // RaidOnyxiaActions.h
-#ifndef _PLAYERBOT_RAIDONYXIAACTIONS_H_
-#define _PLAYERBOT_RAIDONYXIAACTIONS_H_
+#ifndef _SHADOW_RAIDONYXIAACTIONS_H_
+#define _SHADOW_RAIDONYXIAACTIONS_H_
 
 #include "Action.h"
 #include "AttackAction.h"
 #include "GenericSpellActions.h"
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RaidOnyxiaMoveToSideAction : public MovementAction
 {
 public:
-    RaidOnyxiaMoveToSideAction(PlayerbotAI* botAI, std::string const name = "ony move to side")
+    RaidOnyxiaMoveToSideAction(ShadowAI* botAI, std::string const name = "ony move to side")
         : MovementAction(botAI, name)
     {
     }
@@ -22,7 +22,7 @@ public:
 class RaidOnyxiaSpreadOutAction : public MovementAction
 {
 public:
-    RaidOnyxiaSpreadOutAction(PlayerbotAI* botAI, std::string const name = "ony spread out")
+    RaidOnyxiaSpreadOutAction(ShadowAI* botAI, std::string const name = "ony spread out")
         : MovementAction(botAI, name)
     {
     }
@@ -38,7 +38,7 @@ struct SafeZone
 class RaidOnyxiaMoveToSafeZoneAction : public MovementAction
 {
 public:
-    RaidOnyxiaMoveToSafeZoneAction(PlayerbotAI* botAI, std::string const name = "ony move to safe zone")
+    RaidOnyxiaMoveToSafeZoneAction(ShadowAI* botAI, std::string const name = "ony move to safe zone")
         : MovementAction(botAI, name)
     {
     }
@@ -88,7 +88,7 @@ private:
 class RaidOnyxiaKillWhelpsAction : public AttackAction
 {
 public:
-    RaidOnyxiaKillWhelpsAction(PlayerbotAI* botAI, std::string const name = "ony kill whelps")
+    RaidOnyxiaKillWhelpsAction(ShadowAI* botAI, std::string const name = "ony kill whelps")
         : AttackAction(botAI, name)
     {
     }
@@ -99,7 +99,7 @@ public:
 class OnyxiaAvoidEggsAction : public MovementAction
 {
 public:
-    OnyxiaAvoidEggsAction(PlayerbotAI* botAI) : MovementAction(botAI, "ony avoid eggs move") {}
+    OnyxiaAvoidEggsAction(ShadowAI* botAI) : MovementAction(botAI, "ony avoid eggs move") {}
 
     bool Execute(Event event) override;
 };

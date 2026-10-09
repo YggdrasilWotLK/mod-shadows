@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GIVEITEMACTION_H
-#define _PLAYERBOT_GIVEITEMACTION_H
+#ifndef _SHADOW_GIVEITEMACTION_H
+#define _SHADOW_GIVEITEMACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GiveItemAction : public InventoryAction
 {
 public:
-    GiveItemAction(PlayerbotAI* botAI, std::string const name, std::string const item)
+    GiveItemAction(ShadowAI* botAI, std::string const name, std::string const item)
         : InventoryAction(botAI, name), item(item)
     {
     }
@@ -29,7 +29,7 @@ protected:
 class GiveFoodAction : public GiveItemAction
 {
 public:
-    GiveFoodAction(PlayerbotAI* botAI) : GiveItemAction(botAI, "give food", "conjured food") {}
+    GiveFoodAction(ShadowAI* botAI) : GiveItemAction(botAI, "give food", "conjured food") {}
 
     bool isUseful() override;
     Unit* GetTarget() override;
@@ -38,7 +38,7 @@ public:
 class GiveWaterAction : public GiveItemAction
 {
 public:
-    GiveWaterAction(PlayerbotAI* botAI) : GiveItemAction(botAI, "give water", "conjured water") {}
+    GiveWaterAction(ShadowAI* botAI) : GiveItemAction(botAI, "give water", "conjured water") {}
 
     bool isUseful() override;
     Unit* GetTarget() override;

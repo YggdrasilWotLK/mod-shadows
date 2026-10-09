@@ -6,7 +6,7 @@
 #include "AcceptQuestAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool AcceptAllQuestsAction::ProcessQuest(Quest const* quest, Object* questGiver)
 {
@@ -17,7 +17,7 @@ bool AcceptAllQuestsAction::ProcessQuest(Quest const* quest, Object* questGiver)
 
     if (botAI->HasStrategy("debug quest", BotState::BOT_STATE_NON_COMBAT) || botAI->HasStrategy("debug rpg", BotState::BOT_STATE_COMBAT))
     {
-        LOG_INFO("playerbots", "{} => Quest [{}] accepted", bot->GetName(), quest->GetTitle());
+        LOG_INFO("shadows", "{} => Quest [{}] accepted", bot->GetName(), quest->GetTitle());
         bot->Say("Quest [" + text_quest + "] accepted", LANG_UNIVERSAL);
     }
 
@@ -35,7 +35,7 @@ bool AcceptQuestAction::Execute(Event event)
     uint32 quest = 0;
 
     std::string const text = event.getParam();
-    PlayerbotChatHandler ch(requester);
+    ShadowChatHandler ch(requester);
     quest = ch.extractQuestId(text);
 
     bool hasAccept = false;
@@ -87,7 +87,7 @@ bool AcceptQuestAction::Execute(Event event)
     {
         std::stringstream ss;
         ss << "AcceptQuestAction [" << qInfo->GetTitle() << "] - [" << std::to_string(qInfo->GetQuestId()) << "]";
-        LOG_DEBUG("playerbots", "{}", ss.str().c_str());
+        LOG_DEBUG("shadows", "{}", ss.str().c_str());
         // botAI->TellMaster(ss.str());
     }
 

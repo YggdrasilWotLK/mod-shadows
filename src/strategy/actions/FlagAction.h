@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_FLAGACTION_H
-#define _PLAYERBOT_FLAGACTION_H
+#ifndef _SHADOW_FLAGACTION_H
+#define _SHADOW_FLAGACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FlagAction : public Action
 {
 public:
-    FlagAction(PlayerbotAI* botAI) : Action(botAI, "flag") {}
+    FlagAction(ShadowAI* botAI) : Action(botAI, "flag") {}
 
     bool Execute(Event event) override;
 

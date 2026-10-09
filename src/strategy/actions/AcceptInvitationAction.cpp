@@ -7,9 +7,9 @@
 
 #include "Event.h"
 #include "ObjectAccessor.h"
-#include "PlayerbotAIConfig.h"
-#include "PlayerbotSecurity.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "ShadowSecurity.h"
+#include "Shadows.h"
 #include "WorldPacket.h"
 
 bool AcceptInvitationAction::Execute(Event event)
@@ -26,7 +26,7 @@ bool AcceptInvitationAction::Execute(Event event)
     if (!inviter)
         return false;
 
-    if (!botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, inviter))
+    if (!botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, false, inviter))
     {
         WorldPacket data(SMSG_GROUP_DECLINE, 10);
         data << bot->GetName();
@@ -46,10 +46,10 @@ bool AcceptInvitationAction::Execute(Event event)
     if (!bot->GetGroup() || !bot->GetGroup()->IsMember(inviter->GetGUID()))
         return false;
 
-    if (sRandomPlayerbotMgr->IsRandomBot(bot))
+    if (sRandomShadowMgr->IsRandomBot(bot))
         botAI->SetMaster(inviter);
     // else
-    // sPlayerbotDbStore->Save(botAI);
+    // sShadowDbStore->Save(botAI);
 
     botAI->ResetStrategies();
     botAI->ChangeStrategy("+follow,-lfg,-bg", BOT_STATE_NON_COMBAT);
@@ -57,7 +57,7 @@ bool AcceptInvitationAction::Execute(Event event)
 
     botAI->TellMaster("Hello");
 
-    if (sPlayerbotAIConfig->summonWhenGroup && bot->GetDistance(inviter) > sPlayerbotAIConfig->sightDistance)
+    if (sShadowAIConfig->summonWhenGroup && bot->GetDistance(inviter) > sShadowAIConfig->sightDistance)
     {
         Teleport(inviter, bot);
     }

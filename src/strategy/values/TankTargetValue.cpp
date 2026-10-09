@@ -6,13 +6,13 @@
 #include "TankTargetValue.h"
 
 #include "AttackersValue.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 
 class FindTargetForTankStrategy : public FindNonCcTargetStrategy
 {
 public:
-    FindTargetForTankStrategy(PlayerbotAI* botAI) : FindNonCcTargetStrategy(botAI), minThreat(0) {}
+    FindTargetForTankStrategy(ShadowAI* botAI) : FindNonCcTargetStrategy(botAI), minThreat(0) {}
 
     void CheckAttacker(Unit* creature, ThreatMgr* threatMgr) override
     {
@@ -51,7 +51,7 @@ protected:
 class FindTankTargetSmartStrategy : public FindTargetStrategy
 {
 public:
-    FindTankTargetSmartStrategy(PlayerbotAI* botAI) : FindTargetStrategy(botAI) {}
+    FindTankTargetSmartStrategy(ShadowAI* botAI) : FindTargetStrategy(botAI) {}
 
     void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
     {

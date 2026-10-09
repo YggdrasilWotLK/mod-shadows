@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CUSTOMSTRATEGYEDITACTION_H
-#define _PLAYERBOT_CUSTOMSTRATEGYEDITACTION_H
+#ifndef _SHADOW_CUSTOMSTRATEGYEDITACTION_H
+#define _SHADOW_CUSTOMSTRATEGYEDITACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CustomStrategyEditAction : public Action
 {
 public:
-    CustomStrategyEditAction(PlayerbotAI* botAI) : Action(botAI, "cs") {}
+    CustomStrategyEditAction(ShadowAI* botAI) : Action(botAI, "cs") {}
 
     bool Execute(Event event) override;
 

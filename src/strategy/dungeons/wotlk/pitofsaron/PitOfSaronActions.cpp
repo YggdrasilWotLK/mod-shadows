@@ -1,4 +1,4 @@
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PitOfSaronActions.h"
 #include "PitOfSaronStrategy.h"
 #include "SharedDefines.h"

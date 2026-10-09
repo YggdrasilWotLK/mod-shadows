@@ -5,7 +5,7 @@
 
 #include "MageTriggers.h"
 #include "MageActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Player.h"
 #include "Spell.h"
 #include "DynamicObject.h"

@@ -9,9 +9,9 @@
 #include "FleeManager.h"
 #include "GameGraveyard.h"
 #include "MapMgr.h"
-#include "PlayerbotFactory.h"
-#include "Playerbots.h"
-#include "RandomPlayerbotMgr.h"
+#include "ShadowFactory.h"
+#include "Shadows.h"
+#include "RandomShadowMgr.h"
 #include "ServerFacade.h"
 #include "Corpse.h"
 
@@ -25,7 +25,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
     if (!p.empty() && p.GetOpcode() == CMSG_RECLAIM_CORPSE && master && !corpse && bot->IsAlive())
     {
         if (sServerFacade->IsDistanceLessThan(AI_VALUE2(float, "distance", "master target"),
-                                              sPlayerbotAIConfig->farDistance))
+                                              sShadowAIConfig->farDistance))
         {
             if (!botAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
             {
@@ -45,9 +45,9 @@ bool ReviveFromCorpseAction::Execute(Event event)
 
     if (master)
     {
-        if (!GET_PLAYERBOT_AI(master) && master->isDead() && master->GetCorpse() &&
+        if (!GET_SHADOW_AI(master) && master->isDead() && master->GetCorpse() &&
             sServerFacade->IsDistanceLessThan(AI_VALUE2(float, "distance", "master target"),
-                                              sPlayerbotAIConfig->farDistance))
+                                              sShadowAIConfig->farDistance))
             return false;
     }
 
@@ -61,7 +61,7 @@ bool ReviveFromCorpseAction::Execute(Event event)
         }
     }
 
-    LOG_DEBUG("playerbots", "Bot {} {}:{} <{}> revives at body", bot->GetGUID().ToString().c_str(),
+    LOG_DEBUG("shadows", "Bot {} {}:{} <{}> revives at body", bot->GetGUID().ToString().c_str(),
               bot->GetTeamId() == TEAM_ALLIANCE ? "A" : "H", bot->GetLevel(), bot->GetName().c_str());
 
     bot->GetMotionMaster()->Clear();
@@ -86,9 +86,9 @@ bool FindCorpseAction::Execute(Event event)
 
     // if (master)
     // {
-    //     if (!GET_PLAYERBOT_AI(master) &&
+    //     if (!GET_SHADOW_AI(master) &&
     //         sServerFacade->IsDistanceLessThan(AI_VALUE2(float, "distance", "master target"),
-    //         sPlayerbotAIConfig->farDistance)) return false;
+    //         sShadowAIConfig->farDistance)) return false;
     // }
 
     uint32 dCount = AI_VALUE(uint32, "death count");
@@ -97,12 +97,12 @@ bool FindCorpseAction::Execute(Event event)
     {
         if (dCount >= 5)
         {
-            // LOG_INFO("playerbots", "Bot {} {}:{} <{}>: died too many times, was revived and teleported",
+            // LOG_INFO("shadows", "Bot {} {}:{} <{}>: died too many times, was revived and teleported",
             //     bot->GetGUID().ToString().c_str(), bot->GetTeamId() == TEAM_ALLIANCE ? "A" : "H", bot->GetLevel(),
             //     bot->GetName().c_str());
             context->GetValue<uint32>("death count")->Set(0);
-            // sRandomPlayerbotMgr->RandomTeleportForLevel(bot);
-            sRandomPlayerbotMgr->Revive(bot);
+            // sRandomShadowMgr->RandomTeleportForLevel(bot);
+            sRandomShadowMgr->Revive(bot);
             return true;
         }
     }
@@ -123,7 +123,7 @@ bool FindCorpseAction::Execute(Event event)
     {
         if (moveToMaster)  // We are near master.
         {
-            if (botPos.fDist(masterPos) < sPlayerbotAIConfig->spellDistance)
+            if (botPos.fDist(masterPos) < sShadowAIConfig->spellDistance)
                 return false;
         }
         else if (deadTime > 8 * MINUTE)  // We have walked too long already.
@@ -138,7 +138,7 @@ bool FindCorpseAction::Execute(Event event)
     }
 
     // If we are getting close move to a save ressurrection spot instead of just the corpse.
-    if (corpseDist < sPlayerbotAIConfig->reactDistance)
+    if (corpseDist < sShadowAIConfig->reactDistance)
     {
         if (moveToMaster)
             moveToPos = masterPos;
@@ -308,7 +308,7 @@ bool SpiritHealerAction::Execute(Event event)
     GraveyardStruct const* ClosestGrave =
         GetGrave(dCount > 10 || deadTime > 15 * MINUTE || AI_VALUE(uint8, "durability") < 10);
 
-    if (bot->GetDistance2d(ClosestGrave->x, ClosestGrave->y) < sPlayerbotAIConfig->sightDistance)
+    if (bot->GetDistance2d(ClosestGrave->x, ClosestGrave->y) < sShadowAIConfig->sightDistance)
     {
         GuidVector npcs = AI_VALUE(GuidVector, "nearest npcs");
         for (GuidVector::iterator i = npcs.begin(); i != npcs.end(); i++)
@@ -316,9 +316,9 @@ bool SpiritHealerAction::Execute(Event event)
             Unit* unit = botAI->GetUnit(*i);
             if (unit && unit->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_SPIRITHEALER))
             {
-                LOG_DEBUG("playerbots", "Bot {} {}:{} <{}> revives at spirit healer", bot->GetGUID().ToString().c_str(),
+                LOG_DEBUG("shadows", "Bot {} {}:{} <{}> revives at spirit healer", bot->GetGUID().ToString().c_str(),
                           bot->GetTeamId() == TEAM_ALLIANCE ? "A" : "H", bot->GetLevel(), bot->GetName());
-                PlayerbotChatHandler ch(bot);
+                ShadowChatHandler ch(bot);
                 bot->ResurrectPlayer(0.5f);
                 bot->SpawnCorpseBones();
                 context->GetValue<Unit*>("current target")->Set(nullptr);
@@ -355,7 +355,7 @@ bool SpiritHealerAction::Execute(Event event)
     return bot->TeleportTo(ClosestGrave->Map, ClosestGrave->x, ClosestGrave->y, ClosestGrave->z, 0.f);
     // }
 
-    // LOG_INFO("playerbots", "Bot {} {}:{} <{}> can't find a spirit healer", bot->GetGUID().ToString().c_str(),
+    // LOG_INFO("shadows", "Bot {} {}:{} <{}> can't find a spirit healer", bot->GetGUID().ToString().c_str(),
     //          bot->GetTeamId() == TEAM_ALLIANCE ? "A" : "H", bot->GetLevel(), bot->GetName().c_str());
 
     // botAI->TellError("Cannot find any spirit healer nearby");

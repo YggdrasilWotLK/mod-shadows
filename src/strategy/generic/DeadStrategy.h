@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_DEADSTRATEGY_H
-#define _PLAYERBOT_DEADSTRATEGY_H
+#ifndef _SHADOW_DEADSTRATEGY_H
+#define _SHADOW_DEADSTRATEGY_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class DeadStrategy : public PassTroughStrategy
 {
 public:
-    DeadStrategy(PlayerbotAI* botAI);
+    DeadStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "dead"; }

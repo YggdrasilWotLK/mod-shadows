@@ -19,7 +19,7 @@
 #include "ShamanActions.h"
 #include "UseMeetingStoneAction.h"
 #include "WarriorActions.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "RaidIccTriggers.h"
 
 // LK global variables

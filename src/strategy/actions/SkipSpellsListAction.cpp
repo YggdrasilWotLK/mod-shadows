@@ -7,7 +7,7 @@
 
 #include "Event.h"
 #include "LootAction.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "SkipSpellsListValue.h"
 
 bool SkipSpellsListAction::Execute(Event event)

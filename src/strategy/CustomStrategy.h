@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CUSTOMSTRATEGY_H
-#define _PLAYERBOT_CUSTOMSTRATEGY_H
+#ifndef _SHADOW_CUSTOMSTRATEGY_H
+#define _SHADOW_CUSTOMSTRATEGY_H
 
 #include <map>
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CustomStrategy : public Strategy, public Qualified
 {
 public:
-    CustomStrategy(PlayerbotAI* botAI);
+    CustomStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return std::string("custom::" + qualifier); }

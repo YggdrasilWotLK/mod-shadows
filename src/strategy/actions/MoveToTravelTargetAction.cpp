@@ -8,7 +8,7 @@
 #include "ChooseRpgTargetAction.h"
 #include "LootObjectStack.h"
 #include "PathGenerator.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool MoveToTravelTargetAction::Execute(Event event)
 {
@@ -32,7 +32,7 @@ bool MoveToTravelTargetAction::Execute(Event event)
             if (!member->isMoving())
                 continue;
 
-            auto memberBotAI = GET_PLAYERBOT_AI(member);
+            auto memberBotAI = GET_SHADOW_AI(member);
             if (memberBotAI && !memberBotAI->HasStrategy("follow", BOT_STATE_NON_COMBAT))
                 continue;
 
@@ -43,7 +43,7 @@ bool MoveToTravelTargetAction::Execute(Event event)
 
             if (memberDistance < 50.0f)
                 continue;
-            if (memberDistance > sPlayerbotAIConfig->reactDistance * 20)
+            if (memberDistance > sShadowAIConfig->reactDistance * 20)
                 continue;
 
             // float memberAngle = botLocation.getAngleBetween(targetPos, memberPos);
@@ -65,9 +65,9 @@ bool MoveToTravelTargetAction::Execute(Event event)
                 botAI->TellMasterNoFacing(out);
             }
 
-            target->setExpireIn(target->getTimeLeft() + sPlayerbotAIConfig->maxWaitForMove);
+            target->setExpireIn(target->getTimeLeft() + sShadowAIConfig->maxWaitForMove);
 
-            botAI->SetNextCheckDelay(sPlayerbotAIConfig->maxWaitForMove);
+            botAI->SetNextCheckDelay(sShadowAIConfig->maxWaitForMove);
 
             return true;
         }
@@ -80,7 +80,7 @@ bool MoveToTravelTargetAction::Execute(Event event)
 
     if (target->getMaxTravelTime() > target->getTimeLeft())  // The bot is late. Speed it up.
     {
-        // distance = sPlayerbotAIConfig->fleeDistance;
+        // distance = sShadowAIConfig->fleeDistance;
         // angle = bot->GetAngle(location.GetPositionX(), location.GetPositionY());
         // location = botLocation.getLocation();
     }

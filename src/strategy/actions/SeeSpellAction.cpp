@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "Formations.h"
 #include "PathGenerator.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "RTSCValues.h"
 #include "RtscAction.h"
 #include "PositionValue.h"
@@ -17,7 +17,7 @@ Creature* SeeSpellAction::CreateWps(Player* wpOwner, float x, float y, float z, 
                                     bool important)
 {
     float dist = wpOwner->GetDistance(x, y, z);
-    float delay = 1000.0f * dist / wpOwner->GetSpeed(MOVE_RUN) + sPlayerbotAIConfig->reactDelay;
+    float delay = 1000.0f * dist / wpOwner->GetSpeed(MOVE_RUN) + sShadowAIConfig->reactDelay;
 
     if (!important)
         delay *= 0.25;

@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_RAIDEOETRIGGERS_H
-#define _PLAYERBOT_RAIDEOETRIGGERS_H
+#ifndef _SHADOW_RAIDEOETRIGGERS_H
+#define _SHADOW_RAIDEOETRIGGERS_H
 
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "Trigger.h"
 
 enum EyeOfEternityIDs
@@ -43,7 +43,7 @@ const uint32 EOE_MAP_ID = 616;
 class MalygosTrigger : public Trigger
 {
 public:
-    MalygosTrigger(PlayerbotAI* botAI) : Trigger(botAI, "malygos") {}
+    MalygosTrigger(ShadowAI* botAI) : Trigger(botAI, "malygos") {}
     bool IsActive() override;
     uint8 static getPhase(Player* bot, Unit* boss);
 };
@@ -51,7 +51,7 @@ public:
 class PowerSparkTrigger : public Trigger
 {
 public:
-    PowerSparkTrigger(PlayerbotAI* botAI) : Trigger(botAI, "power spark") {}
+    PowerSparkTrigger(ShadowAI* botAI) : Trigger(botAI, "power spark") {}
     bool IsActive() override;
 };
 

@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ENGINE_H
-#define _PLAYERBOT_ENGINE_H
+#ifndef _SHADOW_ENGINE_H
+#define _SHADOW_ENGINE_H
 
 #include <map>
 
 #include "Multiplier.h"
-#include "PlayerbotAIAware.h"
+#include "ShadowAIAware.h"
 #include "Queue.h"
 #include "Strategy.h"
 #include "Trigger.h"
@@ -19,7 +19,7 @@ class ActionNode;
 class AiObjectContext;
 class Event;
 class NextAction;
-class PlayerbotAI;
+class ShadowAI;
 
 enum ActionResult
 {
@@ -59,10 +59,10 @@ private:
     std::list<ActionExecutionListener*> listeners;
 };
 
-class Engine : public PlayerbotAIAware
+class Engine : public ShadowAIAware
 {
 public:
-    Engine(PlayerbotAI* botAI, AiObjectContext* factory);
+    Engine(ShadowAI* botAI, AiObjectContext* factory);
 
     void Init();
     void addStrategy(std::string const name, bool init = true);

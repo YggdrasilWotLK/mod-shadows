@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_QUESTSTRATEGIES_H
-#define _PLAYERBOT_QUESTSTRATEGIES_H
+#ifndef _SHADOW_QUESTSTRATEGIES_H
+#define _SHADOW_QUESTSTRATEGIES_H
 
 #include "PassTroughStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class QuestStrategy : public PassTroughStrategy
 {
 public:
-    QuestStrategy(PlayerbotAI* botAI);
+    QuestStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
 };
@@ -21,7 +21,7 @@ public:
 class DefaultQuestStrategy : public QuestStrategy
 {
 public:
-    DefaultQuestStrategy(PlayerbotAI* botAI);
+    DefaultQuestStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "quest"; }
@@ -30,7 +30,7 @@ public:
 class AcceptAllQuestsStrategy : public QuestStrategy
 {
 public:
-    AcceptAllQuestsStrategy(PlayerbotAI* botAI);
+    AcceptAllQuestsStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "accept all quests"; }

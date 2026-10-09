@@ -5,7 +5,7 @@
 
 #include "ItemForSpellValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 #ifndef WIN32
 inline int strcmpi(char const* s1, char const* s2)

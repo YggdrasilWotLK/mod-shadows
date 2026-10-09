@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_READYCHECKACTION_H
-#define _PLAYERBOT_READYCHECKACTION_H
+#ifndef _SHADOW_READYCHECKACTION_H
+#define _SHADOW_READYCHECKACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ReadyCheckAction : public InventoryAction
 {
 public:
-    ReadyCheckAction(PlayerbotAI* botAI, std::string const name = "ready check") : InventoryAction(botAI, name) {}
+    ReadyCheckAction(ShadowAI* botAI, std::string const name = "ready check") : InventoryAction(botAI, name) {}
 
     bool Execute(Event event) override;
 
@@ -24,7 +24,7 @@ protected:
 class FinishReadyCheckAction : public ReadyCheckAction
 {
 public:
-    FinishReadyCheckAction(PlayerbotAI* botAI) : ReadyCheckAction(botAI, "finish ready check") {}
+    FinishReadyCheckAction(ShadowAI* botAI) : ReadyCheckAction(botAI, "finish ready check") {}
 
     bool Execute(Event event) override;
 };

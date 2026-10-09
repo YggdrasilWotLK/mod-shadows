@@ -1,7 +1,7 @@
 #include "RaidOsActions.h"
 #include "RaidOsTriggers.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool SartharionTankPositionAction::Execute(Event event)
 {

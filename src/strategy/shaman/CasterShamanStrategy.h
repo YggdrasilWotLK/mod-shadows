@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CASTSHAMANSTRATEGY_H
-#define _PLAYERBOT_CASTSHAMANSTRATEGY_H
+#ifndef _SHADOW_CASTSHAMANSTRATEGY_H
+#define _SHADOW_CASTSHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CasterShamanStrategy : public GenericShamanStrategy
 {
 public:
-    CasterShamanStrategy(PlayerbotAI* botAI);
+    CasterShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     NextAction** getDefaultActions() override;
@@ -24,7 +24,7 @@ public:
 class CasterAoeShamanStrategy : public CombatStrategy
 {
 public:
-    CasterAoeShamanStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    CasterAoeShamanStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "caster aoe"; }

@@ -7,7 +7,7 @@
 
 #include "ChatHelper.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool RepairAllAction::Execute(Event event)
 {

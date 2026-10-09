@@ -4,7 +4,7 @@
  */
 
 #include "AfflictionWarlockStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 // ===== Action Node Factory =====
 class AfflictionWarlockStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -27,22 +27,22 @@ public:
     }
 
 private:
-    static ActionNode* corruption(PlayerbotAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* corruption_on_attacker(PlayerbotAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* unstable_affliction(PlayerbotAI*) { return new ActionNode("unstable affliction", nullptr, nullptr, nullptr); }
-    static ActionNode* unstable_affliction_on_attacker(PlayerbotAI*) { return new ActionNode("unstable affliction on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* haunt(PlayerbotAI*) { return new ActionNode("haunt", nullptr, nullptr, nullptr); }
-    static ActionNode* shadow_bolt(PlayerbotAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
-    static ActionNode* drain_soul(PlayerbotAI*) { return new ActionNode("drain soul", nullptr, nullptr, nullptr); }
-    static ActionNode* life_tap(PlayerbotAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
-    static ActionNode* shadowflame(PlayerbotAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption_on_attacker(PlayerbotAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
-    static ActionNode* seed_of_corruption(PlayerbotAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
-    static ActionNode* rain_of_fire(PlayerbotAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption(ShadowAI*) { return new ActionNode("corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* corruption_on_attacker(ShadowAI*) { return new ActionNode("corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* unstable_affliction(ShadowAI*) { return new ActionNode("unstable affliction", nullptr, nullptr, nullptr); }
+    static ActionNode* unstable_affliction_on_attacker(ShadowAI*) { return new ActionNode("unstable affliction on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* haunt(ShadowAI*) { return new ActionNode("haunt", nullptr, nullptr, nullptr); }
+    static ActionNode* shadow_bolt(ShadowAI*) { return new ActionNode("shadow bolt", nullptr, nullptr, nullptr); }
+    static ActionNode* drain_soul(ShadowAI*) { return new ActionNode("drain soul", nullptr, nullptr, nullptr); }
+    static ActionNode* life_tap(ShadowAI*) { return new ActionNode("life tap", nullptr, nullptr, nullptr); }
+    static ActionNode* shadowflame(ShadowAI*) { return new ActionNode("shadowflame", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption_on_attacker(ShadowAI*) { return new ActionNode("seed of corruption on attacker", nullptr, nullptr, nullptr); }
+    static ActionNode* seed_of_corruption(ShadowAI*) { return new ActionNode("seed of corruption", nullptr, nullptr, nullptr); }
+    static ActionNode* rain_of_fire(ShadowAI*) { return new ActionNode("rain of fire", nullptr, nullptr, nullptr); }
 };
 
 // ===== Single Target Strategy =====
-AfflictionWarlockStrategy::AfflictionWarlockStrategy(PlayerbotAI* botAI) : GenericWarlockStrategy(botAI)
+AfflictionWarlockStrategy::AfflictionWarlockStrategy(ShadowAI* botAI) : GenericWarlockStrategy(botAI)
 {
     actionNodeFactories.Add(new AfflictionWarlockStrategyActionNodeFactory());
 }

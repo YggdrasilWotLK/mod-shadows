@@ -6,8 +6,8 @@
 #include "ReachTargetActions.h"
 
 #include "Event.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 bool ReachTargetAction::Execute(Event event) { return ReachCombatTo(AI_VALUE(Unit*, GetTargetName()), distance); }
@@ -43,22 +43,22 @@ bool CastReachTargetSpellAction::isUseful()
     }
 
     return sServerFacade->IsDistanceGreaterThan(AI_VALUE2(float, "distance", "current target"),
-                                                (distance + sPlayerbotAIConfig->contactDistance));
+                                                (distance + sShadowAIConfig->contactDistance));
 }
 
-ReachSpellAction::ReachSpellAction(PlayerbotAI* botAI)
+ReachSpellAction::ReachSpellAction(ShadowAI* botAI)
     : ReachTargetAction(botAI, "reach spell", botAI->GetRange("spell"))
 {
 }
 
-ReachPartyMemberToHealAction::ReachPartyMemberToHealAction(PlayerbotAI* botAI)
+ReachPartyMemberToHealAction::ReachPartyMemberToHealAction(ShadowAI* botAI)
     : ReachTargetAction(botAI, "reach party member to heal", botAI->GetRange("heal"))
 {
 }
 
 std::string const ReachPartyMemberToHealAction::GetTargetName() { return "party member to heal"; }
 
-ReachPartyMemberToResurrectAction::ReachPartyMemberToResurrectAction(PlayerbotAI* botAI)
+ReachPartyMemberToResurrectAction::ReachPartyMemberToResurrectAction(ShadowAI* botAI)
     : ReachTargetAction(botAI, "reach party member to resurrect", botAI->GetRange("spell"))
 {
 }

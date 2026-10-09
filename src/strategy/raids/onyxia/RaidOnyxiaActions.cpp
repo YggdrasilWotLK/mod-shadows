@@ -4,7 +4,7 @@
 #include "GenericSpellActions.h"
 #include "LastMovementValue.h"
 #include "MovementActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PositionAction.h"
 
 bool RaidOnyxiaMoveToSideAction::Execute(Event event)

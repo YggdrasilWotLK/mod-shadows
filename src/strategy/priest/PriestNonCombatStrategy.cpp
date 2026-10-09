@@ -5,10 +5,10 @@
 
 #include "PriestNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PriestNonCombatStrategyActionNodeFactory.h"
 
-PriestNonCombatStrategy::PriestNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+PriestNonCombatStrategy::PriestNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new PriestNonCombatStrategyActionNodeFactory());
 }

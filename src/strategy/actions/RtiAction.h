@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTIACTION_H
-#define _PLAYERBOT_RTIACTION_H
+#ifndef _SHADOW_RTIACTION_H
+#define _SHADOW_RTIACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RtiAction : public Action
 {
 public:
-    RtiAction(PlayerbotAI* botAI) : Action(botAI, "rti") {}
+    RtiAction(ShadowAI* botAI) : Action(botAI, "rti") {}
 
     bool Execute(Event event) override;
 
@@ -24,7 +24,7 @@ private:
 class MarkRtiAction : public Action
 {
 public:
-    MarkRtiAction(PlayerbotAI* botAI) : Action(botAI, "mark rti") {}
+    MarkRtiAction(ShadowAI* botAI) : Action(botAI, "mark rti") {}
 
     bool Execute(Event event) override;
 };

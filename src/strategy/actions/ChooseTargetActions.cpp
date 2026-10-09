@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "LootObjectStack.h"
 #include "NewRpgStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PossibleRpgTargetsValue.h"
 #include "PvpTriggers.h"
 #include "ServerFacade.h"
@@ -19,7 +19,7 @@ bool AttackEnemyPlayerAction::isUseful()
     if (PlayerHasFlag::IsCapturingFlag(bot))
         return false;
 
-    return !sPlayerbotAIConfig->IsPvpProhibited(bot->GetZoneId(), bot->GetAreaId());
+    return !sShadowAIConfig->IsPvpProhibited(bot->GetZoneId(), bot->GetAreaId());
 }
 
 bool AttackEnemyFlagCarrierAction::isUseful()

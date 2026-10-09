@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GENERICPRIESTSTRATEGY_H
-#define _PLAYERBOT_GENERICPRIESTSTRATEGY_H
+#ifndef _SHADOW_GENERICPRIESTSTRATEGY_H
+#define _SHADOW_GENERICPRIESTSTRATEGY_H
 
 #include "CombatStrategy.h"
 #include "RangedCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GenericPriestStrategy : public RangedCombatStrategy
 {
 public:
-    GenericPriestStrategy(PlayerbotAI* botAI);
+    GenericPriestStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
 };
@@ -22,7 +22,7 @@ public:
 class PriestCureStrategy : public Strategy
 {
 public:
-    PriestCureStrategy(PlayerbotAI* botAI);
+    PriestCureStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cure"; }
@@ -31,7 +31,7 @@ public:
 class PriestBoostStrategy : public Strategy
 {
 public:
-    PriestBoostStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PriestBoostStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "boost"; }
@@ -40,7 +40,7 @@ public:
 class PriestCcStrategy : public Strategy
 {
 public:
-    PriestCcStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PriestCcStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "cc"; }
@@ -49,7 +49,7 @@ public:
 class PriestHealerDpsStrategy : public Strategy
 {
 public:
-    PriestHealerDpsStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PriestHealerDpsStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "healer dps"; }

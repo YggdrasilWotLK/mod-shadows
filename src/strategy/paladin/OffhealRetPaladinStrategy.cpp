@@ -5,7 +5,7 @@
 
 #include "OffhealRetPaladinStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Strategy.h"
 
 class OffhealRetPaladinStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
@@ -23,7 +23,7 @@ public:
     }
 
 private:
-    static ActionNode* retribution_aura([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* retribution_aura([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("retribution aura",
                               /*P*/ nullptr,
@@ -31,7 +31,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_corruption([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_corruption([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of corruption",
                               /*P*/ nullptr,
@@ -39,7 +39,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_vengeance([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_vengeance([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of vengeance",
                               /*P*/ nullptr,
@@ -47,7 +47,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* seal_of_command([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* seal_of_command([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("seal of command",
                               /*P*/ nullptr,
@@ -55,7 +55,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* blessing_of_might([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* blessing_of_might([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("blessing of might",
                               /*P*/ nullptr,
@@ -63,7 +63,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* crusader_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* crusader_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("crusader strike",
                               /*P*/ nullptr,
@@ -71,7 +71,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* divine_plea([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* divine_plea([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("divine plea",
                               /*P*/ nullptr,
@@ -80,7 +80,7 @@ private:
     }
 };
 
-OffhealRetPaladinStrategy::OffhealRetPaladinStrategy(PlayerbotAI* botAI) : GenericPaladinStrategy(botAI)
+OffhealRetPaladinStrategy::OffhealRetPaladinStrategy(ShadowAI* botAI) : GenericPaladinStrategy(botAI)
 {
     actionNodeFactories.Add(new OffhealRetPaladinStrategyActionNodeFactory());
 }

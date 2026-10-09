@@ -8,7 +8,7 @@
 #include "CellImpl.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void NearestNonBotPlayersValue::FindUnits(std::list<Unit*>& targets)
 {
@@ -20,6 +20,6 @@ void NearestNonBotPlayersValue::FindUnits(std::list<Unit*>& targets)
 bool NearestNonBotPlayersValue::AcceptUnit(Unit* unit)
 {
     ObjectGuid guid = unit->GetGUID();
-    return guid.IsPlayer() && !GET_PLAYERBOT_AI(((Player*)unit)) &&
+    return guid.IsPlayer() && !GET_SHADOW_AI(((Player*)unit)) &&
            (!((Player*)unit)->IsGameMaster() || ((Player*)unit)->isGMVisible());
 }

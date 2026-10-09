@@ -7,8 +7,8 @@
 
 #include "Event.h"
 #include "GuildPackets.h"
-#include "PlayerbotSecurity.h"
-#include "Playerbots.h"
+#include "ShadowSecurity.h"
+#include "Shadows.h"
 
 bool GuildAcceptAction::Execute(Event event)
 {
@@ -36,7 +36,7 @@ bool GuildAcceptAction::Execute(Event event)
         botAI->TellError("Sorry, I am in a guild already");
         accept = false;
     }
-    else if (!botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, inviter, true))
+    else if (!botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, false, inviter, true))
     {
         botAI->TellError("Sorry, I don't want to join your guild :(");
         accept = false;

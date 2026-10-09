@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PARTYMEMBERVALUE_H
-#define _PLAYERBOT_PARTYMEMBERVALUE_H
+#ifndef _SHADOW_PARTYMEMBERVALUE_H
+#define _SHADOW_PARTYMEMBERVALUE_H
 
 #include "Player.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class FindPlayerPredicate
 {
@@ -27,7 +27,7 @@ public:
 class PartyMemberValue : public UnitCalculatedValue
 {
 public:
-    PartyMemberValue(PlayerbotAI* botAI, std::string const name = "party member", int checkInterval = 1)
+    PartyMemberValue(ShadowAI* botAI, std::string const name = "party member", int checkInterval = 1)
         : UnitCalculatedValue(botAI, name, checkInterval)
     {
     }
@@ -43,7 +43,7 @@ protected:
 class PartyMemberMainTankValue : public PartyMemberValue
 {
 public:
-    PartyMemberMainTankValue(PlayerbotAI* botAI) : PartyMemberValue(botAI, "main tank member", 2 * 1000) {}
+    PartyMemberMainTankValue(ShadowAI* botAI) : PartyMemberValue(botAI, "main tank member", 2 * 1000) {}
     virtual Unit* Calculate();
 };
 

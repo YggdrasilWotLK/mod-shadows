@@ -6,18 +6,18 @@
 #include "SecurityCheckAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool SecurityCheckAction::isUseful()
 {
-    if (!sRandomPlayerbotMgr->IsRandomBot(bot) || !botAI)
+    if (!sRandomShadowMgr->IsRandomBot(bot) || !botAI)
         return false;
     Player* secMaster = botAI->GetMaster();
     if (!secMaster || !secMaster->GetSession())
         return false;
     if (secMaster->GetSession()->GetSecurity() >= SEC_GAMEMASTER)
         return false;
-    return !GET_PLAYERBOT_AI(secMaster);
+    return !GET_SHADOW_AI(secMaster);
 }
 
 bool SecurityCheckAction::Execute(Event event)

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CHATSHORTCUTACTION_H
-#define _PLAYERBOT_CHATSHORTCUTACTION_H
+#ifndef _SHADOW_CHATSHORTCUTACTION_H
+#define _SHADOW_CHATSHORTCUTACTION_H
 
 #include "MovementActions.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PositionsResetAction : public Action
 {
 public:
-    PositionsResetAction(PlayerbotAI* botAI, std::string const name) : Action(botAI, name) {}
+    PositionsResetAction(ShadowAI* botAI, std::string const name) : Action(botAI, name) {}
 
     void ResetReturnPosition();
     void SetReturnPosition(float x, float y, float z);
@@ -24,7 +24,7 @@ public:
 class FollowChatShortcutAction : public MovementAction
 {
 public:
-    FollowChatShortcutAction(PlayerbotAI* botAI) : MovementAction(botAI, "follow chat shortcut") {}
+    FollowChatShortcutAction(ShadowAI* botAI) : MovementAction(botAI, "follow chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -32,7 +32,7 @@ public:
 class StayChatShortcutAction : public PositionsResetAction
 {
 public:
-    StayChatShortcutAction(PlayerbotAI* botAI) : PositionsResetAction(botAI, "stay chat shortcut") {}
+    StayChatShortcutAction(ShadowAI* botAI) : PositionsResetAction(botAI, "stay chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -40,7 +40,7 @@ public:
 class MoveFromGroupChatShortcutAction : public Action
 {
 public:
-    MoveFromGroupChatShortcutAction(PlayerbotAI* botAI) : Action(botAI, "move from group chat shortcut") {}
+    MoveFromGroupChatShortcutAction(ShadowAI* botAI) : Action(botAI, "move from group chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -48,7 +48,7 @@ public:
 class FleeChatShortcutAction : public PositionsResetAction
 {
 public:
-    FleeChatShortcutAction(PlayerbotAI* botAI) : PositionsResetAction(botAI, "flee chat shortcut") {}
+    FleeChatShortcutAction(ShadowAI* botAI) : PositionsResetAction(botAI, "flee chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -56,7 +56,7 @@ public:
 class GoawayChatShortcutAction : public PositionsResetAction
 {
 public:
-    GoawayChatShortcutAction(PlayerbotAI* botAI) : PositionsResetAction(botAI, "runaway chat shortcut") {}
+    GoawayChatShortcutAction(ShadowAI* botAI) : PositionsResetAction(botAI, "runaway chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -64,7 +64,7 @@ public:
 class GrindChatShortcutAction : public PositionsResetAction
 {
 public:
-    GrindChatShortcutAction(PlayerbotAI* botAI) : PositionsResetAction(botAI, "grind chat shortcut") {}
+    GrindChatShortcutAction(ShadowAI* botAI) : PositionsResetAction(botAI, "grind chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -72,7 +72,7 @@ public:
 class TankAttackChatShortcutAction : public PositionsResetAction
 {
 public:
-    TankAttackChatShortcutAction(PlayerbotAI* botAI) : PositionsResetAction(botAI, "tank attack chat shortcut") {}
+    TankAttackChatShortcutAction(ShadowAI* botAI) : PositionsResetAction(botAI, "tank attack chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -80,7 +80,7 @@ public:
 class MaxDpsChatShortcutAction : public Action
 {
 public:
-    MaxDpsChatShortcutAction(PlayerbotAI* botAI) : Action(botAI, "max dps chat shortcut") {}
+    MaxDpsChatShortcutAction(ShadowAI* botAI) : Action(botAI, "max dps chat shortcut") {}
 
     bool Execute(Event event) override;
 };
@@ -88,14 +88,14 @@ public:
 class NaxxChatShortcutAction : public Action
 {
 public:
-    NaxxChatShortcutAction(PlayerbotAI* ai) : Action(ai, "naxx chat shortcut") {}
+    NaxxChatShortcutAction(ShadowAI* ai) : Action(ai, "naxx chat shortcut") {}
     virtual bool Execute(Event event);
 };
 
 class BwlChatShortcutAction : public Action
 {
 public:
-    BwlChatShortcutAction(PlayerbotAI* ai) : Action(ai, "bwl chat shortcut") {}
+    BwlChatShortcutAction(ShadowAI* ai) : Action(ai, "bwl chat shortcut") {}
     virtual bool Execute(Event event);
 };
 #endif

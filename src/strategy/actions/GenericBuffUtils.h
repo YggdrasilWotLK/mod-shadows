@@ -11,7 +11,7 @@
 #include "Group.h"
 #include "Chat.h"
 #include "Language.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
 namespace ai::buff
 {
@@ -34,7 +34,7 @@ namespace ai::buff
     // (if provided) to notify the party/raid.
     std::string UpgradeToGroupIfAppropriate(
         Player* bot,
-        PlayerbotAI* botAI,
+        ShadowAI* botAI,
         std::string const& baseName,
         bool announceOnMissing = false,
         std::function<void(std::string const&)> announce = {}
@@ -42,7 +42,7 @@ namespace ai::buff
 }
 
 namespace ai::chat {
-    inline std::function<void(std::string const&)> MakeGroupAnnouncer(PlayerbotAI* botAI)
+    inline std::function<void(std::string const&)> MakeGroupAnnouncer(ShadowAI* botAI)
     {
         return [botAI](std::string const& msg)
         {

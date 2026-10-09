@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONFOSTRIGGERCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONFOSTRIGGERCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONFOSTRIGGERCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONFOSTRIGGERCONTEXT_H
 
 #include "NamedObjectContext.h"
 #include "AiObjectContext.h"
@@ -17,10 +17,10 @@ public:
     }
 
 private:
-    static Trigger* move_from_bronjahm(PlayerbotAI* ai) { return new MoveFromBronjahmTrigger(ai); }
-    static Trigger* switch_to_soul_fragment(PlayerbotAI* ai) { return new SwitchToSoulFragment(ai); }
-    static Trigger* bronjahm_position(PlayerbotAI* ai) { return new BronjahmPositionTrigger(ai); }
-    static Trigger* devourer_of_souls(PlayerbotAI* ai) { return new DevourerOfSoulsTrigger(ai); }
+    static Trigger* move_from_bronjahm(ShadowAI* ai) { return new MoveFromBronjahmTrigger(ai); }
+    static Trigger* switch_to_soul_fragment(ShadowAI* ai) { return new SwitchToSoulFragment(ai); }
+    static Trigger* bronjahm_position(ShadowAI* ai) { return new BronjahmPositionTrigger(ai); }
+    static Trigger* devourer_of_souls(ShadowAI* ai) { return new DevourerOfSoulsTrigger(ai); }
 };
 
-#endif  // !_PLAYERBOT_WOTLKDUNGEONFOSTRIGGERCONTEXT_H
+#endif  // !_SHADOW_WOTLKDUNGEONFOSTRIGGERCONTEXT_H

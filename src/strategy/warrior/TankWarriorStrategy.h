@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TANKWARRIORSTRATEGY_H
-#define _PLAYERBOT_TANKWARRIORSTRATEGY_H
+#ifndef _SHADOW_TANKWARRIORSTRATEGY_H
+#define _SHADOW_TANKWARRIORSTRATEGY_H
 
 #include "GenericWarriorStrategy.h"
 #include "WarriorTriggers.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class TankWarriorStrategy : public GenericWarriorStrategy
 {
 public:
-    TankWarriorStrategy(PlayerbotAI* botAI);
+    TankWarriorStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "tank"; }

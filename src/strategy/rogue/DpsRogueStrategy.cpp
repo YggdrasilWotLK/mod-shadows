@@ -5,7 +5,7 @@
 
 #include "DpsRogueStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class DpsRogueStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -22,49 +22,49 @@ public:
     }
 
 private:
-    static ActionNode* melee([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* melee([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("melee",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("mutilate"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* mutilate([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* mutilate([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("mutilate",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("sinister strike"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* sinister_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* sinister_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("sinister strike",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("melee"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* kick([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* kick([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("kick",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("kidney shot"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* kidney_shot([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* kidney_shot([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("kidney shot",
                               /*P*/ nullptr,
                               /*A*/ nullptr,
                               /*C*/ nullptr);
     }
-    static ActionNode* backstab([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* backstab([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("backstab",
                               /*P*/ nullptr,
                               /*A*/ NextAction::array(0, new NextAction("mutilate"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* rupture([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* rupture([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("rupture",
                               /*P*/ nullptr,
@@ -73,7 +73,7 @@ private:
     }
 };
 
-DpsRogueStrategy::DpsRogueStrategy(PlayerbotAI* botAI) : MeleeCombatStrategy(botAI)
+DpsRogueStrategy::DpsRogueStrategy(ShadowAI* botAI) : MeleeCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new DpsRogueStrategyActionNodeFactory());
 }
@@ -158,7 +158,7 @@ public:
     }
 
 private:
-    static ActionNode* ambush([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* ambush([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("ambush",
                               /*P*/ nullptr,
@@ -166,7 +166,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* cheap_shot([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* cheap_shot([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("cheap shot",
                               /*P*/ nullptr,
@@ -174,7 +174,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* garrote([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* garrote([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("garrote",
                               /*P*/ nullptr,
@@ -182,7 +182,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* sap([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* sap([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("sap",
                               /*P*/ nullptr,
@@ -190,7 +190,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* sinister_strike([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* sinister_strike([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("sinister strike",
                               /*P*/ nullptr,
@@ -199,7 +199,7 @@ private:
     }
 };
 
-StealthedRogueStrategy::StealthedRogueStrategy(PlayerbotAI* botAI) : Strategy(botAI)
+StealthedRogueStrategy::StealthedRogueStrategy(ShadowAI* botAI) : Strategy(botAI)
 {
     actionNodeFactories.Add(new StealthedRogueStrategyActionNodeFactory());
 }

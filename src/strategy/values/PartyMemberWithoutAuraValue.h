@@ -3,21 +3,21 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PARTYMEMBERWITHOUTAURAVALUE_H
-#define _PLAYERBOT_PARTYMEMBERWITHOUTAURAVALUE_H
+#ifndef _SHADOW_PARTYMEMBERWITHOUTAURAVALUE_H
+#define _SHADOW_PARTYMEMBERWITHOUTAURAVALUE_H
 
 #include "NamedObjectContext.h"
 #include "PartyMemberValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class PartyMemberWithoutAuraValue : public PartyMemberValue, public Qualified
 {
 public:
-    PartyMemberWithoutAuraValue(PlayerbotAI* botAI, std::string const name = "party member without aura",
-                                float range = sPlayerbotAIConfig->sightDistance)
+    PartyMemberWithoutAuraValue(ShadowAI* botAI, std::string const name = "party member without aura",
+                                float range = sShadowAIConfig->sightDistance)
         : PartyMemberValue(botAI, name)
     {
     }

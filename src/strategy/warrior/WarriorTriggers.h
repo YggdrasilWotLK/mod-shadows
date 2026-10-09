@@ -3,11 +3,11 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WARRIORTRIGGERS_H
-#define _PLAYERBOT_WARRIORTRIGGERS_H
+#ifndef _SHADOW_WARRIORTRIGGERS_H
+#define _SHADOW_WARRIORTRIGGERS_H
 
 #include "GenericTriggers.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
 BUFF_TRIGGER(BattleStanceTrigger, "battle stance");
 BUFF_TRIGGER(DefensiveStanceTrigger, "defensive stance");
@@ -21,7 +21,7 @@ DEBUFF_TRIGGER(MortalStrikeDebuffTrigger, "mortal strike");
 class RendDebuffOnAttackerTrigger : public DebuffOnMeleeAttackerTrigger
 {
 public:
-    RendDebuffOnAttackerTrigger(PlayerbotAI* botAI) : DebuffOnMeleeAttackerTrigger(botAI, "rend") {}
+    RendDebuffOnAttackerTrigger(ShadowAI* botAI) : DebuffOnMeleeAttackerTrigger(botAI, "rend") {}
 };
 
 CAN_CAST_TRIGGER(RevengeAvailableTrigger, "revenge");
@@ -59,13 +59,13 @@ HAS_AURA_TRIGGER(TasteForBloodTrigger, "taste for blood");
 class RendDebuffTrigger : public DebuffTrigger
 {
 public:
-    RendDebuffTrigger(PlayerbotAI* botAI) : DebuffTrigger(botAI, "rend", 1, true) {}
+    RendDebuffTrigger(ShadowAI* botAI) : DebuffTrigger(botAI, "rend", 1, true) {}
 };
 
 class VigilanceTrigger : public BuffOnPartyTrigger
 {
 public:
-    VigilanceTrigger(PlayerbotAI* botAI) : BuffOnPartyTrigger(botAI, "vigilance") {}
+    VigilanceTrigger(ShadowAI* botAI) : BuffOnPartyTrigger(botAI, "vigilance") {}
 
     bool IsActive() override;
 };
@@ -73,7 +73,7 @@ public:
 class ShatteringThrowTrigger : public Trigger
 {
 public:
-    ShatteringThrowTrigger(PlayerbotAI* botAI) : Trigger(botAI, "shattering throw trigger") {}
+    ShatteringThrowTrigger(ShadowAI* botAI) : Trigger(botAI, "shattering throw trigger") {}
 
     bool IsActive() override;
 };
@@ -81,7 +81,7 @@ public:
 class BattleShoutTrigger : public BuffTrigger
 {
 public:
-    BattleShoutTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "battle shout") {}
+    BattleShoutTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "battle shout") {}
 
     bool IsActive() override;
 };
@@ -89,7 +89,7 @@ public:
 class CommandingShoutTrigger : public BuffTrigger
 {
 public:
-    CommandingShoutTrigger(PlayerbotAI* botAI) : BuffTrigger(botAI, "commanding shout") {}
+    CommandingShoutTrigger(ShadowAI* botAI) : BuffTrigger(botAI, "commanding shout") {}
 
     bool IsActive() override;
 };
@@ -97,6 +97,6 @@ public:
 // class SlamTrigger : public HasAuraTrigger
 // {
 // public:
-//     SlamTrigger(PlayerbotAI* ai) : HasAuraTrigger(ai, "slam!") {}
+//     SlamTrigger(ShadowAI* ai) : HasAuraTrigger(ai, "slam!") {}
 // };
 #endif

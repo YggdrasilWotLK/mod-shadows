@@ -6,8 +6,8 @@
 #include "RangeTriggers.h"
 
 #include "MoveSplineInit.h"
-#include "PlayerbotAIConfig.h"
-#include "Playerbots.h"
+#include "ShadowAIConfig.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 
@@ -47,10 +47,10 @@ bool EnemyTooCloseForSpellTrigger::IsActive()
     //         isRaid = true;
 
     // //    if (isBoss || isRaid)
-    // //        return sServerFacade->IsDistanceLessThan(targetDistance, (sPlayerbotAIConfig->tooCloseDistance +
+    // //        return sServerFacade->IsDistanceLessThan(targetDistance, (sShadowAIConfig->tooCloseDistance +
     // combatReach) / 2);
 
-    //     return sServerFacade->IsDistanceLessOrEqualThan(targetDistance, (sPlayerbotAIConfig->tooCloseDistance +
+    //     return sServerFacade->IsDistanceLessOrEqualThan(targetDistance, (sShadowAIConfig->tooCloseDistance +
     //     combatReach / 2));
 }
 
@@ -147,7 +147,7 @@ bool EnemyIsCloseTrigger::IsActive()
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     return target && sServerFacade->IsDistanceLessOrEqualThan(AI_VALUE2(float, "distance", "current target"),
-                                                              sPlayerbotAIConfig->tooCloseDistance);
+                                                              sShadowAIConfig->tooCloseDistance);
 }
 
 bool EnemyWithinMeleeTrigger::IsActive()
@@ -167,7 +167,7 @@ bool OutOfRangeTrigger::IsActive()
                dis);  // sServerFacade->IsDistanceGreaterThan(AI_VALUE2(float, "distance", GetTargetName()), distance);
 }
 
-EnemyOutOfSpellRangeTrigger::EnemyOutOfSpellRangeTrigger(PlayerbotAI* botAI)
+EnemyOutOfSpellRangeTrigger::EnemyOutOfSpellRangeTrigger(ShadowAI* botAI)
     : OutOfRangeTrigger(botAI, "enemy out of spell range", botAI->GetRange("spell"))
 {
 }
@@ -180,7 +180,7 @@ EnemyOutOfSpellRangeTrigger::EnemyOutOfSpellRangeTrigger(PlayerbotAI* botAI)
 
 //     float combatReach = bot->GetCombatReach() + target->GetCombatReach();
 //     return target && (sServerFacade->GetDistance2d(bot, target) > (distance + combatReach +
-//     sPlayerbotAIConfig->contactDistance) || !bot->IsWithinLOSInMap(target));
+//     sShadowAIConfig->contactDistance) || !bot->IsWithinLOSInMap(target));
 // }
 
 // bool EnemyOutOfMeleeTrigger::IsActive()
@@ -201,11 +201,11 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
         return false;
 
     float combatReach = bot->GetCombatReach() + target->GetCombatReach();
-    return target && (sServerFacade->GetDistance2d(bot, target) > (distance + sPlayerbotAIConfig->contactDistance) ||
+    return target && (sServerFacade->GetDistance2d(bot, target) > (distance + sShadowAIConfig->contactDistance) ||
                       !bot->IsWithinLOSInMap(target));
 }
 
-PartyMemberToHealOutOfSpellRangeTrigger::PartyMemberToHealOutOfSpellRangeTrigger(PlayerbotAI* botAI)
+PartyMemberToHealOutOfSpellRangeTrigger::PartyMemberToHealOutOfSpellRangeTrigger(ShadowAI* botAI)
     : OutOfRangeTrigger(botAI, "party member to heal out of spell range", botAI->GetRange("heal") + 1.0f)
 {
 }

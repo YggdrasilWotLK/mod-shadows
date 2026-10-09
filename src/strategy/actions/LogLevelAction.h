@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LOGLEVELACTION_H
-#define _PLAYERBOT_LOGLEVELACTION_H
+#ifndef _SHADOW_LOGLEVELACTION_H
+#define _SHADOW_LOGLEVELACTION_H
 
 #include "Action.h"
 #include "LogCommon.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LogLevelAction : public Action
 {
 public:
-    LogLevelAction(PlayerbotAI* botAI) : Action(botAI, "log") {}
+    LogLevelAction(ShadowAI* botAI) : Action(botAI, "log") {}
 
     bool Execute(Event event) override;
 

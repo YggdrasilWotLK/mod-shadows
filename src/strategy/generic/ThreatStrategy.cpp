@@ -7,7 +7,7 @@
 
 #include "GenericSpellActions.h"
 #include "Map.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 float ThreatMultiplier::GetValue(Action* action)
 {

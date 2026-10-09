@@ -19,12 +19,12 @@
 #include "ObjectMgr.h"
 #include "PathGenerator.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
+#include "ShadowAI.h"
+#include "Shadows.h"
 #include "Position.h"
 #include "QuestDef.h"
 #include "Random.h"
-#include "RandomPlayerbotMgr.h"
+#include "RandomShadowMgr.h"
 #include "SharedDefines.h"
 #include "StatsWeightCalculator.h"
 #include "Timer.h"
@@ -48,7 +48,7 @@ bool StartRpgDoQuestAction::Execute(Event event)
         return false;
 
     std::string const text = event.getParam();
-    PlayerbotChatHandler ch(owner);
+    ShadowChatHandler ch(owner);
     uint32 questId = ch.extractQuestId(text);
     const Quest* quest = sObjectMgr->GetQuestTemplate(questId);
     if (quest)
@@ -334,7 +334,7 @@ bool NewRpgDoQuestAction::DoIncompleteQuest()
             /// @TODO: It may be better to make lowPriorityQuest a global set shared by all bots (or saved in db)
             botAI->lowPriorityQuest.insert(questId);
             botAI->rpgStatistic.questAbandoned++;
-            LOG_DEBUG("playerbots", "[New RPG] {} marked as abandoned quest {}", bot->GetName(), questId);
+            LOG_DEBUG("shadows", "[New RPG] {} marked as abandoned quest {}", bot->GetName(), questId);
             botAI->rpgInfo.ChangeToIdle();
             return true;
         }
@@ -401,7 +401,7 @@ bool NewRpgDoQuestAction::DoCompletedQuest()
         /// @TODO: It may be better to make lowPriorityQuest a global set shared by all bots (or saved in db)
         botAI->lowPriorityQuest.insert(questId);
         botAI->rpgStatistic.questAbandoned++;
-        LOG_DEBUG("playerbots", "[New RPG] {} marked as abandoned quest {}", bot->GetName(), questId);
+        LOG_DEBUG("shadows", "[New RPG] {} marked as abandoned quest {}", bot->GetName(), questId);
         botAI->rpgInfo.ChangeToIdle();
         return true;
     }
@@ -435,7 +435,7 @@ bool NewRpgTravelFlightAction::Execute(Event event)
     }
     if (!bot->ActivateTaxiPathTo(nodes, flightMaster, 0))
     {
-        LOG_DEBUG("playerbots", "[New RPG] {} active taxi path {} (from {} to {}) failed", bot->GetName(),
+        LOG_DEBUG("shadows", "[New RPG] {} active taxi path {} (from {} to {}) failed", bot->GetName(),
                   flightMaster->GetEntry(), nodes[0], nodes[1]);
         botAI->rpgInfo.ChangeToIdle();
     }

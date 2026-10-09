@@ -1,7 +1,7 @@
 #include "TradeStatusExtendedAction.h"
 #include "Event.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "WorldPacket.h"
 #include "TradeData.h"
 

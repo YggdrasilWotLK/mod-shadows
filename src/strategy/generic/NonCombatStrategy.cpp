@@ -5,7 +5,7 @@
 
 #include "NonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void NonCombatStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {

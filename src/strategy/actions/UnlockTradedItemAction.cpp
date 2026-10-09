@@ -1,5 +1,5 @@
 #include "UnlockTradedItemAction.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "TradeData.h"
 #include "SpellInfo.h"
 

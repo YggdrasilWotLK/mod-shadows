@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONPOSTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONPOSTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONPOSTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONPOSTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -32,7 +32,7 @@ enum PitOfSaronIDs
 class IckAndKrickTrigger : public Trigger
 {
 public:
-    IckAndKrickTrigger(PlayerbotAI* ai) : Trigger(ai, "ick and krick") {}
+    IckAndKrickTrigger(ShadowAI* ai) : Trigger(ai, "ick and krick") {}
 
     bool IsActive() override;
 };
@@ -40,7 +40,7 @@ public:
 class TyrannusTrigger : public Trigger
 {
 public:
-    TyrannusTrigger(PlayerbotAI* ai) : Trigger(ai, "tyrannus") {}
+    TyrannusTrigger(ShadowAI* ai) : Trigger(ai, "tyrannus") {}
 
     bool IsActive() override;
 };

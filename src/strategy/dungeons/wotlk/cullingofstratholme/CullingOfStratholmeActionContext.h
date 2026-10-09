@@ -1,5 +1,5 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONCOSACTIONCONTEXT_H
-#define _PLAYERBOT_WOTLKDUNGEONCOSACTIONCONTEXT_H
+#ifndef _SHADOW_WOTLKDUNGEONCOSACTIONCONTEXT_H
+#define _SHADOW_WOTLKDUNGEONCOSACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
@@ -13,8 +13,8 @@ class WotlkDungeonCoSActionContext : public NamedObjectContext<Action>
             creators["epoch stack"] = &WotlkDungeonCoSActionContext::epoch_stack;
         }
     private:
-        static Action* explode_ghoul_spread(PlayerbotAI* ai) { return new ExplodeGhoulSpreadAction(ai); }
-        static Action* epoch_stack(PlayerbotAI* ai) { return new EpochStackAction(ai); }
+        static Action* explode_ghoul_spread(ShadowAI* ai) { return new ExplodeGhoulSpreadAction(ai); }
+        static Action* epoch_stack(ShadowAI* ai) { return new EpochStackAction(ai); }
 };
 
 #endif

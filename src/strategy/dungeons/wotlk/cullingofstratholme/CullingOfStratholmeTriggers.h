@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONCOSTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONCOSTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONCOSTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONCOSTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -15,14 +15,14 @@ enum CullingOfStratholmeIDs
 class ExplodeGhoulTrigger : public Trigger
 {
 public:
-    ExplodeGhoulTrigger(PlayerbotAI* ai) : Trigger(ai, "explode ghoul") {}
+    ExplodeGhoulTrigger(ShadowAI* ai) : Trigger(ai, "explode ghoul") {}
     bool IsActive() override;
 };
 
 class EpochRangedTrigger : public Trigger
 {
 public:
-    EpochRangedTrigger(PlayerbotAI* ai) : Trigger(ai, "chrono-lord epoch ranged") {}
+    EpochRangedTrigger(ShadowAI* ai) : Trigger(ai, "chrono-lord epoch ranged") {}
     bool IsActive() override;
 };
 

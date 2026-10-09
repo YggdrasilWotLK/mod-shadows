@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_INVITETOGROUPACTION_H
-#define _PLAYERBOT_INVITETOGROUPACTION_H
+#ifndef _SHADOW_INVITETOGROUPACTION_H
+#define _SHADOW_INVITETOGROUPACTION_H
 
 #include "Action.h"
 #include "Player.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class InviteToGroupAction : public Action
 {
 public:
-    InviteToGroupAction(PlayerbotAI* botAI, std::string const name = "invite") : Action(botAI, name) {}
+    InviteToGroupAction(ShadowAI* botAI, std::string const name = "invite") : Action(botAI, name) {}
 
     bool Execute(Event event) override
     {
@@ -28,14 +28,14 @@ public:
 class JoinGroupAction : public InviteToGroupAction
 {
 public:
-    JoinGroupAction(PlayerbotAI* ai, std::string name = "join") : InviteToGroupAction(ai, name) {}
+    JoinGroupAction(ShadowAI* ai, std::string name = "join") : InviteToGroupAction(ai, name) {}
     bool Execute(Event event) override;
 };
 
 class InviteNearbyToGroupAction : public InviteToGroupAction
 {
 public:
-    InviteNearbyToGroupAction(PlayerbotAI* botAI, std::string const name = "invite nearby") : InviteToGroupAction(botAI, name) {}
+    InviteNearbyToGroupAction(ShadowAI* botAI, std::string const name = "invite nearby") : InviteToGroupAction(botAI, name) {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };
@@ -57,7 +57,7 @@ private:
 class InviteGuildToGroupAction : public InviteNearbyToGroupAction
 {
 public:
-    InviteGuildToGroupAction(PlayerbotAI* botAI, std::string const name = "invite guild")
+    InviteGuildToGroupAction(ShadowAI* botAI, std::string const name = "invite guild")
         : InviteNearbyToGroupAction(botAI, name)
     {
     }
@@ -72,7 +72,7 @@ private:
 class LfgAction : public InviteToGroupAction
 {
 public:
-    LfgAction(PlayerbotAI* botAI, std::string name = "lfg") : InviteToGroupAction(botAI, name) {}
+    LfgAction(ShadowAI* botAI, std::string name = "lfg") : InviteToGroupAction(botAI, name) {}
     bool Execute(Event event) override;
 };
 

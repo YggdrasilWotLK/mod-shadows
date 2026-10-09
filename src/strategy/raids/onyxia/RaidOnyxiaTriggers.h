@@ -1,43 +1,43 @@
 // OnyxiaTriggers.h
-#ifndef _PLAYERBOT_ONYXIATRIGGERS_H_
-#define _PLAYERBOT_ONYXIATRIGGERS_H_
+#ifndef _SHADOW_ONYXIATRIGGERS_H_
+#define _SHADOW_ONYXIATRIGGERS_H_
 
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "Trigger.h"
 
 // Mechanics
 class OnyxiaDeepBreathTrigger : public Trigger
 {
 public:
-    OnyxiaDeepBreathTrigger(PlayerbotAI* botAI);
+    OnyxiaDeepBreathTrigger(ShadowAI* botAI);
     bool IsActive() override;
 };
 
 class OnyxiaNearTailTrigger : public Trigger
 {
 public:
-    OnyxiaNearTailTrigger(PlayerbotAI* botAI);
+    OnyxiaNearTailTrigger(ShadowAI* botAI);
     bool IsActive() override;
 };
 
 class RaidOnyxiaFireballSplashTrigger : public Trigger
 {
 public:
-    RaidOnyxiaFireballSplashTrigger(PlayerbotAI* botAI);
+    RaidOnyxiaFireballSplashTrigger(ShadowAI* botAI);
     bool IsActive() override;
 };
 
 class RaidOnyxiaWhelpsSpawnTrigger : public Trigger
 {
 public:
-    RaidOnyxiaWhelpsSpawnTrigger(PlayerbotAI* botAI);
+    RaidOnyxiaWhelpsSpawnTrigger(ShadowAI* botAI);
     bool IsActive() override;
 };
 
 class OnyxiaAvoidEggsTrigger : public Trigger
 {
 public:
-    OnyxiaAvoidEggsTrigger(PlayerbotAI* botAI);
+    OnyxiaAvoidEggsTrigger(ShadowAI* botAI);
     bool IsActive() override;
 };
 

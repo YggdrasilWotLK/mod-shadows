@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_PASSIVESTRATEGY_H
-#define _PLAYERBOT_PASSIVESTRATEGY_H
+#ifndef _SHADOW_PASSIVESTRATEGY_H
+#define _SHADOW_PASSIVESTRATEGY_H
 
 #include "Strategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class PassiveStrategy : public Strategy
 {
 public:
-    PassiveStrategy(PlayerbotAI* botAI) : Strategy(botAI) {}
+    PassiveStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
     void InitMultipliers(std::vector<Multiplier*>& multipliers) override;
     std::string const getName() override { return "passive"; }

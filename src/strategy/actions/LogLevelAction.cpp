@@ -6,7 +6,7 @@
 #include "LogLevelAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool LogLevelAction::Execute(Event event)
 {

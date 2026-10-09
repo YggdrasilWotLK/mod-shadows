@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SETCRAFTACTION_H
-#define _PLAYERBOT_SETCRAFTACTION_H
+#ifndef _SHADOW_SETCRAFTACTION_H
+#define _SHADOW_SETCRAFTACTION_H
 
 #include "Action.h"
 #include "CraftValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct SkillLineAbilityEntry;
 
 class SetCraftAction : public Action
 {
 public:
-    SetCraftAction(PlayerbotAI* botAI) : Action(botAI, "craft") {}
+    SetCraftAction(ShadowAI* botAI) : Action(botAI, "craft") {}
 
     bool Execute(Event event) override;
 

@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ITEMUSAGEVALUE_H
-#define _PLAYERBOT_ITEMUSAGEVALUE_H
+#ifndef _SHADOW_ITEMUSAGEVALUE_H
+#define _SHADOW_ITEMUSAGEVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
 class Item;
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 struct ItemTemplate;
 
@@ -36,7 +36,7 @@ enum ItemUsage : uint32
 class ItemUsageValue : public CalculatedValue<ItemUsage>, public Qualified
 {
 public:
-    ItemUsageValue(PlayerbotAI* botAI, std::string const name = "item usage") : CalculatedValue<ItemUsage>(botAI, name)
+    ItemUsageValue(ShadowAI* botAI, std::string const name = "item usage") : CalculatedValue<ItemUsage>(botAI, name)
     {
     }
 

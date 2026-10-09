@@ -12,7 +12,7 @@
 #include "GuildCreateActions.h"
 #include "LastMovementValue.h"
 #include "MovementActions.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "PossibleRpgTargetsValue.h"
 #include "SocialMgr.h"
 
@@ -77,9 +77,9 @@ void RpgHelper::setFacing(GuidPosition guidPosition)
 void RpgHelper::setDelay(bool waitForGroup)
 {
     if (!botAI->HasRealPlayerMaster() || (waitForGroup && botAI->GetGroupMaster() == bot && bot->GetGroup()))
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->rpgDelay);
+        botAI->SetNextCheckDelay(sShadowAIConfig->rpgDelay);
     else
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->rpgDelay / 5);
+        botAI->SetNextCheckDelay(sShadowAIConfig->rpgDelay / 5);
 }
 
 bool RpgSubAction::isPossible() { return rpg->guidP() && rpg->guidP().GetWorldObject(); }
@@ -164,7 +164,7 @@ bool RpgTaxiAction::Execute(Event event)
 
     if (nodes.empty())
     {
-        LOG_ERROR("playerbots", "Bot {} - No flight paths available", bot->GetName());
+        LOG_ERROR("shadows", "Bot {} - No flight paths available", bot->GetName());
         return false;
     }
 
@@ -182,18 +182,18 @@ bool RpgTaxiAction::Execute(Event event)
     Creature* flightMaster = bot->GetNPCIfCanInteractWith(guidP, UNIT_NPC_FLAG_FLIGHTMASTER);
     if (!flightMaster)
     {
-        LOG_ERROR("playerbots", "Bot {} cannot talk to flightmaster ({} location available)", bot->GetName(),
+        LOG_ERROR("shadows", "Bot {} cannot talk to flightmaster ({} location available)", bot->GetName(),
                   nodes.size());
         return false;
     }
 
     if (!bot->ActivateTaxiPathTo({entry->from, entry->to}, flightMaster, 0))
     {
-        LOG_ERROR("playerbots", "Bot {} cannot fly {} ({} location available)", bot->GetName(), path, nodes.size());
+        LOG_ERROR("shadows", "Bot {} cannot fly {} ({} location available)", bot->GetName(), path, nodes.size());
         return false;
     }
 
-    LOG_INFO("playerbots", "Bot {} <{}> is flying from {} to {} ({} location available)",
+    LOG_INFO("shadows", "Bot {} <{}> is flying from {} to {} ({} location available)",
              bot->GetGUID().ToString().c_str(), bot->GetName(), nodeFrom->name[0], nodeTo->name[0], nodes.size());
 
     bot->SetMoney(money);
@@ -312,7 +312,7 @@ std::vector<Item*> RpgTradeUsefulAction::CanGiveItems(GuidPosition guidPosition)
 
     std::vector<Item*> giveItems;
 
-    if (botAI->HasActivePlayerMaster() || !GET_PLAYERBOT_AI(player))
+    if (botAI->HasActivePlayerMaster() || !GET_SHADOW_AI(player))
         return giveItems;
 
     std::vector<ItemUsage> myUsages = {ITEM_USAGE_NONE, ITEM_USAGE_VENDOR, ITEM_USAGE_AH, ITEM_USAGE_DISENCHANT};
@@ -392,7 +392,7 @@ bool RpgTradeUsefulAction::Execute(Event event)
             bot->Say("Start trade with" + chat->FormatWorldobject(player),
                      (bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH));
 
-        botAI->SetNextCheckDelay(sPlayerbotAIConfig->rpgDelay);
+        botAI->SetNextCheckDelay(sShadowAIConfig->rpgDelay);
         return true;
     }
 
@@ -402,7 +402,7 @@ bool RpgTradeUsefulAction::Execute(Event event)
 bool RpgDuelAction::isUseful()
 {
     // do not offer duel in non pvp areas
-    if (sPlayerbotAIConfig->IsInPvpProhibitedZone(bot->GetZoneId()))
+    if (sShadowAIConfig->IsInPvpProhibitedZone(bot->GetZoneId()))
         return false;
 
     // Players can only fight a duel with each other outside (=not inside dungeons and not in capital cities)

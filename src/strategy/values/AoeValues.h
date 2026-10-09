@@ -3,20 +3,20 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_AOEVALUES_H
-#define _PLAYERBOT_AOEVALUES_H
+#ifndef _SHADOW_AOEVALUES_H
+#define _SHADOW_AOEVALUES_H
 
 #include "AiObjectContext.h"
 #include "GameObject.h"
 #include "Object.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class AoePositionValue : public CalculatedValue<WorldLocation>
 {
 public:
-    AoePositionValue(PlayerbotAI* botAI) : CalculatedValue<WorldLocation>(botAI, "aoe position") {}
+    AoePositionValue(ShadowAI* botAI) : CalculatedValue<WorldLocation>(botAI, "aoe position") {}
 
     WorldLocation Calculate() override;
 };
@@ -24,7 +24,7 @@ public:
 class AoeCountValue : public CalculatedValue<uint8>
 {
 public:
-    AoeCountValue(PlayerbotAI* botAI) : CalculatedValue<uint8>(botAI, "aoe count") {}
+    AoeCountValue(ShadowAI* botAI) : CalculatedValue<uint8>(botAI, "aoe count") {}
 
     uint8 Calculate() override;
 };
@@ -32,7 +32,7 @@ public:
 class HasAreaDebuffValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    HasAreaDebuffValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI) {}
+    HasAreaDebuffValue(ShadowAI* botAI) : BoolCalculatedValue(botAI) {}
 
     Unit* GetTarget()
     {
@@ -46,7 +46,7 @@ public:
 class AreaDebuffValue : public CalculatedValue<Aura*>
 {
 public:
-    AreaDebuffValue(PlayerbotAI* botAI) : CalculatedValue<Aura*>(botAI, "area debuff", 1) {}
+    AreaDebuffValue(ShadowAI* botAI) : CalculatedValue<Aura*>(botAI, "area debuff", 1) {}
 
     Aura* Calculate() override;
 };

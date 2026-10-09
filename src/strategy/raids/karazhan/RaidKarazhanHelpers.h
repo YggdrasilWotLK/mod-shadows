@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_RAIDKARAZHANHELPERS_H_
-#define _PLAYERBOT_RAIDKARAZHANHELPERS_H_
+#ifndef _SHADOW_RAIDKARAZHANHELPERS_H_
+#define _SHADOW_RAIDKARAZHANHELPERS_H_
 
 #include "AiObject.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Position.h"
 
 enum KarazhanSpells
@@ -62,7 +62,7 @@ extern const Position KARAZHAN_THE_CURATOR_BOSS_POSITION;
 class RaidKarazhanHelpers : public AiObject
 {
 public:
-    explicit RaidKarazhanHelpers(PlayerbotAI* botAI) : AiObject(botAI) {}
+    explicit RaidKarazhanHelpers(ShadowAI* botAI) : AiObject(botAI) {}
 
     void MarkTargetWithSkull(Unit* /*target*/);
     Unit* GetFirstAliveUnit(const std::vector<Unit*>& /*units*/);

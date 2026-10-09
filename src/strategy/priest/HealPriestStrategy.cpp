@@ -6,9 +6,9 @@
 #include "HealPriestStrategy.h"
 
 #include "GenericPriestStrategyActionNodeFactory.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
-HealPriestStrategy::HealPriestStrategy(PlayerbotAI* botAI) : GenericPriestStrategy(botAI)
+HealPriestStrategy::HealPriestStrategy(ShadowAI* botAI) : GenericPriestStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericPriestStrategyActionNodeFactory());
 }

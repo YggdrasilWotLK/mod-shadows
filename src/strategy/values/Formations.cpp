@@ -8,7 +8,7 @@
 #include "Arrow.h"
 #include "Event.h"
 #include "Map.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 WorldLocation Formation::NullLocation = WorldLocation();
@@ -38,8 +38,8 @@ WorldLocation MoveAheadFormation::GetLocation()
     // if (master->isMoving())
     // {
     //     float ori = master->GetOrientation();
-    //     float x1 = x + sPlayerbotAIConfig->tooCloseDistance * cos(ori);
-    //     float y1 = y + sPlayerbotAIConfig->tooCloseDistance * sin(ori);
+    //     float x1 = x + sShadowAIConfig->tooCloseDistance * cos(ori);
+    //     float y1 = y + sShadowAIConfig->tooCloseDistance * sin(ori);
     //     float ground = master->GetMap()->GetHeight(x1, y1, z);
     //     if (ground > INVALID_HEIGHT)
     //     {
@@ -60,7 +60,7 @@ WorldLocation MoveAheadFormation::GetLocation()
 class MeleeFormation : public FollowFormation
 {
 public:
-    MeleeFormation(PlayerbotAI* botAI) : FollowFormation(botAI, "melee") {}
+    MeleeFormation(ShadowAI* botAI) : FollowFormation(botAI, "melee") {}
 
     std::string const GetTargetName() override { return "master target"; }
 };
@@ -68,7 +68,7 @@ public:
 class QueueFormation : public FollowFormation
 {
 public:
-    QueueFormation(PlayerbotAI* botAI) : FollowFormation(botAI, "queue") {}
+    QueueFormation(ShadowAI* botAI) : FollowFormation(botAI, "queue") {}
 
     std::string const GetTargetName() override { return "line target"; }
 };
@@ -76,7 +76,7 @@ public:
 class NearFormation : public MoveAheadFormation
 {
 public:
-    NearFormation(PlayerbotAI* botAI) : MoveAheadFormation(botAI, "near") {}
+    NearFormation(ShadowAI* botAI) : MoveAheadFormation(botAI, "near") {}
 
     WorldLocation GetLocationInternal() override
     {
@@ -84,7 +84,7 @@ public:
         if (!master)
             return WorldLocation();
 
-        float range = sPlayerbotAIConfig->followDistance;
+        float range = sShadowAIConfig->followDistance;
         float angle = GetFollowAngle();
         float x = master->GetPositionX() + cos(angle) * range;
         float y = master->GetPositionY() + sin(angle) * range;
@@ -100,13 +100,13 @@ public:
         return WorldLocation(master->GetMapId(), x, y, z);
     }
 
-    float GetMaxDistance() override { return sPlayerbotAIConfig->followDistance; }
+    float GetMaxDistance() override { return sShadowAIConfig->followDistance; }
 };
 
 class ChaosFormation : public MoveAheadFormation
 {
 public:
-    ChaosFormation(PlayerbotAI* botAI) : MoveAheadFormation(botAI, "chaos"), lastChangeTime(0) {}
+    ChaosFormation(ShadowAI* botAI) : MoveAheadFormation(botAI, "chaos"), lastChangeTime(0) {}
 
     WorldLocation GetLocationInternal() override
     {
@@ -114,7 +114,7 @@ public:
         if (!master)
             return WorldLocation();
 
-        float range = sPlayerbotAIConfig->followDistance;
+        float range = sShadowAIConfig->followDistance;
         float angle = GetFollowAngle();
 
         time_t now = time(nullptr);
@@ -124,15 +124,15 @@ public:
             if (!master)
                 return WorldLocation();
 
-            float range = sPlayerbotAIConfig->followDistance;
+            float range = sShadowAIConfig->followDistance;
             float angle = GetFollowAngle();
 
             time_t now = time(nullptr);
             if (!lastChangeTime || now - lastChangeTime >= 3)
             {
                 lastChangeTime = now;
-                dx = (urand(0, 10) / 10.0 - 0.5) * sPlayerbotAIConfig->tooCloseDistance;
-                dy = (urand(0, 10) / 10.0 - 0.5) * sPlayerbotAIConfig->tooCloseDistance;
+                dx = (urand(0, 10) / 10.0 - 0.5) * sShadowAIConfig->tooCloseDistance;
+                dy = (urand(0, 10) / 10.0 - 0.5) * sShadowAIConfig->tooCloseDistance;
                 dr = sqrt(dx * dx + dy * dy);
             }
 
@@ -166,7 +166,7 @@ public:
         return WorldLocation(master->GetMapId(), x, y, z);
     }
 
-    float GetMaxDistance() override { return sPlayerbotAIConfig->followDistance + dr; }
+    float GetMaxDistance() override { return sShadowAIConfig->followDistance + dr; }
 
 private:
     time_t lastChangeTime;
@@ -178,7 +178,7 @@ private:
 class CircleFormation : public MoveFormation
 {
 public:
-    CircleFormation(PlayerbotAI* botAI) : MoveFormation(botAI, "circle") {}
+    CircleFormation(ShadowAI* botAI) : MoveFormation(botAI, "circle") {}
 
     WorldLocation GetLocation() override
     {
@@ -229,7 +229,7 @@ public:
 class LineFormation : public MoveAheadFormation
 {
 public:
-    LineFormation(PlayerbotAI* botAI) : MoveAheadFormation(botAI, "line") {}
+    LineFormation(ShadowAI* botAI) : MoveAheadFormation(botAI, "line") {}
 
     WorldLocation GetLocationInternal() override
     {
@@ -268,7 +268,7 @@ public:
 class ShieldFormation : public MoveFormation
 {
 public:
-    ShieldFormation(PlayerbotAI* botAI) : MoveFormation(botAI, "shield") {}
+    ShieldFormation(ShadowAI* botAI) : MoveFormation(botAI, "shield") {}
 
     WorldLocation GetLocation() override
     {
@@ -276,7 +276,7 @@ public:
         if (!group)
             return Formation::NullLocation;
 
-        float range = sPlayerbotAIConfig->followDistance;
+        float range = sShadowAIConfig->followDistance;
 
         Player* master = GetMaster();
         if (!master)
@@ -321,14 +321,14 @@ public:
 
         if (botAI->IsTank(bot) && !botAI->IsTank(master))
         {
-            float diff = tanks.size() % 2 == 0 ? -sPlayerbotAIConfig->tooCloseDistance / 2.0f : 0.0f;
+            float diff = tanks.size() % 2 == 0 ? -sShadowAIConfig->tooCloseDistance / 2.0f : 0.0f;
             return MoveLine(tanks, diff, x + cos(orientation) * range, y + sin(orientation) * range, z, orientation,
                             range);
         }
 
         if (!botAI->IsTank(bot) && botAI->IsTank(master))
         {
-            float diff = dps.size() % 2 == 0 ? -sPlayerbotAIConfig->tooCloseDistance / 2.0f : 0.0f;
+            float diff = dps.size() % 2 == 0 ? -sShadowAIConfig->tooCloseDistance / 2.0f : 0.0f;
             return MoveLine(dps, diff, x - cos(orientation) * range, y - sin(orientation) * range, z, orientation,
                             range);
         }
@@ -340,12 +340,12 @@ public:
 class FarFormation : public FollowFormation
 {
 public:
-    FarFormation(PlayerbotAI* botAI) : FollowFormation(botAI, "far") {}
+    FarFormation(ShadowAI* botAI) : FollowFormation(botAI, "far") {}
 
     WorldLocation GetLocation() override
     {
-        float range = sPlayerbotAIConfig->farDistance;
-        float followRange = sPlayerbotAIConfig->followDistance;
+        float range = sShadowAIConfig->farDistance;
+        float followRange = sShadowAIConfig->followDistance;
 
         Player* master = GetMaster();
         if (!master)
@@ -411,7 +411,7 @@ float Formation::GetFollowAngle()
 {
     Player* master = GetMaster();
     Group* group = bot->GetGroup();
-    auto botAI = GET_PLAYERBOT_AI(bot);
+    auto botAI = GET_SHADOW_AI(bot);
 
     // If there's no master and no group
     if (!master && !group)
@@ -467,10 +467,10 @@ float Formation::GetFollowAngle()
     else if (master)
     {
         // If the bot is following a master, look up the bot's position in the master's list
-        auto masterBotMgr = GET_PLAYERBOT_MGR(master);
-        if (masterBotMgr && !GET_PLAYERBOT_AI(master))
+        auto masterBotMgr = GET_SHADOW_MGR(master);
+        if (masterBotMgr && !GET_SHADOW_AI(master))
         {
-            for (auto it = masterBotMgr->GetPlayerBotsBegin(); it != masterBotMgr->GetPlayerBotsEnd(); ++it)
+            for (auto it = masterBotMgr->GetShadowsBegin(); it != masterBotMgr->GetShadowsEnd(); ++it)
             {
                 if (it->second == bot)
                 {
@@ -494,7 +494,7 @@ float Formation::GetFollowAngle()
     return start + (0.125f + 1.75f * index / total + (total == 2 ? 0.125f : 0.0f)) * M_PI;
 }
 
-FormationValue::FormationValue(PlayerbotAI* botAI)
+FormationValue::FormationValue(ShadowAI* botAI)
     : ManualSetValue<Formation*>(botAI, new ChaosFormation(botAI), "formation")
 {
 }

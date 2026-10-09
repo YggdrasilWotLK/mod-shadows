@@ -6,7 +6,7 @@
 #include "WithinAreaTrigger.h"
 
 #include "LastMovementValue.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 bool WithinAreaTrigger::IsActive()
 {

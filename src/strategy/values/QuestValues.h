@@ -3,15 +3,15 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_QUESTVALUES_H
-#define _PLAYERBOT_QUESTVALUES_H
+#ifndef _SHADOW_QUESTVALUES_H
+#define _SHADOW_QUESTVALUES_H
 
 #include "NamedObjectContext.h"
 #include "TravelMgr.h"
 #include "Value.h"
 
 class Player;
-class PlayerbotAI;
+class ShadowAI;
 
 struct CreatureData;
 struct GameObjectData;
@@ -49,7 +49,7 @@ typedef std::unordered_map<uint32, std::vector<GuidPosition>> questGiverMap;
 class EntryQuestRelationMapValue : public SingleCalculatedValue<entryQuestRelationMap>
 {
 public:
-    EntryQuestRelationMapValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "entry quest relation map") {}
+    EntryQuestRelationMapValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "entry quest relation map") {}
 
     entryQuestRelationMap Calculate() override;
 };
@@ -78,7 +78,7 @@ private:
 class QuestGuidpMapValue : public SingleCalculatedValue<questGuidpMap>
 {
 public:
-    QuestGuidpMapValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "quest guidp map") {}
+    QuestGuidpMapValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "quest guidp map") {}
 
     questGuidpMap Calculate() override;
 };
@@ -87,7 +87,7 @@ public:
 class QuestGiversValue : public SingleCalculatedValue<questGiverMap>, public Qualified
 {
 public:
-    QuestGiversValue(PlayerbotAI* botAI) : SingleCalculatedValue(botAI, "quest givers") {}
+    QuestGiversValue(ShadowAI* botAI) : SingleCalculatedValue(botAI, "quest givers") {}
 
     questGiverMap Calculate() override;
 };
@@ -96,7 +96,7 @@ public:
 class ActiveQuestGiversValue : public CalculatedValue<std::vector<GuidPosition>>
 {
 public:
-    ActiveQuestGiversValue(PlayerbotAI* botAI) : CalculatedValue(botAI, "active quest givers", 5) {}
+    ActiveQuestGiversValue(ShadowAI* botAI) : CalculatedValue(botAI, "active quest givers", 5) {}
 
     std::vector<GuidPosition> Calculate() override;
 };
@@ -105,7 +105,7 @@ public:
 class ActiveQuestTakersValue : public CalculatedValue<std::vector<GuidPosition>>
 {
 public:
-    ActiveQuestTakersValue(PlayerbotAI* botAI) : CalculatedValue(botAI, "active quest takers", 5) {}
+    ActiveQuestTakersValue(ShadowAI* botAI) : CalculatedValue(botAI, "active quest takers", 5) {}
 
     std::vector<GuidPosition> Calculate() override;
 };
@@ -114,7 +114,7 @@ public:
 class ActiveQuestObjectivesValue : public CalculatedValue<std::vector<GuidPosition>>
 {
 public:
-    ActiveQuestObjectivesValue(PlayerbotAI* botAI) : CalculatedValue(botAI, "active quest objectives", 5) {}
+    ActiveQuestObjectivesValue(ShadowAI* botAI) : CalculatedValue(botAI, "active quest objectives", 5) {}
 
     std::vector<GuidPosition> Calculate() override;
 };
@@ -123,7 +123,7 @@ public:
 class FreeQuestLogSlotValue : public Uint8CalculatedValue
 {
 public:
-    FreeQuestLogSlotValue(PlayerbotAI* botAI) : Uint8CalculatedValue(botAI, "free quest log slots", 2) {}
+    FreeQuestLogSlotValue(ShadowAI* botAI) : Uint8CalculatedValue(botAI, "free quest log slots", 2) {}
 
     uint8 Calculate() override;
 };
@@ -132,7 +132,7 @@ public:
 class DialogStatusValue : public Uint32CalculatedValue, public Qualified
 {
 public:
-    DialogStatusValue(PlayerbotAI* botAI, std::string const name = "dialog status")
+    DialogStatusValue(ShadowAI* botAI, std::string const name = "dialog status")
         : Uint32CalculatedValue(botAI, name, 2)
     {
     }
@@ -146,7 +146,7 @@ public:
 class DialogStatusQuestValue : public DialogStatusValue
 {
 public:
-    DialogStatusQuestValue(PlayerbotAI* botAI) : DialogStatusValue(botAI, "dialog status quest") {}
+    DialogStatusQuestValue(ShadowAI* botAI) : DialogStatusValue(botAI, "dialog status quest") {}
 
     uint32 Calculate() override;
 };
@@ -155,7 +155,7 @@ public:
 class CanAcceptQuestValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    CanAcceptQuestValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can accept quest npc") {}
+    CanAcceptQuestValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can accept quest npc") {}
 
     bool Calculate() override;
 };
@@ -164,7 +164,7 @@ public:
 class CanAcceptQuestLowLevelValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    CanAcceptQuestLowLevelValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can accept quest low level npc") {}
+    CanAcceptQuestLowLevelValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can accept quest low level npc") {}
 
     bool Calculate() override;
 };
@@ -173,7 +173,7 @@ public:
 class CanTurnInQuestValue : public BoolCalculatedValue, public Qualified
 {
 public:
-    CanTurnInQuestValue(PlayerbotAI* botAI) : BoolCalculatedValue(botAI, "can turn in quest npc") {}
+    CanTurnInQuestValue(ShadowAI* botAI) : BoolCalculatedValue(botAI, "can turn in quest npc") {}
 
     bool Calculate() override;
 };

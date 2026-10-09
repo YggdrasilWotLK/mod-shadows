@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LINETARGETVALUE_H
-#define _PLAYERBOT_LINETARGETVALUE_H
+#ifndef _SHADOW_LINETARGETVALUE_H
+#define _SHADOW_LINETARGETVALUE_H
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class LineTargetValue : public UnitCalculatedValue
 {
 public:
-    LineTargetValue(PlayerbotAI* botAI, std::string const name = "line target") : UnitCalculatedValue(botAI, name) {}
+    LineTargetValue(ShadowAI* botAI, std::string const name = "line target") : UnitCalculatedValue(botAI, name) {}
 
     Unit* Calculate() override;
 };

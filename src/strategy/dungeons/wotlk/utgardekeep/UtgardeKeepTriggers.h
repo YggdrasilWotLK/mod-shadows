@@ -1,8 +1,8 @@
-#ifndef _PLAYERBOT_WOTLKDUNGEONUKTRIGGERS_H
-#define _PLAYERBOT_WOTLKDUNGEONUKTRIGGERS_H
+#ifndef _SHADOW_WOTLKDUNGEONUKTRIGGERS_H
+#define _SHADOW_WOTLKDUNGEONUKTRIGGERS_H
 
 #include "Trigger.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 
@@ -16,14 +16,14 @@ enum UtgardeKeepIDs
 class KelesethFrostTombTrigger : public Trigger
 {
 public:
-    KelesethFrostTombTrigger(PlayerbotAI* ai) : Trigger(ai, "keleseth frost tomb") {}
+    KelesethFrostTombTrigger(ShadowAI* ai) : Trigger(ai, "keleseth frost tomb") {}
     bool IsActive() override;
 };
 
 class DalronnDpsTrigger : public Trigger
 {
 public:
-    DalronnDpsTrigger(PlayerbotAI* ai) : Trigger(ai, "dalronn dps") {}
+    DalronnDpsTrigger(ShadowAI* ai) : Trigger(ai, "dalronn dps") {}
     bool IsActive() override;
 };
 

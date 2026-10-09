@@ -7,7 +7,7 @@
 
 #include "GuildMgr.h"
 #include "GuildPackets.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 #include "BroadcastHelper.h"
 
@@ -187,7 +187,7 @@ bool GuildManageNearbyAction::Execute(Event event)
             continue;
         }
 
-        if (!sPlayerbotAIConfig->randomBotGuildNearby)
+        if (!sShadowAIConfig->randomBotGuildNearby)
             return false;
 
         if (guild->GetMemberSize() > 1000)
@@ -199,9 +199,9 @@ bool GuildManageNearbyAction::Execute(Event event)
         if (player->GetGuildIdInvited())
             continue;
 
-        auto botAi = GET_PLAYERBOT_AI(player);
+        auto botAi = GET_SHADOW_AI(player);
 
-        if (!sPlayerbotAIConfig->randomBotInvitePlayer && botAi && botAi->IsRealPlayer())
+        if (!sShadowAIConfig->randomBotInvitePlayer && botAi && botAi->IsRealPlayer())
             continue;
 
         if (botAi)
@@ -209,16 +209,16 @@ bool GuildManageNearbyAction::Execute(Event event)
             if (botAi->GetGuilderType() == GuilderType::SOLO && !botAi->HasRealPlayerMaster()) //Do not invite solo players.
                 continue;
 
-            if (botAi->HasActivePlayerMaster() && !sRandomPlayerbotMgr->IsRandomBot(player)) //Do not invite alts of active players.
+            if (botAi->HasActivePlayerMaster() && !sRandomShadowMgr->IsRandomBot(player)) //Do not invite alts of active players.
                 continue;
         }
 
         bool sameGroup = bot->GetGroup() && bot->GetGroup()->IsMember(player->GetGUID());
 
-        if (!sameGroup && sServerFacade->GetDistance2d(bot, player) > sPlayerbotAIConfig->spellDistance)
+        if (!sameGroup && sServerFacade->GetDistance2d(bot, player) > sShadowAIConfig->spellDistance)
             continue;
 
-        if (sPlayerbotAIConfig->inviteChat && (sRandomPlayerbotMgr->IsRandomBot(bot) || !botAI->HasActivePlayerMaster()))
+        if (sShadowAIConfig->inviteChat && (sRandomShadowMgr->IsRandomBot(bot) || !botAI->HasActivePlayerMaster()))
         {
             /* std::map<std::string, std::string> placeholders;
             placeholders["%name"] = player->GetName();
@@ -290,7 +290,7 @@ bool GuildManageNearbyAction::Execute(Event event)
 
         if (botAI->DoSpecificAction("guild invite", Event("guild management", guid), true))
         {
-            if (sPlayerbotAIConfig->inviteChat)
+            if (sShadowAIConfig->inviteChat)
                 return true;
             found++;
         }
@@ -313,7 +313,7 @@ bool GuildManageNearbyAction::isUseful()
 bool GuildLeaveAction::Execute(Event event)
 {
     Player* owner = event.getOwner();
-    if (owner && !botAI->GetSecurity()->CheckLevelFor(PLAYERBOT_SECURITY_INVITE, false, owner, true))
+    if (owner && !botAI->GetSecurity()->CheckLevelFor(SHADOW_SECURITY_INVITE, false, owner, true))
     {
         botAI->TellError("Sorry, I am happy in my guild :)");
         return false;

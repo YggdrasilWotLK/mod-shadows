@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_GUARDSTRATEGY_H
-#define _PLAYERBOT_GUARDSTRATEGY_H
+#ifndef _SHADOW_GUARDSTRATEGY_H
+#define _SHADOW_GUARDSTRATEGY_H
 
 #include "NonCombatStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class GuardStrategy : public NonCombatStrategy
 {
 public:
-    GuardStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI) {}
+    GuardStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI) {}
 
     std::string const getName() override { return "guard"; }
     NextAction** getDefaultActions() override;

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SENDMAILACTION_H
-#define _PLAYERBOT_SENDMAILACTION_H
+#ifndef _SHADOW_SENDMAILACTION_H
+#define _SHADOW_SENDMAILACTION_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SendMailAction : public InventoryAction
 {
 public:
-    SendMailAction(PlayerbotAI* botAI) : InventoryAction(botAI, "sendmail") {}
+    SendMailAction(ShadowAI* botAI) : InventoryAction(botAI, "sendmail") {}
 
     bool Execute(Event event) override;
 };

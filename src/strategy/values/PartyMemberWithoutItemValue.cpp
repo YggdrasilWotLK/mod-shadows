@@ -5,13 +5,13 @@
 
 #include "PartyMemberWithoutItemValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
-class PlayerWithoutItemPredicate : public FindPlayerPredicate, public PlayerbotAIAware
+class PlayerWithoutItemPredicate : public FindPlayerPredicate, public ShadowAIAware
 {
 public:
-    PlayerWithoutItemPredicate(PlayerbotAI* botAI, std::string const item)
-        : PlayerbotAIAware(botAI), FindPlayerPredicate(), item(item)
+    PlayerWithoutItemPredicate(ShadowAI* botAI, std::string const item)
+        : ShadowAIAware(botAI), FindPlayerPredicate(), item(item)
     {
     }
 
@@ -27,7 +27,7 @@ public:
         if (!(member->IsInSameGroupWith(botAI->GetBot()) || member->IsInSameRaidWith(botAI->GetBot())))
             return false;
 
-        auto memberbotAI = GET_PLAYERBOT_AI(member);
+        auto memberbotAI = GET_SHADOW_AI(member);
         if (!memberbotAI)
             return false;
 
@@ -54,7 +54,7 @@ FindPlayerPredicate* PartyMemberWithoutItemValue::CreatePredicate()
 class PlayerWithoutFoodPredicate : public PlayerWithoutItemPredicate
 {
 public:
-    PlayerWithoutFoodPredicate(PlayerbotAI* botAI) : PlayerWithoutItemPredicate(botAI, "conjured food") {}
+    PlayerWithoutFoodPredicate(ShadowAI* botAI) : PlayerWithoutItemPredicate(botAI, "conjured food") {}
 
     bool Check(Unit* unit) override
     {
@@ -72,7 +72,7 @@ public:
 class PlayerWithoutWaterPredicate : public PlayerWithoutItemPredicate
 {
 public:
-    PlayerWithoutWaterPredicate(PlayerbotAI* botAI) : PlayerWithoutItemPredicate(botAI, "conjured water") {}
+    PlayerWithoutWaterPredicate(ShadowAI* botAI) : PlayerWithoutItemPredicate(botAI, "conjured water") {}
 
     bool Check(Unit* unit) override
     {

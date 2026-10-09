@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_ENHANCEMENTSHAMANSTRATEGY_H
-#define _PLAYERBOT_ENHANCEMENTSHAMANSTRATEGY_H
+#ifndef _SHADOW_ENHANCEMENTSHAMANSTRATEGY_H
+#define _SHADOW_ENHANCEMENTSHAMANSTRATEGY_H
 
 #include "GenericShamanStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class EnhancementShamanStrategy : public GenericShamanStrategy
 {
 public:
-    EnhancementShamanStrategy(PlayerbotAI* botAI);
+    EnhancementShamanStrategy(ShadowAI* botAI);
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     NextAction** getDefaultActions() override;

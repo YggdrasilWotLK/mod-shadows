@@ -1,12 +1,12 @@
 #include "RaidIccTriggers.h"
 #include "RaidIccActions.h"
 #include "strategy/values/NearestNpcsValue.h"
-#include "PlayerbotAIConfig.h"
+#include "ShadowAIConfig.h"
 #include "ObjectAccessor.h"
 #include "GenericTriggers.h"
 #include "DungeonStrategyUtils.h"
 #include "EventMap.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ScriptedCreature.h"
 #include "Trigger.h"
 #include "CellImpl.h"
@@ -281,7 +281,7 @@ bool IccPutricideGrowingOozePuddleTrigger::IsActive()
 
     Difficulty diff = bot->GetRaidDifficulty();
 
-    if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+    if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
     {
         //-------CHEAT-------
         if (!bot->HasAura(SPELL_EXPERIENCED))
@@ -840,7 +840,7 @@ bool IccSindragosaGroupPositionTrigger::IsActive()
 
     Difficulty diff = bot->GetRaidDifficulty();
 
-    if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+    if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
     {
         //-------CHEAT-------
         if (!bot->HasAura(SPELL_EXPERIENCED))

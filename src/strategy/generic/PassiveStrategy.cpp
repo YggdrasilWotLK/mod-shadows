@@ -6,7 +6,7 @@
 #include "PassiveStrategy.h"
 
 #include "PassiveMultiplier.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void PassiveStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
 {

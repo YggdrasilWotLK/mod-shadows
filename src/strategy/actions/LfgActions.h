@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_LFGACTIONS_H
-#define _PLAYERBOT_LFGACTIONS_H
+#ifndef _SHADOW_LFGACTIONS_H
+#define _SHADOW_LFGACTIONS_H
 
 #include "InventoryAction.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class LfgJoinAction : public InventoryAction
 {
 public:
-    LfgJoinAction(PlayerbotAI* botAI, std::string const name = "lfg join") : InventoryAction(botAI, name) {}
+    LfgJoinAction(ShadowAI* botAI, std::string const name = "lfg join") : InventoryAction(botAI, name) {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -26,7 +26,7 @@ protected:
 class LfgAcceptAction : public LfgJoinAction
 {
 public:
-    LfgAcceptAction(PlayerbotAI* botAI) : LfgJoinAction(botAI, "lfg accept") {}
+    LfgAcceptAction(ShadowAI* botAI) : LfgJoinAction(botAI, "lfg accept") {}
 
     bool Execute(Event event) override;
     bool isUseful() override { return true; }
@@ -35,7 +35,7 @@ public:
 class LfgRoleCheckAction : public LfgJoinAction
 {
 public:
-    LfgRoleCheckAction(PlayerbotAI* botAI) : LfgJoinAction(botAI, "lfg role check") {}
+    LfgRoleCheckAction(ShadowAI* botAI) : LfgJoinAction(botAI, "lfg role check") {}
 
     bool Execute(Event event) override;
     bool isUseful() override { return true; }
@@ -44,7 +44,7 @@ public:
 class LfgLeaveAction : public Action
 {
 public:
-    LfgLeaveAction(PlayerbotAI* botAI) : Action(botAI, "lfg leave") {}
+    LfgLeaveAction(ShadowAI* botAI) : Action(botAI, "lfg leave") {}
 
     bool Execute(Event event) override;
     bool isUseful() override;
@@ -53,7 +53,7 @@ public:
 class LfgTeleportAction : public Action
 {
 public:
-    LfgTeleportAction(PlayerbotAI* botAI) : Action(botAI, "lfg teleport") {}
+    LfgTeleportAction(ShadowAI* botAI) : Action(botAI, "lfg teleport") {}
 
     bool Execute(Event event) override;
 };

@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CANCELCHANNELACTION_H
-#define _PLAYERBOT_CANCELCHANNELACTION_H
+#ifndef _SHADOW_CANCELCHANNELACTION_H
+#define _SHADOW_CANCELCHANNELACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class CancelChannelAction : public Action
 {
 public:
-    CancelChannelAction(PlayerbotAI* botAI) : Action(botAI, "cancel channel") {}
+    CancelChannelAction(ShadowAI* botAI) : Action(botAI, "cancel channel") {}
 
     bool Execute(Event event) override;
 };

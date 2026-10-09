@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_TRIGGER_H
-#define _PLAYERBOT_TRIGGER_H
+#ifndef _SHADOW_TRIGGER_H
+#define _SHADOW_TRIGGER_H
 
 #include "Action.h"
 #include "Common.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class Trigger : public AiNamedObject
 {
 public:
-    Trigger(PlayerbotAI* botAI, std::string const name = "trigger", int32 checkInterval = 1);
+    Trigger(ShadowAI* botAI, std::string const name = "trigger", int32 checkInterval = 1);
 
     virtual ~Trigger() {}
 

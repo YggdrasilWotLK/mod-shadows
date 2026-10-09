@@ -6,7 +6,7 @@
 #include "ListSpellsAction.h"
 
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 std::map<uint32, SkillLineAbilityEntry const*> ListSpellsAction::skillSpells;
 std::set<uint32> ListSpellsAction::vendorItems;
@@ -17,7 +17,7 @@ bool CompareSpells(const std::pair<uint32, std::string>& s1, const std::pair<uin
     SpellInfo const* si2 = sSpellMgr->GetSpellInfo(s2.first);
     if (!si1 || !si2)
     {
-        LOG_ERROR("playerbots", "SpellInfo missing. {} {}", s1.first, s2.first);
+        LOG_ERROR("shadows", "SpellInfo missing. {} {}", s1.first, s2.first);
         return false;
     }
     uint32 p1 = si1->SchoolMask * 20000;
@@ -276,7 +276,7 @@ std::vector<std::pair<uint32, std::string>> ListSpellsAction::GetSpellList(std::
 
         if (itr->first == 0)
         {
-            LOG_ERROR("playerbots", "?! {}", itr->first);
+            LOG_ERROR("shadows", "?! {}", itr->first);
         }
         spells.push_back(std::pair<uint32, std::string>(itr->first, out.str()));
         alreadySeenList += spellInfo->SpellName[0];

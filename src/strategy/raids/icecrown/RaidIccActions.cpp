@@ -2,7 +2,7 @@
 #include "strategy/values/NearestNpcsValue.h"
 #include "ObjectAccessor.h"
 #include "RaidIccStrategy.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "Timer.h"
 #include "Vehicle.h"
 #include "RtiValue.h"
@@ -6832,7 +6832,7 @@ bool IccLichKingShadowTrapAction::Execute(Event event)
 
     Difficulty diff = bot->GetRaidDifficulty();
 
-    if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+    if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
     {
         //-------CHEAT-------
         if (!bot->HasAura(SPELL_EXPERIENCED))
@@ -7032,7 +7032,7 @@ bool IccLichKingWinterAction::Execute(Event event)
 
     Difficulty diff = bot->GetRaidDifficulty();
 
-    if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+    if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
     {
         //------CHEAT-------
         if (!bot->HasAura(SPELL_EXPERIENCED))
@@ -7838,7 +7838,7 @@ bool IccLichKingAddsAction::Execute(Event event)
 
     Difficulty diff = bot->GetRaidDifficulty();
 
-    if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+    if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
     {
         //------CHEAT-------
         if (!bot->HasAura(SPELL_EXPERIENCED))
@@ -9246,7 +9246,7 @@ void IccLichKingAddsAction::HandleValkyrAssignment(const std::vector<Unit*>& gra
         bot->SetFacingToObject(myValkyr);
         Difficulty diff = bot->GetRaidDifficulty();
 
-        if (sPlayerbotAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
+        if (sShadowAIConfig->EnableICCBuffs && diff && (diff == RAID_DIFFICULTY_10MAN_HEROIC || diff == RAID_DIFFICULTY_25MAN_HEROIC))
         {
             //---------CHEAT---------
             if (!myValkyr->HasAura(SPELL_HAMMER_OF_JUSTICE))

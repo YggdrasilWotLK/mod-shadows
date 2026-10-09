@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SNARETARGETVALUE_H
-#define _PLAYERBOT_SNARETARGETVALUE_H
+#ifndef _SHADOW_SNARETARGETVALUE_H
+#define _SHADOW_SNARETARGETVALUE_H
 
 #include "NamedObjectContext.h"
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class SnareTargetValue : public UnitCalculatedValue, public Qualified
 {
 public:
-    SnareTargetValue(PlayerbotAI* botAI) : UnitCalculatedValue(botAI, "snare target", 1) {}
+    SnareTargetValue(ShadowAI* botAI) : UnitCalculatedValue(botAI, "snare target", 1) {}
 
 protected:
     Unit* Calculate() override;

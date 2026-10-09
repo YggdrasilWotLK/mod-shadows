@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SHADOWPRIESTSTRATEGY_H
-#define _PLAYERBOT_SHADOWPRIESTSTRATEGY_H
+#ifndef _SHADOW_SHADOWPRIESTSTRATEGY_H
+#define _SHADOW_SHADOWPRIESTSTRATEGY_H
 
 #include "GenericPriestStrategy.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class ShadowPriestStrategy : public GenericPriestStrategy
 {
 public:
-    ShadowPriestStrategy(PlayerbotAI* botAI);
+    ShadowPriestStrategy(ShadowAI* botAI);
 
     NextAction** getDefaultActions() override;
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
@@ -24,7 +24,7 @@ public:
 class ShadowPriestAoeStrategy : public CombatStrategy
 {
 public:
-    ShadowPriestAoeStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    ShadowPriestAoeStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "shadow aoe"; }
@@ -33,7 +33,7 @@ public:
 class ShadowPriestDebuffStrategy : public CombatStrategy
 {
 public:
-    ShadowPriestDebuffStrategy(PlayerbotAI* botAI) : CombatStrategy(botAI) {}
+    ShadowPriestDebuffStrategy(ShadowAI* botAI) : CombatStrategy(botAI) {}
 
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
     std::string const getName() override { return "shadow debuff"; }

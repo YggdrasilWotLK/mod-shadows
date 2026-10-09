@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_CURETRIGGERS_H
-#define _PLAYERBOT_CURETRIGGERS_H
+#ifndef _SHADOW_CURETRIGGERS_H
+#define _SHADOW_CURETRIGGERS_H
 
 #include "GenericTriggers.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class NeedCureTrigger : public SpellTrigger
 {
 public:
-    NeedCureTrigger(PlayerbotAI* botAI, std::string const spell, uint32 dispelType)
+    NeedCureTrigger(ShadowAI* botAI, std::string const spell, uint32 dispelType)
         : SpellTrigger(botAI, spell, 1 * 1000), dispelType(dispelType)
     {
     }
@@ -29,7 +29,7 @@ protected:
 class TargetAuraDispelTrigger : public NeedCureTrigger
 {
 public:
-    TargetAuraDispelTrigger(PlayerbotAI* botAI, std::string const spell, uint32 dispelType)
+    TargetAuraDispelTrigger(ShadowAI* botAI, std::string const spell, uint32 dispelType)
         : NeedCureTrigger(botAI, spell, dispelType)
     {
     }
@@ -40,7 +40,7 @@ public:
 class PartyMemberNeedCureTrigger : public NeedCureTrigger
 {
 public:
-    PartyMemberNeedCureTrigger(PlayerbotAI* botAI, std::string const spell, uint32 dispelType)
+    PartyMemberNeedCureTrigger(ShadowAI* botAI, std::string const spell, uint32 dispelType)
         : NeedCureTrigger(botAI, spell, dispelType)
     {
     }
@@ -52,7 +52,7 @@ public:
 class NeedWorldBuffTrigger : public Trigger
 {
 public:
-    NeedWorldBuffTrigger(PlayerbotAI* botAI) : Trigger(botAI) {}
+    NeedWorldBuffTrigger(ShadowAI* botAI) : Trigger(botAI) {}
 
     bool IsActive() override;
 };

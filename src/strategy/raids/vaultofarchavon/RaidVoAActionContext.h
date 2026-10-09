@@ -3,13 +3,13 @@
 //  and/or modify it under version 2 of the License, or (at your option), any later version.
 //  */
 
-#ifndef _PLAYERBOT_RAIDVOAACTIONCONTEXT_H
-#define _PLAYERBOT_RAIDVOAACTIONCONTEXT_H
+#ifndef _SHADOW_RAIDVOAACTIONCONTEXT_H
+#define _SHADOW_RAIDVOAACTIONCONTEXT_H
 
 #include "Action.h"
 #include "NamedObjectContext.h"
 #include "RaidVoAActions.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 
 class RaidVoAActionContext : public NamedObjectContext<Action>
 {
@@ -25,12 +25,12 @@ public:
     }
 
 private:
-    static Action* emalon_mark_boss_action(PlayerbotAI* ai) { return new EmalonMarkBossAction(ai); }
-    static Action* emalon_lighting_nova_action(PlayerbotAI* ai) { return new EmalonLightingNovaAction(ai); }
-    static Action* emalon_overcharge_action(PlayerbotAI* ai) { return new EmalonOverchargeAction(ai); }
-    static Action* emalon_fall_from_floor_action(PlayerbotAI* ai) { return new EmalonFallFromFloorAction(ai); }
-    static Action* emalon_nature_resistance_action(PlayerbotAI* ai) { return new BossNatureResistanceAction(ai, "emalon the storm watcher"); }
-    static Action* koralon_fire_resistance_action(PlayerbotAI* ai) { return new BossFireResistanceAction(ai, "koralon the flame watcher"); }
+    static Action* emalon_mark_boss_action(ShadowAI* ai) { return new EmalonMarkBossAction(ai); }
+    static Action* emalon_lighting_nova_action(ShadowAI* ai) { return new EmalonLightingNovaAction(ai); }
+    static Action* emalon_overcharge_action(ShadowAI* ai) { return new EmalonOverchargeAction(ai); }
+    static Action* emalon_fall_from_floor_action(ShadowAI* ai) { return new EmalonFallFromFloorAction(ai); }
+    static Action* emalon_nature_resistance_action(ShadowAI* ai) { return new BossNatureResistanceAction(ai, "emalon the storm watcher"); }
+    static Action* koralon_fire_resistance_action(ShadowAI* ai) { return new BossFireResistanceAction(ai, "koralon the flame watcher"); }
 };
 
 #endif

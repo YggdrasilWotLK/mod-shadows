@@ -5,7 +5,7 @@
 
 #include "GenericDKNonCombatStrategy.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 class GenericDKNonCombatStrategyActionNodeFactory : public NamedObjectFactory<ActionNode>
 {
@@ -17,7 +17,7 @@ public:
     }
 
 private:
-    static ActionNode* bone_shield([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* bone_shield([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("bone shield",
                               /*P*/ nullptr,
@@ -25,7 +25,7 @@ private:
                               /*C*/ nullptr);
     }
 
-    static ActionNode* horn_of_winter([[maybe_unused]] PlayerbotAI* botAI)
+    static ActionNode* horn_of_winter([[maybe_unused]] ShadowAI* botAI)
     {
         return new ActionNode("horn of winter",
                               /*P*/ nullptr,
@@ -34,7 +34,7 @@ private:
     }
 };
 
-GenericDKNonCombatStrategy::GenericDKNonCombatStrategy(PlayerbotAI* botAI) : NonCombatStrategy(botAI)
+GenericDKNonCombatStrategy::GenericDKNonCombatStrategy(ShadowAI* botAI) : NonCombatStrategy(botAI)
 {
     actionNodeFactories.Add(new GenericDKNonCombatStrategyActionNodeFactory());
 }

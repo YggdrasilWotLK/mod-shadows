@@ -3,13 +3,13 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WARRIORACTIONS_H
-#define _PLAYERBOT_WARRIORACTIONS_H
+#ifndef _SHADOW_WARRIORACTIONS_H
+#define _SHADOW_WARRIORACTIONS_H
 
 #include "AiObject.h"
 #include "GenericSpellActions.h"
 #include "Player.h"
-#include "PlayerbotAI.h"
+#include "ShadowAI.h"
 #include "ReachTargetActions.h"
 
 // stances
@@ -25,14 +25,14 @@ MELEE_ACTION_U(CastBattleShoutTauntAction, "battle shout", CastSpellAction::isUs
 class CastDemoralizingShoutAction : public CastMeleeDebuffSpellAction
 {
 public:
-    CastDemoralizingShoutAction(PlayerbotAI* botAI)
+    CastDemoralizingShoutAction(ShadowAI* botAI)
         : CastMeleeDebuffSpellAction(botAI, "demoralizing shout") {}
 };
 
 class CastDemoralizingShoutWithoutLifeTimeCheckAction : public CastMeleeDebuffSpellAction
 {
 public:
-    CastDemoralizingShoutWithoutLifeTimeCheckAction(PlayerbotAI* botAI)
+    CastDemoralizingShoutWithoutLifeTimeCheckAction(ShadowAI* botAI)
         : CastMeleeDebuffSpellAction(botAI, "demoralizing shout", false, 0.0f)
     {
     }
@@ -50,7 +50,7 @@ DEBUFF_CHECKISOWNER_ACTION(CastRendAction, "rend");
 class CastRendOnAttackerAction : public CastDebuffSpellOnMeleeAttackerAction
 {
 public:
-    CastRendOnAttackerAction(PlayerbotAI* botAI) : CastDebuffSpellOnMeleeAttackerAction(botAI, "rend") {}
+    CastRendOnAttackerAction(ShadowAI* botAI) : CastDebuffSpellOnMeleeAttackerAction(botAI, "rend") {}
 };
 
 MELEE_ACTION(CastThunderClapAction, "thunder clap");
@@ -125,7 +125,7 @@ SNARE_ACTION(CastShockwaveSnareAction, "shockwave");
 class CastSunderArmorAction : public CastDebuffSpellAction
 {
 public:
-    CastSunderArmorAction(PlayerbotAI* botAI) : CastDebuffSpellAction(botAI, "sunder armor")
+    CastSunderArmorAction(ShadowAI* botAI) : CastDebuffSpellAction(botAI, "sunder armor")
     {
         range = ATTACK_DISTANCE;
     }
@@ -136,7 +136,7 @@ public:
 class CastVigilanceAction : public BuffOnPartyAction
 {
 public:
-    CastVigilanceAction(PlayerbotAI* botAI) : BuffOnPartyAction(botAI, "vigilance") {}
+    CastVigilanceAction(ShadowAI* botAI) : BuffOnPartyAction(botAI, "vigilance") {}
 
     Unit* GetTarget() override;
     bool Execute(Event event) override;
@@ -145,7 +145,7 @@ public:
 class CastRetaliationAction : public CastBuffSpellAction
 {
 public:
-    CastRetaliationAction(PlayerbotAI* botAI) : CastBuffSpellAction(botAI, "retaliation") {}
+    CastRetaliationAction(ShadowAI* botAI) : CastBuffSpellAction(botAI, "retaliation") {}
 
     bool isUseful() override;
 };
@@ -153,7 +153,7 @@ public:
 class CastShatteringThrowAction : public CastSpellAction
 {
 public:
-    CastShatteringThrowAction(PlayerbotAI* botAI) : CastSpellAction(botAI, "shattering throw") {}
+    CastShatteringThrowAction(ShadowAI* botAI) : CastSpellAction(botAI, "shattering throw") {}
 
     Unit* GetTarget() override;
     bool isUseful() override;

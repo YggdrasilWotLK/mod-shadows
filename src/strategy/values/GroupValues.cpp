@@ -5,7 +5,7 @@
 
 #include "GroupValues.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "ServerFacade.h"
 
 GuidVector GroupMembersValue::Calculate()
@@ -47,7 +47,7 @@ bool IsNearLeaderValue::Calculate()
     if (groupMaster == bot)
         return true;
 
-    return sServerFacade->GetDistance2d(bot, botAI->GetGroupMaster()) < sPlayerbotAIConfig->sightDistance;
+    return sServerFacade->GetDistance2d(bot, botAI->GetGroupMaster()) < sShadowAIConfig->sightDistance;
 }
 
 bool BoolANDValue::Calculate()
@@ -77,7 +77,7 @@ uint32 GroupBoolCountValue::Calculate()
         if (player->GetMapId() != bot->GetMapId())
             continue;
 
-        if (!GET_PLAYERBOT_AI(player))
+        if (!GET_SHADOW_AI(player))
             continue;
 
         if (PAI_VALUE2(bool, "and", getQualifier()))
@@ -99,7 +99,7 @@ bool GroupBoolANDValue::Calculate()
         if (player->GetMapId() != bot->GetMapId())
             continue;
 
-        if (!GET_PLAYERBOT_AI(player))
+        if (!GET_SHADOW_AI(player))
             continue;
 
         if (!PAI_VALUE2(bool, "and", getQualifier()))
@@ -121,7 +121,7 @@ bool GroupBoolORValue::Calculate()
         if (player->GetMapId() != bot->GetMapId())
             continue;
 
-        if (!GET_PLAYERBOT_AI(player))
+        if (!GET_SHADOW_AI(player))
             continue;
 
         if (PAI_VALUE2(bool, "and", getQualifier()))
@@ -144,7 +144,7 @@ bool GroupReadyValue::Calculate()
 
         if (inDungeon)  // In dungeons all following members need to be alive before continueing.
         {
-            auto memberAi = GET_PLAYERBOT_AI(member);
+            auto memberAi = GET_SHADOW_AI(member);
 
             bool isFollowing = memberAi ? memberAi->HasStrategy("follow", BOT_STATE_NON_COMBAT) : true;
 
@@ -155,10 +155,10 @@ bool GroupReadyValue::Calculate()
         // We only wait for members that are in range otherwise we might be waiting for bots stuck in dead loops
         // forever.
         if (botAI->GetGroupMaster() &&
-            sServerFacade->GetDistance2d(member, botAI->GetGroupMaster()) > sPlayerbotAIConfig->sightDistance)
+            sServerFacade->GetDistance2d(member, botAI->GetGroupMaster()) > sShadowAIConfig->sightDistance)
             continue;
 
-        if (member->GetHealthPct() < sPlayerbotAIConfig->almostFullHealth)
+        if (member->GetHealthPct() < sShadowAIConfig->almostFullHealth)
             return false;
 
         if (!member->GetPower(POWER_MANA))
@@ -166,7 +166,7 @@ bool GroupReadyValue::Calculate()
 
         float mana = (static_cast<float>(member->GetPower(POWER_MANA)) / member->GetMaxPower(POWER_MANA)) * 100;
 
-        if (mana < sPlayerbotAIConfig->mediumMana)
+        if (mana < sShadowAIConfig->mediumMana)
             return false;
     }
 

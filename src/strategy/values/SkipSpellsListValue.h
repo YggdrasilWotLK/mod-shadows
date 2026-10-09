@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_SKIPSPELLSLISTVALUE_H
-#define _PLAYERBOT_SKIPSPELLSLISTVALUE_H
+#ifndef _SHADOW_SKIPSPELLSLISTVALUE_H
+#define _SHADOW_SKIPSPELLSLISTVALUE_H
 
 #include <set>
 
 #include "Value.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class SkipSpellsListValue : public ManualSetValue<std::set<uint32>&>
 {
 public:
-    SkipSpellsListValue(PlayerbotAI* botAI, std::string const name = "skip spells list")
+    SkipSpellsListValue(ShadowAI* botAI, std::string const name = "skip spells list")
         : ManualSetValue<std::set<uint32>&>(botAI, list, name)
     {
     }

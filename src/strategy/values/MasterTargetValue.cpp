@@ -5,6 +5,6 @@
 
 #include "MasterTargetValue.h"
 
-#include "Playerbots.h"
+#include "Shadows.h"
 
 Unit* MasterTargetValue::Calculate() { return botAI->GetGroupMaster(); }

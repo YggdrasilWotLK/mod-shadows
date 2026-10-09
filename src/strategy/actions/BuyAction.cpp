@@ -10,7 +10,7 @@
 #include "ItemCountValue.h"
 #include "ItemUsageValue.h"
 #include "ItemVisitors.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 #include "StatsWeightCalculator.h"
 
 bool BuyAction::Execute(Event event)

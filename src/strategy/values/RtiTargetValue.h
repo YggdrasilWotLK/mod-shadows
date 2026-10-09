@@ -3,18 +3,18 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RTITARGETVALUE_H
-#define _PLAYERBOT_RTITARGETVALUE_H
+#ifndef _SHADOW_RTITARGETVALUE_H
+#define _SHADOW_RTITARGETVALUE_H
 
 #include "TargetValue.h"
 
-class PlayerbotAI;
+class ShadowAI;
 class Unit;
 
 class RtiTargetValue : public TargetValue
 {
 public:
-    RtiTargetValue(PlayerbotAI* botAI, std::string const type = "rti", std::string const name = "rti target")
+    RtiTargetValue(ShadowAI* botAI, std::string const type = "rti", std::string const name = "rti target")
         : TargetValue(botAI, name), type(type)
     {
     }
@@ -37,7 +37,7 @@ private:
 class RtiCcTargetValue : public RtiTargetValue
 {
 public:
-    RtiCcTargetValue(PlayerbotAI* botAI, std::string const name = "rti cc target")
+    RtiCcTargetValue(ShadowAI* botAI, std::string const name = "rti cc target")
         : RtiTargetValue(botAI, "rti cc", name)
     {
     }

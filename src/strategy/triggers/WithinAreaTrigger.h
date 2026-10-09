@@ -3,19 +3,19 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_WITHINAREATRIGGER_H
-#define _PLAYERBOT_WITHINAREATRIGGER_H
+#ifndef _SHADOW_WITHINAREATRIGGER_H
+#define _SHADOW_WITHINAREATRIGGER_H
 
 #include "Trigger.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 struct AreaTrigger;
 
 class WithinAreaTrigger : public Trigger
 {
 public:
-    WithinAreaTrigger(PlayerbotAI* botAI) : Trigger(botAI, "within area trigger") {}
+    WithinAreaTrigger(ShadowAI* botAI) : Trigger(botAI, "within area trigger") {}
 
     bool IsActive() override;
 

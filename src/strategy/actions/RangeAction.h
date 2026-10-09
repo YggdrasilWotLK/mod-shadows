@@ -3,17 +3,17 @@
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
-#ifndef _PLAYERBOT_RANGEACTION_H
-#define _PLAYERBOT_RANGEACTION_H
+#ifndef _SHADOW_RANGEACTION_H
+#define _SHADOW_RANGEACTION_H
 
 #include "Action.h"
 
-class PlayerbotAI;
+class ShadowAI;
 
 class RangeAction : public Action
 {
 public:
-    RangeAction(PlayerbotAI* botAI) : Action(botAI, "range") {}
+    RangeAction(ShadowAI* botAI) : Action(botAI, "range") {}
 
     bool Execute(Event event) override;
 

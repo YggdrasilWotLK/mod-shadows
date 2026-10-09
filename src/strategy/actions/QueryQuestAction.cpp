@@ -7,7 +7,7 @@
 
 #include "ChatHelper.h"
 #include "Event.h"
-#include "Playerbots.h"
+#include "Shadows.h"
 
 void QueryQuestAction::TellObjective(std::string const name, uint32 available, uint32 required)
 {
@@ -29,7 +29,7 @@ bool QueryQuestAction::Execute(Event event)
         chat->eraseAllSubStr(text, " travel");
     }
 
-    PlayerbotChatHandler ch(bot);
+    ShadowChatHandler ch(bot);
     uint32 questId = ch.extractQuestId(text);
     if (!questId)
     {
