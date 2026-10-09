@@ -620,6 +620,14 @@ public:
     // Schedules a callback to run once after <delayMs> milliseconds.
     void AddTimedEvent(std::function<void()> callback, uint32 delayMs);
 
+    // Eating/drinking regen state. While eating the AI keeps ticking (combat
+    // and chat commands stay live) but routine non-combat actions are
+    // suppressed by the engine. Any executed non-food action stops eating.
+    bool IsEating() const { return eating; }
+    void StartEating(uint32 durationSeconds);
+    void StopEating();
+    void UpdateEatingState();
+
 private:
     static void _fillGearScoreData(Player* player, Item* item, std::vector<uint32>* gearScore, uint32& twoHandScore,
                                    bool mixed = false);
@@ -679,6 +687,10 @@ protected:
     uint32 prevFall2T = 0;
     float pendingFallStartZ = 0.0f;
     bool pendingFallDamage = false;
+
+    // See StartEating/StopEating: regen sit state with an expiry cap.
+    bool eating = false;
+    time_t eatingExpireTime = 0;
 };
 
 #endif

@@ -1618,6 +1618,7 @@ void ShadowAI::DoNextAction(bool min)
     bool isBotAlive = bot->IsAlive();
     if (currentEngine != engines[BOT_STATE_DEAD] && !isBotAlive)
     {
+        StopEating();
         bot->StopMoving();
         bot->GetMotionMaster()->Clear();
         bot->GetMotionMaster()->MoveIdle();
@@ -1694,6 +1695,12 @@ void ShadowAI::DoNextAction(bool min)
     }
 
     bool minimal = !AllowActivity();
+
+    // Refresh the eating/drinking regen state before the engine tick so the
+    // engine gate below (and in Engine::DoNextAction) sees the current state.
+    // Eating never blocks the tick itself: combat and chat commands stay live,
+    // routine non-combat actions are suppressed while eating is active.
+    UpdateEatingState();
 
     currentEngine->DoNextAction(nullptr, 0, (minimal || min));
 
@@ -4367,6 +4374,57 @@ void ShadowAI::RemoveAura(std::string const name)
     uint32 spellid = aiObjectContext->GetValue<uint32>("spell id", name)->Get();
     if (spellid && HasAura(spellid, bot))
         bot->RemoveAurasDueToSpell(spellid);
+}
+
+void ShadowAI::StartEating(uint32 durationSeconds)
+{
+    eating = true;
+    eatingExpireTime = time(nullptr) + (time_t)std::max<uint32>(durationSeconds, 1);
+}
+
+void ShadowAI::StopEating()
+{
+    if (!eating)
+        return;
+
+    eating = false;
+    eatingExpireTime = 0;
+
+    if (!bot)
+        return;
+
+    if (bot->IsSitState())
+        bot->SetStandState(UNIT_STAND_STATE_STAND);
+
+    bot->RemoveAura(25990);
+}
+
+void ShadowAI::UpdateEatingState()
+{
+    if (!eating || !bot)
+        return;
+
+    // Eating never survives death, expiry, regen completion, combat,
+    // movement (knockbacks etc.) or a master that has moved out of range.
+    if (!bot->IsAlive() || time(nullptr) >= eatingExpireTime || bot->IsInCombat() || bot->isMoving())
+    {
+        StopEating();
+        return;
+    }
+
+    bool const hasMana = bot->getPowerType() == POWER_MANA;
+    if (bot->GetHealthPct() >= 100.0f && (!hasMana || bot->GetPowerPct(POWER_MANA) >= 100.0f))
+    {
+        StopEating();
+        return;
+    }
+
+    if (Player* moveMaster = GetValidMaster())
+    {
+        if (moveMaster->IsInWorld() &&
+            sServerFacade->GetDistance2d(bot, moveMaster) > 50.0f)
+            StopEating();
+    }
 }
 
 bool ShadowAI::IsInterruptableSpellCasting(Unit* target, std::string const spell)

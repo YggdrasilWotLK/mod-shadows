@@ -94,6 +94,7 @@ private:
                          const char* pushType);
     void Reset();
     void ProcessTriggers(bool minimal);
+    static bool IsTriggerAllowedWhileEating(Trigger* trigger);
     void PushDefaultActions();
     void PushAgain(ActionNode* actionNode, float relevance, Event event);
     ActionNode* CreateActionNode(std::string const name);
