@@ -268,6 +268,11 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
         if (bot->IsInCombat())
             return false;
 
+        // Already eating/drinking: keep the regen state, do not consume
+        // another item or re-delay the AI.
+        if (botAI->IsEating())
+            return true;
+
         // bot->SetStandState(UNIT_STAND_STATE_SIT);
         botAI->InterruptSpell();
         float hp = bot->GetHealthPct();
@@ -289,11 +294,18 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
             TellConsumableUse(item, "Eating", p);
         }
 
-        if (!bot->IsInCombat() && !bot->InBattleground())
-            botAI->SetNextCheckDelay(std::max(10000.0f, 27000.0f * (100 - p) / 100.0f));
+        // Regen duration stays proportional to the missing health/mana, but it
+        // no longer sleeps the whole AI: the engine keeps ticking (combat and
+        // chat commands stay live) and only routine actions are suppressed.
+        // Capped at a single food/drink aura duration; regen completion,
+        // combat, movement or commands end eating earlier.
+        float baseMs = bot->InBattleground() ? 20000.0f : 27000.0f;
+        uint32 eatDuration = (uint32)(baseMs * (100.0f - p) / 100.0f / 1000.0f) + 1;
+        if (eatDuration > 30)
+            eatDuration = 30;
 
-        if (!bot->IsInCombat() && bot->InBattleground())
-            botAI->SetNextCheckDelay(std::max(10000.0f, 20000.0f * (100 - p) / 100.0f));
+        botAI->StartEating(eatDuration);
+        botAI->SetNextCheckDelay(botAI->GetReactDelay());
 
         // botAI->SetNextCheckDelay(27000.0f * (100 - p) / 100.0f);
         //  botAI->SetNextCheckDelay(20000);

@@ -10,34 +10,28 @@
 
 bool DrinkAction::Execute(Event event)
 {
+    // Already drinking: keep the regen state, do not re-sit or re-delay.
+    if (botAI->IsEating())
+        return true;
+
     if (botAI->HasCheat(BotCheatMask::food))
     {
-        // if (bot->IsNonMeleeSpellCast(true))
-        //     return false;
-
         bot->ClearUnitState(UNIT_STATE_CHASE);
         bot->ClearUnitState(UNIT_STATE_FOLLOW);
 
         if (bot->isMoving())
-        {
             bot->StopMoving();
-            // botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
-            // return false;
-        }
+
         bot->SetStandState(UNIT_STAND_STATE_SIT);
         botAI->InterruptSpell();
 
-        // float hp = bot->GetHealthPercent();
+        // Regen duration stays proportional to the missing mana, but it no
+        // longer sleeps the whole AI: the engine keeps ticking (combat and
+        // chat commands stay live) and only routine actions are suppressed.
         float mp = bot->GetPowerPct(POWER_MANA);
-        float p = mp;
-        float delay;
-
-        if (!bot->InBattleground())
-            delay = 18000.0f * (100 - p) / 100.0f;
-        else
-            delay = 12000.0f * (100 - p) / 100.0f;
-
-        botAI->SetNextCheckDelay(delay);
+        float baseMs = bot->InBattleground() ? 12000.0f : 18000.0f;
+        botAI->StartEating((uint32)(baseMs * (100.0f - mp) / 100.0f / 1000.0f) + 1);
+        botAI->SetNextCheckDelay(botAI->GetReactDelay());
 
         bot->AddAura(25990, bot);
         return true;
@@ -65,35 +59,26 @@ bool DrinkAction::isPossible()
 
 bool EatAction::Execute(Event event)
 {
+    // Already eating: keep the regen state, do not re-sit or re-delay.
+    if (botAI->IsEating())
+        return true;
+
     if (botAI->HasCheat(BotCheatMask::food))
     {
-        // if (bot->IsNonMeleeSpellCast(true))
-        //     return false;
-
         bot->ClearUnitState(UNIT_STATE_CHASE);
         bot->ClearUnitState(UNIT_STATE_FOLLOW);
 
         if (bot->isMoving())
-        {
             bot->StopMoving();
-            // botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
-            // return false;
-        }
 
         bot->SetStandState(UNIT_STAND_STATE_SIT);
         botAI->InterruptSpell();
 
+        // See DrinkAction::Execute: duration without sleeping the AI.
         float hp = bot->GetHealthPct();
-        // float mp = bot->HasMana() ? bot->GetPowerPercent() : 0.f;
-        float p = hp;
-        float delay;
-
-        if (!bot->InBattleground())
-            delay = 18000.0f * (100 - p) / 100.0f;
-        else
-            delay = 12000.0f * (100 - p) / 100.0f;
-
-        botAI->SetNextCheckDelay(delay);
+        float baseMs = bot->InBattleground() ? 12000.0f : 18000.0f;
+        botAI->StartEating((uint32)(baseMs * (100.0f - hp) / 100.0f / 1000.0f) + 1);
+        botAI->SetNextCheckDelay(botAI->GetReactDelay());
 
         bot->AddAura(25990, bot);
         return true;

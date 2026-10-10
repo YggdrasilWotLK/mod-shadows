@@ -12,6 +12,10 @@
 #include "Queue.h"
 #include "Strategy.h"
 #include "Timer.h"
+#include "triggers/ChatCommandTrigger.h"
+#include "triggers/WorldPacketTrigger.h"
+
+#include <unordered_set>
 
 Engine::Engine(ShadowAI* botAI, AiObjectContext* factory) : ShadowAIAware(botAI), aiObjectContext(factory)
 {
@@ -148,9 +152,23 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
     ActionBasket* basket = nullptr;
     time_t currentTime = time(nullptr);
 
+    // While eating/drinking, drop routine baskets queued before eating
+    // started (follow, buffs, ...). Combat and command baskets are re-pushed
+    // from live trigger state below, so nothing live is lost.
+    if (botAI && botAI->IsEating())
+    {
+        ActionNode* stale = nullptr;
+        while ((stale = queue.Pop()) != nullptr)
+            delete stale;
+    }
+
     // Update triggers and push default actions
     ProcessTriggers(minimal);
-    PushDefaultActions();
+
+    // While eating/drinking routine default actions (follow, ...) stay
+    // suppressed. Combat entry and chat commands arrive via triggers above.
+    if (!botAI || !botAI->IsEating())
+        PushDefaultActions();
 
     uint32 iterations = 0;
     uint32 iterationsPerTick = queue.Size() * (minimal ? 2 : sShadowAIConfig->iterationsPerTick);
@@ -435,6 +453,14 @@ void Engine::ProcessTriggers(bool minimal)
 {
     std::unordered_map<Trigger*, Event> fires;
     uint32 now = getMSTime();
+
+    // While the bot is eating/drinking only combat-relevant and externally
+    // driven (chat command / party command packet) triggers may fire.
+    // Everything else is skipped without Reset so pending external events
+    // survive until eating ends.
+    bool const restricted = botAI && botAI->IsEating();
+    std::unordered_set<Trigger*> checkedTriggers;
+
     for (std::vector<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
     {
         TriggerNode* node = *i;
@@ -453,6 +479,11 @@ void Engine::ProcessTriggers(bool minimal)
 
         if (fires.find(trigger) != fires.end())
             continue;
+
+        if (restricted && !IsTriggerAllowedWhileEating(trigger))
+            continue;
+
+        checkedTriggers.insert(trigger);
 
         if (testMode || trigger->needCheck(now))
         {
@@ -487,8 +518,39 @@ void Engine::ProcessTriggers(bool minimal)
     for (std::vector<TriggerNode*>::iterator i = triggers.begin(); i != triggers.end(); i++)
     {
         if (Trigger* trigger = (*i)->getTrigger())
-            trigger->Reset();
+        {
+            // Skipped (restricted) triggers keep their state so no external
+            // event is lost while eating.
+            if (!restricted || checkedTriggers.find(trigger) != checkedTriggers.end())
+                trigger->Reset();
+        }
     }
+}
+
+// Combat and command triggers that stay live while the bot is eating or
+// drinking. Chat commands cover direct orders (follow, buff, attack, ...),
+// the combat watchers let the bot defend itself and switch to the combat
+// engine. Routine triggers (follow distance, buffs, loot, food re-cast, ...)
+// stay suppressed until eating ends.
+bool Engine::IsTriggerAllowedWhileEating(Trigger* trigger)
+{
+    if (!trigger)
+        return false;
+
+    if (dynamic_cast<ChatCommandTrigger*>(trigger))
+        return true;
+
+    if (WorldPacketTrigger* packetTrigger = dynamic_cast<WorldPacketTrigger*>(trigger))
+        return packetTrigger->getName() == "party command";
+
+    static const std::unordered_set<std::string> combatWatch = {
+        "not dps target active",
+        "tank assist",
+        "being attacked",
+        "enemy player near"
+    };
+
+    return combatWatch.find(trigger->getName()) != combatWatch.end();
 }
 
 void Engine::PushDefaultActions()
@@ -588,6 +650,16 @@ bool Engine::ListenAndExecute(Action* action, Event event)
     }
 
     actionExecuted = actionExecutionListeners.OverrideResult(action, actionExecuted, event);
+
+    // Any executed action other than eating/drinking itself (combat, movement,
+    // spells, direct orders, ...) breaks the eating/drinking regen state.
+    if (actionExecuted && botAI && botAI->IsEating())
+    {
+        std::string const actionName = action->getName();
+        if (actionName != "food" && actionName != "drink")
+            botAI->StopEating();
+    }
+
     actionExecutionListeners.After(action, actionExecuted, event);
     return actionExecuted;
 }
