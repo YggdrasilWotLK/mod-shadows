@@ -5,63 +5,60 @@ on:
   pull_request:
 
 concurrency:
-  group: "core-build-${{ github.event.pull_request.number }}"
+  group: "core-build-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
   build:
-    strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-      matrix:
-        # single build: latest ubuntu only
-        include:
-          - os: ubuntu-24.04
-            c_compiler: gcc
-            cpp_compiler: g++
-            build_type: Release
-            
-    runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }}-${{ matrix.cpp_compiler }}
+    runs-on: ubuntu-24.04
+    name: ubuntu-24.04-g++
+    env:
+      CCACHE_SLOPPINESS: pch_defines,time_macros,include_file_mtime
+      CCACHE_CPP2: "true"
 
     steps:
       - name: Checkout YggdrasilCore
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'YggdrasilWotLK/yggdrasilcore'
           ref: 'master-shadows'
+          submodules: 'recursive'
+          fetch-depth: 1
 
       - name: Set reusable strings
         id: strings
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          
+
       - name: Checkout Shadows Module
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'YggdrasilWotLK/mod-shadows'
           path: 'modules/mod-shadows'
-      
-      - name: Cache
-        uses: actions/cache@v4
+          fetch-depth: 1
+
+      - name: Ccache
+        uses: hendrikmuhs/ccache-action@v1
         with:
-          path: ${{ github.workspace }}/var/ccache
-          key: ccache:${{ matrix.os }}:${{ matrix.c_compiler }}:${{ github.ref }}:${{ github.sha }}
+          key: mod-shadows-ubuntu-24.04-gcc-${{ github.ref_name }}
           restore-keys: |
-            ccache:${{ matrix.os }}:${{ matrix.c_compiler }}:${{ github.ref }}
-            ccache:${{ matrix.os }}:${{ matrix.c_compiler }}
-            ccache:${{ matrix.os }}
+            mod-shadows-ubuntu-24.04-gcc-
+          max-size: 1000M
 
       - name: Install Requirements
-        run: sudo apt-get update && sudo apt-get install ccache git cmake make gcc g++ clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev mysql-server libboost-all-dev
+        run: >
+          sudo apt-get update &&
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends
+          ccache ninja-build
+          libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev
 
       - name: Configure CMake
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}
-          -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
-          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
-          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -G Ninja -B ${{ steps.strings.outputs.build-output-dir }}
+          -DCMAKE_CXX_COMPILER=g++
+          -DCMAKE_C_COMPILER=gcc
+          -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_C_FLAGS="-DMOD_SHADOWS"
           -DCMAKE_CXX_FLAGS="-DMOD_SHADOWS"
           -DCMAKE_C_COMPILER_LAUNCHER="ccache"
@@ -69,4 +66,4 @@ jobs:
           -S ${{ github.workspace }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }} --parallel $(nproc)
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release --parallel $(nproc)
