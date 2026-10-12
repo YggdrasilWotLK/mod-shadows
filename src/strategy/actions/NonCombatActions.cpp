@@ -10,9 +10,19 @@
 
 bool DrinkAction::Execute(Event event)
 {
-    // Already drinking: keep the regen state, do not re-sit or re-delay.
+    // Already drinking: keep the regen state and make sure the bot is still
+    // seated with the regen aura (something may have stood it up without
+    // going through the engine).
     if (botAI->IsEating())
+    {
+        if (!bot->IsSitState())
+            bot->SetStandState(UNIT_STAND_STATE_SIT);
+
+        if (!bot->HasAura(25990))
+            bot->AddAura(25990, bot);
+
         return true;
+    }
 
     if (botAI->HasCheat(BotCheatMask::food))
     {
@@ -59,9 +69,19 @@ bool DrinkAction::isPossible()
 
 bool EatAction::Execute(Event event)
 {
-    // Already eating: keep the regen state, do not re-sit or re-delay.
+    // Already eating: keep the regen state and make sure the bot is still
+    // seated with the regen aura (something may have stood it up without
+    // going through the engine).
     if (botAI->IsEating())
+    {
+        if (!bot->IsSitState())
+            bot->SetStandState(UNIT_STAND_STATE_SIT);
+
+        if (!bot->HasAura(25990))
+            bot->AddAura(25990, bot);
+
         return true;
+    }
 
     if (botAI->HasCheat(BotCheatMask::food))
     {

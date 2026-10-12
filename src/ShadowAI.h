@@ -622,7 +622,8 @@ public:
 
     // Eating/drinking regen state. While eating the AI keeps ticking (combat
     // and chat commands stay live) but routine non-combat actions are
-    // suppressed by the engine. Any executed non-food action stops eating.
+    // suppressed by the engine. Only combat and player-commanded actions
+    // execute while eating; any such executed non-food action stops eating.
     bool IsEating() const { return eating; }
     void StartEating(uint32 durationSeconds);
     void StopEating();

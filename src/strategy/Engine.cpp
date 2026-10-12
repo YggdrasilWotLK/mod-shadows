@@ -151,6 +151,7 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
     bool actionExecuted = false;
     ActionBasket* basket = nullptr;
     time_t currentTime = time(nullptr);
+    eatingAllowedSources.clear();
 
     // While eating/drinking, drop routine baskets queued before eating
     // started (follow, buffs, ...). Combat and command baskets are re-pushed
@@ -195,6 +196,16 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
         }
         else if (action->isUseful())
         {
+            // While eating/drinking only combat and player-commanded actions
+            // may run. Anything else is dropped without executing so it can
+            // neither stand the bot nor break the regen state.
+            if (botAI && botAI->IsEating() && !IsActionAllowedWhileEating(action, event))
+            {
+                // Dropped without executing: it can neither stand the bot
+                // nor break the regen state.
+            }
+            else
+            {
             // Apply multipliers early to avoid unnecessary iterations
             for (Multiplier* multiplier : multipliers)
             {
@@ -245,6 +256,7 @@ bool Engine::DoNextAction(Unit* unit, uint32 depth, bool minimal)
                 LogAction("A:%s - IMPOSSIBLE", action->getName().c_str());
                 MultiplyAndPush(actionNode->getAlternatives(), relevance + 0.003f, false, event, "alt");
             }
+            }  // end allowed-while-eating gate
         }
         else
         {
@@ -500,6 +512,8 @@ void Engine::ProcessTriggers(bool minimal)
                 continue;
 
             fires[trigger] = event;
+            if (restricted)
+                eatingAllowedSources.insert(event.GetSource());
             LogAction("T:%s", trigger->getName().c_str());
         }
     }
@@ -530,8 +544,9 @@ void Engine::ProcessTriggers(bool minimal)
 // Combat and command triggers that stay live while the bot is eating or
 // drinking. Chat commands cover direct orders (follow, buff, attack, ...),
 // the combat watchers let the bot defend itself and switch to the combat
-// engine. Routine triggers (follow distance, buffs, loot, food re-cast, ...)
-// stay suppressed until eating ends.
+// engine. The food/drink re-cast triggers stay live too so the eat/drink
+// action itself maintains the sit and the aura through its normal path;
+// everything else stays suppressed until eating ends.
 bool Engine::IsTriggerAllowedWhileEating(Trigger* trigger)
 {
     if (!trigger)
@@ -550,7 +565,33 @@ bool Engine::IsTriggerAllowedWhileEating(Trigger* trigger)
         "enemy player near"
     };
 
-    return combatWatch.find(trigger->getName()) != combatWatch.end();
+    if (combatWatch.find(trigger->getName()) != combatWatch.end())
+        return true;
+
+    static const std::unordered_set<std::string> regen = {
+        "low health",
+        "medium health",
+        "low mana",
+        "high mana"
+    };
+
+    return regen.find(trigger->getName()) != regen.end();
+}
+
+// While eating/drinking only food/drink itself and actions pushed by combat
+// or player-commanded (chat command / party command packet) triggers on this
+// tick may execute. Continuers inherit their parent's event source, so a
+// combat or command action's follow-ups stay live too.
+bool Engine::IsActionAllowedWhileEating(Action* action, Event& event)
+{
+    if (!action)
+        return false;
+
+    std::string const actionName = action->getName();
+    if (actionName == "food" || actionName == "drink")
+        return true;
+
+    return eatingAllowedSources.find(event.GetSource()) != eatingAllowedSources.end();
 }
 
 void Engine::PushDefaultActions()
@@ -653,6 +694,8 @@ bool Engine::ListenAndExecute(Action* action, Event event)
 
     // Any executed action other than eating/drinking itself (combat, movement,
     // spells, direct orders, ...) breaks the eating/drinking regen state.
+    // The tick gate above ensures only combat and player-commanded actions
+    // can reach this point while eating.
     if (actionExecuted && botAI && botAI->IsEating())
     {
         std::string const actionName = action->getName();
