@@ -7,6 +7,8 @@
 #define _SHADOW_ENGINE_H
 
 #include <map>
+#include <string>
+#include <unordered_set>
 
 #include "Multiplier.h"
 #include "ShadowAIAware.h"
@@ -95,6 +97,7 @@ private:
     void Reset();
     void ProcessTriggers(bool minimal);
     static bool IsTriggerAllowedWhileEating(Trigger* trigger);
+    bool IsActionAllowedWhileEating(Action* action, Event& event);
     void PushDefaultActions();
     void PushAgain(ActionNode* actionNode, float relevance, Event event);
     ActionNode* CreateActionNode(std::string const name);
@@ -116,6 +119,12 @@ protected:
     std::string lastAction;
     uint32 strategyTypeMask;
     NamedObjectFactoryList<ActionNode> actionNodeFactories;
+
+    // Event sources (trigger names) that fired from combat/command triggers
+    // on the current tick. While eating only actions pushed by those sources
+    // (plus food/drink itself) may execute; everything else is dropped
+    // without executing so it can neither stand the bot nor break regen.
+    std::unordered_set<std::string> eatingAllowedSources;
 };
 
 #endif

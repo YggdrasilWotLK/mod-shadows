@@ -1823,12 +1823,12 @@ void ShadowAI::DoNextAction(bool min)
             if (!bot->isMoving() && distance < 10.0f)
                 bot->SetStandState(UNIT_STAND_STATE_SIT);
         }
-        else if (nextAICheckDelay < 1000)
+        else if (nextAICheckDelay < 1000 && !eating)
             bot->SetStandState(UNIT_STAND_STATE_STAND);
     }
     else if (bot->m_movementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING))
         bot->m_movementInfo.RemoveMovementFlag(MOVEMENTFLAG_WALKING);
-    else if ((nextAICheckDelay < 1000) && bot->IsSitState())
+    else if ((nextAICheckDelay < 1000) && bot->IsSitState() && !eating)
         bot->SetStandState(UNIT_STAND_STATE_STAND);
 
     bool hasMountAura = bot->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_SPEED) ||
@@ -4380,6 +4380,20 @@ void ShadowAI::StartEating(uint32 durationSeconds)
 {
     eating = true;
     eatingExpireTime = time(nullptr) + (time_t)std::max<uint32>(durationSeconds, 1);
+
+    if (!bot)
+        return;
+
+    // Full stop: killing only the current spline is not enough, the stale
+    // follow generator in the MotionMaster would re-path on its next update,
+    // set movement flags again and trip the movement wake below. Eating ends
+    // only on combat or an executed command action, so follow safely resumes
+    // from triggers once eating ends.
+    bot->ClearUnitState(UNIT_STATE_CHASE);
+    bot->ClearUnitState(UNIT_STATE_FOLLOW);
+    bot->StopMoving();
+    bot->GetMotionMaster()->Clear();
+    bot->GetMotionMaster()->MoveIdle();
 }
 
 void ShadowAI::StopEating()
@@ -4404,9 +4418,11 @@ void ShadowAI::UpdateEatingState()
     if (!eating || !bot)
         return;
 
-    // Eating never survives death, expiry, regen completion, combat,
-    // movement (knockbacks etc.) or a master that has moved out of range.
-    if (!bot->IsAlive() || time(nullptr) >= eatingExpireTime || bot->IsInCombat() || bot->isMoving())
+    // Eating ends on death, expiry, regen completion or combat. Movement
+    // alone (spline jitter, knockbacks, ... ) never breaks the regen state:
+    // only combat or an executed player-commanded action (via
+    // Engine::ListenAndExecute) wakes the bot.
+    if (!bot->IsAlive() || time(nullptr) >= eatingExpireTime || bot->IsInCombat())
     {
         StopEating();
         return;
@@ -4417,13 +4433,6 @@ void ShadowAI::UpdateEatingState()
     {
         StopEating();
         return;
-    }
-
-    if (Player* moveMaster = GetValidMaster())
-    {
-        if (moveMaster->IsInWorld() &&
-            sServerFacade->GetDistance2d(bot, moveMaster) > 50.0f)
-            StopEating();
     }
 }
 

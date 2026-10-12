@@ -268,6 +268,11 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
         if (bot->IsInCombat())
             return false;
 
+        // Eating inhibited by a direct order that is still being carried
+        // out: do not consume the item and do not sit back down.
+        if (botAI->IsEatingInhibited())
+            return false;
+
         // Already eating/drinking: keep the regen state, do not consume
         // another item or re-delay the AI.
         if (botAI->IsEating())

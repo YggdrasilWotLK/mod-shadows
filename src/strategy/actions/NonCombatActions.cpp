@@ -10,9 +10,18 @@
 
 bool DrinkAction::Execute(Event event)
 {
-    // Already drinking: keep the regen state, do not re-sit or re-delay.
+    // Already drinking: keep the regen state and make sure the bot is still
+    // seated (something may have stood it up without going through the
+    // engine). Never (re-)apply aura 25990 here: the regen visual comes
+    // from the actual source (cheat branch or the consumed drink item's own
+    // aura). Stamping it here made every drink display as fruitcake.
     if (botAI->IsEating())
+    {
+        if (!bot->IsSitState())
+            bot->SetStandState(UNIT_STAND_STATE_SIT);
+
         return true;
+    }
 
     if (botAI->HasCheat(BotCheatMask::food))
     {
@@ -44,6 +53,7 @@ bool DrinkAction::Execute(Event event)
 bool DrinkAction::isUseful() 
 { 
     return UseItemAction::isUseful() && 
+        !botAI->IsEatingInhibited() &&
         AI_VALUE2(bool, "has mana", "self target") &&
         AI_VALUE2(uint8, "mana", "self target") < 100;
 }
@@ -59,9 +69,19 @@ bool DrinkAction::isPossible()
 
 bool EatAction::Execute(Event event)
 {
-    // Already eating: keep the regen state, do not re-sit or re-delay.
+    // Already eating: keep the regen state and make sure the bot is still
+    // seated (something may have stood it up without going through the
+    // engine). Never (re-)apply aura 25990 here: the regen visual comes
+    // from the actual source (cheat branch or the consumed food item's own
+    // aura). Stamping it here made every eat display as
+    // Graccu's Mince Meat Fruitcake.
     if (botAI->IsEating())
+    {
+        if (!bot->IsSitState())
+            bot->SetStandState(UNIT_STAND_STATE_SIT);
+
         return true;
+    }
 
     if (botAI->HasCheat(BotCheatMask::food))
     {
@@ -90,6 +110,7 @@ bool EatAction::Execute(Event event)
 bool EatAction::isUseful() 
 { 
     return UseItemAction::isUseful() && 
+        !botAI->IsEatingInhibited() &&
         AI_VALUE2(uint8, "health", "self target") < 100;
 }
 
