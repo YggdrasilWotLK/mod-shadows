@@ -46,6 +46,11 @@ bool FollowAction::Execute(Event event)
     // if (moved)
     // botAI->SetNextCheckDelay(sShadowAIConfig->reactDelay);
 
+    // While follow is still moving the bot, eating must not restart and
+    // wipe the movement away.
+    if (moved)
+        botAI->InhibitEating(5);
+
     return moved;
 }
 

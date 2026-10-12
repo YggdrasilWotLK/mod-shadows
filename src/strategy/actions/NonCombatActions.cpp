@@ -54,6 +54,7 @@ bool DrinkAction::Execute(Event event)
 bool DrinkAction::isUseful() 
 { 
     return UseItemAction::isUseful() && 
+        !botAI->IsEatingInhibited() &&
         AI_VALUE2(bool, "has mana", "self target") &&
         AI_VALUE2(uint8, "mana", "self target") < 100;
 }
@@ -110,6 +111,7 @@ bool EatAction::Execute(Event event)
 bool EatAction::isUseful() 
 { 
     return UseItemAction::isUseful() && 
+        !botAI->IsEatingInhibited() &&
         AI_VALUE2(uint8, "health", "self target") < 100;
 }
 

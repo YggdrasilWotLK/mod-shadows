@@ -703,6 +703,12 @@ bool Engine::ListenAndExecute(Action* action, Event event)
             botAI->StopEating();
     }
 
+    // A direct order (chat command / party command packet, identified by the
+    // commanding player on the event) inhibits (re)starting eating so the
+    // bot carries the order out instead of sitting back down on next tick.
+    if (actionExecuted && botAI && event.getOwner())
+        botAI->InhibitEating(5);
+
     actionExecutionListeners.After(action, actionExecuted, event);
     return actionExecuted;
 }

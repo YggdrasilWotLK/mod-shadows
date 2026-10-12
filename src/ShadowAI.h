@@ -628,6 +628,10 @@ public:
     void StartEating(uint32 durationSeconds);
     void StopEating();
     void UpdateEatingState();
+    // Blocks (re)starting eating for <seconds> (e.g. after a direct order).
+    // Refreshed while the ordered movement is still executing.
+    void InhibitEating(uint32 seconds) { eatingInhibitedUntil = time(nullptr) + (time_t)seconds; }
+    bool IsEatingInhibited() const { return time(nullptr) < eatingInhibitedUntil; }
 
 private:
     static void _fillGearScoreData(Player* player, Item* item, std::vector<uint32>* gearScore, uint32& twoHandScore,
@@ -692,6 +696,9 @@ protected:
     // See StartEating/StopEating: regen sit state with an expiry cap.
     bool eating = false;
     time_t eatingExpireTime = 0;
+    // Until this time eating cannot (re)start: a direct order takes
+    // precedence until it is carried out.
+    time_t eatingInhibitedUntil = 0;
 };
 
 #endif
