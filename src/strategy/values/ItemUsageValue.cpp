@@ -879,6 +879,9 @@ std::string const ItemUsageValue::GetConsumableType(ItemTemplate const* proto, b
 {
     std::string const foodType = "";
 
+    if (IsFeastItem(proto))
+        return "";
+
     if ((proto->SubClass == ITEM_SUBCLASS_CONSUMABLE || proto->SubClass == ITEM_SUBCLASS_FOOD))
     {
         if (proto->Spells[0].SpellCategory == 11)
@@ -910,4 +913,32 @@ std::string const ItemUsageValue::GetConsumableType(ItemTemplate const* proto, b
     }
 
     return "";
+}
+
+bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
+{
+    if (!proto)
+        return false;
+
+    for (uint8 j = 0; j < MAX_ITEM_PROTO_SPELLS; ++j)
+    {
+        uint32 spellId = proto->Spells[j].SpellId;
+        if (!spellId)
+            continue;
+
+        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
+        if (!spellInfo)
+            continue;
+
+        for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
+        {
+            uint32 effect = spellInfo->Effects[i].Effect;
+            if (effect == SPELL_EFFECT_SUMMON_OBJECT_WILD || effect == SPELL_EFFECT_CREATE_HOUSE ||
+                effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT1 || effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT2 ||
+                effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT3 || effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT4)
+                return true;
+        }
+    }
+
+    return false;
 }

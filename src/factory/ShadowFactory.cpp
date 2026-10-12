@@ -18,6 +18,7 @@
 #include "InventoryAction.h"
 #include "Item.h"
 #include "ItemTemplate.h"
+#include "ItemUsageValue.h"
 #include "ItemVisitors.h"
 #include "Log.h"
 #include "LogCommon.h"
@@ -3266,6 +3267,10 @@ void ShadowFactory::InitFood()
 
         if (proto->Class != ITEM_CLASS_CONSUMABLE || proto->SubClass != ITEM_SUBCLASS_FOOD ||
             (proto->Spells[0].SpellCategory != 11 && proto->Spells[0].SpellCategory != 59) || proto->Bonding != NO_BIND)
+            continue;
+
+        // Feasts deploy a shared game object; they are not personal food/drink.
+        if (ItemUsageValue::IsFeastItem(proto))
             continue;
 
         if (proto->RequiredLevel > bot->GetLevel() || proto->RequiredLevel < bot->GetLevel() - 9)
