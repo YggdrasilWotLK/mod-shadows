@@ -114,6 +114,11 @@ public:
         // 3. Those objects may already be freed, causing a segmentation fault
         if (player->GetMapId() != mapid && player->IsInWorld())
         {
+            // Send destroy packets before wiping visibility, otherwise
+            // observers in the old map/instance keep a ghost (no
+            // SMSG_DESTROY_OBJECT ever reaches them). Destroy first,
+            // then clean any residual references for crash safety.
+            player->DestroyForVisiblePlayers();
             player->GetObjectVisibilityContainer().CleanVisibilityReferences();
         }
 
