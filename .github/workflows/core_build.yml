@@ -43,7 +43,7 @@ jobs:
         with:
           key: mod-shadows-ubuntu-24.04-gcc-${{ github.ref_name }}
           restore-keys: |
-            mod-shadows-ubuntu-24.04-gcc-
+            mod-shadows-ubuntu-24.04-gcc
           max-size: 1000M
 
       - name: Install Requirements
