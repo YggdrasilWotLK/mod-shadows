@@ -17,8 +17,6 @@
 #include "ServerFacade.h"
 #include "StatsWeightCalculator.h"
 
-char* strstri(char const* str1, char const* str2);
-
 ItemUsage ItemUsageValue::Calculate()
 {
     uint32 itemId = 0;
@@ -922,6 +920,19 @@ bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
     if (!proto)
         return false;
 
-    // Authoritative: a feast-named item is never personal food.
-    return !proto->Name1.empty() && strstri(proto->Name1.c_str(), "feast");
+    // Authoritative: known feast items are never personal food. Matched by
+    // id so renames and locales can't evade it.
+    switch (proto->ItemId)
+    {
+        case 33052:
+        case 34753:
+        case 43015:
+        case 43478:
+        case 43480:
+        case 45279:
+        case 46887:
+            return true;
+        default:
+            return false;
+    }
 }
