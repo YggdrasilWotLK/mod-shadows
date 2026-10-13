@@ -920,19 +920,8 @@ bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
     if (!proto)
         return false;
 
-    // Authoritative: known feast items are never personal food. Matched by
-    // id so renames and locales can't evade it.
-    switch (proto->ItemId)
-    {
-        case 33052:
-        case 34753:
-        case 43015:
-        case 43478:
-        case 43480:
-        case 45279:
-        case 46887:
-            return true;
-        default:
-            return false;
-    }
+    // Feast food item IDs
+    uint32 itemId = proto->ItemId;
+    return itemId == 33052 || itemId == 34753 || itemId == 43015 || itemId == 43478 || itemId == 43480 ||
+           itemId == 45279 || itemId == 46887;
 }
