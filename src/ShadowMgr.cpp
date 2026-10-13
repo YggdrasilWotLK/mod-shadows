@@ -1624,7 +1624,6 @@ void ShadowMgr::SaveToDB()
 
     for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (auto saveBotAI = GET_SHADOW_AI(bot))
         {
             if (saveBotAI->GetMaster() == GetMaster())
