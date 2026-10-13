@@ -59,8 +59,6 @@ public:
     static bool SpellGivesSkillUp(uint32 spellId, Player* bot);
 
     static std::string const GetConsumableType(ItemTemplate const* proto, bool hasMana);
-    // Feast items deploy a shared game object instead of feeding the user.
-    // Matched by item id; they must never be treated as personal food/drink.
     static bool IsFeastItem(ItemTemplate const* proto);
 };
 

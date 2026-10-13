@@ -20,9 +20,6 @@ bool UseItemAction::Execute(Event event)
     std::vector<Item*> items = AI_VALUE2(std::vector<Item*>, "inventory items", name);
     GuidVector gos = chat->parseGameobjects(name);
 
-    // Only a direct player order (chat/party command, identified by the
-    // commanding player on the event) gets failure feedback. Automatic
-    // callers retry on their own tick and must stay quiet.
     bool const announce = event.getOwner() != nullptr;
 
     if (gos.empty())
@@ -109,12 +106,6 @@ bool UseItemAction::UseFeast(Item* item)
         return false;
     }
 
-    // Deploy at the bot's feet. The destination-targeted check matches the
-    // summon spell; the unit-target check used for regular items always
-    // fails feast spells (bad targets) and must not be used here. Pass no
-    // target item: the overload's itemTarget is the item the spell is cast
-    // ON (sets TARGET_FLAG_ITEM and forces an equippability check the feast
-    // can never pass), not the item being used.
     float x = bot->GetPositionX();
     float y = bot->GetPositionY();
     float z = bot->GetPositionZ();
@@ -174,11 +165,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
         return false;
     }
 
-    // Feasts deploy a shared game object at a ground location, so they get
-    // the destination-targeted deploy path (no eating state, no personal
-    // food handling). Only an explicit player order may place one:
-    // automatic callers (eat/drink triggers, ...) must never consume a
-    // feast, no matter which lookup found it.
     if (ItemUsageValue::IsFeastItem(item->GetTemplate()))
     {
         if (!announce)
@@ -315,14 +301,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     {
         bot->StopMoving();
         botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
-
-        if (announce)
-        {
-            std::ostringstream out;
-            out << "Stopping first -- order me to use " << chat->FormatItem(item->GetTemplate()) << " again once I've stopped";
-            botAI->TellMasterNoFacing(out.str());
-        }
-
         return false;
     }
 
@@ -400,8 +378,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     if (proto->Class == ITEM_CLASS_CONSUMABLE &&
         (proto->SubClass == ITEM_SUBCLASS_FOOD || proto->SubClass == ITEM_SUBCLASS_CONSUMABLE) && (isFood || isDrink))
     {
-        // Feasts never reach this branch: UseItem() routes them to UseFeast()
-        // above (IsFeastItem check). Anything arriving here is personal food.
         if (bot->IsInCombat())
             return false;
 
