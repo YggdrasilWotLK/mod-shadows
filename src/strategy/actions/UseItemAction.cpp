@@ -100,12 +100,15 @@ bool UseItemAction::UseFeast(Item* item)
 
     // Deploy at the bot's feet. The destination-targeted check matches the
     // summon spell; the unit-target check used for regular items always
-    // fails feast spells (bad targets) and must not be used here.
+    // fails feast spells (bad targets) and must not be used here. Pass no
+    // target item: the overload's itemTarget is the item the spell is cast
+    // ON (sets TARGET_FLAG_ITEM and forces an equippability check the feast
+    // can never pass), not the item being used.
     float x = bot->GetPositionX();
     float y = bot->GetPositionY();
     float z = bot->GetPositionZ();
 
-    if (!botAI->CanCastSpell(feastSpell, x, y, z, false, item))
+    if (!botAI->CanCastSpell(feastSpell, x, y, z, false, nullptr))
     {
         std::ostringstream out;
         out << "Can't set down " << chat->FormatItem(proto) << " right now";
