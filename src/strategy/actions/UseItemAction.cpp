@@ -99,6 +99,10 @@ bool UseItemAction::UseFeast(Item* item)
     {
         bot->StopMoving();
         botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+        std::ostringstream out;
+        out << "I can't use " << chat->FormatItem(proto) << " while moving";
+        botAI->TellMasterNoFacing(out.str());
         return false;
     }
 
@@ -297,6 +301,14 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     {
         bot->StopMoving();
         botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+        if (announce)
+        {
+            std::ostringstream out;
+            out << "I can't use " << chat->FormatItem(item->GetTemplate()) << " while moving";
+            botAI->TellMasterNoFacing(out.str());
+        }
+
         return false;
     }
 
