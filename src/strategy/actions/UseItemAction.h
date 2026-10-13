@@ -25,15 +25,18 @@ public:
     bool isPossible() override;
 
 protected:
-    bool UseItemAuto(Item* item);
-    bool UseItemOnGameObject(Item* item, ObjectGuid go);
+    bool UseItemAuto(Item* item, bool announce = false);
+    bool UseItemOnGameObject(Item* item, ObjectGuid go, bool announce = false);
     bool UseItemOnItem(Item* item, Item* itemTarget);
-    bool UseItem(Item* item, ObjectGuid go, Item* itemTarget, Unit* unitTarget = nullptr);
+    bool UseItem(Item* item, ObjectGuid go, Item* itemTarget, Unit* unitTarget = nullptr, bool announce = false);
     bool UseGameObject(ObjectGuid guid);
     // Feasts summon a shared game object at a ground location: unit-target
     // checks and the eating state do not apply, so they get their own path.
     bool UseFeast(Item* item);
     void TellConsumableUse(Item* item, std::string const action, float percent);
+    // Direct-order feedback for the silent pre-check gates below. Automatic
+    // callers (combat potions, mounts, ...) keep announce=false and stay quiet.
+    void TellCantUse(Item* item);
     bool SocketItem(Item* item, Item* gem, bool replace = false);
 
 private:
