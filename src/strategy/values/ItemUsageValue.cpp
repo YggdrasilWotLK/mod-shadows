@@ -17,6 +17,8 @@
 #include "ServerFacade.h"
 #include "StatsWeightCalculator.h"
 
+char* strstri(char const* str1, char const* str2);
+
 ItemUsage ItemUsageValue::Calculate()
 {
     uint32 itemId = 0;
@@ -919,6 +921,12 @@ bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
 {
     if (!proto)
         return false;
+
+    // Name fallback: a feast-named item is never personal food, even if its
+    // summon is not a detectable summon effect (script/trigger chains,
+    // custom items).
+    if (!proto->Name1.empty() && strstri(proto->Name1.c_str(), "feast"))
+        return true;
 
     for (uint8 j = 0; j < MAX_ITEM_PROTO_SPELLS; ++j)
     {

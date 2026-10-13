@@ -8,7 +8,6 @@
 #include "ChatHelper.h"
 #include "Event.h"
 #include "ItemUsageValue.h"
-#include "ItemVisitors.h"
 #include "Shadows.h"
 #include "ItemPackets.h"
 
@@ -30,13 +29,6 @@ bool UseItemAction::Execute(Event event)
     {
         if (!items.empty())
         {
-            if (ItemUsageValue::IsFeastItem((*items.begin())->GetTemplate()))
-            {
-                Player* owner = event.getOwner();
-                LOG_INFO("shadows", "Feast use: bot {} param '{}' source '{}' owner {}", bot->GetName(),
-                         name, event.GetSource(), owner ? owner->GetName() : "<none>");
-            }
-
             return UseItemAuto(*items.begin(), announce);
         }
     }
@@ -152,8 +144,6 @@ bool UseItemAction::UseFeast(Item* item)
 
     bot->GetSession()->HandleUseItemOpcode(packet);
 
-    LOG_INFO("shadows", "Feast deployed: bot {} item {} spell {}", bot->GetName(), item->GetEntry(), feastSpell);
-
     if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(feastSpell))
         botAI->SetNextCheckDelay(spellInfo->CalcCastTime() + sShadowAIConfig->reactDelay);
     else
@@ -191,9 +181,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     // feast, no matter which lookup found it.
     if (ItemUsageValue::IsFeastItem(item->GetTemplate()))
     {
-        LOG_INFO("shadows", "Feast route: bot {} item {} announce {}", bot->GetName(), item->GetEntry(),
-                 announce ? 1 : 0);
-
         if (!announce)
             return false;
 
@@ -415,20 +402,6 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     {
         // Feasts never reach this branch: UseItem() routes them to UseFeast()
         // above (IsFeastItem check). Anything arriving here is personal food.
-        if (ItemUsageValue::IsFeastItem(proto))
-            LOG_ERROR("shadows", "Feast in food branch: bot {} item {}", bot->GetName(), proto->ItemId);
-
-        // Temporary diagnostic: catch feast-named items that evade IsFeastItem.
-        if (strstri(proto->Name1.c_str(), "feast"))
-        {
-            std::string spells;
-            for (uint8 si = 0; si < MAX_ITEM_PROTO_SPELLS; ++si)
-                spells += std::to_string(proto->Spells[si].SpellId) + " ";
-            LOG_INFO("shadows", "Feast-name in food branch: bot {} item {} subclass {} cat {} spells {} detected {}",
-                     bot->GetName(), proto->ItemId, proto->SubClass, proto->Spells[0].SpellCategory, spells,
-                     ItemUsageValue::IsFeastItem(proto) ? 1 : 0);
-        }
-
         if (bot->IsInCombat())
             return false;
 
