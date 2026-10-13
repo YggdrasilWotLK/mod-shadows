@@ -59,9 +59,9 @@ public:
     static bool SpellGivesSkillUp(uint32 spellId, Player* bot);
 
     static std::string const GetConsumableType(ItemTemplate const* proto, bool hasMana);
-    // Feast items (Fish Feast, Great Feast, etc.) share food SpellCategory 11
-    // but summon a game object instead of feeding the user. They must never
-    // be treated as personal food/drink.
+    // Feast items (Fish Feast, Great Feast, etc.) deploy a shared game
+    // object instead of feeding the user. Matched by item name; they must
+    // never be treated as personal food/drink.
     static bool IsFeastItem(ItemTemplate const* proto);
 };
 

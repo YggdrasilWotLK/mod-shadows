@@ -922,31 +922,6 @@ bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
     if (!proto)
         return false;
 
-    // Name fallback: a feast-named item is never personal food, even if its
-    // summon is not a detectable summon effect (script/trigger chains,
-    // custom items).
-    if (!proto->Name1.empty() && strstri(proto->Name1.c_str(), "feast"))
-        return true;
-
-    for (uint8 j = 0; j < MAX_ITEM_PROTO_SPELLS; ++j)
-    {
-        uint32 spellId = proto->Spells[j].SpellId;
-        if (!spellId)
-            continue;
-
-        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
-        if (!spellInfo)
-            continue;
-
-        for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
-        {
-            uint32 effect = spellInfo->Effects[i].Effect;
-            if (effect == SPELL_EFFECT_SUMMON_OBJECT_WILD || effect == SPELL_EFFECT_CREATE_HOUSE ||
-                effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT1 || effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT2 ||
-                effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT3 || effect == SPELL_EFFECT_SUMMON_OBJECT_SLOT4)
-                return true;
-        }
-    }
-
-    return false;
+    // Authoritative: a feast-named item is never personal food.
+    return !proto->Name1.empty() && strstri(proto->Name1.c_str(), "feast");
 }
