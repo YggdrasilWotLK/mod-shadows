@@ -20,11 +20,13 @@ bool UseItemAction::Execute(Event event)
     std::vector<Item*> items = AI_VALUE2(std::vector<Item*>, "inventory items", name);
     GuidVector gos = chat->parseGameobjects(name);
 
+    bool const announce = event.getOwner() != nullptr;
+
     if (gos.empty())
     {
         if (!items.empty())
         {
-            return UseItemAuto(*items.begin());
+            return UseItemAuto(*items.begin(), announce);
         }
     }
     else
@@ -32,7 +34,7 @@ bool UseItemAction::Execute(Event event)
         if (items.empty())
             return UseGameObject(*gos.begin());
         else
-            return UseItemOnGameObject(*items.begin(), *gos.begin());
+            return UseItemOnGameObject(*items.begin(), *gos.begin(), announce);
     }
 
     botAI->TellError("No items (or game objects) available");
@@ -53,19 +55,123 @@ bool UseItemAction::UseGameObject(ObjectGuid guid)
     return true;
 }
 
-bool UseItemAction::UseItemAuto(Item* item) { return UseItem(item, ObjectGuid::Empty, nullptr); }
+bool UseItemAction::UseItemAuto(Item* item, bool announce)
+{
+    return UseItem(item, ObjectGuid::Empty, nullptr, nullptr, announce);
+}
 
-bool UseItemAction::UseItemOnGameObject(Item* item, ObjectGuid go) { return UseItem(item, go, nullptr); }
+bool UseItemAction::UseItemOnGameObject(Item* item, ObjectGuid go, bool announce)
+{
+    return UseItem(item, go, nullptr, nullptr, announce);
+}
 
 bool UseItemAction::UseItemOnItem(Item* item, Item* itemTarget) { return UseItem(item, ObjectGuid::Empty, itemTarget); }
 
-bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Unit* unitTarget)
+bool UseItemAction::UseFeast(Item* item)
 {
-    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
+    ItemTemplate const* proto = item->GetTemplate();
+
+    uint32 feastSpell = 0;
+    for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+    {
+        if (proto->Spells[i].SpellId > 0)
+        {
+            feastSpell = proto->Spells[i].SpellId;
+            break;
+        }
+    }
+
+    if (!feastSpell)
         return false;
 
     if (bot->IsNonMeleeSpellCast(false))
         return false;
+
+    if (bot->IsInCombat())
+    {
+        std::ostringstream out;
+        out << "Can't set down " << chat->FormatItem(proto) << " in combat";
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    if (bot->isMoving())
+    {
+        bot->StopMoving();
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+        std::ostringstream out;
+        out << "I can't use " << chat->FormatItem(proto) << " while moving";
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    float x = bot->GetPositionX();
+    float y = bot->GetPositionY();
+    float z = bot->GetPositionZ();
+
+    if (!botAI->CanCastSpell(feastSpell, x, y, z, false, nullptr))
+    {
+        std::ostringstream out;
+        out << "Can't set down " << chat->FormatItem(proto) << " right now";
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    WorldPacket packet(CMSG_USE_ITEM);
+    packet << uint8(item->GetBagSlot()) << uint8(item->GetSlot()) << uint8(1) << feastSpell << item->GetGUID()
+           << uint32(0) << uint8(0);
+
+    packet << uint32(TARGET_FLAG_DEST_LOCATION);
+    packet << ObjectGuid::Empty.WriteAsPacked();
+    packet << x << y << z;
+
+    bot->ClearUnitState(UNIT_STATE_CHASE);
+    bot->ClearUnitState(UNIT_STATE_FOLLOW);
+
+    std::ostringstream out;
+    out << "Setting down " << chat->FormatItem(proto);
+    botAI->TellMasterNoFacing(out.str());
+
+    bot->GetSession()->HandleUseItemOpcode(packet);
+
+    if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(feastSpell))
+        botAI->SetNextCheckDelay(spellInfo->CalcCastTime() + sShadowAIConfig->reactDelay);
+    else
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+    return true;
+}
+
+bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Unit* unitTarget, bool announce)
+{
+    if (bot->CanUseItem(item) != EQUIP_ERR_OK)
+    {
+        if (announce)
+            TellCantUse(item);
+
+        return false;
+    }
+
+    if (bot->IsNonMeleeSpellCast(false))
+    {
+        if (announce)
+        {
+            std::ostringstream out;
+            out << "Can't use " << chat->FormatItem(item->GetTemplate()) << " while casting";
+            botAI->TellMasterNoFacing(out.str());
+        }
+
+        return false;
+    }
+
+    if (ItemUsageValue::IsFeastItem(item->GetTemplate()))
+    {
+        if (!announce)
+            return false;
+
+        return UseFeast(item);
+    }
 
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
@@ -83,6 +189,13 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
             spellId = item->GetTemplate()->Spells[i].SpellId;
             if (!botAI->CanCastSpell(spellId, bot, false, itemTarget, item))
             {
+                if (announce)
+                {
+                    std::ostringstream out;
+                    out << "Can't use " << chat->FormatItem(item->GetTemplate()) << " right now";
+                    botAI->TellMasterNoFacing(out.str());
+                }
+
                 return false;
             }
         }
@@ -188,6 +301,14 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     {
         bot->StopMoving();
         botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+        if (announce)
+        {
+            std::ostringstream out;
+            out << "I can't use " << chat->FormatItem(item->GetTemplate()) << " while moving";
+            botAI->TellMasterNoFacing(out.str());
+        }
+
         return false;
     }
 
@@ -326,6 +447,23 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     botAI->TellMasterNoFacing(out.str());
     bot->GetSession()->HandleUseItemOpcode(packet);
     return true;
+}
+
+void UseItemAction::TellCantUse(Item* item)
+{
+    ItemTemplate const* proto = item->GetTemplate();
+
+    std::ostringstream out;
+    out << "Can't use " << chat->FormatItem(proto);
+
+    if (proto->RequiredLevel > bot->GetLevel())
+        out << " (requires level " << proto->RequiredLevel << ")";
+    else if (proto->RequiredSkill && bot->GetSkillValue(proto->RequiredSkill) == 0)
+        out << " (requires " << ChatHelper::FormatSkill(proto->RequiredSkill) << ")";
+    else if (proto->RequiredSkill && bot->GetSkillValue(proto->RequiredSkill) < proto->RequiredSkillRank)
+        out << " (requires higher " << ChatHelper::FormatSkill(proto->RequiredSkill) << " rank)";
+
+    botAI->TellMasterNoFacing(out.str());
 }
 
 void UseItemAction::TellConsumableUse(Item* item, std::string const action, float percent)

@@ -59,6 +59,7 @@ public:
     static bool SpellGivesSkillUp(uint32 spellId, Player* bot);
 
     static std::string const GetConsumableType(ItemTemplate const* proto, bool hasMana);
+    static bool IsFeastItem(ItemTemplate const* proto);
 };
 
 #endif

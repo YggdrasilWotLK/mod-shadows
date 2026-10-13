@@ -25,12 +25,14 @@ public:
     bool isPossible() override;
 
 protected:
-    bool UseItemAuto(Item* item);
-    bool UseItemOnGameObject(Item* item, ObjectGuid go);
+    bool UseItemAuto(Item* item, bool announce = false);
+    bool UseItemOnGameObject(Item* item, ObjectGuid go, bool announce = false);
     bool UseItemOnItem(Item* item, Item* itemTarget);
-    bool UseItem(Item* item, ObjectGuid go, Item* itemTarget, Unit* unitTarget = nullptr);
+    bool UseItem(Item* item, ObjectGuid go, Item* itemTarget, Unit* unitTarget = nullptr, bool announce = false);
     bool UseGameObject(ObjectGuid guid);
+    bool UseFeast(Item* item);
     void TellConsumableUse(Item* item, std::string const action, float percent);
+    void TellCantUse(Item* item);
     bool SocketItem(Item* item, Item* gem, bool replace = false);
 
 private:

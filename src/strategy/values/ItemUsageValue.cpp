@@ -879,6 +879,9 @@ std::string const ItemUsageValue::GetConsumableType(ItemTemplate const* proto, b
 {
     std::string const foodType = "";
 
+    if (IsFeastItem(proto))
+        return "";
+
     if ((proto->SubClass == ITEM_SUBCLASS_CONSUMABLE || proto->SubClass == ITEM_SUBCLASS_FOOD))
     {
         if (proto->Spells[0].SpellCategory == 11)
@@ -910,4 +913,15 @@ std::string const ItemUsageValue::GetConsumableType(ItemTemplate const* proto, b
     }
 
     return "";
+}
+
+bool ItemUsageValue::IsFeastItem(ItemTemplate const* proto)
+{
+    if (!proto)
+        return false;
+
+    // Feast food item IDs
+    uint32 itemId = proto->ItemId;
+    return itemId == 33052 || itemId == 34753 || itemId == 43015 || itemId == 43478 || itemId == 43480 ||
+           itemId == 45279 || itemId == 46887;
 }

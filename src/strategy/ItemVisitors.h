@@ -289,6 +289,9 @@ public:
 
     bool Accept(ItemTemplate const* proto) override
     {
+        if (!proto || ItemUsageValue::IsFeastItem(proto))
+            return false;
+
         return proto->Class == ITEM_CLASS_CONSUMABLE &&
                (proto->SubClass == ITEM_SUBCLASS_CONSUMABLE || proto->SubClass == ITEM_SUBCLASS_FOOD) &&
                proto->Spells[0].SpellCategory == spellCategory && (!conjured || proto->IsConjuredConsumable());
