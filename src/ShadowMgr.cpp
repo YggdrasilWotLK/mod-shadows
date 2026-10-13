@@ -86,8 +86,11 @@ public:
 void ShadowHolder::AddShadow(ObjectGuid playerGuid, uint32 masterAccountId)
 {
     // bot is loading
-    if (botLoading.find(playerGuid) != botLoading.end())
-        return;
+    {
+        std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+        if (botLoading.find(playerGuid) != botLoading.end())
+            return;
+    }
 
     // has bot already been added?
     Player* bot = ObjectAccessor::FindConnectedPlayer(playerGuid);
@@ -125,7 +128,13 @@ void ShadowHolder::AddShadow(ObjectGuid playerGuid, uint32 masterAccountId)
             LOG_DEBUG("shadows", "ShadowMgr not found for master player with GUID: {}", masterPlayer->GetGUID().GetRawValue());
             return;
         }
-        uint32 count = mgr->GetShadowsCount() + botLoading.size();
+        // Separate locked reads (never nest holder locks: mgr may be a
+        // different holder than this, and shared_mutex is not recursive).
+        uint32 count = mgr->GetShadowsCount();
+        {
+            std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+            count += static_cast<uint32>(botLoading.size());
+        }
         if (count >= sShadowAIConfig->maxAddedBots)
         {
             allowed = false;
@@ -148,7 +157,10 @@ void ShadowHolder::AddShadow(ObjectGuid playerGuid, uint32 masterAccountId)
         return;
     }
 
-    botLoading.insert(playerGuid);
+    {
+        std::unique_lock<std::shared_mutex> lock(_shadowsMutex);
+        botLoading.insert(playerGuid);
+    }
 
     // Always login in with world session to avoid race condition
     sWorld->AddQueryHolderCallback(CharacterDatabase.DelayQueryHolder(holder))
@@ -180,7 +192,10 @@ void ShadowHolder::HandleShadowLoginCallback(ShadowLoginQueryHolder const& holde
         LOG_DEBUG("mod-shadows", "Bot player could not be loaded for account ID: {}", botAccountId);
         botSession->LogoutPlayer(true);
         delete botSession;
-        botLoading.erase(holder.GetGuid());
+        {
+            std::unique_lock<std::shared_mutex> lock(_shadowsMutex);
+            botLoading.erase(holder.GetGuid());
+        }
         return;
     }
 
@@ -197,14 +212,16 @@ void ShadowHolder::HandleShadowLoginCallback(ShadowLoginQueryHolder const& holde
     sRandomShadowMgr->OnPlayerLogin(bot);
     OnBotLogin(bot);
 
-    botLoading.erase(holder.GetGuid());
+    {
+        std::unique_lock<std::shared_mutex> lock(_shadowsMutex);
+        botLoading.erase(holder.GetGuid());
+    }
 }
 
 void ShadowHolder::UpdateSessions()
 {
-    for (ShadowMap::const_iterator itr = GetShadowsBegin(); itr != GetShadowsEnd(); ++itr)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = itr->second;
         if (bot->IsBeingTeleported())
         {
             auto botAI = GET_SHADOW_AI(bot);
@@ -253,7 +270,11 @@ void ShadowHolder::LogoutAllBots()
     }
     */
 
-    ShadowMap bots = shadows;
+    ShadowMap bots;
+    {
+        std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+        bots = shadows;
+    }
     for (auto& itr : bots)
     {
         Player* bot = itr.second;
@@ -274,9 +295,8 @@ void ShadowMgr::CancelLogout()
     if (!master)
         return;
 
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (!botAI || botAI->IsRealPlayer())
             continue;
@@ -289,10 +309,8 @@ void ShadowMgr::CancelLogout()
         }
     }
 
-    for (ShadowMap::const_iterator it = sRandomShadowMgr->GetShadowsBegin();
-         it != sRandomShadowMgr->GetShadowsEnd(); ++it)
+    for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (!botAI || botAI->IsRealPlayer())
             continue;
@@ -451,17 +469,20 @@ void ShadowHolder::DisableShadow(ObjectGuid guid)
 
 void ShadowHolder::RemoveFromShadowsMap(ObjectGuid guid)
 {
+    std::unique_lock<std::shared_mutex> lock(_shadowsMutex);
     shadows.erase(guid);
 }
 
 Player* ShadowHolder::GetShadow(ObjectGuid playerGuid) const
 {
+    std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
     ShadowMap::const_iterator it = shadows.find(playerGuid);
     return (it == shadows.end()) ? 0 : it->second;
 }
 
 Player* ShadowHolder::GetShadow(ObjectGuid::LowType lowGuid) const
 {
+    std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
     ObjectGuid playerGuid = ObjectGuid::Create<HighGuid::Player>(lowGuid);
     ShadowMap::const_iterator it = shadows.find(playerGuid);
     return (it == shadows.end()) ? 0 : it->second;
@@ -470,13 +491,19 @@ Player* ShadowHolder::GetShadow(ObjectGuid::LowType lowGuid) const
 void ShadowHolder::OnBotLogin(Player* const bot)
 {
     // Prevent duplicate login
-    if (shadows.find(bot->GetGUID()) != shadows.end())
     {
-        return;
+        std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+        if (shadows.find(bot->GetGUID()) != shadows.end())
+        {
+            return;
+        }
     }
 
     sShadowsMgr->AddShadowData(bot, true);
-    shadows[bot->GetGUID()] = bot;
+    {
+        std::unique_lock<std::shared_mutex> lock(_shadowsMutex);
+        shadows[bot->GetGUID()] = bot;
+    }
 
     OnBotLoginInternal(bot);
 
@@ -1183,8 +1210,11 @@ std::vector<std::string> ShadowHolder::HandleShadowCommand(char const* args, Pla
             // If the user requested a specific gender, skip any character that doesn't match.
             if (gender != -1 && GetOfflinePlayerGender(guid) != gender)
                 continue;
-            if (botLoading.find(guid) != botLoading.end())
-                continue;
+            {
+                std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+                if (botLoading.find(guid) != botLoading.end())
+                    continue;
+            }
             if (ObjectAccessor::FindConnectedPlayer(guid))
                 continue;
             uint32 guildId = sCharacterCache->GetCharacterGuildIdByGuid(guid);
@@ -1248,9 +1278,9 @@ std::vector<std::string> ShadowHolder::HandleShadowCommand(char const* args, Pla
 
     if (charnameStr == "!" && master && master->GetSession()->GetSecurity() > SEC_GAMEMASTER)
     {
-        for (ShadowMap::const_iterator i = GetShadowsBegin(); i != GetShadowsEnd(); ++i)
+        for (Player* bot : GetShadowsSnapshot())
         {
-            if (Player* bot = i->second)
+            if (bot)
                 if (bot->IsInWorld())
                     bots.insert(bot->GetName());
         }
@@ -1378,9 +1408,8 @@ std::string const ShadowHolder::ListBots(Player* master)
     std::vector<std::string> names;
     std::map<std::string, std::string> classes;
 
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         std::string const name = bot->GetName();
         bots.insert(name);
 
@@ -1472,9 +1501,8 @@ std::string const ShadowHolder::LookupBots(Player* master)
 uint32 ShadowHolder::GetShadowsCountByClass(uint32 cls)
 {
     uint32 count = 0;
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (bot && bot->IsInWorld() && bot->getClass() == cls)
         {
             count++;
@@ -1520,18 +1548,15 @@ void ShadowMgr::HandleCommand(uint32 type, std::string const text)
         return;
     }
 
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (botAI)
             botAI->HandleCommand(type, text, master);
     }
 
-    for (ShadowMap::const_iterator it = sRandomShadowMgr->GetShadowsBegin();
-         it != sRandomShadowMgr->GetShadowsEnd(); ++it)
+    for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (botAI && botAI->GetMaster() == master)
             botAI->HandleCommand(type, text, master);
@@ -1540,9 +1565,8 @@ void ShadowMgr::HandleCommand(uint32 type, std::string const text)
 
 void ShadowMgr::HandleMasterIncomingPacket(WorldPacket const& packet)
 {
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (!bot)
             continue;
         auto botAI = GET_SHADOW_AI(bot);
@@ -1550,10 +1574,8 @@ void ShadowMgr::HandleMasterIncomingPacket(WorldPacket const& packet)
             botAI->HandleMasterIncomingPacket(packet);
     }
 
-    for (ShadowMap::const_iterator it = sRandomShadowMgr->GetShadowsBegin();
-         it != sRandomShadowMgr->GetShadowsEnd(); ++it)
+    for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (botAI && botAI->GetMaster() == GetMaster())
             botAI->HandleMasterIncomingPacket(packet);
@@ -1578,18 +1600,15 @@ void ShadowMgr::HandleMasterIncomingPacket(WorldPacket const& packet)
 
 void ShadowMgr::HandleMasterOutgoingPacket(WorldPacket const& packet)
 {
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (botAI)
             botAI->HandleMasterOutgoingPacket(packet);
     }
 
-    for (ShadowMap::const_iterator it = sRandomShadowMgr->GetShadowsBegin();
-         it != sRandomShadowMgr->GetShadowsEnd(); ++it)
+    for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         if (botAI && botAI->GetMaster() == GetMaster())
             botAI->HandleMasterOutgoingPacket(packet);
@@ -1598,16 +1617,13 @@ void ShadowMgr::HandleMasterOutgoingPacket(WorldPacket const& packet)
 
 void ShadowMgr::SaveToDB()
 {
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         bot->SaveToDB(false, false);
     }
 
-    for (ShadowMap::const_iterator it = sRandomShadowMgr->GetShadowsBegin();
-         it != sRandomShadowMgr->GetShadowsEnd(); ++it)
+    for (Player* const bot : sRandomShadowMgr->GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (auto saveBotAI = GET_SHADOW_AI(bot))
         {
             if (saveBotAI->GetMaster() == GetMaster())

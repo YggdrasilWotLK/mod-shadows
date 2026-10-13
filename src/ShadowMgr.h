@@ -15,6 +15,7 @@
 
 #include <memory>
 #include <shared_mutex>
+#include <vector>
 
 class ChatHandler;
 class ShadowAI;
@@ -41,6 +42,17 @@ public:
     Player* GetShadow(ObjectGuid::LowType lowGuid) const;
     ShadowMap::const_iterator GetShadowsBegin() const { return shadows.begin(); }
     ShadowMap::const_iterator GetShadowsEnd() const { return shadows.end(); }
+    // Snapshot under lock; the map is mutated from other threads,
+    // so never iterate it live outside the holder's own update path.
+    std::vector<Player*> GetShadowsSnapshot() const
+    {
+        std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+        std::vector<Player*> snapshot;
+        snapshot.reserve(shadows.size());
+        for (auto const& kv : shadows)
+            snapshot.push_back(kv.second);
+        return snapshot;
+    }
 
     void UpdateAIInternal([[maybe_unused]] uint32 elapsed, [[maybe_unused]] bool minimal = false) override{};
     void UpdateSessions();
@@ -56,7 +68,11 @@ public:
     uint32 GetAccountId(ObjectGuid guid);
     std::string const ListBots(Player* master);
     std::string const LookupBots(Player* master);
-    uint32 GetShadowsCount() { return shadows.size(); }
+    uint32 GetShadowsCount() const
+    {
+        std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
+        return shadows.size();
+    }
     uint32 GetShadowsCountByClass(uint32 cls);
 
 protected:
@@ -64,6 +80,9 @@ protected:
 
     ShadowMap shadows;
     std::unordered_set<ObjectGuid> botLoading;
+    // Guards shadows and botLoading. Keep sections leaf-only: never hold
+    // across ObjectAccessor, AI, group or session calls (lock order).
+    mutable std::shared_mutex _shadowsMutex;
 };
 
 class ShadowMgr : public ShadowHolder
