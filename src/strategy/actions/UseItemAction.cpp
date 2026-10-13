@@ -174,12 +174,18 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
         return false;
     }
 
-    // Feasts deploy a shared game object at a ground location. The
-    // unit-target CanCastSpell pre-check below always fails for them
-    // (CheckCast with the bot as unit target), so route them to the
-    // destination-targeted deploy path instead of failing silently.
+    // Feasts deploy a shared game object at a ground location, so they get
+    // the destination-targeted deploy path (no eating state, no personal
+    // food handling). Only an explicit player order may place one:
+    // automatic callers (eat/drink triggers, ...) must never consume a
+    // feast, no matter which lookup found it.
     if (ItemUsageValue::IsFeastItem(item->GetTemplate()))
+    {
+        if (!announce)
+            return false;
+
         return UseFeast(item);
+    }
 
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
