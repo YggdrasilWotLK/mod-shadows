@@ -8,6 +8,7 @@
 #include "ChatHelper.h"
 #include "Event.h"
 #include "ItemUsageValue.h"
+#include "ItemVisitors.h"
 #include "Shadows.h"
 #include "ItemPackets.h"
 
@@ -416,6 +417,17 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
         // above (IsFeastItem check). Anything arriving here is personal food.
         if (ItemUsageValue::IsFeastItem(proto))
             LOG_ERROR("shadows", "Feast in food branch: bot {} item {}", bot->GetName(), proto->ItemId);
+
+        // Temporary diagnostic: catch feast-named items that evade IsFeastItem.
+        if (strstri(proto->Name1.c_str(), "feast"))
+        {
+            std::string spells;
+            for (uint8 si = 0; si < MAX_ITEM_PROTO_SPELLS; ++si)
+                spells += std::to_string(proto->Spells[si].SpellId) + " ";
+            LOG_INFO("shadows", "Feast-name in food branch: bot {} item {} subclass {} cat {} spells {} detected {}",
+                     bot->GetName(), proto->ItemId, proto->SubClass, proto->Spells[0].SpellCategory, spells,
+                     ItemUsageValue::IsFeastItem(proto) ? 1 : 0);
+        }
 
         if (bot->IsInCombat())
             return false;
