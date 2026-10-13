@@ -99,10 +99,6 @@ bool UseItemAction::UseFeast(Item* item)
     {
         bot->StopMoving();
         botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
-
-        std::ostringstream out;
-        out << "Stopping, then setting down " << chat->FormatItem(proto);
-        botAI->TellMasterNoFacing(out.str());
         return false;
     }
 
