@@ -260,9 +260,8 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     }
 
     ItemTemplate const* proto = item->GetTemplate();
-    bool isFeast = ItemUsageValue::IsFeastItem(proto);
-    bool isDrink = !isFeast && proto->Spells[0].SpellCategory == 59;
-    bool isFood = !isFeast && proto->Spells[0].SpellCategory == 11;
+    bool isDrink = proto->Spells[0].SpellCategory == 59;
+    bool isFood = proto->Spells[0].SpellCategory == 11;
     if (proto->Class == ITEM_CLASS_CONSUMABLE &&
         (proto->SubClass == ITEM_SUBCLASS_FOOD || proto->SubClass == ITEM_SUBCLASS_CONSUMABLE) && (isFood || isDrink))
     {
