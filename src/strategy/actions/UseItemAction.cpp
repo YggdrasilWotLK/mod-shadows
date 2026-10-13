@@ -59,6 +59,85 @@ bool UseItemAction::UseItemOnGameObject(Item* item, ObjectGuid go) { return UseI
 
 bool UseItemAction::UseItemOnItem(Item* item, Item* itemTarget) { return UseItem(item, ObjectGuid::Empty, itemTarget); }
 
+bool UseItemAction::UseFeast(Item* item)
+{
+    ItemTemplate const* proto = item->GetTemplate();
+
+    uint32 feastSpell = 0;
+    for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+    {
+        if (proto->Spells[i].SpellId > 0)
+        {
+            feastSpell = proto->Spells[i].SpellId;
+            break;
+        }
+    }
+
+    if (!feastSpell)
+        return false;
+
+    if (bot->IsNonMeleeSpellCast(false))
+        return false;
+
+    if (bot->IsInCombat())
+    {
+        std::ostringstream out;
+        out << "Can't set down " << chat->FormatItem(proto) << " in combat";
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    if (bot->isMoving())
+    {
+        bot->StopMoving();
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+        std::ostringstream out;
+        out << "Stopping, then setting down " << chat->FormatItem(proto);
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    // Deploy at the bot's feet. The destination-targeted check matches the
+    // summon spell; the unit-target check used for regular items always
+    // fails feast spells (bad targets) and must not be used here.
+    float x = bot->GetPositionX();
+    float y = bot->GetPositionY();
+    float z = bot->GetPositionZ();
+
+    if (!botAI->CanCastSpell(feastSpell, x, y, z, false, item))
+    {
+        std::ostringstream out;
+        out << "Can't set down " << chat->FormatItem(proto) << " right now";
+        botAI->TellMasterNoFacing(out.str());
+        return false;
+    }
+
+    WorldPacket packet(CMSG_USE_ITEM);
+    packet << uint8(item->GetBagSlot()) << uint8(item->GetSlot()) << uint8(1) << feastSpell << item->GetGUID()
+           << uint32(0) << uint8(0);
+
+    packet << uint32(TARGET_FLAG_DEST_LOCATION);
+    packet << ObjectGuid::Empty.WriteAsPacked();
+    packet << x << y << z;
+
+    bot->ClearUnitState(UNIT_STATE_CHASE);
+    bot->ClearUnitState(UNIT_STATE_FOLLOW);
+
+    std::ostringstream out;
+    out << "Setting down " << chat->FormatItem(proto);
+    botAI->TellMasterNoFacing(out.str());
+
+    bot->GetSession()->HandleUseItemOpcode(packet);
+
+    if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(feastSpell))
+        botAI->SetNextCheckDelay(spellInfo->CalcCastTime() + sShadowAIConfig->reactDelay);
+    else
+        botAI->SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+
+    return true;
+}
+
 bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Unit* unitTarget)
 {
     if (bot->CanUseItem(item) != EQUIP_ERR_OK)
@@ -66,6 +145,13 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
 
     if (bot->IsNonMeleeSpellCast(false))
         return false;
+
+    // Feasts deploy a shared game object at a ground location. The
+    // unit-target CanCastSpell pre-check below always fails for them
+    // (CheckCast with the bot as unit target), so route them to the
+    // destination-targeted deploy path instead of failing silently.
+    if (ItemUsageValue::IsFeastItem(item->GetTemplate()))
+        return UseFeast(item);
 
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
@@ -265,6 +351,8 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
     if (proto->Class == ITEM_CLASS_CONSUMABLE &&
         (proto->SubClass == ITEM_SUBCLASS_FOOD || proto->SubClass == ITEM_SUBCLASS_CONSUMABLE) && (isFood || isDrink))
     {
+        // Feasts never reach this branch: UseItem() routes them to UseFeast()
+        // above (IsFeastItem check). Anything arriving here is personal food.
         if (bot->IsInCombat())
             return false;
 

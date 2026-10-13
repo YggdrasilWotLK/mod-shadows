@@ -30,6 +30,9 @@ protected:
     bool UseItemOnItem(Item* item, Item* itemTarget);
     bool UseItem(Item* item, ObjectGuid go, Item* itemTarget, Unit* unitTarget = nullptr);
     bool UseGameObject(ObjectGuid guid);
+    // Feasts summon a shared game object at a ground location: unit-target
+    // checks and the eating state do not apply, so they get their own path.
+    bool UseFeast(Item* item);
     void TellConsumableUse(Item* item, std::string const action, float percent);
     bool SocketItem(Item* item, Item* gem, bool replace = false);
 
