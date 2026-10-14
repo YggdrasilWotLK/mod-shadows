@@ -110,9 +110,13 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
 
     if (!bot->IsWithinLOSInMap(target))
     {
-        if (verbose)
-            botAI->TellError(std::string(target->GetName()) + " is not in my sight.");
-        return false;
+        // Melee fighters close to LoS on foot; ranged must see the target.
+        if (!shouldMelee)
+        {
+            if (verbose)
+                botAI->TellError(std::string(target->GetName()) + " is not in my sight.");
+            return false;
+        }
     }
 
     if (sameTarget && inCombat && sameAttackMode)
