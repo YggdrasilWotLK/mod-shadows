@@ -1345,11 +1345,11 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     }
 
     // Master below with no mesh route down: jump it when survivable, always
-    // MoveJump even straight down. Falling needs no navmesh.
+    // MoveJump even straight down. Falling needs no navmesh. No sight, no jump.
     float const dropDz = target->GetPositionZ() - bot->GetPositionZ();
     float const dropDist2d = bot->GetDistance2d(target);
     if (dropDz < -3.0f && dropDist2d < 25.0f && target->GetMapId() == bot->GetMapId() && target->IsAlive() &&
-        !bot->CanFly() && !bot->IsInWater() && !bot->IsUnderWater())
+        !bot->CanFly() && !bot->IsInWater() && !bot->IsUnderWater() && bot->IsWithinLOSInMap(target))
     {
         float const gz = bot->GetMapHeight(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
         if (gz > INVALID_HEIGHT && botAI->PredictFallDamage(bot->GetPositionZ() - gz) < bot->GetHealth())
