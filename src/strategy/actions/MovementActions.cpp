@@ -1214,6 +1214,11 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     if (!target)
         return false;
 
+    // Yield to controlled motion first: re-issuing follow fights the spline,
+    // including our own drop jumps below.
+    if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+        return false;
+
     /*
     if (!bot->InBattleground()
         && sServerFacade->IsDistanceLessOrEqualThan(sServerFacade->GetDistance2d(bot, target->GetPositionX(),
@@ -1378,10 +1383,6 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
 
     // AI_VALUE(LastMovement&, "last movement").Set(target);
     ClearIdleState();
-
-    // Yield to controlled motion; re-issuing follow fights the spline.
-    if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
-        return false;
 
     if (bot->GetMotionMaster()->GetCurrentMovementGeneratorType() == FOLLOW_MOTION_TYPE)
     {
