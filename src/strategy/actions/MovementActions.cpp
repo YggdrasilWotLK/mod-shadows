@@ -197,7 +197,7 @@ bool MovementAction::MoveToLOS(WorldObject* target, bool ranged)
 
     // No route point sees the target yet (blind lip): walk the route toward it
     // and re-evaluate; sight is gained on arrival.
-    if (!path.GetPath().empty())
+    if (!path.GetPath().empty() && (type & typeOk))
     {
         G3D::Vector3 const& endPos = path.GetPath().back();
         return MoveTo(target->GetMapId(), endPos.x, endPos.y, endPos.z);
