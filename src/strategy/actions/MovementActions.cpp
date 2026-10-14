@@ -152,13 +152,36 @@ bool MovementAction::MoveToLOS(WorldObject* target, bool ranged)
 
     if (!path.GetPath().empty())
     {
+        // LoS from the bot's eyes at the candidate point, not the target's:
+        // tall eyes clear lips the bot still hides behind. Hull side-rays keep
+        // wide models off the edge.
+        auto botSeesFrom = [&](float px, float py, float pz) -> bool
+        {
+            Map* map = bot->GetMap();
+            if (!map)
+                return false;
+            uint32 const phase = bot->GetPhaseMask();
+            float const eye = pz + bot->GetCollisionHeight();
+            float const tx = target->GetPositionX(), ty = target->GetPositionY();
+            float const tz = target->GetPositionZ() + target->GetCollisionHeight();
+            if (!map->isInLineOfSight(px, py, eye, tx, ty, tz, phase, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing))
+                return false;
+            float const clearance = bot->GetObjectSize();
+            float const dx = tx - px, dy = ty - py;
+            float const len = std::hypot(dx, dy);
+            if (clearance <= 0.01f || len < 0.01f)
+                return true;
+            float const nx = -dy / len * clearance, ny = dx / len * clearance;
+            return map->isInLineOfSight(px + nx, py + ny, eye, tx, ty, tz, phase, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing) &&
+                   map->isInLineOfSight(px - nx, py - ny, eye, tx, ty, tz, phase, LINEOFSIGHT_ALL_CHECKS, VMAP::ModelIgnoreFlags::Nothing);
+        };
         for (auto& point : path.GetPath())
         {
             if (botAI->HasStrategy("debug move", BOT_STATE_NON_COMBAT))
                 CreateWp(bot, point.x, point.y, point.z, 0.0, 2334);
 
             float distPoint = target->GetDistance(point.x, point.y, point.z);
-            if (distPoint < dist && target->IsWithinLOS(point.x, point.y, point.z + bot->GetCollisionHeight()))
+            if (distPoint < dist && botSeesFrom(point.x, point.y, point.z))
             {
                 dist = distPoint;
                 dest.Set(point.x, point.y, point.z, target->GetMapId());
