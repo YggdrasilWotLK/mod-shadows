@@ -18,11 +18,13 @@ bool InvalidTargetValue::Calculate()
 
     if (target && qualifier == "current target")
     {
+        // Hold the target while closing: melee walks to range, ranged walks to
+        // sight. Dropping it here turns bots around at every blind corner.
         return target->GetMapId() != bot->GetMapId() || target->HasUnitFlag(UNIT_FLAG_NOT_SELECTABLE) ||
                target->HasUnitFlag(UNIT_FLAG_NON_ATTACKABLE) || target->HasUnitFlag(UNIT_FLAG_NON_ATTACKABLE_2) ||
                !target->IsVisible() || !target->IsAlive() || target->IsPolymorphed() || target->IsCharmed() ||
                target->HasFearAura() || target->HasUnitState(UNIT_STATE_ISOLATED) || target->IsFriendlyTo(bot) ||
-               !AttackersValue::IsValidTarget(target, bot);
+               !AttackersValue::IsPossibleTarget(target, bot);
     }
 
     return !target;
