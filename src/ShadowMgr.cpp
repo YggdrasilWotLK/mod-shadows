@@ -44,6 +44,7 @@ class BotInitGuard
 public:
     BotInitGuard(ObjectGuid guid) : guid(guid), active(false)
     {
+        std::unique_lock<std::shared_mutex> lock(botsBeingInitializedMutex);
         if (!botsBeingInitialized.contains(guid))
         {
             botsBeingInitialized.insert(guid);
@@ -54,7 +55,10 @@ public:
     ~BotInitGuard()
     {
         if (active)
+        {
+            std::unique_lock<std::shared_mutex> lock(botsBeingInitializedMutex);
             botsBeingInitialized.erase(guid);
+        }
     }
 
     bool IsLocked() const { return !active; }
@@ -63,9 +67,11 @@ private:
     ObjectGuid guid;
     bool active;
     static std::unordered_set<ObjectGuid> botsBeingInitialized;
+    static std::shared_mutex botsBeingInitializedMutex;
 };
 
 std::unordered_set<ObjectGuid> BotInitGuard::botsBeingInitialized;
+std::shared_mutex BotInitGuard::botsBeingInitializedMutex;
 
 ShadowHolder::ShadowHolder() : ShadowAIBase(false) {}
 class ShadowLoginQueryHolder : public LoginQueryHolder
