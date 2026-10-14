@@ -140,7 +140,8 @@ bool MovementAction::MoveToLOS(WorldObject* target, bool ranged)
     PathGenerator path(bot);
     path.CalculatePath(x, y, z, false);
     PathType type = path.GetPathType();
-    if (type != PATHFIND_NORMAL && type != PATHFIND_INCOMPLETE)
+    int typeOk = PATHFIND_NORMAL | PATHFIND_INCOMPLETE | PATHFIND_SHORTCUT;
+    if (!(type & typeOk))
         return false;
 
     if (!ranged)
