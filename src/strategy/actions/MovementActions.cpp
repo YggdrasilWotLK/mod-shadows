@@ -337,13 +337,15 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z, bool idle, 
             if (isFlying(bot) || isFlying(master))
                 allowPath = false;
             mm.Clear();
+            // Drive to the validated layer height, not the raw request: under low
+            // ceilings the raw Z snaps to the floor above and clips through.
             if (!backwards)
             {
-                mm.MovePoint(0, x, y, z, FORCED_MOVEMENT_NONE, 0.0f, 0.0f, allowPath);
+                mm.MovePoint(0, x, y, modifiedZ, FORCED_MOVEMENT_NONE, 0.0f, 0.0f, allowPath);
             }
             else
             {
-                mm.MovePointBackwards(0, x, y, z, allowPath);
+                mm.MovePointBackwards(0, x, y, modifiedZ, allowPath);
             }
             float delay = 1000.0f * MoveDelay(distance, backwards);
             if (lessDelay)
@@ -1340,6 +1342,27 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     {
         // botAI->TellError("No need to follow");
         return false; // truly in range (2D and Z) => no need to move
+    }
+
+    // Master below with no mesh route down: jump it when survivable, always
+    // MoveJump even straight down. Falling needs no navmesh.
+    float const dropDz = target->GetPositionZ() - bot->GetPositionZ();
+    float const dropDist2d = bot->GetDistance2d(target);
+    if (dropDz < -3.0f && dropDist2d < 25.0f && target->GetMapId() == bot->GetMapId() && target->IsAlive() &&
+        !bot->CanFly() && !bot->IsInWater() && !bot->IsUnderWater())
+    {
+        float const gz = bot->GetMapHeight(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
+        if (gz > INVALID_HEIGHT && botAI->PredictFallDamage(bot->GetPositionZ() - gz) < bot->GetHealth())
+        {
+            PathGenerator dropProbe(bot);
+            dropProbe.CalculatePath(target->GetPositionX(), target->GetPositionY(), gz, false);
+            int const dropOk = PATHFIND_NORMAL | PATHFIND_INCOMPLETE;
+            if (!(dropProbe.GetPathType() & dropOk))
+            {
+                botAI->DoFallJump(target->GetPositionX(), target->GetPositionY(), gz);
+                return true;
+            }
+        }
     }
 
     bot->HandleEmoteCommand(0);
