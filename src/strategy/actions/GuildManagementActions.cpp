@@ -149,7 +149,7 @@ bool GuildManageNearbyAction::Execute(Event event)
     uint32 found = 0;
 
     Guild* guild = sGuildMgr->GetGuildById(bot->GetGuildId());
-    Guild::Member* botMember = guild->GetMember(bot->GetGUID());
+    Optional<Guild::Member> botMember = guild->GetMember(bot->GetGUID());
 
     GuidVector nearGuids = botAI->GetAiObjectContext()->GetValue<GuidVector>("nearest friendly players")->Get();
     for (auto& guid : nearGuids)
@@ -165,7 +165,7 @@ bool GuildManageNearbyAction::Execute(Event event)
         // Promote or demote nearby members based on chance.
         if (player->GetGuildId() && player->GetGuildId() == bot->GetGuildId())
         {
-            Guild::Member* member = guild->GetMember(player->GetGUID());
+            Optional<Guild::Member> member = guild->GetMember(player->GetGUID());
             uint32 dCount = AI_VALUE(uint32, "death count");
 
             if (!urand(0, 30) && dCount < 2 && guild->GetRankRights(botMember->GetRankId()) & GR_RIGHT_PROMOTE)
@@ -305,7 +305,7 @@ bool GuildManageNearbyAction::isUseful()
         return false;
 
     Guild* guild = sGuildMgr->GetGuildById(bot->GetGuildId());
-    Guild::Member* botMember = guild->GetMember(bot->GetGUID());
+    Optional<Guild::Member> botMember = guild->GetMember(bot->GetGUID());
 
     return guild->GetRankRights(botMember->GetRankId()) & (GR_RIGHT_DEMOTE | GR_RIGHT_PROMOTE | GR_RIGHT_INVITE);
 }
