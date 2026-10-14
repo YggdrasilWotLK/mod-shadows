@@ -171,9 +171,16 @@ bool MovementAction::MoveToLOS(WorldObject* target, bool ranged)
 
     if (dest.isSet())
         return MoveTo(dest.mapId, dest.x, dest.y, dest.z);
-    else
-        botAI->TellError("All paths not in LOS");
 
+    // No route point sees the target yet (blind lip): walk the route toward it
+    // and re-evaluate; sight is gained on arrival.
+    if (!path.GetPath().empty())
+    {
+        G3D::Vector3 const& endPos = path.GetPath().back();
+        return MoveTo(target->GetMapId(), endPos.x, endPos.y, endPos.z);
+    }
+
+    botAI->TellError("All paths not in LOS");
     return false;
 }
 
