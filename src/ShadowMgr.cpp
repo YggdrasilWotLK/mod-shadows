@@ -1768,6 +1768,21 @@ void ShadowsMgr::RemoveShadowData(ObjectGuid const& guid, bool is_AI)
     }
 }
 
+void ShadowsMgr::Shutdown()
+{
+    // Swap out first: AI destruction re-enters RemoveShadowData (same
+    // mutex), so the actual destruction happens without the lock held.
+    std::unordered_map<ObjectGuid, std::shared_ptr<ShadowAIBase>> aiMap;
+    std::unordered_map<ObjectGuid, std::shared_ptr<ShadowAIBase>> mgrMap;
+    {
+        std::unique_lock<std::shared_mutex> lock(_mapsMutex);
+        aiMap.swap(_shadowsAIMap);
+        mgrMap.swap(_shadowsMgrMap);
+    }
+    aiMap.clear();
+    mgrMap.clear();
+}
+
 std::shared_ptr<ShadowAI> ShadowsMgr::GetShadowAI(Player* player)
 {
     if (!(sShadowAIConfig->enabled) || !player)

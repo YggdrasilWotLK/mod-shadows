@@ -131,9 +131,15 @@ public:
 
     static ShadowsMgr* instance()
     {
-        static ShadowsMgr instance;
-        return &instance;
+        // Intentionally leaked: AI destruction must happen during world
+        // shutdown (see Shutdown()), never in exit() static teardown.
+        static ShadowsMgr* instance = new ShadowsMgr();
+        return instance;
     }
+
+    // Called from world shutdown hooks while the allocator is alive.
+    // Destroys all remaining AI/Mgr objects before exit().
+    void Shutdown();
 
     void AddShadowData(Player* player, bool isBotAI);
     void RemoveShadowData(ObjectGuid const& guid, bool is_AI);
