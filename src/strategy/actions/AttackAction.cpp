@@ -9,6 +9,7 @@
 #include "Event.h"
 #include "LastMovementValue.h"
 #include "LootObjectStack.h"
+#include "PathGenerator.h"
 #include "ShadowAI.h"
 #include "Shadows.h"
 #include "ServerFacade.h"
@@ -110,9 +111,18 @@ bool AttackAction::Attack(Unit* target, bool with_pet /*true*/)
 
     if (!bot->IsWithinLOSInMap(target))
     {
-        if (verbose)
-            botAI->TellError(std::string(target->GetName()) + " is not in my sight.");
-        return false;
+        // Melee closes on foot when a route exists; ranged repositions into sight.
+        if (!shouldMelee)
+            return MoveToLOS(target, true);
+        PathGenerator route(bot);
+        route.CalculatePath(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), false);
+        int const routeOk = PATHFIND_NORMAL | PATHFIND_INCOMPLETE | PATHFIND_SHORTCUT;
+        if (!(route.GetPathType() & routeOk))
+        {
+            if (verbose)
+                botAI->TellError(std::string("I cannot reach ") + target->GetName() + ".");
+            return false;
+        }
     }
 
     if (sameTarget && inCombat && sameAttackMode)
