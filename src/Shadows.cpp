@@ -300,8 +300,22 @@ class ShadowsWorldScript : public WorldScript
 {
 public:
     ShadowsWorldScript() : WorldScript("ShadowsWorldScript", {
-        WORLDHOOK_ON_BEFORE_WORLD_INITIALIZED
+        WORLDHOOK_ON_BEFORE_WORLD_INITIALIZED,
+        WORLDHOOK_ON_SHUTDOWN,
+        WORLDHOOK_ON_AFTER_UNLOAD_ALL_MAPS
     }) {}
+
+    void OnShutdown() override
+    {
+        // Tear down AI/Mgr maps while the allocator is alive.
+        sShadowsMgr->Shutdown();
+    }
+
+    void OnAfterUnloadAllMaps() override
+    {
+        // Clear again in case bots were re-added after OnShutdown.
+        sShadowsMgr->Shutdown();
+    }
 
     void OnBeforeWorldInitialized() override
     {
