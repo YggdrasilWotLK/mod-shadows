@@ -386,7 +386,7 @@ void RandomShadowMgr::UpdateAIInternal(uint32 elapsed, bool /*minimal*/)
     GetBots();
     std::list<uint32> availableBots = currentBots;
     uint32 availableBotCount = availableBots.size();
-    uint32 onlineBotCount = shadows.size();
+    uint32 onlineBotCount = GetShadowsCount();
 
     uint32 onlineBotFocus = 75;
     if (onlineBotCount < (uint32)(sShadowAIConfig->minRandomBots * 90 / 100))
@@ -1187,7 +1187,7 @@ void RandomShadowMgr::CheckBgQueue()
     }
 
     // If enabled, wait for all bots to have logged in before queueing for Arena's / BG's
-    if (sShadowAIConfig->randomBotAutoJoinBG && shadows.size() >= GetMaxAllowedBotCount())
+    if (sShadowAIConfig->randomBotAutoJoinBG && GetShadowsCount() >= GetMaxAllowedBotCount())
     {
         uint32 randomBotAutoJoinArenaBracket = sShadowAIConfig->randomBotAutoJoinArenaBracket;
         uint32 randomBotAutoJoinBGRatedArena2v2Count = sShadowAIConfig->randomBotAutoJoinBGRatedArena2v2Count;
@@ -2962,9 +2962,8 @@ bool RandomShadowMgr::HandleShadowConsoleCommand(ChatHandler* handler, char cons
 
 void RandomShadowMgr::HandleCommand(uint32 type, std::string const text, Player* fromPlayer, std::string channelName)
 {
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (!bot)
             continue;
 
@@ -2987,9 +2986,8 @@ void RandomShadowMgr::OnPlayerLogout(Player* player)
 {
     DisableShadow(player->GetGUID());
 
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         auto botAI = GET_SHADOW_AI(bot);
         // Raw compare: no dereference, no registry lookup while iterating.
         if (botAI && botAI->IsAlive() && player == botAI->GetRawMaster())
@@ -3011,10 +3009,10 @@ void RandomShadowMgr::OnBotLoginInternal(Player* const bot)
 {
     if (_isBotLogging)
     {
-        LOG_INFO("shadows", "{}/{} Bot {} logged in", shadows.size(),
+        LOG_INFO("shadows", "{}/{} Bot {} logged in", GetShadowsCount(),
                  sRandomShadowMgr->GetMaxAllowedBotCount(), bot->GetName().c_str());
 
-        if (shadows.size() == sRandomShadowMgr->GetMaxAllowedBotCount())
+        if (GetShadowsCount() == sRandomShadowMgr->GetMaxAllowedBotCount())
         {
             _isBotLogging = false;
         }
@@ -3034,9 +3032,8 @@ void RandomShadowMgr::OnPlayerLogin(Player* player)
 {
     uint32 botsNearby = 0;
 
-    for (ShadowMap::const_iterator it = GetShadowsBegin(); it != GetShadowsEnd(); ++it)
+    for (Player* const bot : GetShadowsSnapshot())
     {
-        Player* const bot = it->second;
         if (player == bot /* || GET_SHADOW_AI(player)*/)  // TEST
             continue;
 
@@ -3143,7 +3140,7 @@ Player* RandomShadowMgr::GetRandomPlayer()
 void RandomShadowMgr::PrintStats()
 {
     printStatsTimer = time(nullptr);
-    LOG_INFO("shadows", "Random Bots Stats: {} online", shadows.size());
+    LOG_INFO("shadows", "Random Bots Stats: {} online", GetShadowsCount());
 
     std::map<uint8, uint32> alliance, horde;
     for (uint32 i = 0; i < 10; ++i)
@@ -3192,9 +3189,8 @@ void RandomShadowMgr::PrintStats()
     // static NewRpgStatistic rpgStasticTotal;
     std::unordered_map<uint32, int> zoneCount;
     uint8 maxBotLevel = 0;
-    for (ShadowMap::iterator i = shadows.begin(); i != shadows.end(); ++i)
+    for (Player* bot : GetShadowsSnapshot())
     {
-        Player* bot = i->second;
         if (IsAlliance(bot->getRace()))
             ++alliance[bot->GetLevel()];
         else

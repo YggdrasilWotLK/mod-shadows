@@ -470,9 +470,9 @@ float Formation::GetFollowAngle()
         auto masterBotMgr = GET_SHADOW_MGR(master);
         if (masterBotMgr && !GET_SHADOW_AI(master))
         {
-            for (auto it = masterBotMgr->GetShadowsBegin(); it != masterBotMgr->GetShadowsEnd(); ++it)
+            for (Player* shadowBot : masterBotMgr->GetShadowsSnapshot())
             {
-                if (it->second == bot)
+                if (shadowBot == bot)
                 {
                     index = total;  // Found bot in master's list, set the index
                     break;

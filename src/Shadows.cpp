@@ -182,10 +182,9 @@ public:
         {
             if (auto shadowMgr = GET_SHADOW_MGR(player))
             {
-                for (ShadowMap::const_iterator it = shadowMgr->GetShadowsBegin();
-                     it != shadowMgr->GetShadowsEnd(); ++it)
+                for (Player* const bot : shadowMgr->GetShadowsSnapshot())
                 {
-                    if (Player* const bot = it->second)
+                    if (bot)
                     {
                         if (bot->GetGuildId() == player->GetGuildId())
                         {
