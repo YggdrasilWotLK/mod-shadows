@@ -2982,7 +2982,7 @@ bool ShadowAI::SayToChannel(const std::string& msg, const ChatChannelId& chanId)
     const auto current_str_zone = GetLocalizedAreaName(current_zone);
     uint32 lang = bot->GetTeamId() == TEAM_ALLIANCE ? LANG_COMMON : LANG_ORCISH;
 
-    for (auto const& [key, channel] : cMgr->GetChannels())
+    for (Channel* channel : cMgr->GetChannelsSnapshot())
     {
         if (!channel || channel->GetChannelId() != chanId || channel->GetName().empty())
             continue;
