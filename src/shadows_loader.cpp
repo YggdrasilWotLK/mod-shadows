@@ -23,3 +23,15 @@ void Addmod_shadowsScripts() { AddShadowsScripts(); }
 
 // Compat: old folder name modules/mod-playerbots
 void Addmod_playerbotsScripts() { AddShadowsScripts(); }
+
+// Load order: shadows loads last, after every default-ordered module
+int Addmod_shadowsLoadOrder()
+{
+    return 999;
+}
+
+// Compat: old folder name modules/mod-playerbots
+int Addmod_playerbotsLoadOrder()
+{
+    return Addmod_shadowsLoadOrder();
+}
