@@ -3,7 +3,7 @@
 #include "ForgeOfSoulsStrategy.h"
 #include "SharedDefines.h"
 
-bool MoveFromBronjahmAction::Execute(Event event)
+bool MoveFromBronjahmAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "bronjahm");
     if (!boss)
@@ -18,13 +18,13 @@ bool MoveFromBronjahmAction::Execute(Event event)
 }
 
 
-bool AttackCorruptedSoulFragmentAction::Execute(Event event)
+bool AttackCorruptedSoulFragmentAction::Execute(Event event [[maybe_unused]])
 {
-    Unit* currentTarget = AI_VALUE(Unit*, "current target");
+    Unit* currentTarget [[maybe_unused]] = AI_VALUE(Unit*, "current target");
     GuidVector targets = AI_VALUE(GuidVector, "possible targets");
 
     // If no valid skull target, search for corrupted soul fragment
-    Unit* empoweredPrince = nullptr;
+    Unit* empoweredPrince [[maybe_unused]] = nullptr;
     for (auto i = targets.begin(); i != targets.end(); ++i)
     {
         Unit* unit = botAI->GetUnit(*i);
@@ -53,7 +53,7 @@ bool AttackCorruptedSoulFragmentAction::Execute(Event event)
 }
 
 
-bool BronjahmGroupPositionAction::Execute(Event event)
+bool BronjahmGroupPositionAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "bronjahm");
     if (!boss)
@@ -143,7 +143,7 @@ bool BronjahmGroupPositionAction::Execute(Event event)
 
 bool BronjahmGroupPositionAction::isUseful() { return true; }
 
-bool DevourerOfSoulsAction::Execute(Event event)
+bool DevourerOfSoulsAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "devourer of souls");
     if (!boss)

@@ -18,7 +18,7 @@ WorldLocation ArrowFormation::GetLocationInternal()
     uint32 tankLines = 1 + tanks.Size() / 6;
     uint32 meleeLines = 1 + melee.Size() / 6;
     uint32 rangedLines = 1 + ranged.Size() / 6;
-    uint32 healerLines = 1 + healers.Size() / 6;
+    uint32 healerLines [[maybe_unused]] = 1 + healers.Size() / 6;
     float offset = 0.f;
 
     Player* master = botAI->GetMaster();
@@ -143,12 +143,12 @@ UnitPosition MultiLineUnitPlacer::Place(FormationUnit* unit, uint32 index, uint3
     uint32 lineNo = index / 6;
     uint32 indexInLine = index % 6;
     uint32 lineSize = std::max(count - lineNo * 6, uint32(6));
-    float x = cos(orientation) * sShadowAIConfig->followDistance * lineNo;
-    float y = sin(orientation) * sShadowAIConfig->followDistance * lineNo;
+    float x [[maybe_unused]] = cos(orientation) * sShadowAIConfig->followDistance * lineNo;
+    float y [[maybe_unused]] = sin(orientation) * sShadowAIConfig->followDistance * lineNo;
     return placer.Place(unit, indexInLine, lineSize);
 }
 
-UnitPosition SingleLineUnitPlacer::Place(FormationUnit* unit, uint32 index, uint32 count)
+UnitPosition SingleLineUnitPlacer::Place(FormationUnit* unit [[maybe_unused]], uint32 index, uint32 count)
 {
     float angle = orientation - M_PI / 2.0f;
     float x = cos(angle) * sShadowAIConfig->followDistance * ((float)index - (float)count / 2);

@@ -10,7 +10,7 @@
 #include "ScriptedCreature.h"
 #include "SharedDefines.h"
 
-bool GrobbulusGoBehindAction::Execute(Event event)
+bool GrobbulusGoBehindAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE(Unit*, "boss target");
     if (!boss)
@@ -31,7 +31,7 @@ uint32 RotateAroundTheCenterPointAction::FindNearestWaypoint()
 {
     float minDistance = 0;
     int ret = -1;
-    for (int i = 0; i < intervals; i++)
+    for (int i = 0; i < static_cast<int>(intervals); i++)
     {
         float w_x = waypoints[i].first, w_y = waypoints[i].second;
         float dis = bot->GetDistance2d(w_x, w_y);
@@ -91,7 +91,7 @@ bool HeiganDanceAction::CalculateSafe()
     return true;
 }
 
-bool HeiganDanceMeleeAction::Execute(Event event)
+bool HeiganDanceMeleeAction::Execute(Event event [[maybe_unused]])
 {
     CalculateSafe();
     if (prev_phase == 0 && botAI->IsMainTank(bot) && !AI_VALUE2(bool, "has aggro", "boss target"))
@@ -103,7 +103,7 @@ bool HeiganDanceMeleeAction::Execute(Event event)
                       botAI->IsMainTank(bot) ? 0 : 0, MovementPriority::MOVEMENT_COMBAT);
 }
 
-bool HeiganDanceRangedAction::Execute(Event event)
+bool HeiganDanceRangedAction::Execute(Event event [[maybe_unused]])
 {
     CalculateSafe();
     if (prev_phase != 1)
@@ -132,7 +132,7 @@ bool ThaddiusAttackNearestPetAction::isUseful()
     return true;
 }
 
-bool ThaddiusAttackNearestPetAction::Execute(Event event)
+bool ThaddiusAttackNearestPetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = helper.GetNearestPet();
     if (!bot->IsWithinLOSInMap(target))
@@ -158,7 +158,7 @@ bool ThaddiusAttackNearestPetAction::Execute(Event event)
 
 bool ThaddiusMoveToPlatformAction::isUseful() { return true; }
 
-bool ThaddiusMoveToPlatformAction::Execute(Event event)
+bool ThaddiusMoveToPlatformAction::Execute(Event event [[maybe_unused]])
 {
     std::vector<std::pair<float, float>> position = {
         // high left
@@ -210,7 +210,7 @@ bool ThaddiusMovePolarityAction::isUseful()
     return !botAI->IsMainTank(bot) || AI_VALUE2(bool, "has aggro", "current target");
 }
 
-bool ThaddiusMovePolarityAction::Execute(Event event)
+bool ThaddiusMovePolarityAction::Execute(Event event [[maybe_unused]])
 {
     std::vector<std::pair<float, float>> position = {
         // left melee
@@ -243,7 +243,7 @@ bool ThaddiusMovePolarityAction::Execute(Event event)
     return MoveTo(bot->GetMapId(), position[idx].first, position[idx].second, bot->GetPositionZ(), false, false, false, false, MovementPriority::MOVEMENT_COMBAT);
 }
 
-bool RazuviousUseObedienceCrystalAction::Execute(Event event)
+bool RazuviousUseObedienceCrystalAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -282,7 +282,7 @@ bool RazuviousUseObedienceCrystalAction::Execute(Event event)
         {
             // taunt
             bool tauntUseful = true;
-            if (forceObedience->GetDuration() <= (duration_time - 5000))
+            if (static_cast<uint32>(forceObedience->GetDuration()) <= (duration_time - 5000))
             {
                 if (target->GetVictim() && botAI->HasAura(29061, target->GetVictim()))
                 {
@@ -293,7 +293,7 @@ bool RazuviousUseObedienceCrystalAction::Execute(Event event)
                     tauntUseful = false;
                 }
             }
-            if (forceObedience->GetDuration() >= (duration_time - 500))
+            if (static_cast<uint32>(forceObedience->GetDuration()) >= (duration_time - 500))
             {
                 tauntUseful = false;
             }
@@ -379,7 +379,7 @@ bool RazuviousUseObedienceCrystalAction::Execute(Event event)
     return false;
 }
 
-bool RazuviousTargetAction::Execute(Event event)
+bool RazuviousTargetAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -403,7 +403,7 @@ bool RazuviousTargetAction::Execute(Event event)
     return Attack(target);
 }
 
-bool HorsemanAttractAlternativelyAction::Execute(Event event)
+bool HorsemanAttractAlternativelyAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -423,7 +423,7 @@ bool HorsemanAttractAlternativelyAction::Execute(Event event)
     return false;
 }
 
-bool HorsemanAttactInOrderAction::Execute(Event event)
+bool HorsemanAttactInOrderAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -470,7 +470,7 @@ bool HorsemanAttactInOrderAction::Execute(Event event)
     return false;
 }
 
-bool SapphironGroundPositionAction::Execute(Event event)
+bool SapphironGroundPositionAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -517,7 +517,7 @@ bool SapphironGroundPositionAction::Execute(Event event)
     return false;
 }
 
-bool SapphironFlightPositionAction::Execute(Event event)
+bool SapphironFlightPositionAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -545,7 +545,7 @@ bool SapphironFlightPositionAction::MoveToNearestIcebolt()
     {
         return false;
     }
-    Group::MemberSlotList const& slots = group->GetMemberSlots();
+    Group::MemberSlotList const& slots [[maybe_unused]] = group->GetMemberSlots();
     Player* playerWithIcebolt = nullptr;
     float minDistance;
     for (GroupReference* ref = group->GetFirstMember(); ref; ref = ref->next())
@@ -573,7 +573,7 @@ bool SapphironFlightPositionAction::MoveToNearestIcebolt()
     return false;
 }
 
-bool KelthuzadChooseTargetAction::Execute(Event event)
+bool KelthuzadChooseTargetAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -688,7 +688,7 @@ bool KelthuzadChooseTargetAction::Execute(Event event)
     return Attack(target, false);
 }
 
-bool KelthuzadPositionAction::Execute(Event event)
+bool KelthuzadPositionAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -772,7 +772,7 @@ bool KelthuzadPositionAction::Execute(Event event)
     return false;
 }
 
-bool AnubrekhanChooseTargetAction::Execute(Event event)
+bool AnubrekhanChooseTargetAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector attackers = context->GetValue<GuidVector>("attackers")->Get();
     Unit* target = nullptr;
@@ -834,7 +834,7 @@ bool AnubrekhanChooseTargetAction::Execute(Event event)
     return Attack(target);
 }
 
-bool AnubrekhanPositionAction::Execute(Event event)
+bool AnubrekhanPositionAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "anub'rekhan");
     if (!boss)
@@ -867,7 +867,7 @@ bool AnubrekhanPositionAction::Execute(Event event)
     return false;
 }
 
-bool GluthChooseTargetAction::Execute(Event event)
+bool GluthChooseTargetAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -961,7 +961,7 @@ bool GluthChooseTargetAction::Execute(Event event)
     // return Attack(target);
 }
 
-bool GluthPositionAction::Execute(Event event)
+bool GluthPositionAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -1026,7 +1026,7 @@ bool GluthPositionAction::Execute(Event event)
     return false;
 }
 
-bool GluthSlowdownAction::Execute(Event event)
+bool GluthSlowdownAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -1052,7 +1052,7 @@ bool GluthSlowdownAction::Execute(Event event)
     return false;
 }
 
-bool LoathebPositionAction::Execute(Event event)
+bool LoathebPositionAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {
@@ -1072,7 +1072,7 @@ bool LoathebPositionAction::Execute(Event event)
     return false;
 }
 
-bool LoathebChooseTargetAction::Execute(Event event)
+bool LoathebChooseTargetAction::Execute(Event event [[maybe_unused]])
 {
     if (!helper.UpdateBossAI())
     {

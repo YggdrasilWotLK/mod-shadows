@@ -82,7 +82,7 @@ float ChooseRpgTargetAction::getMaxRelevance(GuidPosition guidP)
 
             bool isRpg = false;
 
-            for (int32 i = 0; i < NextAction::size(nextActions); i++)
+            for (uint32 i = 0; i < NextAction::size(nextActions); i++)
             {
                 NextAction* nextAction = nextActions[i];
 
@@ -115,14 +115,14 @@ float ChooseRpgTargetAction::getMaxRelevance(GuidPosition guidP)
     return floor((maxRelevance - 1.0) * 1000.0f);
 }
 
-bool ChooseRpgTargetAction::Execute(Event event)
+bool ChooseRpgTargetAction::Execute(Event event [[maybe_unused]])
 {
     //TravelTarget* travelTarget = AI_VALUE(TravelTarget*, "travel target"); //not used, line marked for removal.
     Player* master = botAI->GetMaster();
     GuidPosition masterRpgTarget;
     if (master && master != bot && GET_SHADOW_AI(master) && master->GetMapId() == bot->GetMapId() && !master->IsBeingTeleported())
     {
-        Player* player = botAI->GetMaster();
+        Player* player [[maybe_unused]] = botAI->GetMaster();
         //GuidPosition masterRpgTarget = PAI_VALUE(GuidPosition, "rpg target"); //not used, line marked for removal.
     }
     else
@@ -345,7 +345,7 @@ bool ChooseRpgTargetAction::isFollowValid(Player* bot, WorldPosition pos)
     if (!followBotAI->HasActivePlayerMaster() && distance < 50.0f)
     {
         Player* player = gmaster;
-        if (gmaster && !gmaster->isMoving() ||
+        if ((gmaster && !gmaster->isMoving()) ||
             PAI_VALUE(WorldPosition, "last long move").distance(pos) < sShadowAIConfig->reactDistance)
             return true;
     }

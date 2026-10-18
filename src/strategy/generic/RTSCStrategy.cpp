@@ -9,4 +9,4 @@
 
 RTSCStrategy::RTSCStrategy(ShadowAI* botAI) : Strategy(botAI) {}
 
-void RTSCStrategy::InitTriggers(std::vector<TriggerNode*>& triggers) {}
+void RTSCStrategy::InitTriggers(std::vector<TriggerNode*>& triggers [[maybe_unused]]) {}

@@ -3,7 +3,7 @@
 #include "OculusStrategy.h"
 #include "LastSpellCastValue.h"
 
-bool AvoidUnstableSphereAction::Execute(Event event)
+bool AvoidUnstableSphereAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "drakos the interrogator");
     if (!boss) { return false; }
@@ -34,7 +34,7 @@ bool AvoidUnstableSphereAction::Execute(Event event)
 }
 
 bool MountDrakeAction::isPossible() { return bot->GetMapId() == OCULUS_MAP_ID; }
-bool MountDrakeAction::Execute(Event event)
+bool MountDrakeAction::Execute(Event event [[maybe_unused]])
 {
     std::map<int32, int32> drakeAssignments;
     // Composition can be adjusted - both 3/1/1 and 2/2/1 are good default comps
@@ -68,7 +68,7 @@ bool MountDrakeAction::Execute(Event event)
         Player* player = botAI->GetPlayer(member);
         if (!player->GetSession()->IsBot()) { continue; }
 
-        for (int i = 0; i < composition.size(); i++)
+        for (size_t i = 0; i < composition.size(); i++)
         {
             if (composition[i] > 0)
             {
@@ -85,7 +85,7 @@ bool MountDrakeAction::Execute(Event event)
         Item* item = bot->GetItemByEntry(itemId);
         if (!item) { continue; }
 
-        if (itemId == drakeAssignments[myIndex])
+        if (itemId == static_cast<uint32>(drakeAssignments[myIndex]))
         {
             // Use our assigned drake
             return UseItemAuto(item);
@@ -101,7 +101,7 @@ bool MountDrakeAction::Execute(Event event)
     return false;
 }
 
-bool DismountDrakeAction::Execute(Event event)
+bool DismountDrakeAction::Execute(Event event [[maybe_unused]])
 {
     if (bot->GetVehicle())
     {
@@ -111,7 +111,7 @@ bool DismountDrakeAction::Execute(Event event)
     return false;
 }
 
-bool OccFlyDrakeAction::Execute(Event event)
+bool OccFlyDrakeAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = botAI->GetMaster();
     if (!master) { return false; }
@@ -152,7 +152,7 @@ bool OccFlyDrakeAction::Execute(Event event)
     return false;
 }
 
-bool OccDrakeAttackAction::Execute(Event event)
+bool OccDrakeAttackAction::Execute(Event event [[maybe_unused]])
 {
     vehicleBase = bot->GetVehicleBase();
     if (!vehicleBase) { return false; }
@@ -311,7 +311,7 @@ bool OccDrakeAttackAction::RubyDrakeAction(Unit* target)
     return CastDrakeSpellAction(target, SPELL_SEARING_WRATH, 0);
 }
 
-bool AvoidArcaneExplosionAction::Execute(Event event)
+bool AvoidArcaneExplosionAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "mage-lord urom");
     if (!boss) { return false; }
@@ -331,7 +331,7 @@ bool AvoidArcaneExplosionAction::Execute(Event event)
     return MoveNear(bot->GetMapId(), closestPos->GetPositionX(), closestPos->GetPositionY(), closestPos->GetPositionZ(), 2.0f, MovementPriority::MOVEMENT_COMBAT);
 }
 
-bool TimeBombSpreadAction::Execute(Event event)
+bool TimeBombSpreadAction::Execute(Event event [[maybe_unused]])
 {
     float radius = 10.0f;
     float distanceExtra = 2.0f;

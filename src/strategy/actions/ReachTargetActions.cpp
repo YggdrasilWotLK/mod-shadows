@@ -10,7 +10,7 @@
 #include "Shadows.h"
 #include "ServerFacade.h"
 
-bool ReachTargetAction::Execute(Event event) { return ReachCombatTo(AI_VALUE(Unit*, GetTargetName()), distance); }
+bool ReachTargetAction::Execute(Event event [[maybe_unused]]) { return ReachCombatTo(AI_VALUE(Unit*, GetTargetName()), distance); }
 
 bool ReachTargetAction::isUseful()
 {

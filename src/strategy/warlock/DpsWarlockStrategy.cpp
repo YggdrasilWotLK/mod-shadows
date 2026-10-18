@@ -25,14 +25,14 @@ private:
                               /*A*/ NextAction::array(0, new NextAction("shoot"), nullptr),
                               /*C*/ nullptr);
     }
-    static ActionNode* unstable_affliction(ShadowAI* ai)
+    static ActionNode* unstable_affliction(ShadowAI* ai [[maybe_unused]])
     {
         return new ActionNode("unstable affliction",
                               /*P*/ NULL,
                               /*A*/ NextAction::array(0, new NextAction("immolate"), NULL),
                               /*C*/ NULL);
     }
-    static ActionNode* unstable_affliction_on_attacker(ShadowAI* ai)
+    static ActionNode* unstable_affliction_on_attacker(ShadowAI* ai [[maybe_unused]])
     {
         return new ActionNode("unstable affliction on attacker",
                               /*P*/ NULL,

@@ -354,7 +354,7 @@ void RandomShadowMgr::LogPlayerLocation()
     }
 }
 
-void RandomShadowMgr::UpdateAIInternal(uint32 elapsed, bool /*minimal*/)
+void RandomShadowMgr::UpdateAIInternal(uint32 elapsed [[maybe_unused]], bool /*minimal*/)
 {
     if (totalPmo)
         totalPmo->finish();
@@ -1690,7 +1690,7 @@ void RandomShadowMgr::RandomTeleport(Player* bot, std::vector<WorldLocation>& lo
         tlocs.push_back(WorldPosition(loc));
     // Do not teleport to maps disabled in config
     tlocs.erase(std::remove_if(tlocs.begin(), tlocs.end(),
-                               [bot](WorldPosition l)
+                               [](WorldPosition l)
                                {
                                    std::vector<uint32>::iterator i =
                                        find(sShadowAIConfig->randomBotMaps.begin(),
@@ -1936,7 +1936,7 @@ void RandomShadowMgr::PrepareTeleportCache()
             for (int32 l = (int32)level - (int32)sShadowAIConfig->randomBotTeleLowerLevel;
                  l <= (int32)level + (int32)sShadowAIConfig->randomBotTeleHigherLevel; l++)
             {
-                if (l < 1 || l > maxLevel)
+                if (l < 1 || static_cast<uint32>(l) > maxLevel)
                 {
                     continue;
                 }
@@ -2014,7 +2014,7 @@ void RandomShadowMgr::PrepareTeleportCache()
                 if (zone2LevelBracket.find(zoneId) == zone2LevelBracket.end())
                     continue;
                 LevelBracket bracket = zone2LevelBracket[zoneId];
-                for (int i = bracket.low; i <= bracket.high; i++)
+                for (uint32 i = bracket.low; i <= bracket.high; i++)
                 {
                     if (forHorde)
                     {
@@ -2094,7 +2094,7 @@ void RandomShadowMgr::PrepareTeleportCache()
             bLoc.loc = WorldLocation(mapId, x + cos(orient) * 6.0f, y + sin(orient) * 6.0f, z + 2.0f, orient + M_PI);
             bLoc.entry = entry;
             collected_locs++;
-            for (int32 l = 1; l <= maxLevel; l++)
+            for (uint32 l = 1; l <= maxLevel; l++)
             {
                 // Bots 1-60 go to base game bankers (all have minlevel 30 or 45)
                 if (l <=60 && level > 45)
@@ -2517,7 +2517,7 @@ void RandomShadowMgr::Clear(Player* bot)
     factory.ClearEverything();
 }
 
-uint32 RandomShadowMgr::GetZoneLevel(uint16 mapId, float teleX, float teleY, float teleZ)
+uint32 RandomShadowMgr::GetZoneLevel(uint16 mapId, float teleX, float teleY, float teleZ [[maybe_unused]])
 {
     uint32 maxLevel = sWorld->getIntConfig(CONFIG_MAX_PLAYER_LEVEL);
 
@@ -2716,7 +2716,7 @@ std::vector<uint32> RandomShadowMgr::GetBgBots(uint32 bracket)
         } while (result->NextRow());
     }
 
-    return std::move(BgBots);
+    return BgBots;
 }
 
 uint32 RandomShadowMgr::GetEventValue(uint32 bot, std::string const event)
@@ -2838,7 +2838,7 @@ void RandomShadowMgr::SetValue(Player* bot, std::string const type, uint32 value
     SetValue(bot->GetGUID().GetCounter(), type, value, data);
 }
 
-bool RandomShadowMgr::HandleShadowConsoleCommand(ChatHandler* handler, char const* args)
+bool RandomShadowMgr::HandleShadowConsoleCommand(ChatHandler* handler [[maybe_unused]], char const* args)
 {
     if (!sShadowAIConfig->enabled)
     {

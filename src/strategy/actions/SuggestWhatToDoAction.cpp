@@ -62,14 +62,14 @@ bool SuggestWhatToDoAction::isUseful()
     return (time(0) - lastSaid) > 30;
 }
 
-bool SuggestWhatToDoAction::Execute(Event event)
+bool SuggestWhatToDoAction::Execute(Event event [[maybe_unused]])
 {
     uint32 index = rand() % suggestions.size();
     auto fnct_ptr = suggestions[index];
     fnct_ptr();
 
     std::string const qualifier = "suggest what to do";
-    time_t lastSaid = AI_VALUE2(time_t, "last said", qualifier);
+    time_t lastSaid [[maybe_unused]] = AI_VALUE2(time_t, "last said", qualifier);
     botAI->GetAiObjectContext()->GetValue<time_t>("last said", qualifier)->Set(time(nullptr) + urand(1, 60));
 
     return true;
@@ -226,7 +226,7 @@ void SuggestWhatToDoAction::thunderfury()
 class FindTradeItemsVisitor : public IterateItemsVisitor
 {
 public:
-    FindTradeItemsVisitor(uint32 quality) : quality(quality), IterateItemsVisitor() {}
+    FindTradeItemsVisitor(uint32 quality) : IterateItemsVisitor(), quality(quality) {}
 
     bool Visit(Item* item) override
     {
@@ -257,7 +257,7 @@ private:
 
 SuggestDungeonAction::SuggestDungeonAction(ShadowAI* botAI) : SuggestWhatToDoAction(botAI, "suggest dungeon") {}
 
-bool SuggestDungeonAction::Execute(Event event)
+bool SuggestDungeonAction::Execute(Event event [[maybe_unused]])
 {
     // TODO: use sShadowDungeonSuggestionMgr
 
@@ -324,7 +324,7 @@ bool SuggestDungeonAction::Execute(Event event)
 
 SuggestTradeAction::SuggestTradeAction(ShadowAI* botAI) : SuggestWhatToDoAction(botAI, "suggest trade") {}
 
-bool SuggestTradeAction::Execute(Event event)
+bool SuggestTradeAction::Execute(Event event [[maybe_unused]])
 {
     uint32 quality = urand(0, 100);
     if (quality > 95)

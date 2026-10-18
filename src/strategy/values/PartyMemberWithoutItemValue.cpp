@@ -11,7 +11,7 @@ class PlayerWithoutItemPredicate : public FindPlayerPredicate, public ShadowAIAw
 {
 public:
     PlayerWithoutItemPredicate(ShadowAI* botAI, std::string const item)
-        : ShadowAIAware(botAI), FindPlayerPredicate(), item(item)
+        : FindPlayerPredicate(), ShadowAIAware(botAI), item(item)
     {
     }
 

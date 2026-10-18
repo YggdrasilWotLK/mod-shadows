@@ -193,7 +193,7 @@ std::vector<std::pair<uint32, std::string>> ListSpellsAction::GetSpellList(std::
                     if (!buyable)
                     {
                         uint32 craftable = reagentsInInventory / reagentsRequired;
-                        if (craftCount < 0 || craftCount > craftable)
+                        if (craftCount < 0 || static_cast<uint32>(craftCount) > craftable)
                             craftCount = craftable;
                     }
 
@@ -300,7 +300,7 @@ bool ListSpellsAction::Execute(Event event)
 
     std::sort(spells.begin(), spells.end(), CompareSpells);
 
-    uint32 count = 0;
+    uint32 count [[maybe_unused]] = 0;
     for (std::vector<std::pair<uint32, std::string>>::iterator i = spells.begin(); i != spells.end(); ++i)
     {
         botAI->TellMasterNoFacing(i->second);

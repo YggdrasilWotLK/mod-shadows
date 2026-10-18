@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool RandomBotUpdateAction::Execute(Event event)
+bool RandomBotUpdateAction::Execute(Event event [[maybe_unused]])
 {
     if (!sRandomShadowMgr->IsRandomBot(bot))
         return false;

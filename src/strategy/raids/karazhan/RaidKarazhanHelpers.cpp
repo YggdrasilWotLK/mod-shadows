@@ -344,7 +344,7 @@ std::vector<Unit*> RaidKarazhanHelpers::GetAllVoidZones()
     return voidZones;
 }
 
-bool RaidKarazhanHelpers::IsSafePosition(float x, float y, float z,
+bool RaidKarazhanHelpers::IsSafePosition(float x, float y, float z [[maybe_unused]],
      const std::vector<Unit*>& hazards, float hazardRadius)
 {
     for (Unit* hazard : hazards)
@@ -394,7 +394,7 @@ bool RaidKarazhanHelpers::IsStraightPathSafe(const Position& start, const Positi
         float t = checkDist / totalDist;
         float checkX = sx + (tx - sx) * t;
         float checkY = sy + (ty - sy) * t;
-        float checkZ = sz + (tz - sz) * t;
+        float checkZ [[maybe_unused]] = sz + (tz - sz) * t;
         for (Unit* hazard : hazards)
         {
             float hazardDist = std::sqrt(std::pow(checkX - hazard->GetPositionX(), 2) + std::pow(checkY - hazard->GetPositionY(), 2));

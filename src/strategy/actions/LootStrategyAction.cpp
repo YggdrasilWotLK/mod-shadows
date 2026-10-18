@@ -16,7 +16,7 @@ bool LootStrategyAction::Execute(Event event)
 {
     std::string const strategy = event.getParam();
 
-    LootObjectStack* lootItems = AI_VALUE(LootObjectStack*, "available loot");
+    LootObjectStack* lootItems [[maybe_unused]] = AI_VALUE(LootObjectStack*, "available loot");
     std::set<uint32>& alwaysLootItems = AI_VALUE(std::set<uint32>&, "always loot list");
     Value<LootStrategy*>* lootStrategy = context->GetValue<LootStrategy*>("loot strategy");
 

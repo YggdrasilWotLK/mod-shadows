@@ -78,7 +78,7 @@ bool MovementAction::JumpTo(uint32 mapId, float x, float y, float z, MovementPri
     {
         return false;
     }
-    float botZ = bot->GetPositionZ();
+    float botZ [[maybe_unused]] = bot->GetPositionZ();
     float speed = bot->GetSpeed(MOVE_RUN);
     MotionMaster& mm = *bot->GetMotionMaster();
     mm.Clear();
@@ -100,9 +100,9 @@ bool MovementAction::MoveNear(WorldObject* target, float distance, MovementPrior
 
     distance += target->GetCombatReach();
 
-    float x = target->GetPositionX();
-    float y = target->GetPositionY();
-    float z = target->GetPositionZ();
+    float x [[maybe_unused]] = target->GetPositionX();
+    float y [[maybe_unused]] = target->GetPositionY();
+    float z [[maybe_unused]] = target->GetPositionZ();
     float followAngle = GetFollowAngle();
 
     for (float angle = followAngle; angle <= followAngle + static_cast<float>(2 * M_PI);
@@ -207,7 +207,7 @@ bool MovementAction::MoveToLOS(WorldObject* target, bool ranged)
     return false;
 }
 
-bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z, bool idle, bool react, bool normal_only,
+bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z, bool idle [[maybe_unused]], bool react [[maybe_unused]], bool normal_only,
                             bool exact_waypoint, MovementPriority priority, bool lessDelay, bool backwards)
 {
     UpdateMovementState();
@@ -329,7 +329,7 @@ bool MovementAction::MoveTo(uint32 mapId, float x, float y, float z, bool idle, 
             // }
 
             MotionMaster& mm = *bot->GetMotionMaster();
-            G3D::Vector3 endP = path.back();
+            G3D::Vector3 endP [[maybe_unused]] = path.back();
             // No ground pathfinding if the bot/master are flying => allow true 3D (Z) movement
             auto isFlying = [](Unit* u){ return u && (u->HasUnitMovementFlag(MOVEMENTFLAG_FLYING) || u->IsInFlight()); };
             bool allowPath = generatePath;
@@ -859,8 +859,8 @@ bool MovementAction::MoveTo(WorldObject* target, float distance, MovementPriorit
     float by = bot->GetPositionY();
     float bz = bot->GetPositionZ();
 
-    float tx = target->GetPositionX();
-    float ty = target->GetPositionY();
+    float tx [[maybe_unused]] = target->GetPositionX();
+    float ty [[maybe_unused]] = target->GetPositionY();
     float tz = target->GetPositionZ();
 
     float distanceToTarget = bot->GetDistance(target);
@@ -892,9 +892,9 @@ bool MovementAction::ReachCombatTo(Unit* target, float distance)
     if (!IsMovingAllowed(target))
         return false;
 
-    float bx = bot->GetPositionX();
-    float by = bot->GetPositionY();
-    float bz = bot->GetPositionZ();
+    float bx [[maybe_unused]] = bot->GetPositionX();
+    float by [[maybe_unused]] = bot->GetPositionY();
+    float bz [[maybe_unused]] = bot->GetPositionZ();
 
     float tx = target->GetPositionX();
     float ty = target->GetPositionY();
@@ -984,7 +984,7 @@ bool MovementAction::IsMovingAllowed(WorldObject* target)
     return IsMovingAllowed();
 }
 
-bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
+bool MovementAction::IsMovingAllowed(uint32 mapId [[maybe_unused]], float x [[maybe_unused]], float y [[maybe_unused]], float z [[maybe_unused]])
 {
     // removed sqrt as means distance limit was effectively 22500 (ReactDistance�)
     // leaving it commented incase we find ReactDistance limit causes problems
@@ -997,7 +997,7 @@ bool MovementAction::IsMovingAllowed(uint32 mapId, float x, float y, float z)
     return IsMovingAllowed();
 }
 
-bool MovementAction::IsDuplicateMove(uint32 mapId, float x, float y, float z)
+bool MovementAction::IsDuplicateMove(uint32 mapId [[maybe_unused]], float x, float y, float z)
 {
     LastMovement& lastMove = *context->GetValue<LastMovement&>("last movement");
 
@@ -1061,7 +1061,7 @@ void MovementAction::UpdateMovementState()
         bot->SetSwim(false);
     }
 
-    bool onGround = bot->GetPositionZ() <
+    bool onGround [[maybe_unused]] = bot->GetPositionZ() <
                     bot->GetMapWaterOrGroundLevel(bot->GetPositionX(), bot->GetPositionY(), bot->GetPositionZ()) + 1.0f;
 
     // Keep bot->SendMovementFlagUpdate() withing the if statements to not intefere with bot behavior on ground/(shallow) waters
@@ -1374,7 +1374,7 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     return true;
 }
 
-bool MovementAction::ChaseTo(WorldObject* obj, float distance, float angle)
+bool MovementAction::ChaseTo(WorldObject* obj, float distance, float angle [[maybe_unused]])
 {
     if (!IsMovingAllowed())
     {
@@ -1506,7 +1506,7 @@ bool MovementAction::Flee(Unit* target)
                 if (botAI->IsTank(player))
                 {
                     float distanceToTank = sServerFacade->GetDistance2d(bot, player);
-                    float distanceToTarget = sServerFacade->GetDistance2d(bot, target);
+                    float distanceToTarget [[maybe_unused]] = sServerFacade->GetDistance2d(bot, target);
                     if (distanceToTank < fleeDistance)
                     {
                         fleeTarget = player;
@@ -1527,8 +1527,8 @@ bool MovementAction::Flee(Unit* target)
     else  // bot is not targeted, try to flee dps/healers
     {
         bool isHealer = botAI->IsHeal(bot);
-        bool isDps = !isHealer && !botAI->IsTank(bot);
-        bool isTank = botAI->IsTank(bot);
+        bool isDps [[maybe_unused]] = !isHealer && !botAI->IsTank(bot);
+        bool isTank [[maybe_unused]] = botAI->IsTank(bot);
         bool needHealer = !isHealer && AI_VALUE2(uint8, "health", "self target") < 50;
         bool isRanged = botAI->IsRanged(bot);
 
@@ -1884,7 +1884,7 @@ const Movement::PointsArray MovementAction::SearchForBestPath(float x, float y, 
     return result;
 }
 
-bool FleeAction::Execute(Event event)
+bool FleeAction::Execute(Event event [[maybe_unused]])
 {
     return MoveAway(AI_VALUE(Unit*, "current target"), sShadowAIConfig->fleeDistance, true);
 }
@@ -1902,7 +1902,7 @@ bool FleeAction::isUseful()
     return true;
 }
 
-bool FleeWithPetAction::Execute(Event event)
+bool FleeWithPetAction::Execute(Event event [[maybe_unused]])
 {
     if (Pet* pet = bot->GetPet())
     {
@@ -1914,7 +1914,7 @@ bool FleeWithPetAction::Execute(Event event)
 
 bool AvoidAoeAction::isUseful()
 {
-    if (getMSTime() - moveInterval < lastMoveTimer)
+    if (getMSTime() - moveInterval < static_cast<uint32>(lastMoveTimer))
     {
         return false;
     }
@@ -1923,7 +1923,7 @@ bool AvoidAoeAction::isUseful()
     return AI_VALUE(Aura*, "area debuff") || !traps.empty() || !triggers.empty();
 }
 
-bool AvoidAoeAction::Execute(Event event)
+bool AvoidAoeAction::Execute(Event event [[maybe_unused]])
 {
     // Case #1: Aura with dynamic object (e.g. rain of fire)
     if (AvoidAuraWithDynamicObj())
@@ -2340,7 +2340,7 @@ bool MovementAction::CheckLastFlee(float curAngle, std::list<FleeInfo>& infoList
 
 bool CombatFormationMoveAction::isUseful()
 {
-    if (getMSTime() - moveInterval < lastMoveTimer)
+    if (getMSTime() - moveInterval < static_cast<uint32>(lastMoveTimer))
     {
         return false;
     }
@@ -2351,7 +2351,7 @@ bool CombatFormationMoveAction::isUseful()
     return true;
 }
 
-bool CombatFormationMoveAction::Execute(Event event)
+bool CombatFormationMoveAction::Execute(Event event [[maybe_unused]])
 {
     float dis = AI_VALUE(float, "disperse distance");
     if (dis <= 0.0f ||
@@ -2483,7 +2483,7 @@ Player* CombatFormationMoveAction::NearestGroupMember(float dis)
     return result;
 }
 
-bool TankFaceAction::Execute(Event event)
+bool TankFaceAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target)
@@ -2564,7 +2564,7 @@ bool RearFlankAction::isUseful()
     return inFront || inRear;
 }
 
-bool RearFlankAction::Execute(Event event)
+bool RearFlankAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target) { return false; }
@@ -2674,9 +2674,9 @@ bool DisperseSetAction::Execute(Event event)
     return true;
 }
 
-bool RunAwayAction::Execute(Event event) { return Flee(AI_VALUE(Unit*, "master target")); }
+bool RunAwayAction::Execute(Event event [[maybe_unused]]) { return Flee(AI_VALUE(Unit*, "master target")); }
 
-bool MoveToLootAction::Execute(Event event)
+bool MoveToLootAction::Execute(Event event [[maybe_unused]])
 {
     LootObject loot = AI_VALUE(LootObject, "loot target");
     if (!loot.IsLootPossible(bot))
@@ -2685,7 +2685,7 @@ bool MoveToLootAction::Execute(Event event)
     return MoveNear(loot.GetWorldObject(bot), sShadowAIConfig->contactDistance);
 }
 
-bool MoveOutOfEnemyContactAction::Execute(Event event)
+bool MoveOutOfEnemyContactAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target)
@@ -2696,7 +2696,7 @@ bool MoveOutOfEnemyContactAction::Execute(Event event)
 
 bool MoveOutOfEnemyContactAction::isUseful() { return AI_VALUE2(bool, "inside target", "current target"); }
 
-bool SetFacingTargetAction::Execute(Event event)
+bool SetFacingTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target)
@@ -2723,7 +2723,7 @@ bool SetFacingTargetAction::isPossible()
     return true;
 }
 
-bool SetBehindTargetAction::Execute(Event event)
+bool SetBehindTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE(Unit*, "current target");
     if (!target)
@@ -2781,7 +2781,7 @@ bool SetBehindTargetAction::Execute(Event event)
     return MoveTo(bot->GetMapId(), nearest.GetPositionX(), nearest.GetPositionY(), nearest.GetPositionZ(), false, false, false, true, MovementPriority::MOVEMENT_COMBAT);
 }
 
-bool MoveOutOfCollisionAction::Execute(Event event)
+bool MoveOutOfCollisionAction::Execute(Event event [[maybe_unused]])
 {
     float angle = M_PI * 2000 / frand(1.f, 1000.f);
     float distance = sShadowAIConfig->followDistance;
@@ -2799,7 +2799,7 @@ bool MoveOutOfCollisionAction::isUseful()
            botAI->GetAiObjectContext()->GetValue<GuidVector>("nearest friendly players")->Get().size() < 15;
 }
 
-bool MoveRandomAction::Execute(Event event)
+bool MoveRandomAction::Execute(Event event [[maybe_unused]])
 {
     float distance = sShadowAIConfig->tooCloseDistance + urand(10, 30);
 
@@ -2812,9 +2812,9 @@ bool MoveRandomAction::Execute(Event event)
         float angle = (float)rand_norm() * static_cast<float>(M_PI);
         x += urand(0, distance) * cos(angle);
         y += urand(0, distance) * sin(angle);
-        float ox = x;
-        float oy = y;
-        float oz = z;
+        float ox [[maybe_unused]] = x;
+        float oy [[maybe_unused]] = y;
+        float oz [[maybe_unused]] = z;
         if (!bot->GetMap()->CheckCollisionAndGetValidCoords(bot, bot->GetPositionX(), bot->GetPositionY(),
                                                             bot->GetPositionZ(), x, y, z))
             continue;
@@ -2831,9 +2831,9 @@ bool MoveRandomAction::Execute(Event event)
 
 bool MoveRandomAction::isUseful() { return !AI_VALUE(GuidPosition, "rpg target"); }
 
-bool MoveInsideAction::Execute(Event event) { return MoveInside(bot->GetMapId(), x, y, bot->GetPositionZ(), distance); }
+bool MoveInsideAction::Execute(Event event [[maybe_unused]]) { return MoveInside(bot->GetMapId(), x, y, bot->GetPositionZ(), distance); }
 
-bool RotateAroundTheCenterPointAction::Execute(Event event)
+bool RotateAroundTheCenterPointAction::Execute(Event event [[maybe_unused]])
 {
     uint32 next_point = GetCurrWaypoint();
     if (MoveTo(bot->GetMapId(), waypoints[next_point].first, waypoints[next_point].second, bot->GetPositionZ(), false,
@@ -2853,10 +2853,10 @@ bool MoveFromGroupAction::Execute(Event event)
     return MoveFromGroup(distance);
 }
 
-bool MoveAwayFromCreatureAction::Execute(Event event)
+bool MoveAwayFromCreatureAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector targets = AI_VALUE(GuidVector, "nearest npcs");
-    Creature* nearestCreature = bot->FindNearestCreature(creatureId, range, alive);
+    Creature* nearestCreature [[maybe_unused]] = bot->FindNearestCreature(creatureId, range, alive);
 
     // Find all creatures with the specified Id
     std::vector<Unit*> creatures;
@@ -2937,10 +2937,10 @@ bool MoveAwayFromCreatureAction::isPossible()
     return bot->CanFreeMove();
 }
 
-bool MoveAwayFromPlayerWithDebuffAction::Execute(Event event)
+bool MoveAwayFromPlayerWithDebuffAction::Execute(Event event [[maybe_unused]])
 {
-    Player* closestPlayer = nullptr;
-    float minDistance = 0.0f;
+    Player* closestPlayer [[maybe_unused]] = nullptr;
+    float minDistance [[maybe_unused]] = 0.0f;
 
     Group* group = bot->GetGroup();
     if (!group)

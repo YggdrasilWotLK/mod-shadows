@@ -10,7 +10,7 @@
 #include "PathGenerator.h"
 #include "Shadows.h"
 
-bool MoveToTravelTargetAction::Execute(Event event)
+bool MoveToTravelTargetAction::Execute(Event event [[maybe_unused]])
 {
     TravelTarget* target = AI_VALUE(TravelTarget*, "travel target");
 

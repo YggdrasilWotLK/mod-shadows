@@ -3,7 +3,7 @@
 #include "PitOfSaronStrategy.h"
 #include "SharedDefines.h"
 
-bool IckAndKrickAction::Execute(Event event)
+bool IckAndKrickAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "Ick");
     if (!boss)
@@ -26,7 +26,7 @@ bool IckAndKrickAction::Execute(Event event)
 
     bool pursuit = bot->HasAura(SPELL_PURSUIT) || (!botAI->IsTank(bot) && boss->HasUnitState(UNIT_STATE_CASTING) && boss->FindCurrentSpellBySpellId(SPELL_PURSUIT));
     bool poisonNova = boss->HasUnitState(UNIT_STATE_CASTING) && (boss->FindCurrentSpellBySpellId(SPELL_POISON_NOVA_POS) || boss->FindCurrentSpellBySpellId(SPELL_POISON_NOVA_POS_HC));
-    bool explosiveBarrage = orb || boss->HasUnitState(UNIT_STATE_CASTING) && (boss->FindCurrentSpellBySpellId(SPELL_EXPLOSIVE_BARRAGE_ICK) || boss->FindCurrentSpellBySpellId(SPELL_EXPLOSIVE_BARRAGE_KRICK));
+    bool explosiveBarrage = orb || (boss->HasUnitState(UNIT_STATE_CASTING) && (boss->FindCurrentSpellBySpellId(SPELL_EXPLOSIVE_BARRAGE_ICK) || boss->FindCurrentSpellBySpellId(SPELL_EXPLOSIVE_BARRAGE_KRICK)));
     bool isTank = botAI->IsTank(bot);
 
     if (pursuit && Pursuit(pursuit, boss))
@@ -137,7 +137,7 @@ bool IckAndKrickAction::PoisonNova(bool poisonNova, Unit* boss)
 }
 
 
-bool IckAndKrickAction::ExplosiveBarrage(bool explosiveBarrage, Unit* boss)
+bool IckAndKrickAction::ExplosiveBarrage(bool explosiveBarrage [[maybe_unused]], Unit* boss)
 {
     std::vector<Unit*> orbs;
     Unit* closestOrb = nullptr;
@@ -270,7 +270,7 @@ bool IckAndKrickAction::ExplosiveBarrage(bool explosiveBarrage, Unit* boss)
     return false;
 }
 
-bool TyrannusAction::Execute(Event event)
+bool TyrannusAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "scourgelord tyrannus");
     if (!boss)

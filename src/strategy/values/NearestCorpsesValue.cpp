@@ -19,7 +19,7 @@ public:
 
 private:
     WorldObject const* i_obj;
-    float i_range;
+    float i_range [[maybe_unused]];
 };
 
 void NearestCorpsesValue::FindUnits(std::list<Unit*>& targets)
@@ -29,4 +29,4 @@ void NearestCorpsesValue::FindUnits(std::list<Unit*>& targets)
     Cell::VisitObjects(bot, searcher, range);
 }
 
-bool NearestCorpsesValue::AcceptUnit(Unit* unit) { return true; }
+bool NearestCorpsesValue::AcceptUnit(Unit* unit [[maybe_unused]]) { return true; }

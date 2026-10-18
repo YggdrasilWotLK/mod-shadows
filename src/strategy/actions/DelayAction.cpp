@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool DelayAction::Execute(Event event)
+bool DelayAction::Execute(Event event [[maybe_unused]])
 {
     uint32 delay = sShadowAIConfig->passiveDelay + sShadowAIConfig->globalCoolDown;
 

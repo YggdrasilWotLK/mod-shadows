@@ -9,7 +9,7 @@
 #include "LootObjectStack.h"
 #include "Shadows.h"
 
-bool ChooseTravelTargetAction::Execute(Event event)
+bool ChooseTravelTargetAction::Execute(Event event [[maybe_unused]])
 {
     // Player* requester = event.getOwner() ? event.getOwner() : GetMaster(); //not used, line marked for removal.
 
@@ -234,8 +234,8 @@ void ChooseTravelTargetAction::ReportTravelTarget(TravelTarget* newTarget, Trave
         Quest const* quest = QuestDestination->GetQuestTemplate();
         WorldPosition botLocation(bot);
 
-        CreatureTemplate const* cInfo = nullptr;
-        GameObjectTemplate const* gInfo = nullptr;
+        CreatureTemplate const* cInfo [[maybe_unused]] = nullptr;
+        GameObjectTemplate const* gInfo [[maybe_unused]] = nullptr;
 
         if (destination->getEntry() > 0)
             cInfo = sObjectMgr->GetCreatureTemplate(destination->getEntry());
@@ -479,7 +479,7 @@ bool ChooseTravelTargetAction::SetCurrentTarget(TravelTarget* target, TravelTarg
     return target->isActive();
 }
 
-bool ChooseTravelTargetAction::SetQuestTarget(TravelTarget* target, bool onlyCompleted, bool newQuests, bool activeQuests, bool completedQuests)
+bool ChooseTravelTargetAction::SetQuestTarget(TravelTarget* target, bool onlyCompleted [[maybe_unused]], bool newQuests, bool activeQuests, bool completedQuests)
 {
     std::vector<TravelDestination*> activeDestinations;
     std::vector<WorldPosition*> activePoints;
@@ -940,7 +940,7 @@ bool ChooseTravelTargetAction::needForQuest(Unit* target)
                     int required = questTemplate->RequiredNpcOrGoCount[j];
                     int available = questStatus.CreatureOrGOCount[j];
 
-                    if (required && available < required && (target->GetEntry() == entry || justCheck))
+                    if (required && available < required && (target->GetEntry() == static_cast<uint32>(entry) || justCheck))
                         return true;
                 }
 

@@ -331,7 +331,7 @@ std::string const RandomShadowFactory::CreateRandomBotName(NameRaceAndGender rac
         botName += (botName.size() < 2) ? groupFormEnd[gender][rand() % 4] : "";
 
         // Replace Catagory value with random Letter from that Catagory's Letter string for a given bot gender
-        for (int i = 0; i < botName.size(); i++)
+        for (size_t i = 0; i < botName.size(); i++)
         {
             botName[i] = groupLetter[gender][groupCategory.find(botName[i])]
                                     [rand() % groupLetter[gender][groupCategory.find(botName[i])].size()];
@@ -364,7 +364,7 @@ std::string const RandomShadowFactory::CreateRandomBotName(NameRaceAndGender rac
             botName.clear();
             continue;
         }
-        return std::move(botName);
+        return botName;
     }
 
     // TRUE RANDOM NAME GENERATION
@@ -389,11 +389,11 @@ std::string const RandomShadowFactory::CreateRandomBotName(NameRaceAndGender rac
             botName.clear();
             continue;
         }
-        return std::move(botName);
+        return botName;
     }
     LOG_ERROR("shadows", "Random name generation failed.");
     botName.clear();
-    return std::move(botName);
+    return botName;
 }
 
 // Calculates the total number of required accounts, either using the specified randomBotAccountCount
@@ -993,7 +993,7 @@ std::string const RandomShadowFactory::CreateRandomGuildName()
     if (!result)
     {
         LOG_ERROR("shadows", "No more names left for random guilds");
-        return std::move(guildName);
+        return guildName;
     }
 
     Field* fields = result->Fetch();
@@ -1007,13 +1007,13 @@ std::string const RandomShadowFactory::CreateRandomGuildName()
     if (!result)
     {
         LOG_ERROR("shadows", "No more names left for random guilds");
-        return std::move(guildName);
+        return guildName;
     }
 
     fields = result->Fetch();
     guildName = fields[0].Get<std::string>();
 
-    return std::move(guildName);
+    return guildName;
 }
 
 void RandomShadowFactory::CreateRandomArenaTeams(ArenaType type, uint32 count)
@@ -1135,7 +1135,7 @@ std::string const RandomShadowFactory::CreateRandomArenaTeamName()
     if (!result)
     {
         LOG_ERROR("shadows", "No more names left for random arena teams");
-        return std::move(arenaTeamName);
+        return arenaTeamName;
     }
 
     Field* fields = result->Fetch();
@@ -1150,11 +1150,11 @@ std::string const RandomShadowFactory::CreateRandomArenaTeamName()
     if (!result)
     {
         LOG_ERROR("shadows", "No more names left for random arena teams");
-        return std::move(arenaTeamName);
+        return arenaTeamName;
     }
 
     fields = result->Fetch();
     arenaTeamName = fields[0].Get<std::string>();
 
-    return std::move(arenaTeamName);
+    return arenaTeamName;
 }

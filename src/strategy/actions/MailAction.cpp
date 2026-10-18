@@ -78,7 +78,7 @@ private:
 class TakeMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
+    bool Process(uint32 index [[maybe_unused]], Mail* mail, ShadowAI* botAI) override
     {
         Player* bot = botAI->GetBot();
         if (!CheckBagSpace(bot))
@@ -134,7 +134,7 @@ public:
 private:
     bool CheckBagSpace(Player* bot)
     {
-        uint32 totalused = 0, total = 16;
+        uint32 totalused = 0, total [[maybe_unused]] = 16;
         for (uint8 slot = INVENTORY_SLOT_ITEM_START; slot < INVENTORY_SLOT_ITEM_END; slot++)
             if (bot->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
                 ++totalused;
@@ -157,7 +157,7 @@ private:
 class DeleteMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
+    bool Process(uint32 index [[maybe_unused]], Mail* mail, ShadowAI* botAI) override
     {
         std::ostringstream out;
         out << "|cffffffff" << mail->subject << "|cffff0000 deleted";
@@ -172,7 +172,7 @@ public:
 class ReadMailProcessor : public MailProcessor
 {
 public:
-    bool Process(uint32 index, Mail* mail, ShadowAI* botAI) override
+    bool Process(uint32 index [[maybe_unused]], Mail* mail, ShadowAI* botAI) override
     {
         std::ostringstream out, body;
         out << "|cffffffff" << mail->subject;

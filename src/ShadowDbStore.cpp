@@ -122,7 +122,7 @@ void ShadowDbStore::Save(ShadowAI* botAI)
     SaveValue(guid, "dead", FormatStrategies("dead", botAI->GetStrategies(BOT_STATE_DEAD)));
 }
 
-std::string const ShadowDbStore::FormatStrategies(std::string const type, std::vector<std::string> strategies)
+std::string const ShadowDbStore::FormatStrategies(std::string const type [[maybe_unused]], std::vector<std::string> strategies)
 {
     std::ostringstream out;
     for (std::vector<std::string>::iterator i = strategies.begin(); i != strategies.end(); ++i)

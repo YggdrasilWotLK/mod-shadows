@@ -13,7 +13,7 @@
 #include "RtscAction.h"
 #include "PositionValue.h"
 
-Creature* SeeSpellAction::CreateWps(Player* wpOwner, float x, float y, float z, float o, uint32 entry, Creature* lastWp,
+Creature* SeeSpellAction::CreateWps(Player* wpOwner, float x, float y, float z, float o, uint32 entry, Creature* lastWp [[maybe_unused]],
                                     bool important)
 {
     float dist = wpOwner->GetDistance(x, y, z);
@@ -48,7 +48,7 @@ bool SeeSpellAction::Execute(Event event)
     if (spellId != RTSC_MOVE_SPELL)
         return false;
 
-    SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(spellId);
+    SpellInfo const* spellInfo [[maybe_unused]] = sSpellMgr->GetSpellInfo(spellId);
 
     SpellCastTargets targets;
     targets.Read(p, botAI->GetMaster());

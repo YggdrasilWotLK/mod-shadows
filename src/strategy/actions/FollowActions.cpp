@@ -15,7 +15,7 @@
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 
-bool FollowAction::Execute(Event event)
+bool FollowAction::Execute(Event event [[maybe_unused]])
 {
     Formation* formation = AI_VALUE(Formation*, "formation");
     std::string const target = formation->GetTargetName();
@@ -28,7 +28,7 @@ bool FollowAction::Execute(Event event)
     else
     {
         WorldLocation loc = formation->GetLocation();
-        if (Formation::IsNullLocation(loc) || loc.GetMapId() == -1)
+        if (Formation::IsNullLocation(loc) || loc.GetMapId() == static_cast<uint32>(-1))
             return false;
 
         MovementPriority priority = botAI->GetState() == BOT_STATE_COMBAT ? MovementPriority::MOVEMENT_COMBAT : MovementPriority::MOVEMENT_NORMAL;
@@ -123,7 +123,7 @@ bool FollowAction::CanDeadFollow(Unit* target)
     return true;
 }
 
-bool FleeToMasterAction::Execute(Event event)
+bool FleeToMasterAction::Execute(Event event [[maybe_unused]])
 {
     Unit* fTarget = AI_VALUE(Unit*, "master target");
     bool canFollow = Follow(fTarget);

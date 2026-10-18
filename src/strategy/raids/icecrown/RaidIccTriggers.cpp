@@ -1113,7 +1113,7 @@ bool IccLichKingShadowTrapTrigger::IsActive()
     // search for all nearby traps
     GuidVector npcs = AI_VALUE(GuidVector, "nearest hostile npcs");
     std::vector<Unit*> nearbyTraps;
-    bool needToMove = false;
+    bool needToMove [[maybe_unused]] = false;
 
     for (auto& npc : npcs)
     {
@@ -1157,7 +1157,7 @@ bool IccLichKingWinterTrigger::IsActive()
         isCasting = true;
 
     bool isWinter = false;
-    if (boss && boss->FindCurrentSpellBySpellId(SPELL_REMORSELESS_WINTER1) ||
+    if ((boss && boss->FindCurrentSpellBySpellId(SPELL_REMORSELESS_WINTER1)) ||
         boss->FindCurrentSpellBySpellId(SPELL_REMORSELESS_WINTER2) ||
         boss->FindCurrentSpellBySpellId(SPELL_REMORSELESS_WINTER5) ||
         boss->FindCurrentSpellBySpellId(SPELL_REMORSELESS_WINTER6) ||

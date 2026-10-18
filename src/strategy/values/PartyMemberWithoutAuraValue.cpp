@@ -13,7 +13,7 @@ class PlayerWithoutAuraPredicate : public FindPlayerPredicate, public ShadowAIAw
 {
 public:
     PlayerWithoutAuraPredicate(ShadowAI* botAI, std::string const aura)
-        : ShadowAIAware(botAI), FindPlayerPredicate(), auras(split(aura, ','))
+        : FindPlayerPredicate(), ShadowAIAware(botAI), auras(split(aura, ','))
     {
     }
 

@@ -93,7 +93,7 @@ Unit* CastVigilanceAction::GetTarget()
     return nullptr;
 }
 
-bool CastVigilanceAction::Execute(Event event)
+bool CastVigilanceAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = GetTarget();
     if (!target || target == bot)
@@ -233,7 +233,7 @@ bool CastShatteringThrowAction::isPossible()
     return true;
 }
 
-bool CastShatteringThrowAction::Execute(Event event)
+bool CastShatteringThrowAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = GetTarget();
     if (!target)
