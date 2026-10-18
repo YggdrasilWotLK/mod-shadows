@@ -41,7 +41,7 @@ bool StayActionBase::Stay()
     return true;
 }
 
-bool StayAction::Execute(Event event) { return Stay(); }
+bool StayAction::Execute(Event event [[maybe_unused]]) { return Stay(); }
 
 bool StayAction::isUseful()
 {
@@ -49,7 +49,7 @@ bool StayAction::isUseful()
     PositionInfo stayPosition = AI_VALUE(PositionMap&, "position")["stay"];
     if (stayPosition.isSet())
     {
-        const float distance = bot->GetDistance(stayPosition.x, stayPosition.y, stayPosition.z);
+        const float distance [[maybe_unused]] = bot->GetDistance(stayPosition.x, stayPosition.y, stayPosition.z);
         if (sShadowAIConfig->followDistance)
         {
             return false;
@@ -66,7 +66,7 @@ bool StayAction::isUseful()
     return AI_VALUE2(bool, "moving", "self target");
 }
 
-bool SitAction::Execute(Event event)
+bool SitAction::Execute(Event event [[maybe_unused]])
 {
     if (bot->isMoving())
         return false;

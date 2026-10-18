@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool HireAction::Execute(Event event)
+bool HireAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = GetMaster();
     if (!master)

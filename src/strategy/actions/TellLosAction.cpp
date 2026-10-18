@@ -77,7 +77,7 @@ void TellLosAction::ListGameObjects(std::string const title, GuidVector gos)
     }
 }
 
-bool TellAuraAction::Execute(Event event)
+bool TellAuraAction::Execute(Event event [[maybe_unused]])
 {
     botAI->TellMaster("--- Auras ---");
     sLog->outMessage("shadow", LOG_LEVEL_DEBUG, "--- Auras ---");
@@ -97,7 +97,7 @@ bool TellAuraAction::Execute(Event event)
         std::string caster_name = caster ? caster->GetName() : "unknown";
         bool is_area = aura->IsArea();
         int32 duration = aura->GetDuration();
-        const SpellInfo* spellInfo = aura->GetSpellInfo();
+        const SpellInfo* spellInfo [[maybe_unused]] = aura->GetSpellInfo();
         int32 spellId = aura->GetSpellInfo()->Id;
         bool isPositive = aura->GetSpellInfo()->IsPositive();
         sLog->outMessage("shadow", LOG_LEVEL_DEBUG,
@@ -130,7 +130,7 @@ bool TellAuraAction::Execute(Event event)
     return true;
 }
 
-bool TellEstimatedDpsAction::Execute(Event event)
+bool TellEstimatedDpsAction::Execute(Event event [[maybe_unused]])
 {
     float dps = AI_VALUE(float, "estimated group dps");
     botAI->TellMaster("Estimated Group DPS: " + std::to_string(dps));

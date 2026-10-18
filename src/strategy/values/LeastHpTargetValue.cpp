@@ -13,9 +13,9 @@ class FindLeastHpTargetStrategy : public FindNonCcTargetStrategy
 public:
     FindLeastHpTargetStrategy(ShadowAI* botAI) : FindNonCcTargetStrategy(botAI), minHealth(0) {}
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
-        Player* bot = botAI->GetBot();
+        Player* bot [[maybe_unused]] = botAI->GetBot();
         if (IsCcTarget(attacker))
             return;
 

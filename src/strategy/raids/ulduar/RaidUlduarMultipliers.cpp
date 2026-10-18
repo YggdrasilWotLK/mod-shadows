@@ -20,7 +20,7 @@
 #include "UseMeetingStoneAction.h"
 #include "WarriorActions.h"
 
-float FlameLeviathanMultiplier::GetValue(Action* action)
+float FlameLeviathanMultiplier::GetValue(Action* action [[maybe_unused]])
 {
     // if (dynamic_cast<FleeAction*>(action))
     //     return 0.0f;

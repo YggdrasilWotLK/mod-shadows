@@ -368,7 +368,7 @@ bool NewRpgBaseAction::IsWithinInteractionDist(Object* questGiver)
         case TYPEID_GAMEOBJECT:
         {
             ObjectGuid guid = questGiver->GetGUID();
-            GameobjectTypes type = GAMEOBJECT_TYPE_QUESTGIVER;
+            GameobjectTypes type [[maybe_unused]] = GAMEOBJECT_TYPE_QUESTGIVER;
             if (GameObject* go = bot->GetMap()->GetGameObject(guid))
             {
                 if (go->IsWithinDistInMap(bot))
@@ -554,7 +554,7 @@ bool NewRpgBaseAction::OrganizeQuestLog()
             continue;
 
         const Quest* quest = sObjectMgr->GetQuestTemplate(questId);
-        if (quest->GetZoneOrSort() < 0 || (quest->GetZoneOrSort() > 0 && quest->GetZoneOrSort() != bot->GetZoneId()))
+        if (quest->GetZoneOrSort() < 0 || (quest->GetZoneOrSort() > 0 && static_cast<uint32>(quest->GetZoneOrSort()) != bot->GetZoneId()))
         {
             LOG_DEBUG("shadows", "[New RPG] {} drop quest {}", bot->GetName(), questId);
             WorldPacket packet(CMSG_QUESTLOG_REMOVE_QUEST);
@@ -819,7 +819,7 @@ bool NewRpgBaseAction::GetQuestPOIPosAndObjectiveIdx(uint32 questId, std::vector
         bool inComplete = false;
         for (uint32 objective : incompleteObjectiveIdx)
         {
-            if (qPoi.ObjectiveIndex == objective)
+            if (static_cast<uint32>(qPoi.ObjectiveIndex) == objective)
             {
                 inComplete = true;
                 break;

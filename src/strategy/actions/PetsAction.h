@@ -22,7 +22,7 @@ public:
     bool Execute(Event event) override;
 
 private:
-    bool warningEnabled = true;
+    bool warningEnabled [[maybe_unused]] = true;
     std::string defaultCmd;
 };
 

@@ -140,7 +140,7 @@ bool TalentSpec::CheckTalents(uint32 level, std::ostringstream* out)
 }
 
 // Set the talents for the bots to the current spec.
-void TalentSpec::ApplyTalents(Player* bot, std::ostringstream* out)
+void TalentSpec::ApplyTalents(Player* bot, std::ostringstream* out [[maybe_unused]])
 {
     for (auto& entry : talents)
     {
@@ -317,7 +317,7 @@ std::vector<TalentSpec::TalentListEntry> TalentSpec::GetTalentTree(uint32 tabpag
         if (entry.tabPage() == tabpage)
             retList.push_back(entry);
 
-    return std::move(retList);
+    return retList;
 }
 
 uint32 TalentSpec::GetTalentPoints(int32 tabpage) { return GetTalentPoints(talents, tabpage); };
@@ -330,7 +330,7 @@ uint32 TalentSpec::GetTalentPoints(std::vector<TalentListEntry>& talents, int32 
 
     uint32 tPoints = 0;
     for (auto& entry : talents)
-        if (entry.tabPage() == tabpage)
+        if (entry.tabPage() == static_cast<uint32>(tabpage))
             tPoints = tPoints + entry.rank;
 
     return tPoints;
@@ -368,7 +368,7 @@ std::string const TalentSpec::GetTalentLink()
     if (treeLink[2] != "0")
         link = link + "-" + treeLink[2];
 
-    return std::move(link);
+    return link;
 }
 
 uint32 TalentSpec::highestTree()
@@ -395,7 +395,7 @@ uint32 TalentSpec::highestTree()
     return 0;
 }
 
-std::string const TalentSpec::FormatSpec(Player* bot)
+std::string const TalentSpec::FormatSpec(Player* bot [[maybe_unused]])
 {
     // uint8 cls = bot->getClass(); //not used, (used in lined 403), line marked for removal.
 
@@ -446,7 +446,7 @@ std::vector<TalentSpec::TalentListEntry> TalentSpec::SubTalentList(std::vector<T
             {
                 if (reverse == ABSOLUTE_DIST)
                     newentry.rank = std::abs(int32(newentry.rank - oldentry.rank));
-                else if (reverse == ADDED_POINTS || reverse == REMOVED_POINTS)
+                else if (reverse == ADDED_POINTS || reverse == static_cast<uint32>(REMOVED_POINTS))
                     newentry.rank = std::max(0u, (newentry.rank - oldentry.rank) * (reverse / 2));
                 else
                     newentry.rank = (newentry.rank - oldentry.rank) * reverse;

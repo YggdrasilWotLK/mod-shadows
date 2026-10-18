@@ -8,7 +8,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool SetHomeAction::Execute(Event event)
+bool SetHomeAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = GetMaster();
 

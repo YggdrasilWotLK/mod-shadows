@@ -9,7 +9,7 @@
 #include "LastMovementValue.h"
 #include "Shadows.h"
 
-bool TeleportAction::Execute(Event event)
+bool TeleportAction::Execute(Event event [[maybe_unused]])
 {
     /*
     // List of allowed portal entries (you can populate this dynamically)

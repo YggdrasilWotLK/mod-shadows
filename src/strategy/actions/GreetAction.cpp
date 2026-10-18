@@ -10,7 +10,7 @@
 
 GreetAction::GreetAction(ShadowAI* botAI) : Action(botAI, "greet") {}
 
-bool GreetAction::Execute(Event event)
+bool GreetAction::Execute(Event event [[maybe_unused]])
 {
     ObjectGuid guid = AI_VALUE(ObjectGuid, "new player nearby");
     if (!guid || !guid.IsPlayer())

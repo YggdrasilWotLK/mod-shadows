@@ -66,7 +66,7 @@ void NewRpgInfo::ChangeToIdle()
     status = RPG_IDLE;
 }
 
-bool NewRpgInfo::CanChangeTo(NewRpgStatus status) { return true; }
+bool NewRpgInfo::CanChangeTo(NewRpgStatus status [[maybe_unused]]) { return true; }
 
 void NewRpgInfo::Reset()
 {

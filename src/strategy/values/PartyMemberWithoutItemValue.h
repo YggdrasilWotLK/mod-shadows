@@ -17,7 +17,7 @@ class PartyMemberWithoutItemValue : public PartyMemberValue, public Qualified
 {
 public:
     PartyMemberWithoutItemValue(ShadowAI* botAI, std::string const name = "party member without item",
-                                float range = sShadowAIConfig->farDistance)
+                                float range [[maybe_unused]] = sShadowAIConfig->farDistance)
         : PartyMemberValue(botAI, name)
     {
     }

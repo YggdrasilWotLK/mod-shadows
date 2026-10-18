@@ -69,7 +69,7 @@ bool ReachAreaTriggerAction::Execute(Event event)
     return true;
 }
 
-bool AreaTriggerAction::Execute(Event event)
+bool AreaTriggerAction::Execute(Event event [[maybe_unused]])
 {
     LastMovement& movement = context->GetValue<LastMovement&>("last area trigger")->Get();
 

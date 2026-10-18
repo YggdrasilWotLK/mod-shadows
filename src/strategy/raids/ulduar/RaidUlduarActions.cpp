@@ -50,7 +50,7 @@ const Position yoggPortalLoc[] = {
     {1960.62f, -32.00f, 325.5f}, {1981.98f, -5.69f, 325.5f},  {1982.78f, -45.73f, 325.5f}, {2000.66f, -29.68f, 325.5f},
     {1999.88f, -19.61f, 325.5f}, {1961.37f, -19.54f, 325.5f}};
 
-bool FlameLeviathanVehicleAction::Execute(Event event)
+bool FlameLeviathanVehicleAction::Execute(Event event [[maybe_unused]])
 {
     vehicleBase_ = bot->GetVehicleBase();
     vehicle_ = bot->GetVehicle();
@@ -109,7 +109,7 @@ bool FlameLeviathanVehicleAction::MoveAvoidChasing(Unit* target)
         return false;
     if (avoidChaseIdx == -1)
     {
-        for (int i = 0; i < corners.size(); i++)
+        for (size_t i = 0; i < corners.size(); i++)
         {
             if (bot->GetExactDist(corners[i]) > target->GetExactDist(corners[i]))
                 continue;
@@ -272,7 +272,7 @@ bool FlameLeviathanVehicleAction::ChopperAction(Unit* target)
     return false;
 }
 
-bool FlameLeviathanEnterVehicleAction::Execute(Event event)
+bool FlameLeviathanEnterVehicleAction::Execute(Event event [[maybe_unused]])
 {
     // do not switch vehicles yet
     if (bot->GetVehicle())
@@ -417,7 +417,7 @@ bool FlameLeviathanEnterVehicleAction::AllMainVehiclesOnUse()
     return demolisher >= maxC && siege >= maxC;
 }
 
-bool RazorscaleAvoidDevouringFlameAction::Execute(Event event)
+bool RazorscaleAvoidDevouringFlameAction::Execute(Event event [[maybe_unused]])
 {
     RazorscaleBossHelper razorscaleHelper(botAI);
 
@@ -498,7 +498,7 @@ bool RazorscaleAvoidDevouringFlameAction::isUseful()
     return false;  // No nearby flames or bot is at a safe distance
 }
 
-bool RazorscaleAvoidSentinelAction::Execute(Event event)
+bool RazorscaleAvoidSentinelAction::Execute(Event event [[maybe_unused]])
 {
     bool isMainTank = botAI->IsMainTank(bot);
     bool isRanged = botAI->IsRanged(bot);
@@ -620,7 +620,7 @@ bool RazorscaleAvoidSentinelAction::isUseful()
     return false;
 }
 
-bool RazorscaleAvoidWhirlwindAction::Execute(Event event)
+bool RazorscaleAvoidWhirlwindAction::Execute(Event event [[maybe_unused]])
 {
     if (botAI->IsTank(bot))
     {
@@ -737,7 +737,7 @@ bool RazorscaleIgnoreBossAction::isUseful()
     return false;
 }
 
-bool RazorscaleIgnoreBossAction::Execute(Event event)
+bool RazorscaleIgnoreBossAction::Execute(Event event [[maybe_unused]])
 {
     if (!bot)
     {
@@ -894,7 +894,7 @@ bool RazorscaleGroundedAction::isUseful()
     return false;
 }
 
-bool RazorscaleGroundedAction::Execute(Event event)
+bool RazorscaleGroundedAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "razorscale");
     if (!boss || !boss->IsAlive() || boss->GetPositionZ() > RazorscaleBossHelper::RAZORSCALE_FLYING_Z_THRESHOLD)
@@ -977,7 +977,7 @@ bool RazorscaleGroundedAction::Execute(Event event)
     return false;
 }
 
-bool RazorscaleHarpoonAction::Execute(Event event)
+bool RazorscaleHarpoonAction::Execute(Event event [[maybe_unused]])
 {
     if (!bot)
     {
@@ -1145,7 +1145,7 @@ bool RazorscaleFuseArmorAction::isUseful()
     return false;
 }
 
-bool RazorscaleFuseArmorAction::Execute(Event event)
+bool RazorscaleFuseArmorAction::Execute(Event event [[maybe_unused]])
 {
     // We already know from isUseful() that:
     //  1) This bot can tank, AND
@@ -1164,7 +1164,7 @@ bool IronAssemblyLightningTendrilsAction::isUseful()
     return ironAssemblyLightningTendrilsTrigger.IsActive();
 }
 
-bool IronAssemblyLightningTendrilsAction::Execute(Event event)
+bool IronAssemblyLightningTendrilsAction::Execute(Event event [[maybe_unused]])
 {
     const float radius = 18.0f + 10.0f;  // 18 yards + 10 yards for safety
 
@@ -1188,7 +1188,7 @@ bool IronAssemblyOverloadAction::isUseful()
     return ironAssemblyOverloadTrigger.IsActive();
 }
 
-bool IronAssemblyOverloadAction::Execute(Event event)
+bool IronAssemblyOverloadAction::Execute(Event event [[maybe_unused]])
 {
     const float radius = 20.0f + 5.0f;  // 20 yards + 5 yards for safety
 
@@ -1212,7 +1212,7 @@ bool IronAssemblyRuneOfPowerAction::isUseful()
     return ironAssemblyRuneOfPowerTrigger.IsActive();
 }
 
-bool IronAssemblyRuneOfPowerAction::Execute(Event event)
+bool IronAssemblyRuneOfPowerAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = botAI->GetUnit(bot->GetTarget());
     if (!target || !target->IsAlive())
@@ -1227,7 +1227,7 @@ bool KologarnMarkDpsTargetAction::isUseful()
     return kologarnMarkDpsTargetTrigger.IsActive();
 }
 
-bool KologarnMarkDpsTargetAction::Execute(Event event)
+bool KologarnMarkDpsTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* targetToMark = nullptr;
     Unit* additionalTargetToMark = nullptr;
@@ -1249,7 +1249,7 @@ bool KologarnMarkDpsTargetAction::Execute(Event event)
         if (!target)
             continue;
 
-        uint32 creatureId = target->GetEntry();
+        uint32 creatureId [[maybe_unused]] = target->GetEntry();
         if (target->GetEntry() == NPC_RUBBLE && target->IsAlive())
         {
             targetToMark = target;
@@ -1362,7 +1362,7 @@ bool KologarnMarkDpsTargetAction::Execute(Event event)
     return false;
 }
 
-bool KologarnFallFromFloorAction::Execute(Event event)
+bool KologarnFallFromFloorAction::Execute(Event event [[maybe_unused]])
 {
     return bot->TeleportTo(bot->GetMapId(), ULDUAR_KOLOGARN_RESTORE_POSITION.GetPositionX(),
                            ULDUAR_KOLOGARN_RESTORE_POSITION.GetPositionY(),
@@ -1376,7 +1376,7 @@ bool KologarnFallFromFloorAction::isUseful()
     return kologarnFallFromFloorTrigger.IsActive();
 }
 
-bool KologarnRubbleSlowdownAction::Execute(Event event)
+bool KologarnRubbleSlowdownAction::Execute(Event event [[maybe_unused]])
 {
     Group* group = bot->GetGroup();
     if (!group)
@@ -1391,7 +1391,7 @@ bool KologarnRubbleSlowdownAction::Execute(Event event)
     return botAI->CastSpell("frost trap", currentSkullUnit);
 }
 
-bool KologarnEyebeamAction::Execute(Event event)
+bool KologarnEyebeamAction::Execute(Event event [[maybe_unused]])
 {
     float distanceToLeftPoint = bot->GetExactDist(ULDUAR_KOLOGARN_EYEBEAM_LEFT_POSITION);
     float distanceToRightPoint = bot->GetExactDist(ULDUAR_KOLOGARN_EYEBEAM_RIGHT_POSITION);
@@ -1450,7 +1450,7 @@ bool KologarnRtiTargetAction::isUseful()
     return kologarnRtiTargetTrigger.IsActive();
 }
 
-bool KologarnRtiTargetAction::Execute(Event event)
+bool KologarnRtiTargetAction::Execute(Event event [[maybe_unused]])
 {
     if (botAI->IsMainTank(bot) || botAI->IsAssistTankOfIndex(bot, 0))
     {
@@ -1473,13 +1473,13 @@ bool KologarnCrunchArmorAction::isUseful()
     return botAI->HasCheat(BotCheatMask::raid);
 }
 
-bool KologarnCrunchArmorAction::Execute(Event event)
+bool KologarnCrunchArmorAction::Execute(Event event [[maybe_unused]])
 {
     bot->RemoveAura(SPELL_CRUNCH_ARMOR);
     return true;
 }
 
-bool AuriayaFallFromFloorAction::Execute(Event event)
+bool AuriayaFallFromFloorAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = botAI->GetMaster();
 
@@ -1525,7 +1525,7 @@ bool HodirMoveSnowpackedIcicleAction::isUseful()
     return true;
 }
 
-bool HodirMoveSnowpackedIcicleAction::Execute(Event event)
+bool HodirMoveSnowpackedIcicleAction::Execute(Event event [[maybe_unused]])
 {
     Creature* target = bot->FindNearestCreature(NPC_SNOWPACKED_ICICLE, 100.0f);
     if (!target)
@@ -1535,7 +1535,7 @@ bool HodirMoveSnowpackedIcicleAction::Execute(Event event)
                   false, false, true, MovementPriority::MOVEMENT_NORMAL, true);
 }
 
-bool HodirBitingColdJumpAction::Execute(Event event)
+bool HodirBitingColdJumpAction::Execute(Event event [[maybe_unused]])
 {
     bot->RemoveAurasDueToSpell(SPELL_BITING_COLD_PLAYER_AURA);
 
@@ -1591,7 +1591,7 @@ bool FreyaMoveAwayNatureBombAction::isUseful()
     return true;
 }
 
-bool FreyaMoveAwayNatureBombAction::Execute(Event event)
+bool FreyaMoveAwayNatureBombAction::Execute(Event event [[maybe_unused]])
 {
     GameObject* target = bot->FindNearestGameObject(GOBJECT_NATURE_BOMB, 12.0f);
     if (!target)
@@ -1606,7 +1606,7 @@ bool FreyaMarkDpsTargetAction::isUseful()
     return freyaMarkDpsTargetTrigger.IsActive();
 }
 
-bool FreyaMarkDpsTargetAction::Execute(Event event)
+bool FreyaMarkDpsTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "freya");
     if (!boss || !boss->IsAlive())
@@ -1762,7 +1762,7 @@ bool FreyaMoveToHealingSporeAction::isUseful()
     return freyaMoveToHealingSporeTrigger.IsActive();
 }
 
-bool FreyaMoveToHealingSporeAction::Execute(Event event)
+bool FreyaMoveToHealingSporeAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector targets = AI_VALUE(GuidVector, "nearest npcs");
     Creature* nearestSpore = nullptr;
@@ -1804,7 +1804,7 @@ bool ThorimUnbalancingStrikeAction::isUseful()
     return botAI->HasCheat(BotCheatMask::raid);
 }
 
-bool ThorimUnbalancingStrikeAction::Execute(Event event)
+bool ThorimUnbalancingStrikeAction::Execute(Event event [[maybe_unused]])
 {
     bot->RemoveAura(SPELL_UNBALANCING_STRIKE);
     return true;
@@ -1816,7 +1816,7 @@ bool ThorimMarkDpsTargetAction::isUseful()
     return thorimMarkDpsTargetTrigger.IsActive();
 }
 
-bool ThorimMarkDpsTargetAction::Execute(Event event)
+bool ThorimMarkDpsTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* targetToMark = nullptr;
 
@@ -1917,7 +1917,7 @@ bool ThorimArenaPositioningAction::isUseful()
     return thorimArenaPositioningTrigger.IsActive();
 }
 
-bool ThorimArenaPositioningAction::Execute(Event event)
+bool ThorimArenaPositioningAction::Execute(Event event [[maybe_unused]])
 {
     FollowMasterStrategy followMasterStrategy(botAI);
 
@@ -1939,7 +1939,7 @@ bool ThorimGauntletPositioningAction::isUseful()
     return thorimGauntletPositioningTrigger.IsActive();
 }
 
-bool ThorimGauntletPositioningAction::Execute(Event event)
+bool ThorimGauntletPositioningAction::Execute(Event event [[maybe_unused]])
 {
     FollowMasterStrategy followMasterStrategy(botAI);
 
@@ -2113,7 +2113,7 @@ bool ThorimGauntletPositioningAction::Execute(Event event)
     return false;
 }
 
-bool ThorimFallFromFloorAction::Execute(Event event)
+bool ThorimFallFromFloorAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = botAI->GetMaster();
 
@@ -2130,7 +2130,7 @@ bool ThorimFallFromFloorAction::isUseful()
     return thorimFallFromFloorTrigger.IsActive();
 }
 
-bool ThorimPhase2PositioningAction::Execute(Event event)
+bool ThorimPhase2PositioningAction::Execute(Event event [[maybe_unused]])
 {
     Position targetPosition;
     bool backward = false;
@@ -2190,7 +2190,7 @@ bool ThorimPhase2PositioningAction::isUseful()
     return thorimPhase2PositioningTrigger.IsActive();
 }
 
-bool MimironShockBlastAction::Execute(Event event)
+bool MimironShockBlastAction::Execute(Event event [[maybe_unused]])
 {
     Unit* leviathanMkII = nullptr;
     Unit* vx001 = nullptr;
@@ -2264,7 +2264,7 @@ bool MimironShockBlastAction::isUseful()
     return mimironShockBlastTrigger.IsActive();
 }
 
-bool MimironPhase1PositioningAction::Execute(Event event)
+bool MimironPhase1PositioningAction::Execute(Event event [[maybe_unused]])
 {
     SET_AI_VALUE(float, "disperse distance", 6.0f);
     return true;
@@ -2276,7 +2276,7 @@ bool MimironPhase1PositioningAction::isUseful()
     return mimironPhase1PositioningTrigger.IsActive();
 }
 
-bool MimironP3Wx2LaserBarrageAction::Execute(Event event)
+bool MimironP3Wx2LaserBarrageAction::Execute(Event event [[maybe_unused]])
 {
     auto master = botAI->GetMaster();
     if (!master || !master->IsAlive())
@@ -2300,7 +2300,7 @@ bool MimironRapidBurstAction::isUseful()
     return mimironRapidBurstTrigger.IsActive();
 }
 
-bool MimironRapidBurstAction::Execute(Event event)
+bool MimironRapidBurstAction::Execute(Event event [[maybe_unused]])
 {
     Unit* leviathanMkII = nullptr;
 
@@ -2407,7 +2407,7 @@ bool MimironRapidBurstAction::Execute(Event event)
     return true;
 }
 
-bool MimironAerialCommandUnitAction::Execute(Event event)
+bool MimironAerialCommandUnitAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = nullptr;
     Unit* bombBot = nullptr;
@@ -2479,9 +2479,9 @@ bool MimironRocketStrikeAction::isUseful()
     return mimironRocketStrikeTrigger.IsActive();
 }
 
-bool MimironRocketStrikeAction::Execute(Event event)
+bool MimironRocketStrikeAction::Execute(Event event [[maybe_unused]])
 {
-    Unit* leviathanMkII = nullptr;
+    Unit* leviathanMkII [[maybe_unused]] = nullptr;
     Unit* vx001 = nullptr;
     Unit* aerialCommandUnit = nullptr;
 
@@ -2540,7 +2540,7 @@ bool MimironRocketStrikeAction::Execute(Event event)
     }
 }
 
-bool MimironPhase4MarkDpsAction::Execute(Event event)
+bool MimironPhase4MarkDpsAction::Execute(Event event [[maybe_unused]])
 {
     Unit* leviathanMkII = nullptr;
     Unit* vx001 = nullptr;
@@ -2629,7 +2629,7 @@ bool MimironPhase4MarkDpsAction::Execute(Event event)
     }
 }
 
-bool MimironCheatAction::Execute(Event event)
+bool MimironCheatAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector targets = AI_VALUE(GuidVector, "nearest npcs");
     for (const ObjectGuid& guid : targets)
@@ -2651,7 +2651,7 @@ bool MimironCheatAction::Execute(Event event)
     return true;
 }
 
-bool VezaxCheatAction::Execute(Event event)
+bool VezaxCheatAction::Execute(Event event [[maybe_unused]])
 {
     // Restore bot's mana to full
     uint32 maxMana = bot->GetMaxPower(POWER_MANA);
@@ -2663,7 +2663,7 @@ bool VezaxCheatAction::Execute(Event event)
     return true;
 }
 
-bool VezaxShadowCrashAction::Execute(Event event)
+bool VezaxShadowCrashAction::Execute(Event event [[maybe_unused]])
 {
     // Find General Vezax boss
     Unit* boss = AI_VALUE2(Unit*, "find target", "general vezax");
@@ -2707,7 +2707,7 @@ bool VezaxShadowCrashAction::Execute(Event event)
                   true);
 }
 
-bool VezaxMarkOfTheFacelessAction::Execute(Event event)
+bool VezaxMarkOfTheFacelessAction::Execute(Event event [[maybe_unused]])
 {
     return MoveTo(bot->GetMapId(), ULDUAR_VEZAX_MARK_OF_THE_FACELESS_SPOT.GetPositionX(),
                   ULDUAR_VEZAX_MARK_OF_THE_FACELESS_SPOT.GetPositionY(),
@@ -2715,7 +2715,7 @@ bool VezaxMarkOfTheFacelessAction::Execute(Event event)
                   MovementPriority::MOVEMENT_FORCED, true, false);
 }
 
-bool YoggSaronOminousCloudCheatAction::Execute(Event event)
+bool YoggSaronOminousCloudCheatAction::Execute(Event event [[maybe_unused]])
 {
     YoggSaronTrigger yoggSaronTrigger(botAI);
 
@@ -2735,14 +2735,14 @@ bool YoggSaronOminousCloudCheatAction::Execute(Event event)
     return true;
 }
 
-bool YoggSaronGuardianPositioningAction::Execute(Event event)
+bool YoggSaronGuardianPositioningAction::Execute(Event event [[maybe_unused]])
 {
     return MoveTo(bot->GetMapId(), ULDUAR_YOGG_SARON_MIDDLE.GetPositionX(), ULDUAR_YOGG_SARON_MIDDLE.GetPositionY(),
                   ULDUAR_YOGG_SARON_MIDDLE.GetPositionZ(), false, false, false, true,
                   MovementPriority::MOVEMENT_FORCED, true, false);
 }
 
-bool YoggSaronSanityAction::Execute(Event event)
+bool YoggSaronSanityAction::Execute(Event event [[maybe_unused]])
 {
     Creature* sanityWell = bot->FindNearestCreature(NPC_SANITY_WELL, 200.0f);
 
@@ -2751,7 +2751,7 @@ bool YoggSaronSanityAction::Execute(Event event)
                   true, false);
 }
 
-bool YoggSaronMarkTargetAction::Execute(Event event)
+bool YoggSaronMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     Group* group = bot->GetGroup();
     if (!group)
@@ -2833,7 +2833,7 @@ bool YoggSaronMarkTargetAction::Execute(Event event)
             if ((unit->GetEntry() == NPC_IMMORTAL_GUARDIAN || unit->GetEntry() == NPC_MARKED_IMMORTAL_GUARDIAN) &&
                 unit->GetHealthPct() > 10)
             {
-                if (unit->GetHealth() < lowestHealth)
+                if (unit->GetHealth() < static_cast<uint32>(lowestHealth))
                 {
                     lowestHealth = unit->GetHealth();
                     lowestHealthUnit = unit;
@@ -2880,7 +2880,7 @@ bool YoggSaronMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool YoggSaronBrainLinkAction::Execute(Event event)
+bool YoggSaronBrainLinkAction::Execute(Event event [[maybe_unused]])
 {
     Group* group = bot->GetGroup();
     if (!group)
@@ -2900,7 +2900,7 @@ bool YoggSaronBrainLinkAction::Execute(Event event)
     return false;
 }
 
-bool YoggSaronMoveToEnterPortalAction::Execute(Event event)
+bool YoggSaronMoveToEnterPortalAction::Execute(Event event [[maybe_unused]])
 {
     Group* group = bot->GetGroup();
     if (!group)
@@ -2969,7 +2969,7 @@ bool YoggSaronMoveToEnterPortalAction::Execute(Event event)
     }
 }
 
-bool YoggSaronFallFromFloorAction::Execute(Event event)
+bool YoggSaronFallFromFloorAction::Execute(Event event [[maybe_unused]])
 {
     std::string rtiMark = AI_VALUE(std::string, "rti");
     if (rtiMark == "skull")
@@ -3001,7 +3001,7 @@ bool YoggSaronFallFromFloorAction::Execute(Event event)
     return false;
 }
 
-bool YoggSaronBossRoomMovementCheatAction::Execute(Event event)
+bool YoggSaronBossRoomMovementCheatAction::Execute(Event event [[maybe_unused]])
 {
     FollowMasterStrategy followMasterStrategy(botAI);
     if (botAI->HasStrategy(followMasterStrategy.getName(), BotState::BOT_STATE_NON_COMBAT))
@@ -3037,7 +3037,7 @@ bool YoggSaronBossRoomMovementCheatAction::Execute(Event event)
                            currentSkullUnit->GetPositionZ(), bot->GetOrientation());
 }
 
-bool YoggSaronUsePortalAction::Execute(Event event)
+bool YoggSaronUsePortalAction::Execute(Event event [[maybe_unused]])
 {
      Creature* assignedPortal = bot->FindNearestCreature(NPC_DESCEND_INTO_MADNESS, 2.0f, true);
      if (!assignedPortal)
@@ -3054,7 +3054,7 @@ bool YoggSaronUsePortalAction::Execute(Event event)
      return assignedPortal->HandleSpellClick(bot);
 }
 
-bool YoggSaronIllusionRoomAction::Execute(Event event)
+bool YoggSaronIllusionRoomAction::Execute(Event event [[maybe_unused]])
 {
     YoggSaronTrigger yoggSaronTrigger(botAI);
 
@@ -3176,7 +3176,7 @@ bool YoggSaronIllusionRoomAction::SetBrainRtiTarget(YoggSaronTrigger yoggSaronTr
     return true;
 }
 
-bool YoggSaronMoveToExitPortalAction::Execute(Event event)
+bool YoggSaronMoveToExitPortalAction::Execute(Event event [[maybe_unused]])
 {
     GameObject* portal = bot->FindNearestGameObject(GO_FLEE_TO_THE_SURFACE_PORTAL, 100.0f);
     if (!portal)
@@ -3207,7 +3207,7 @@ bool YoggSaronMoveToExitPortalAction::Execute(Event event)
     return true;
 }
 
-bool YoggSaronLunaticGazeAction::Execute(Event event)
+bool YoggSaronLunaticGazeAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "yogg-saron");
     if (!boss || !boss->IsAlive())
@@ -3229,7 +3229,7 @@ bool YoggSaronLunaticGazeAction::Execute(Event event)
     return true;
 }
 
-bool YoggSaronPhase3PositioningAction::Execute(Event event)
+bool YoggSaronPhase3PositioningAction::Execute(Event event [[maybe_unused]])
 {
     if (botAI->IsRanged(bot))
     {

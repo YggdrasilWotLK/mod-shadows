@@ -53,6 +53,7 @@ public:
         : value(other.value), lastChangeTime(other.lastChangeTime), validIn(other.validIn), data(other.data)
     {
     }
+    CachedEvent& operator=(const CachedEvent&) = default;
     CachedEvent(uint32 value, uint32 lastChangeTime, uint32 validIn, std::string const data = "")
         : value(value), lastChangeTime(lastChangeTime), validIn(validIn), data(data)
     {

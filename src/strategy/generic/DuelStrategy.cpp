@@ -19,6 +19,6 @@ void DuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 
 DuelStrategy::DuelStrategy(ShadowAI* botAI) : PassTroughStrategy(botAI) {}
 
-void StartDuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers) {}
+void StartDuelStrategy::InitTriggers(std::vector<TriggerNode*>& triggers [[maybe_unused]]) {}
 
 StartDuelStrategy::StartDuelStrategy(ShadowAI* botAI) : Strategy(botAI) {}

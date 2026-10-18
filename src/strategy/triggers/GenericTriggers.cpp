@@ -165,7 +165,7 @@ bool BuffTrigger::IsActive()
     Aura* aura = botAI->GetAura(spell, target, checkIsOwner, checkDuration);
     if (!aura)
         return true;
-    if (beforeDuration && aura->GetDuration() < beforeDuration)
+    if (beforeDuration && static_cast<uint32>(aura->GetDuration()) < beforeDuration)
         return true;
     return false;
 }
@@ -411,7 +411,7 @@ bool HealerShouldAttackTrigger::IsActive()
     return true;
 }
 
-bool ItemCountTrigger::IsActive() { return AI_VALUE2(uint32, "item count", item) < count; }
+bool ItemCountTrigger::IsActive() { return AI_VALUE2(uint32, "item count", item) < static_cast<uint32>(count); }
 
 bool InterruptSpellTrigger::IsActive()
 {

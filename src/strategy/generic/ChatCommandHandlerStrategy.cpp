@@ -13,7 +13,7 @@ public:
     ChatCommandActionNodeFactoryInternal() { creators["tank attack chat shortcut"] = &tank_attack_chat_shortcut; }
 
 private:
-    static ActionNode* tank_attack_chat_shortcut(ShadowAI* botAI)
+    static ActionNode* tank_attack_chat_shortcut(ShadowAI* botAI [[maybe_unused]])
     {
         return new ActionNode("tank attack chat shortcut",
                               /*P*/ nullptr,

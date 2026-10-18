@@ -284,7 +284,7 @@ static uint32 GetRequiredTotemSpellId(ShadowAI* ai, const char* strategies[],
 }
 
 // Get the spellId of the currently summoned totem in the slot
-static uint32 GetSummonedTotemSpellId(Player* bot, uint8 slot)
+[[maybe_unused]] static uint32 GetSummonedTotemSpellId(Player* bot, uint8 slot)
 {
     ObjectGuid guid = bot->m_SummonSlot[slot];
     if (guid.IsEmpty())

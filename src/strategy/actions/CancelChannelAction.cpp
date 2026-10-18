@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "ShadowAI.h"
 
-bool CancelChannelAction::Execute(Event event)
+bool CancelChannelAction::Execute(Event event [[maybe_unused]])
 {
     if (bot->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
     {

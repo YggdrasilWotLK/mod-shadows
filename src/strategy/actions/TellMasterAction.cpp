@@ -8,13 +8,13 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool TellMasterAction::Execute(Event event)
+bool TellMasterAction::Execute(Event event [[maybe_unused]])
 {
     botAI->TellMaster(text);
     return true;
 }
 
-bool OutOfReactRangeAction::Execute(Event event)
+bool OutOfReactRangeAction::Execute(Event event [[maybe_unused]])
 {
     botAI->TellMaster("Wait for me!");
     return true;
