@@ -448,7 +448,9 @@ bool ShadowAI::IsMasterAirDismountSuspect()
     Player* targetMaster = GetMaster();
     if (!targetMaster || bot->GetMapId() != targetMaster->GetMapId())
         return false;
-    if (IsFlyingMounted(targetMaster) || !bot->IsMounted())
+    // Only follow a master who is actually dismounted: a mounted master keeps
+    // their mount through the fall, so the bot must not drop its own.
+    if (IsFlyingMounted(targetMaster) || targetMaster->IsMounted() || !bot->IsMounted())
         return false;
     if (masterMountTime == 0 || getMSTime() - masterMountTime > 30000)
         return false;
@@ -1682,6 +1684,15 @@ void ShadowAI::DoNextAction(bool min)
                 return;
             }
         }
+    }
+
+    // A controlled move (jump, knockback, air-dismount) owns the spline until it
+    // finishes. Let it play out; ticking actions now fights the arc and stutters
+    // the bot in the air.
+    if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+    {
+        SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+        return;
     }
 
     // Clear targets if in combat but sticking with old data
