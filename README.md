@@ -1,114 +1,70 @@
 <p align="center">
-    <a href="https://github.com/YggdrasilWotLK/mod-shadows/blob/master/README.md">English</a>
-    |
-    <a href="https://github.com/YggdrasilWotLK/mod-shadows/blob/master/README_CN.md">中文</a>
-    |
-    <a href="https://github.com/brighton-chi/mod-shadows/blob/readme/README_ES.md">Español</a>
+  <img alt="Yggdrasilcore" src="https://github.com/user-attachments/assets/6f96adf9-1867-4ca6-b627-1bd0ab7ee494" />
 </p>
 
+# Shadows
 
-<div align="center">
-  <img src="icon.png" alt="Shadows Icon" width="700px">
-</div>
+`mod-shadows` adds player-like bots to a [Yggdrasilcore](https://github.com/yggdrasilcore/yggdrasilcore) server. It is a Yggdrasilcore adaptation of AzerothCore's [mod-playerbots](https://github.com/mod-playerbots/mod-playerbots), which in turn descends from IKE3's Shadows and the mangosbot/playerbots line of projects.
 
-<div align="center">
-    <img src="https://github.com/YggdrasilWotLK/mod-shadows/actions/workflows/core_build.yml/badge.svg">
-    <img src="https://github.com/YggdrasilWotLK/mod-shadows/actions/workflows/code_style.yml/badge.svg">
-</div>
+Bots can be your own alt characters or random world wanderers. They party up, quest, level, run dungeons, raids and battlegrounds, and are driven entirely from chat, with extensive configuration for how they behave.
 
-# Shadows Module
-`mod-shadows` is an [AzerothCore](https://www.azerothcore.org/) module that adds player-like bots to a server. The project is based off [IKE3's Shadows](https://github.com/ike3/mangosbot) and builds against YggdrasilCore: [YggdrasilWotLK/yggdrasilcore/tree/master-shadows](https://github.com/YggdrasilWotLK/yggdrasilcore/tree/master-shadows).
+<p align="center">
+  <a href="https://github.com/yggdrasilcore/mod-shadows/actions/workflows/core_build.yml"><img src="https://github.com/yggdrasilcore/mod-shadows/actions/workflows/core_build.yml/badge.svg" alt="Build"></a>
+  <a href="https://github.com/yggdrasilcore/mod-shadows/actions/workflows/code_style.yml"><img src="https://github.com/yggdrasilcore/mod-shadows/actions/workflows/code_style.yml/badge.svg" alt="Codestyle"></a>
+</p>
 
-Features include:
+Read more about Yggdrasil WoW and see Yggdrasilcore in action [here](https://yggdrasilwow.com/).
 
-- The ability to log in alt characters as bots, allowing players to interact with their other characters, form parties, level up, and more;
-- Random bots that wander through the world, complete quests, and otherwise behave like players, simulating the MMO experience;
-- Bots capable of running most raids and battlegrounds;
-- Highly configurable settings to define how bots behave;
-- Excellent performance, even when running thousands of bots.
+## Compatibility
 
-**This project is still under development**. If you encounter any errors or experience crashes, we kindly request that you [report them as GitHub issues](https://github.com/YggdrasilWotLK/mod-shadows/issues/new?template=bug_report.md). Your valuable feedback will help us improve this project collaboratively.
+> [!IMPORTANT]
+> Shadows is built and tested against Yggdrasilcore only. It is not compatible with stock AzerothCore, and its scripts, database tables and configuration are not interchangeable with upstream mod-playerbots.
 
-`mod-shadows` has a **[Discord server](https://discord.gg/NQm5QShwf9)** where you can discuss the project, ask questions, and get involved in the community!
+If you need stock playerbots, use the upstream project: [mod-playerbots/mod-playerbots](https://github.com/mod-playerbots/mod-playerbots).
+
+## What we changed
+
+This fork keeps upstream bot behaviour but hardens it for Yggdrasilcore's threaded core. A non-exhaustive list:
+
+- Renamed the module from playerbots to shadows throughout.
+- Thread safety: the holder bot map and the channel, guild and bot snapshots are locked and iterated over copies, and the AI init guard is locked.
+- Shutdown: bot AIs are torn down during world shutdown, and crashes from deleting groups and guilds are avoided via manager-owned zombies.
+- Movement: bots get gravity and navmesh handling through `MoveJump`, sharper incline/decline handling, and correct engage behaviour when a target has no line of sight (melee closes, ranged repositions).
+- Visibility: destroy packets are sent before visibility is wiped on a bot teleport.
+- Quality of life: eat/drink no longer sleeps the bot AI, feast items are excluded from food/drink selection, sit persistence is fixed, and follow-on-map-change messages are debounced.
+- Build: Ubuntu 24.04 CI against Yggdrasilcore with ccache and Ninja.
 
 ## Installation
 
-### Classic Installation
-
-As noted above, `mod-shadows` builds against YggdrasilCore: [YggdrasilWotLK/yggdrasilcore/tree/master-shadows](https://github.com/YggdrasilWotLK/yggdrasilcore/tree/master-shadows). To install the module, simply run:
-
 ```bash
-git clone https://github.com/YggdrasilWotLK/yggdrasilcore.git --branch=master-shadows
-cd yggdrasilcore/modules
-git clone https://github.com/YggdrasilWotLK/mod-shadows.git --branch=master
+cd <yggdrasilcore-path>/modules
+git clone https://github.com/yggdrasilcore/mod-shadows.git
 ```
 
-For more information, refer to the [AzerothCore Installation Guide](https://www.azerothcore.org/wiki/installation) and [Installing a Module](https://www.azerothcore.org/wiki/installing-a-module) pages.
-
-### Docker Installation
-
-**Docker installation is considered experimental.** To install the module on a Docker installation, run:
-
-```bash
-git clone https://github.com/YggdrasilWotLK/yggdrasilcore.git --branch=master-shadows
-cd yggdrasilcore/modules
-git clone https://github.com/YggdrasilWotLK/mod-shadows.git --branch=master
-```
-
-Afterwards, create a `docker-compose.override.yml` file in the `azerothcore-wotlk` directory. This override file allows for mounting the modules directory to the `ac-worldserver` service which is required for it to run. Put the following inside and save:
-
-```yml
-services:
-  ac-worldserver:
-    volumes:
-      - ./modules:/azerothcore/modules:ro
-```
-
-Additionally, this override file can be used to set custom configuration settings for `ac-worldserver` and any modules you install as environment variables:
-
-```yml
-services:
-  ac-worldserver:
-    environment:
-      YC_RATE_XP_KILL: "1"
-      YC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "1"
-    volumes:
-      - ./modules:/azerothcore/modules:ro
-```
-
-For example, to double the experience gain rate per kill, take the setting `Rate.XP.Kill = 1` from [woldserver.conf](https://github.com/YggdrasilWotLK/yggdrasilcore/blob/master-shadows/src/server/apps/worldserver/worldserver.conf.dist), convert it to an environment variable, and change it to the desired setting in the override file to get `YC_RATE_XP_KILL: "2"`. If you wanted to disable random bots from logging in automatically, take the `AiShadow.RandomBotAutologin = 1` setting from [shadows.conf](https://github.com/YggdrasilWotLK/mod-shadows/blob/master/conf/shadows.conf.dist) and do the same to get `YC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "0"`. For more information on how to configure Azerothcore, Shadows, and other module settings as environment variables in Docker Compose, see the "Configuring AzerothCore in Containers" section in the [Install With Docker](https://www.azerothcore.org/wiki/install-with-docker) guide.
-
-Before building, consider setting the database password. One way to do this is to create a `.env` file in the root `azerothcore-wotlk` directory using the [template](https://github.com/YggdrasilWotLK/yggdrasilcore/blob/master-shadows/conf/dist/env.docker). This file also allows you to set the user and group Docker uses for the services in case you run into any permissions issues, which are the most common cause for Docker installation problems.
-
-Use `docker compose up -d --build` to build and run the server. For more information, including how to create an account and taking backups, refer to the [Install With Docker](https://www.azerothcore.org/wiki/install-with-docker) page.
+Then rebuild Yggdrasilcore. Bot behaviour is configured in `conf/shadows.conf.dist`.
 
 ## Documentation
 
-The [Shadows Wiki](https://github.com/YggdrasilWotLK/mod-shadows/wiki) contains an extensive overview of addons, commands, raids with programmed bot strategies, and recommended performance configurations. Please note that documentation may be incomplete or out-of-date in some sections. Contributions are welcome.
+- [Generated module documentation](https://yggdrasilcore.github.io/mod-shadows/)
+- [AzerothCore installation guide](https://www.azerothcore.org/wiki/installation)
 
-## Frequently Asked Questions
+## Support
 
-- **Why aren't my bots casting spells?** Please make sure that the necessary English DBC file (enUS) is present.
-- **What platforms are supported?** We support Ubuntu, Windows, and macOS. Other Linux distros may work, but will not receive support.
-- **Why isn't my source compiling?** Please ensure that you are compiling with the required [custom branch of AzerothCore](https://github.com/YggdrasilWotLK/yggdrasilcore/tree/master-shadows). Additionally, please [check the build status of our CI](https://github.com/YggdrasilWotLK/mod-shadows/actions). If the latest build is failing, rever to the last successful commit until we address the issue.
+Shadows is a downstream fork and we do not provide official public support for it, and upstream channels do not support Shadows-specific behaviour. If you use it and find a bug, feel free to open an issue or a pull request here.
 
-## Code standards
-- https://www.azerothcore.org/wiki/cpp-code-standards
+## Contributing
 
-## Addons
-
-Typically, bots are controlled via chat commands. For larger bot groups, this can be unwieldy. As an alternative, community members have developed client Add-Ons to allow controlling bots through the in-game UI. We recommend you check out their projects:
-
-- [Multibot](https://github.com/Macx-Lio/MultiBot) (by Macx-Lio), which includes English, Chinese, French, German, Korean, Russian, and Spanish support [note: active development is temporarily continuing on a fork in Macx-Lio's absence (https://github.com/Wishmaster117/MultiBot)]
-- [Unbot Addon (zh)](https://github.com/liyunfan1223/unbot-addon) (Chinese version by Liyunfan) [note: no longer under active development]
-- [Unbot Addon (en)](https://github.com/noisiver/unbot-addon/tree/english) (English version translated by @Revision) [note: no longer under active development]
+Shadows is a privately managed repository. We do not recommend that emulation enthusiasts follow it. Instead, we recommend that enthusiasts contribute to the upstream [mod-playerbots](https://github.com/mod-playerbots/mod-playerbots) project and to [AzerothCore](https://github.com/azerothcore/azerothcore-wotlk).
 
 ## Acknowledgements
 
-`mod-shadows` is is based off [ZhengPeiRu21/mod-shadows](https://github.com/ZhengPeiRu21/mod-shadows) and [celguar/mangosbot-bots](https://github.com/celguar/mangosbot-bots). We extend our gratitude to [@ZhengPeiRu21](https://github.com/ZhengPeiRu21) and [@celguar](https://github.com/celguar) for the continued efforts in maintaining the module.
+Shadows would not exist without the upstream projects it builds on:
 
-Also, a thank you to the many contributors who've helped build this project:
+- [mod-playerbots/mod-playerbots](https://github.com/mod-playerbots/mod-playerbots)
+- [IKE3's Shadows](https://github.com/ike3/mangosbot)
+- [celguar/mangosbot-bots](https://github.com/celguar/mangosbot-bots)
 
-<a href="https://github.com/YggdrasilWotLK/mod-shadows/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=mod-shadows/mod-shadows" />
-</a>
+## License
+
+- Source: This repository is distributed under the GNU Affero General Public License v3.0.
+- Intellectual property: Yggdrasil WoW and its derivative projects are not related to Blizzard Entertainment and lay no claim to Blizzard Entertainment's copyrights or intellectual property. They operate solely as an avenue for exploring the functionality of the abandonware WotLK 3.3.5a client in an educational capacity.

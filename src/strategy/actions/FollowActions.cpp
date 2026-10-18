@@ -6,6 +6,7 @@
 #include "FollowActions.h"
 
 #include <cstddef>
+#include <optional>
 
 #include "Event.h"
 #include "Formations.h"
@@ -31,9 +32,19 @@ bool FollowAction::Execute(Event event [[maybe_unused]])
         if (Formation::IsNullLocation(loc) || loc.GetMapId() == static_cast<uint32>(-1))
             return false;
 
-        MovementPriority priority = botAI->GetState() == BOT_STATE_COMBAT ? MovementPriority::MOVEMENT_COMBAT : MovementPriority::MOVEMENT_NORMAL;
-        moved = MoveTo(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), false, false, false,
-                       true, priority, true);
+        // Formations that move to a computed location (chaos, near, circle,
+        // line, shield, arrow) never go through Follow: run the same ledge-drop
+        // handling here so they jump down to a master below a cliff too.
+        if (std::optional<bool> drop = TryJumpDownTo(botAI->GetMaster()); drop.value_or(false))
+        {
+            moved = true;
+        }
+        else
+        {
+            MovementPriority priority = botAI->GetState() == BOT_STATE_COMBAT ? MovementPriority::MOVEMENT_COMBAT : MovementPriority::MOVEMENT_NORMAL;
+            moved = MoveTo(loc.GetMapId(), loc.GetPositionX(), loc.GetPositionY(), loc.GetPositionZ(), false, false, false,
+                           true, priority, true);
+        }
     }
 
     // This section has been commented out because it was forcing the pet to

@@ -7,6 +7,7 @@
 #define _SHADOW_MOVEMENTACTIONS_H
 
 #include <cmath>
+#include <optional>
 
 #include "Action.h"
 #include "LastMovementValue.h"
@@ -38,6 +39,10 @@ protected:
     float GetFollowAngle();
     bool Follow(Unit* target, float distance = sShadowAIConfig->followDistance);
     bool Follow(Unit* target, float distance, float angle);
+    // Jump down to a master who stands below a mesh cliff. Returns true when it
+    // issued movement (heading to the lip or jumping), false to suppress normal
+    // movement, or nullopt when the situation does not apply.
+    std::optional<bool> TryJumpDownTo(Unit* target);
     bool ChaseTo(WorldObject* obj, float distance = 0.0f, float angle = 0.0f);
     bool ReachCombatTo(Unit* target, float distance = 0.0f);
     float MoveDelay(float distance, bool backwards = false);
