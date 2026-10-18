@@ -1290,8 +1290,7 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     }
 
     // Master below on a mesh the bot cannot walk down: drive to the ledge lip,
-    // then jump. A partial path to the master's ground ends at the lip; when the
-    // mesh has no path at all, march toward the master and stop at the drop-off.
+    // then jump. The lip is the first ground drop along the line to the master.
     float const dropDz = target->GetPositionZ() - bot->GetPositionZ();
     float const dropDist2d = bot->GetDistance2d(target);
     if (dropDz < -3.0f && dropDist2d < 25.0f && target->GetMapId() == bot->GetMapId() && target->IsAlive() &&
@@ -1306,36 +1305,30 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
             // A full walkable route means the bot can just follow down normally.
             if (!(dropProbe.GetPathType() & (PATHFIND_NORMAL | PATHFIND_SHORT)))
             {
-                // Furthest reachable mesh point toward the master is the ledge lip.
-                G3D::Vector3 lip(0.0f, 0.0f, 0.0f);
-                if (dropProbe.GetPathType() & PATHFIND_INCOMPLETE)
+                // March toward the master and stop where the ground drops away.
+                // The mesh cannot be trusted here: once the bot stands on the
+                // last reachable poly the partial path collapses and its end
+                // becomes the requested destination, not the lip.
+                float const bx = bot->GetPositionX();
+                float const by = bot->GetPositionY();
+                float const bz = bot->GetPositionZ();
+                float const dirX = target->GetPositionX() - bx;
+                float const dirY = target->GetPositionY() - by;
+                float const horiz = std::sqrt(dirX * dirX + dirY * dirY);
+                G3D::Vector3 lip(bx, by, bz);
+                bool atEdge = horiz < 1.0f; // straight above => already at the drop
+                for (float step = 1.0f; !atEdge && step <= horiz; step += 1.0f)
                 {
-                    lip = dropProbe.GetActualEndPosition();
+                    float const px = bx + dirX * (step / horiz);
+                    float const py = by + dirY * (step / horiz);
+                    float const g = bot->GetMapHeight(px, py, bz);
+                    if (g <= INVALID_HEIGHT || bz - g > 3.0f)
+                        atEdge = true;
+                    else
+                        lip = G3D::Vector3(px, py, g);
                 }
-                else
-                {
-                    // No mesh path: march toward the master, stop where ground drops away.
-                    float const bx = bot->GetPositionX();
-                    float const by = bot->GetPositionY();
-                    float const bz = bot->GetPositionZ();
-                    float const dirX = target->GetPositionX() - bx;
-                    float const dirY = target->GetPositionY() - by;
-                    float const horiz = std::sqrt(dirX * dirX + dirY * dirY);
-                    lip = G3D::Vector3(bx, by, bz);
-                    bool atEdge = horiz < 1.0f;
-                    for (float step = 1.0f; !atEdge && step <= horiz; step += 1.0f)
-                    {
-                        float const px = bx + dirX * (step / horiz);
-                        float const py = by + dirY * (step / horiz);
-                        float const g = bot->GetMapHeight(px, py, bz);
-                        if (g <= INVALID_HEIGHT || bz - g > 3.0f)
-                            atEdge = true;
-                        else
-                            lip = G3D::Vector3(px, py, g);
-                    }
-                    if (!atEdge)
-                        return false; // ground stays level toward the master; walk it
-                }
+                if (!atEdge)
+                    return false; // ground stays level toward the master; walk it
 
                 if (bot->GetExactDist(lip.x, lip.y, lip.z) > sShadowAIConfig->followDistance)
                 {
