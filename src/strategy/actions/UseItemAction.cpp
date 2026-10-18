@@ -175,7 +175,7 @@ bool UseItemAction::UseItem(Item* item, ObjectGuid goGuid, Item* itemTarget, Uni
 
     uint8 bagIndex = item->GetBagSlot();
     uint8 slot = item->GetSlot();
-    uint8 spell_index = 0;
+    uint8 spell_index [[maybe_unused]] = 0;
     uint8 cast_count = 1;
     ObjectGuid item_guid = item->GetGUID();
     uint32 glyphIndex = 0;
@@ -576,7 +576,7 @@ bool UseRandomRecipe::isUseful()
 
 bool UseRandomRecipe::isPossible() { return AI_VALUE2(uint32, "item count", "recipe") > 0; }
 
-bool UseRandomRecipe::Execute(Event event)
+bool UseRandomRecipe::Execute(Event event [[maybe_unused]])
 {
     std::vector<Item*> recipes = AI_VALUE2(std::vector<Item*>, "inventory items", "recipe");
 
@@ -605,7 +605,7 @@ bool UseRandomQuestItem::isUseful()
 
 bool UseRandomQuestItem::isPossible() { return AI_VALUE2(uint32, "item count", "quest") > 0; }
 
-bool UseRandomQuestItem::Execute(Event event)
+bool UseRandomQuestItem::Execute(Event event [[maybe_unused]])
 {
     Unit* unitTarget = nullptr;
     ObjectGuid goTarget;

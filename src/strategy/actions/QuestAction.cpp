@@ -350,7 +350,7 @@ bool QuestUpdateAddItemAction::Execute(Event event)
     uint32 itemId, count;
     p >> itemId >> count;
 
-    Player* requester = event.getOwner() ? event.getOwner() : GetMaster();
+    Player* requester [[maybe_unused]] = event.getOwner() ? event.getOwner() : GetMaster();
     auto const* itemPrototype = sObjectMgr->GetItemTemplate(itemId);
     if (itemPrototype)
     {
@@ -405,7 +405,7 @@ bool QuestItemPushResultAction::Execute(Event event)
         if (!quest)
             return false;
 
-        const QuestStatusData& q_status = bot->getQuestStatusMap().at(questId);
+        const QuestStatusData& q_status [[maybe_unused]] = bot->getQuestStatusMap().at(questId);
 
         for (int i = 0; i < QUEST_ITEM_OBJECTIVES_COUNT; i++)
         {
@@ -414,7 +414,7 @@ bool QuestItemPushResultAction::Execute(Event event)
                 continue;
 
             int32 previousCount = itemCount - count;
-            if (itemId == itemEntry && previousCount < quest->RequiredItemCount[i])
+            if (itemId == itemEntry && static_cast<uint32>(previousCount) < quest->RequiredItemCount[i])
             {
                 if (botAI->GetMaster())
                 {
@@ -432,7 +432,7 @@ bool QuestItemPushResultAction::Execute(Event event)
     return false;
 }
 
-bool QuestUpdateFailedAction::Execute(Event event)
+bool QuestUpdateFailedAction::Execute(Event event [[maybe_unused]])
 {
     //opcode SMSG_QUESTUPDATE_FAILED is never sent...(yet?)
     return false;
@@ -446,7 +446,7 @@ bool QuestUpdateFailedTimerAction::Execute(Event event)
     uint32 questId;
     p >> questId;
 
-    Player* requester = event.getOwner() ? event.getOwner() : GetMaster();
+    Player* requester [[maybe_unused]] = event.getOwner() ? event.getOwner() : GetMaster();
 
     Quest const* qInfo = sObjectMgr->GetQuestTemplate(questId);
 

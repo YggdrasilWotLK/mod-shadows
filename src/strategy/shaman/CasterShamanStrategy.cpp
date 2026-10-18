@@ -24,7 +24,7 @@ private:
                               /*A*/ nullptr,
                               /*C*/ NextAction::array(0, new NextAction("fire nova"), nullptr));
     }
-    static ActionNode* totem_of_wrath(ShadowAI* botAI)
+    static ActionNode* totem_of_wrath(ShadowAI* botAI [[maybe_unused]])
     {
         return new ActionNode("totem of wrath",
                               /*P*/ NULL,

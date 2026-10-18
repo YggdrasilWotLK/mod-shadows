@@ -11,7 +11,7 @@
 #include "LastMovementValue.h"
 #include "Shadows.h"
 
-bool MoveToRpgTargetAction::Execute(Event event)
+bool MoveToRpgTargetAction::Execute(Event event [[maybe_unused]])
 {
     GuidPosition guidP = AI_VALUE(GuidPosition, "rpg target");
     Unit* unit = botAI->GetUnit(guidP);
@@ -24,7 +24,7 @@ bool MoveToRpgTargetAction::Execute(Event event)
     {
         return false;
     }
-    Player* player = guidP.GetPlayer();
+    Player* player [[maybe_unused]] = guidP.GetPlayer();
 
     WorldObject* wo = nullptr;
     if (unit)

@@ -176,7 +176,7 @@ RandomItemMgr::~RandomItemMgr()
     predicates.clear();
 }
 
-bool RandomItemMgr::HandleConsoleCommand(ChatHandler* handler, char const* args)
+bool RandomItemMgr::HandleConsoleCommand(ChatHandler* handler [[maybe_unused]], char const* args)
 {
     if (!args || !*args)
     {
@@ -1596,7 +1596,7 @@ uint32 RandomItemMgr::CalculateStatWeight(uint8 playerclass, uint8 spec, ItemTem
     statWeight += attackPower;
 
     // handle negative stats
-    if (basicStatsWeight < 0 && (abs(basicStatsWeight) >= statWeight))
+    if (basicStatsWeight < 0 && (static_cast<uint32>(abs(basicStatsWeight)) >= statWeight))
         statWeight = 0;
     else
         statWeight += basicStatsWeight;
@@ -1700,7 +1700,7 @@ std::vector<uint32> RandomItemMgr::GetQuestIdsForItem(uint32 itemId)
         }
     }
 
-    return std::move(questIds);
+    return questIds;
 }
 
 uint32 RandomItemMgr::GetUpgrade(Player* player, std::string spec, uint8 slot, uint32 quality, uint32 itemId)
@@ -1782,7 +1782,7 @@ uint32 RandomItemMgr::GetUpgrade(Player* player, std::string spec, uint8 slot, u
         }
 
         // skip no stats trinkets
-        if (info.weights[specId] == 1 && info.slot == EQUIPMENT_SLOT_NECK || info.slot == EQUIPMENT_SLOT_TRINKET1 ||
+        if ((info.weights[specId] == 1 && info.slot == EQUIPMENT_SLOT_NECK) || info.slot == EQUIPMENT_SLOT_TRINKET1 ||
             info.slot == EQUIPMENT_SLOT_TRINKET2 || info.slot == EQUIPMENT_SLOT_FINGER1 ||
             info.slot == EQUIPMENT_SLOT_FINGER2)
             continue;
@@ -1823,16 +1823,16 @@ uint32 RandomItemMgr::GetUpgrade(Player* player, std::string spec, uint8 slot, u
 }
 
 std::vector<uint32> RandomItemMgr::GetUpgradeList(Player* player, std::string spec, uint8 slot, uint32 quality,
-                                                  uint32 itemId, uint32 amount)
+                                                  uint32 itemId, uint32 amount [[maybe_unused]])
 {
     std::vector<uint32> listItems;
     if (!player)
-        return std::move(listItems);
+        return listItems;
 
     // get old item statWeight
     uint32 oldStatWeight = 0;
     uint32 specId = 0;
-    uint32 closestUpgrade = 0;
+    uint32 closestUpgrade [[maybe_unused]] = 0;
     uint32 closestUpgradeWeight = 0;
     std::vector<uint32> classspecs;
 
@@ -1848,7 +1848,7 @@ std::vector<uint32> RandomItemMgr::GetUpgradeList(Player* player, std::string sp
     }
 
     if (!specId)
-        return std::move(listItems);
+        return listItems;
 
     if (itemId && itemInfoCache.find(itemId) != itemInfoCache.end())
     {
@@ -1942,7 +1942,7 @@ std::vector<uint32> RandomItemMgr::GetUpgradeList(Player* player, std::string sp
         LOG_INFO("shadows", "New Items: {}, Old item:%d, New items max: {}", listItems.size(), oldStatWeight,
                  closestUpgradeWeight);
 
-    return std::move(listItems);
+    return listItems;
 }
 
 bool RandomItemMgr::HasStatWeight(uint32 itemId)
@@ -2218,7 +2218,7 @@ void RandomItemMgr::BuildEquipCacheNew()
         if (quest->GetRequiredClasses())
             continue;
 
-        for (int j = 0; j < quest->GetRewChoiceItemsCount(); j++)
+        for (uint32 j = 0; j < quest->GetRewChoiceItemsCount(); j++)
             if (uint32 itemId = quest->RewardChoiceItemId[j])
             {
                 ItemTemplate const* proto = sObjectMgr->GetItemTemplate(itemId);
@@ -2229,7 +2229,7 @@ void RandomItemMgr::BuildEquipCacheNew()
                 questItemIds.insert(itemId);
             }
 
-        for (int j = 0; j < quest->GetRewItemsCount(); j++)
+        for (uint32 j = 0; j < quest->GetRewItemsCount(); j++)
             if (uint32 itemId = quest->RewardItemId[j])
             {
                 ItemTemplate const* proto = sObjectMgr->GetItemTemplate(itemId);
@@ -2375,7 +2375,7 @@ void RandomItemMgr::BuildPotionCache()
                     continue;
 
 
-                if (proto->AllowableClass != -1)
+                if (proto->AllowableClass != static_cast<uint32>(-1))
                     continue;
 
                 bool hybrid = false;
@@ -2768,7 +2768,7 @@ inline bool IsCraftedBySpellInfo(ItemTemplate const* proto, SpellInfo const* spe
             continue;
         }
 
-        if (proto->ItemId == spellInfo->Reagent[x])
+        if (proto->ItemId == static_cast<uint32>(spellInfo->Reagent[x]))
         {
             return true;
         }

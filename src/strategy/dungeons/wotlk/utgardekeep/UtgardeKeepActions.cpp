@@ -3,7 +3,7 @@
 #include "UtgardeKeepStrategy.h"
 
 bool AttackFrostTombAction::isUseful() { return !botAI->IsHeal(bot); }
-bool AttackFrostTombAction::Execute(Event event)
+bool AttackFrostTombAction::Execute(Event event [[maybe_unused]])
 {
     Unit* frostTomb = nullptr;
 
@@ -28,7 +28,7 @@ bool AttackFrostTombAction::Execute(Event event)
 }
 
 // TODO: Possibly add player stacking behaviour close to tank, to prevent Skarvald charging ranged
-bool AttackDalronnAction::Execute(Event event)
+bool AttackDalronnAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "dalronn the controller");
     if (!boss) { return false; }

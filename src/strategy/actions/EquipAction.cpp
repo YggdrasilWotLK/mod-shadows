@@ -85,7 +85,7 @@ void EquipAction::EquipItem(Item* item)
     if (itemProto->Class == ITEM_CLASS_CONTAINER)
     {
         // Attempt to equip as a bag
-        Bag* pBag = reinterpret_cast<Bag*>(item);
+        Bag* pBag [[maybe_unused]] = reinterpret_cast<Bag*>(item);
         uint8 newBagSlot = GetSmallestBagSlot();
         if (newBagSlot > 0)
         {
@@ -355,7 +355,7 @@ bool EquipUpgradesAction::Execute(Event event)
     return true;
 }
 
-bool EquipUpgradeAction::Execute(Event event)
+bool EquipUpgradeAction::Execute(Event event [[maybe_unused]])
 {
     CollectItemsVisitor visitor;
     IterateItems(&visitor, ITERATE_ITEMS_IN_BAGS);

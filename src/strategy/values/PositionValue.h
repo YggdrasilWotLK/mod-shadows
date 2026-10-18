@@ -15,15 +15,16 @@ class ShadowAI;
 class PositionInfo
 {
 public:
-    PositionInfo() : valueSet(false), x(0), y(0), z(0), mapId(0) {}
+    PositionInfo() : x(0), y(0), z(0), valueSet(false), mapId(0) {}
     PositionInfo(float x, float y, float z, uint32 mapId, bool valueSet = true)
-        : valueSet(valueSet), x(x), y(y), z(z), mapId(mapId)
+        : x(x), y(y), z(z), valueSet(valueSet), mapId(mapId)
     {
     }
     PositionInfo(PositionInfo const& other)
-        : valueSet(other.valueSet), x(other.x), y(other.y), z(other.z), mapId(other.mapId)
+        : x(other.x), y(other.y), z(other.z), valueSet(other.valueSet), mapId(other.mapId)
     {
     }
+    PositionInfo& operator=(PositionInfo const&) = default;
 
     void Set(float newX, float newY, float newZ, uint32 newMapId)
     {

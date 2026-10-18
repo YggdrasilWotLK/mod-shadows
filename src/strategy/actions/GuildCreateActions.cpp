@@ -14,10 +14,10 @@
 #include "ServerFacade.h"
 #include "SharedDefines.h" // GOLD
 
-bool BuyPetitionAction::Execute(Event event)
+bool BuyPetitionAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector vendors = botAI->GetAiObjectContext()->GetValue<GuidVector>("nearest npcs")->Get();
-    bool vendored = false, result = false;
+    bool vendored [[maybe_unused]] = false, result [[maybe_unused]] = false;
     for (GuidVector::iterator i = vendors.begin(); i != vendors.end(); ++i)
     {
         ObjectGuid vendorguid = *i;
@@ -97,7 +97,7 @@ bool BuyPetitionAction::canBuyPetition(Player* bot)
 
 bool PetitionOfferAction::Execute(Event event)
 {
-    uint32 petitionEntry = 5863;  // GUILD_CHARTER
+    uint32 petitionEntry [[maybe_unused]] = 5863;  // GUILD_CHARTER
     std::vector<Item*> petitions = AI_VALUE2(std::vector<Item*>, "inventory items", chat->FormatQItem(5863));
 
     if (petitions.empty())
@@ -152,7 +152,7 @@ bool PetitionOfferAction::Execute(Event event)
 
 bool PetitionOfferAction::isUseful() { return !bot->GetGuildId(); }
 
-bool PetitionOfferNearbyAction::Execute(Event event)
+bool PetitionOfferNearbyAction::Execute(Event event [[maybe_unused]])
 {
     uint32 found = 0;
 
@@ -209,10 +209,10 @@ bool PetitionOfferNearbyAction::isUseful()
            AI_VALUE(uint8, "petition signs") < sWorld->getIntConfig(CONFIG_MIN_PETITION_SIGNS);
 }
 
-bool PetitionTurnInAction::Execute(Event event)
+bool PetitionTurnInAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector vendors = botAI->GetAiObjectContext()->GetValue<GuidVector>("nearest npcs")->Get();
-    bool vendored = false, result = false;
+    bool vendored [[maybe_unused]] = false, result [[maybe_unused]] = false;
     std::vector<Item*> petitions = AI_VALUE2(std::vector<Item*>, "inventory items", chat->FormatQItem(5863));
 
     if (petitions.empty())
@@ -297,7 +297,7 @@ bool PetitionTurnInAction::isUseful()
            !context->GetValue<TravelTarget*>("travel target")->Get()->isTraveling();
 }
 
-bool BuyTabardAction::Execute(Event event)
+bool BuyTabardAction::Execute(Event event [[maybe_unused]])
 {
     bool canBuy = botAI->DoSpecificAction("buy", Event("buy tabard", "Hitem:5976:"));
     if (canBuy && AI_VALUE2(uint32, "item count", chat->FormatQItem(5976)))

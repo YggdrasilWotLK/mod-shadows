@@ -10,13 +10,13 @@
 namespace 
 {
     // Big Bad Wolf
-    static int currentIndex = 0;
+    static int currentIndex [[maybe_unused]] = 0;
     // Netherspite
     static std::map<ObjectGuid, uint32> beamMoveTimes;
     static std::map<ObjectGuid, bool> lastBeamMoveSideways;
 }
 
-bool KarazhanAttumenTheHuntsmanStackBehindAction::Execute(Event event)
+bool KarazhanAttumenTheHuntsmanStackBehindAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     Unit* boss = karazhanHelper.GetFirstAliveUnitByEntry(NPC_ATTUMEN_THE_HUNTSMAN_MOUNTED);
@@ -45,7 +45,7 @@ bool KarazhanAttumenTheHuntsmanStackBehindAction::isUseful()
     return boss && !(botAI->IsTank(bot) && botAI->HasAggro(boss) && boss->GetVictim() == bot);
 }
 
-bool KarazhanMoroesMarkTargetAction::Execute(Event event)
+bool KarazhanMoroesMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
 
@@ -62,7 +62,7 @@ bool KarazhanMoroesMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanMaidenOfVirtuePositionBossAction::Execute(Event event)
+bool KarazhanMaidenOfVirtuePositionBossAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "maiden of virtue");
     Unit* healer = nullptr;
@@ -124,7 +124,7 @@ bool KarazhanMaidenOfVirtuePositionBossAction::isUseful()
     return boss && botAI->IsTank(bot) && botAI->HasAggro(boss) && boss->GetVictim() == bot;
 }
 
-bool KarazhanMaidenOfVirtuePositionRangedAction::Execute(Event event)
+bool KarazhanMaidenOfVirtuePositionRangedAction::Execute(Event event [[maybe_unused]])
 {
     int maxIndex = 7;
     int index = 0;
@@ -173,7 +173,7 @@ bool KarazhanMaidenOfVirtuePositionRangedAction::isUseful()
     return boss && botAI->IsRanged(bot);
 }
 
-bool KarazhanBigBadWolfPositionBossAction::Execute(Event event)
+bool KarazhanBigBadWolfPositionBossAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "the big bad wolf");
 
@@ -209,7 +209,7 @@ bool KarazhanBigBadWolfPositionBossAction::isUseful()
            !bot->HasAura(SPELL_LITTLE_RED_RIDING_HOOD);
 }
 
-bool KarazhanBigBadWolfRunAwayAction::Execute(Event event)
+bool KarazhanBigBadWolfRunAwayAction::Execute(Event event [[maybe_unused]])
 {
     constexpr float threshold = 1.0f;
     Position target = KARAZHAN_BIG_BAD_WOLF_RUN_POSITION[currentIndex];
@@ -234,7 +234,7 @@ bool KarazhanBigBadWolfRunAwayAction::isUseful()
     return boss && bot->HasAura(SPELL_LITTLE_RED_RIDING_HOOD);
 }
 
-bool KarazhanRomuloAndJulianneMarkTargetAction::Execute(Event event)
+bool KarazhanRomuloAndJulianneMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = nullptr;
     Unit* romulo = AI_VALUE2(Unit*, "find target", "romulo");
@@ -260,7 +260,7 @@ bool KarazhanRomuloAndJulianneMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanWizardOfOzMarkTargetAction::Execute(Event event)
+bool KarazhanWizardOfOzMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     Unit* dorothee = AI_VALUE2(Unit*, "find target", "dorothee");
@@ -276,7 +276,7 @@ bool KarazhanWizardOfOzMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanWizardOfOzScorchStrawmanAction::Execute(Event event)
+bool KarazhanWizardOfOzScorchStrawmanAction::Execute(Event event [[maybe_unused]])
 {
     Unit* strawman = AI_VALUE2(Unit*, "find target", "strawman");
     if (!strawman || !strawman->IsAlive() || bot->getClass() != CLASS_MAGE)
@@ -292,7 +292,7 @@ bool KarazhanWizardOfOzScorchStrawmanAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanTheCuratorMarkTargetAction::Execute(Event event)
+bool KarazhanTheCuratorMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = AI_VALUE2(Unit*, "find target", "astral flare");
     if (!target || !target->IsAlive())
@@ -306,7 +306,7 @@ bool KarazhanTheCuratorMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanTheCuratorPositionBossAction::Execute(Event event)
+bool KarazhanTheCuratorPositionBossAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "the curator");
     const float maxDistance = 3.0f;
@@ -335,7 +335,7 @@ bool KarazhanTheCuratorPositionBossAction::isUseful()
     return boss && botAI->IsTank(bot) && botAI->HasAggro(boss) && boss->GetVictim() == bot;
 }
 
-bool KarazhanTheCuratorSpreadRangedAction::Execute(Event event)
+bool KarazhanTheCuratorSpreadRangedAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     const float minDistance = 5.0f;
@@ -359,7 +359,7 @@ bool KarazhanTheCuratorSpreadRangedAction::isUseful()
     return boss && botAI->IsRanged(bot);
 }
 
-bool KarazhanTerestianIllhoofMarkTargetAction::Execute(Event event)
+bool KarazhanTerestianIllhoofMarkTargetAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "terestian illhoof");
     if (!boss)
@@ -382,7 +382,7 @@ bool KarazhanTerestianIllhoofMarkTargetAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanShadeOfAranArcaneExplosionRunAwayAction::Execute(Event event)
+bool KarazhanShadeOfAranArcaneExplosionRunAwayAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "shade of aran");
     const float safeDistance = 20.0f;
@@ -407,7 +407,7 @@ bool KarazhanShadeOfAranArcaneExplosionRunAwayAction::isUseful()
            boss->FindCurrentSpellBySpellId(SPELL_ARCANE_EXPLOSION);
 }
 
-bool KarazhanShadeOfAranFlameWreathStopMovementAction::Execute(Event event)
+bool KarazhanShadeOfAranFlameWreathStopMovementAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     if (karazhanHelper.IsFlameWreathActive())
@@ -424,7 +424,7 @@ bool KarazhanShadeOfAranFlameWreathStopMovementAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanShadeOfAranMarkConjuredElementalAction::Execute(Event event)
+bool KarazhanShadeOfAranMarkConjuredElementalAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     Unit* boss = AI_VALUE2(Unit*, "find target", "shade of aran");
@@ -441,7 +441,7 @@ bool KarazhanShadeOfAranMarkConjuredElementalAction::Execute(Event event)
     return false;
 }
 
-bool KarazhanShadeOfAranSpreadRangedAction::Execute(Event event)
+bool KarazhanShadeOfAranSpreadRangedAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "shade of aran");
 
@@ -484,7 +484,7 @@ bool KarazhanShadeOfAranSpreadRangedAction::isUseful()
 
 // One tank bot per phase will dance in and out of the red beam (5 seconds in, 5 seconds out)
 // Tank bots will ignore void zones--their positioning is too important
-bool KarazhanNetherspiteBlockRedBeamAction::Execute(Event event)
+bool KarazhanNetherspiteBlockRedBeamAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "netherspite");
     Unit* redPortal = bot->FindNearestCreature(NPC_RED_PORTAL, 150.0f);
@@ -582,7 +582,7 @@ bool KarazhanNetherspiteBlockRedBeamAction::isUseful()
 
 // Two non-Rogue/Warrior DPS bots will block the blue beam for each phase (swap at 26 debuff stacks)
 // When avoiding void zones, blocking bots will move along the beam to continue blocking
-bool KarazhanNetherspiteBlockBlueBeamAction::Execute(Event event)
+bool KarazhanNetherspiteBlockBlueBeamAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "netherspite");
     Unit* bluePortal = bot->FindNearestCreature(NPC_BLUE_PORTAL, 150.0f);
@@ -692,7 +692,7 @@ bool KarazhanNetherspiteBlockBlueBeamAction::isUseful()
 // Two healer bots will block the green beam for each phase (swap at 26 debuff stacks)
 // OR one rogue or DPS warrior bot will block the green beam for an entire phase (if they begin the phase as the blocker)
 // When avoiding void zones, blocking bots will move along the beam to continue blocking
-bool KarazhanNetherspiteBlockGreenBeamAction::Execute(Event event)
+bool KarazhanNetherspiteBlockGreenBeamAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "netherspite");
     Unit* greenPortal = bot->FindNearestCreature(NPC_GREEN_PORTAL, 150.0f);
@@ -800,11 +800,11 @@ bool KarazhanNetherspiteBlockGreenBeamAction::isUseful()
 }
 
 // All bots not currently blocking a beam will avoid beams and void zones
-bool KarazhanNetherspiteAvoidBeamAndVoidZoneAction::Execute(Event event)
+bool KarazhanNetherspiteAvoidBeamAndVoidZoneAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "netherspite");
     RaidKarazhanHelpers karazhanHelper(botAI);
-    auto [redBlocker, greenBlocker, blueBlocker] = karazhanHelper.GetCurrentBeamBlockers();
+    [[maybe_unused]] auto [redBlocker, greenBlocker, blueBlocker] = karazhanHelper.GetCurrentBeamBlockers();
     std::vector<Unit*> voidZones = karazhanHelper.GetAllVoidZones();
     bool nearVoidZone = false;
     for (Unit* vz : voidZones)
@@ -958,7 +958,7 @@ bool KarazhanNetherspiteAvoidBeamAndVoidZoneAction::isUseful()
     return true;
 }
 
-bool KarazhanNetherspiteBanishPhaseAvoidVoidZoneAction::Execute(Event event)
+bool KarazhanNetherspiteBanishPhaseAvoidVoidZoneAction::Execute(Event event [[maybe_unused]])
 {
     RaidKarazhanHelpers karazhanHelper(botAI);
     std::vector<Unit*> voidZones = karazhanHelper.GetAllVoidZones();
@@ -995,7 +995,7 @@ bool KarazhanNetherspiteBanishPhaseAvoidVoidZoneAction::isUseful()
     return false;
 }
 
-bool KarazhanPrinceMalchezaarNonTankAvoidHazardAction::Execute(Event event)
+bool KarazhanPrinceMalchezaarNonTankAvoidHazardAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "prince malchezaar");
     RaidKarazhanHelpers karazhanHelper(botAI);
@@ -1139,9 +1139,9 @@ bool KarazhanPrinceMalchezaarNonTankAvoidHazardAction::isUseful()
     return boss && !(botAI->IsTank(bot) && botAI->HasAggro(boss) && boss->GetVictim() == bot);
 }
 
-bool KarazhanPrinceMalchezaarTankAvoidHazardAction::Execute(Event event)
+bool KarazhanPrinceMalchezaarTankAvoidHazardAction::Execute(Event event [[maybe_unused]])
 {
-    Unit* boss = AI_VALUE2(Unit*, "find target", "prince malchezaar");
+    Unit* boss [[maybe_unused]] = AI_VALUE2(Unit*, "find target", "prince malchezaar");
     RaidKarazhanHelpers karazhanHelper(botAI);
     std::vector<Unit*> infernals = karazhanHelper.GetSpawnedInfernals();
 

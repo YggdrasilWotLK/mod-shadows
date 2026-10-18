@@ -141,7 +141,7 @@ void ShadowHolder::AddShadow(ObjectGuid playerGuid, uint32 masterAccountId)
             std::shared_lock<std::shared_mutex> lock(_shadowsMutex);
             count += static_cast<uint32>(botLoading.size());
         }
-        if (count >= sShadowAIConfig->maxAddedBots)
+        if (count >= static_cast<uint32>(sShadowAIConfig->maxAddedBots))
         {
             allowed = false;
             out << "Failure: You have added too many bots (more than " << sShadowAIConfig->maxAddedBots << ")";
@@ -725,12 +725,12 @@ void ShadowHolder::OnBotLogin(Player* const bot)
 }
 
 std::string const ShadowHolder::ProcessBotCommand(std::string const cmd, ObjectGuid guid, ObjectGuid masterguid,
-                                                     bool admin, uint32 masterAccountId, uint32 masterGuildId)
+                                                     bool admin, uint32 masterAccountId, uint32 masterGuildId [[maybe_unused]])
 {
     if (!sShadowAIConfig->enabled || guid.IsEmpty())
         return "bot system is disabled";
 
-    uint32 botAccount = sCharacterCache->GetCharacterAccountIdByGuid(guid);
+    uint32 botAccount [[maybe_unused]] = sCharacterCache->GetCharacterAccountIdByGuid(guid);
     //bool isRandomBot = sRandomShadowMgr->IsRandomBot(guid.GetCounter()); //not used, line marked for removal.
     //bool isRandomAccount = sShadowAIConfig->IsInRandomAccountList(botAccount); //not used, shadowed, line marked for removal.
     //bool isMasterAccount = (masterAccountId == botAccount); //not used, line marked for removal.
@@ -747,11 +747,11 @@ std::string const ShadowHolder::ProcessBotCommand(std::string const cmd, ObjectG
             if (!accountId)
                 return "character not found";
 
-                if (!sShadowAIConfig->allowAccountBots && accountId != masterAccountId &&
-                    !(sShadowAIConfig->allowTrustedAccountBots && IsAccountLinked(accountId, masterAccountId)))
-                {
-                    return "you can only add bots from your own account or linked accounts";
-                }
+            if (!sShadowAIConfig->allowAccountBots && accountId != masterAccountId &&
+                !(sShadowAIConfig->allowTrustedAccountBots && IsAccountLinked(accountId, masterAccountId)))
+            {
+                return "you can only add bots from your own account or linked accounts";
+            }
         }
 
         AddShadow(guid, masterAccountId);
@@ -1481,7 +1481,7 @@ std::string const ShadowHolder::ListBots(Player* master)
     return out.str();
 }
 
-std::string const ShadowHolder::LookupBots(Player* master)
+std::string const ShadowHolder::LookupBots(Player* master [[maybe_unused]])
 {
     std::list<std::string> messages;
     messages.push_back("Classes Available:");
@@ -1696,7 +1696,7 @@ void ShadowMgr::TellError(std::string const botName, std::string const text)
     errors[text] = names;
 }
 
-void ShadowMgr::CheckTellErrors(uint32 elapsed)
+void ShadowMgr::CheckTellErrors(uint32 elapsed [[maybe_unused]])
 {
     time_t now = time(nullptr);
     if ((now - lastErrorTell) < sShadowAIConfig->errorDelay / 1000)

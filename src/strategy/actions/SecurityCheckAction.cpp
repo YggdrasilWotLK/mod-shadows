@@ -20,7 +20,7 @@ bool SecurityCheckAction::isUseful()
     return !GET_SHADOW_AI(secMaster);
 }
 
-bool SecurityCheckAction::Execute(Event event)
+bool SecurityCheckAction::Execute(Event event [[maybe_unused]])
 {
     if (Group* group = bot->GetGroup())
     {

@@ -9,7 +9,7 @@
 #include "Shadows.h"
 #include "ReputationMgr.h"
 
-bool TellReputationAction::Execute(Event event)
+bool TellReputationAction::Execute(Event event [[maybe_unused]])
 {
     Player* master = GetMaster();
     if (!master)

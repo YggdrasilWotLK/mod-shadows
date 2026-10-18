@@ -2,7 +2,7 @@
 #include "UtgardePinnacleActions.h"
 #include "UtgardePinnacleStrategy.h"
 
-bool AvoidFreezingCloudAction::Execute(Event event)
+bool AvoidFreezingCloudAction::Execute(Event event [[maybe_unused]])
 {
     Unit* closestTrigger = nullptr;
     GuidVector objects = AI_VALUE(GuidVector, "nearest hostile npcs");
@@ -30,7 +30,7 @@ bool AvoidFreezingCloudAction::Execute(Event event)
     return false;
 }
 
-bool AvoidSkadiWhirlwindAction::Execute(Event event)
+bool AvoidSkadiWhirlwindAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "skadi the ruthless");
     if (!boss)
@@ -50,7 +50,7 @@ bool AvoidSkadiWhirlwindAction::Execute(Event event)
     return false;
 }
 
-bool AvoidYmironBaneAction::Execute(Event event)
+bool AvoidYmironBaneAction::Execute(Event event [[maybe_unused]])
 {
     Creature* boss = bot->FindNearestCreature(26861, 100.0f);
     if (!boss)

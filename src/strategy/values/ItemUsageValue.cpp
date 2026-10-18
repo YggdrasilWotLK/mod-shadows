@@ -77,7 +77,7 @@ ItemUsage ItemUsageValue::Calculate()
         return ITEM_USAGE_USE;
 
     if (proto->Class == ITEM_CLASS_CONSUMABLE &&
-        (proto->MaxCount == 0 || AI_VALUE2(uint32, "item count", proto->Name1) < proto->MaxCount))
+        (proto->MaxCount == 0 || AI_VALUE2(uint32, "item count", proto->Name1) < static_cast<uint32>(proto->MaxCount)))
     {
         std::string const foodType = GetConsumableType(proto, bot->GetPower(POWER_MANA));
 
@@ -732,7 +732,7 @@ bool ItemUsageValue::HasItemsNeededForSpell(uint32 spellId, ItemTemplate const* 
     for (uint8 i = 0; i < MAX_SPELL_REAGENTS; i++)
         if (spellInfo->ReagentCount[i] > 0 && spellInfo->Reagent[i])
         {
-            if (proto && proto->ItemId == spellInfo->Reagent[i] &&
+            if (proto && proto->ItemId == static_cast<uint32>(spellInfo->Reagent[i]) &&
                 spellInfo->ReagentCount[i] == 1)  // If we only need 1 item then current item does not need to be
                                                   // checked since we are looting/buying or already have it.
                 continue;
@@ -831,7 +831,7 @@ std::vector<uint32> ItemUsageValue::SpellsUsingItem(uint32 itemId, Player* bot)
             continue;
 
         for (uint8 i = 0; i < MAX_SPELL_REAGENTS; i++)
-            if (spellInfo->ReagentCount[i] > 0 && spellInfo->Reagent[i] == itemId)
+            if (spellInfo->ReagentCount[i] > 0 && static_cast<uint32>(spellInfo->Reagent[i]) == itemId)
                 retSpells.push_back(spellId);
     }
 
@@ -863,7 +863,7 @@ bool ItemUsageValue::SpellGivesSkillUp(uint32 spellId, Player* bot)
         {
             uint32 SkillValue = bot->GetPureSkillValue(skill->SkillLine);
 
-            uint32 craft_skill_gain = sWorld->getIntConfig(CONFIG_SKILL_GAIN_CRAFTING);
+            uint32 craft_skill_gain [[maybe_unused]] = sWorld->getIntConfig(CONFIG_SKILL_GAIN_CRAFTING);
 
             if (SkillGainChance(SkillValue, skill->TrivialSkillLineRankHigh,
                                 (skill->TrivialSkillLineRankHigh + skill->TrivialSkillLineRankLow) / 2,

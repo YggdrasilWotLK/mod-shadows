@@ -237,7 +237,7 @@ void ShadowFactory::Randomize(bool incremental)
     Prepare();
     LOG_DEBUG("shadows", "Resetting player...");
     PerformanceMonitorOperation* pmo = sPerformanceMonitor->start(PERF_MON_RNDBOT, "ShadowFactory_Reset");
-    if (!sShadowAIConfig->equipmentPersistence || level < sShadowAIConfig->equipmentPersistenceLevel)
+    if (!sShadowAIConfig->equipmentPersistence || level < static_cast<uint32>(sShadowAIConfig->equipmentPersistenceLevel))
     {
         bot->resetTalents(true);
     }
@@ -246,7 +246,7 @@ void ShadowFactory::Randomize(bool incremental)
         ClearSkills();
         ClearSpells();
         ResetQuests();
-        if (!sShadowAIConfig->equipmentPersistence || level < sShadowAIConfig->equipmentPersistenceLevel)
+        if (!sShadowAIConfig->equipmentPersistence || level < static_cast<uint32>(sShadowAIConfig->equipmentPersistenceLevel))
         {
             ClearAllItems();
         }
@@ -813,7 +813,7 @@ void ShadowFactory::InitPetTalents()
                 int index = urand(0, spells_row.size() - 1);
                 TalentEntry const* talentInfo = spells_row[index];
                 int maxRank = 0;
-                for (int rank = 0; rank < std::min((uint32)MAX_TALENT_RANK, (uint32)pet->GetFreeTalentPoints()); ++rank)
+                for (uint32 rank = 0; rank < std::min((uint32)MAX_TALENT_RANK, (uint32)pet->GetFreeTalentPoints()); ++rank)
                 {
                     uint32 spellId = talentInfo->RankID[rank];
                     if (!spellId)
@@ -950,8 +950,8 @@ void ShadowFactory::InitPet()
                 continue;
             if (co->Name.size() > 21)
                 continue;
-            uint32 guid = map->GenerateLowGuid<HighGuid::Pet>();
-            uint32 pet_number = sObjectMgr->GeneratePetNumber();
+            uint32 guid [[maybe_unused]] = map->GenerateLowGuid<HighGuid::Pet>();
+            uint32 pet_number [[maybe_unused]] = sObjectMgr->GeneratePetNumber();
             if (bot->GetPetStable() && bot->GetPetStable()->CurrentPet)
             {
                 auto petGuid = bot->GetPetStable()->CurrentPet.value(); // To correct the build warnin in VS
@@ -1787,7 +1787,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
         }
         do
         {
-            for (uint32 requiredLevel = bot->GetLevel(); requiredLevel > std::max((int32)bot->GetLevel() - delta, 0);
+            for (uint32 requiredLevel = bot->GetLevel(); requiredLevel > static_cast<uint32>(std::max((int32)bot->GetLevel() - delta, 0));
                  requiredLevel--)
             {
                 for (InventoryType inventoryType : GetPossibleInventoryTypeListBySlot((EquipmentSlots)slot))
@@ -1826,7 +1826,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
                         if (proto->Class != ITEM_CLASS_WEAPON && proto->Class != ITEM_CLASS_ARMOR)
                             continue;
 
-                        if (proto->Quality != desiredQuality)
+                        if (proto->Quality != static_cast<uint32>(desiredQuality))
                             continue;
 
                         if (proto->Class == ITEM_CLASS_ARMOR &&
@@ -1857,7 +1857,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
 
         float bestScoreForSlot = -1;
         uint32 bestItemForSlot = 0;
-        for (int index = 0; index < ids.size(); index++)
+        for (size_t index = 0; index < ids.size(); index++)
         {
             uint32 newItemId = ids[index];
 
@@ -1911,7 +1911,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
         if (oldItem)
             continue;
 
-        Item* newItem = bot->EquipNewItem(dest, bestItemForSlot, true);
+        Item* newItem [[maybe_unused]] = bot->EquipNewItem(dest, bestItemForSlot, true);
         bot->AutoUnequipOffhandIfNeed();
         // if (newItem)
         // {
@@ -1951,7 +1951,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
 
             float bestScoreForSlot = -1;
             uint32 bestItemForSlot = 0;
-            for (int index = 0; index < ids.size(); index++)
+            for (size_t index = 0; index < ids.size(); index++)
             {
                 uint32 newItemId = ids[index];
 
@@ -1980,7 +1980,7 @@ void ShadowFactory::InitEquipment(bool incremental, bool second_chance)
             {
                 continue;
             }
-            Item* newItem = bot->EquipNewItem(dest, bestItemForSlot, true);
+            Item* newItem [[maybe_unused]] = bot->EquipNewItem(dest, bestItemForSlot, true);
             bot->AutoUnequipOffhandIfNeed();
             // if (newItem)
             // {
@@ -2008,7 +2008,7 @@ bool ShadowFactory::IsDesiredReplacement(Item* item)
     // }
 
     uint32 delta = 1 + (80 - bot->GetLevel()) / 10;
-    return proto->Quality < ITEM_QUALITY_RARE || int32(bot->GetLevel() - requiredLevel) > delta;
+    return proto->Quality < ITEM_QUALITY_RARE || static_cast<uint32>(int32(bot->GetLevel() - requiredLevel)) > delta;
 }
 
 inline Item* StoreNewItemInInventorySlot(Player* player, uint32 newItemId, uint32 count)
@@ -2157,7 +2157,7 @@ void ShadowFactory::InitBags(bool destroyOld)
         {
             continue;
         }
-        Item* newItem = bot->EquipNewItem(dest, newItemId, true);
+        Item* newItem [[maybe_unused]] = bot->EquipNewItem(dest, newItemId, true);
         // if (newItem)
         // {
         //     newItem->AddToWorld();
@@ -2749,7 +2749,7 @@ void ShadowFactory::InitTalents(uint32 specNo)
             int index = urand(0, spells_row.size() - 1);
             TalentEntry const* talentInfo = spells_row[index];
             int maxRank = 0;
-            for (int rank = 0; rank < std::min((uint32)MAX_TALENT_RANK, bot->GetFreeTalentPoints()); ++rank)
+            for (uint32 rank = 0; rank < std::min((uint32)MAX_TALENT_RANK, bot->GetFreeTalentPoints()); ++rank)
             {
                 uint32 spellId = talentInfo->RankID[rank];
                 if (!spellId)
@@ -2910,7 +2910,7 @@ void ShadowFactory::AddPrevQuests(uint32 questId, std::list<uint32>& questIds)
 
 void ShadowFactory::InitQuests(std::list<uint32>& questMap, bool withRewardItem)
 {
-    uint32 count = 0;
+    uint32 count [[maybe_unused]] = 0;
     for (std::list<uint32>::iterator i = questMap.begin(); i != questMap.end(); ++i)
     {
         uint32 questId = *i;
@@ -3286,7 +3286,7 @@ void ShadowFactory::InitFood()
     }
 
     uint32 categories[] = {11, 59};
-    for (int i = 0; i < sizeof(categories) / sizeof(uint32); ++i)
+    for (size_t i = 0; i < sizeof(categories) / sizeof(uint32); ++i)
     {
         uint32 category = categories[i];
         std::vector<uint32>& ids = items[category];
@@ -3319,7 +3319,7 @@ void ShadowFactory::InitFood()
 
 void ShadowFactory::InitReagents()
 {
-    int specTab = AiFactory::GetPlayerSpecTab(bot);
+    int specTab [[maybe_unused]] = AiFactory::GetPlayerSpecTab(bot);
     std::vector<std::pair<uint32, uint32>> items;
     switch (bot->getClass())
     {
@@ -4292,7 +4292,7 @@ void ShadowFactory::ApplyEnchantTemplate(uint8 spec)
     // const SpellItemEnchantmentEntry* a = sSpellItemEnchantmentStore.LookupEntry(1);
 }
 
-void ShadowFactory::ApplyEnchantAndGemsNew(bool destroyOld)
+void ShadowFactory::ApplyEnchantAndGemsNew(bool destroyOld [[maybe_unused]])
 {
     //int32 bestGemEnchantId[4] = {-1, -1, -1, -1};  // 1, 2, 4, 8 color //not used, line marked for removal.
     //float bestGemScore[4] = {0, 0, 0, 0}; //not used, line marked for removal.
@@ -4429,7 +4429,7 @@ void ShadowFactory::ApplyEnchantAndGemsNew(bool destroyOld)
                 continue;
             }
             int32 enchantIdChosen = -1;
-            int32 colorChosen;
+            int32 colorChosen [[maybe_unused]];
             bool jewelersGemChosen;
             float bestGemScore = -1;
             for (uint32& enchantGem : availableGems)
@@ -4460,9 +4460,9 @@ void ShadowFactory::ApplyEnchantAndGemsNew(bool destroyOld)
                 if (curCount[0] != 0)
                 {
                     // Ensure meta gem activation
-                    for (int i = 1; i < curCount.size(); i++)
+                    for (size_t i = 1; i < curCount.size(); i++)
                     {
-                        if (curCount[i] < requiredActive && (gemProperties->color & (1 << i)))
+                        if (curCount[i] < static_cast<uint32>(requiredActive) && (gemProperties->color & (1 << i)))
                         {
                             score *= 2;
                             break;

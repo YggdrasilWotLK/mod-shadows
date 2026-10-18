@@ -29,7 +29,7 @@ public:
             foundHighPriority = true;
             return;
         }
-        Unit* victim = attacker->GetVictim();
+        Unit* victim [[maybe_unused]] = attacker->GetVictim();
         if (!result || CalcThreatGap(attacker, threatMgr) > CalcThreatGap(result, &result->GetThreatMgr()))
             result = attacker;
     }
@@ -53,7 +53,7 @@ public:
         result = nullptr;
     }
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
         if (Group* group = botAI->GetBot()->GetGroup())
         {
@@ -144,7 +144,7 @@ public:
     {
     }
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
         if (Group* group = botAI->GetBot()->GetGroup())
         {
@@ -195,7 +195,7 @@ public:
     }
     int32_t GetIntervalLevel(Unit* unit)
     {
-        float time = unit->GetHealth() / dps_;
+        float time [[maybe_unused]] = unit->GetHealth() / dps_;
         float dis = unit->GetDistance(botAI->GetBot());
         float attackRange =
             botAI->IsRanged(botAI->GetBot()) ? sShadowAIConfig->spellDistance : sShadowAIConfig->meleeDistance;
@@ -218,7 +218,7 @@ public:
     {
     }
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
         if (Group* group = botAI->GetBot()->GetGroup())
         {
@@ -276,7 +276,7 @@ public:
     }
     int32_t GetIntervalLevel(Unit* unit)
     {
-        float time = unit->GetHealth() / dps_;
+        float time [[maybe_unused]] = unit->GetHealth() / dps_;
         float dis = unit->GetDistance(botAI->GetBot());
         float attackRange =
             botAI->IsRanged(botAI->GetBot()) ? sShadowAIConfig->spellDistance : sShadowAIConfig->meleeDistance;
@@ -322,7 +322,7 @@ class FindMaxHpTargetStrategy : public FindTargetStrategy
 public:
     FindMaxHpTargetStrategy(ShadowAI* botAI) : FindTargetStrategy(botAI), maxHealth(0) {}
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
         if (Group* group = botAI->GetBot()->GetGroup())
         {

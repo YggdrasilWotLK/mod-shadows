@@ -9,7 +9,7 @@
 #include "GuildTaskMgr.h"
 #include "Shadows.h"
 
-bool CheckMailAction::Execute(Event event)
+bool CheckMailAction::Execute(Event event [[maybe_unused]])
 {
     WorldPacket p;
     bot->GetSession()->HandleQueryNextMailTime(p);

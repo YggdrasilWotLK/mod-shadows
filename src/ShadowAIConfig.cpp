@@ -893,14 +893,14 @@ std::vector<std::vector<uint32>> ShadowAIConfig::ParseTempTalentsOrder(uint32 cl
     }
     for (int tab = 0; tab < 3; tab++)
     {
-        if (tab_links.size() <= tab)
+        if (tab_links.size() <= static_cast<size_t>(tab))
         {
             break;
         }
         std::sort(spells[tab].begin(), spells[tab].end(),
                   [&](TalentEntry const* lhs, TalentEntry const* rhs)
                   { return lhs->Row != rhs->Row ? lhs->Row < rhs->Row : lhs->Col < rhs->Col; });
-        for (int i = 0; i < tab_links[tab].size(); i++)
+        for (size_t i = 0; i < tab_links[tab].size(); i++)
         {
             if (i >= spells[tab].size())
             {
@@ -949,7 +949,7 @@ std::vector<std::vector<uint32>> ShadowAIConfig::ParseTempPetTalentsOrder(uint32
     std::sort(spells.begin(), spells.end(),
               [&](TalentEntry const* lhs, TalentEntry const* rhs)
               { return lhs->Row != rhs->Row ? lhs->Row < rhs->Row : lhs->Col < rhs->Col; });
-    for (int i = 0; i < tab_link.size(); i++)
+    for (size_t i = 0; i < tab_link.size(); i++)
     {
         if (i >= spells.size())
         {

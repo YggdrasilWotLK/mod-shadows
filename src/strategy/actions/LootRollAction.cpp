@@ -13,7 +13,7 @@
 #include "ShadowAIConfig.h"
 #include "Shadows.h"
 
-bool LootRollAction::Execute(Event event)
+bool LootRollAction::Execute(Event event [[maybe_unused]])
 {
     Group* group = bot->GetGroup();
     if (!group)
@@ -27,7 +27,7 @@ bool LootRollAction::Execute(Event event)
             continue;
         }
         ObjectGuid guid = roll->itemGUID;
-        uint32 slot = roll->itemSlot;
+        uint32 slot [[maybe_unused]] = roll->itemSlot;
         uint32 itemId = roll->itemid;
         int32 randomProperty = 0;
         if (roll->itemRandomPropId)
@@ -184,7 +184,7 @@ bool MasterLootRollAction::Execute(Event event)
     if (!group)
         return false;
 
-    RollVote vote = CalculateRollVote(proto);
+    RollVote vote [[maybe_unused]] = CalculateRollVote(proto);
     group->CountRollVote(bot->GetGUID(), creatureGuid, CalculateRollVote(proto));
 
     return true;

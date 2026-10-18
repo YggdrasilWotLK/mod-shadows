@@ -372,7 +372,7 @@ public:
     bool IsActive() override;
 
 private:
-    uint32 requiredSpellId;
+    uint32 requiredSpellId [[maybe_unused]];
     uint32 const* totemSpellIds;
 	size_t totemSpellIdsCount;
     int actionButtonId;

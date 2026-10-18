@@ -11,7 +11,7 @@
 #include "ServerFacade.h"
 #include "SharedDefines.h"
 
-static float GetSpeedInMotion(Unit* target)
+[[maybe_unused]] static float GetSpeedInMotion(Unit* target)
 {
     return target->GetSpeed(Movement::SelectSpeedType(target->GetUnitMovementFlags()));
 }
@@ -200,7 +200,7 @@ bool PartyMemberToHealOutOfSpellRangeTrigger::IsActive()
     if (!target)
         return false;
 
-    float combatReach = bot->GetCombatReach() + target->GetCombatReach();
+    float combatReach [[maybe_unused]] = bot->GetCombatReach() + target->GetCombatReach();
     return target && (sServerFacade->GetDistance2d(bot, target) > (distance + sShadowAIConfig->contactDistance) ||
                       !bot->IsWithinLOSInMap(target));
 }

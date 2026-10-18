@@ -108,14 +108,14 @@ ShadowAI::ShadowAI()
     : ShadowAIBase(true),
       bot(nullptr),
       botGuid(ObjectGuid::Empty),
+      master(nullptr),
+      accountId(0),
       aiObjectContext(nullptr),
       currentEngine(nullptr),
+      currentState(BOT_STATE_NON_COMBAT),
       chatHelper(this),
       chatFilter(this),
-      accountId(0),
-      security(nullptr),
-      master(nullptr),
-      currentState(BOT_STATE_NON_COMBAT)
+      security(nullptr)
 {
     for (uint8 i = 0; i < BOT_STATE_MAX; i++)
         engines[i] = nullptr;
@@ -131,9 +131,9 @@ ShadowAI::ShadowAI(Player* bot)
     : ShadowAIBase(true),
       bot(bot),
       botGuid(bot ? bot->GetGUID() : ObjectGuid::Empty),
+      master(nullptr),
       chatHelper(this),
       chatFilter(this),
-      master(nullptr),
       security(bot)  // reorder args - whipowill
 {
     if (!bot->isTaxiCheater() && HasCheat((BotCheatMask::taxi)))
@@ -2065,7 +2065,7 @@ bool ShadowAI::ContainsStrategy(StrategyType type)
 
 bool ShadowAI::HasStrategy(std::string const name, BotState type) { return engines[type]->HasStrategy(name); }
 
-void ShadowAI::ResetStrategies(bool load)
+void ShadowAI::ResetStrategies(bool load [[maybe_unused]])
 {
     for (uint8 i = 0; i < BOT_STATE_MAX; i++)
         engines[i]->removeAllStrategies();
@@ -2600,7 +2600,7 @@ bool ShadowAI::IsBotMainTank(Player* player)
 
     uint32 botAssistTankIndex = GetAssistTankIndex(player);
 
-    if (botAssistTankIndex == -1)
+    if (botAssistTankIndex == static_cast<uint32>(-1))
     {
         return false;
     }
@@ -2615,7 +2615,7 @@ bool ShadowAI::IsBotMainTank(Player* player)
 
         uint32 memberAssistTankIndex = GetAssistTankIndex(member);
 
-        if (memberAssistTankIndex == -1)
+        if (memberAssistTankIndex == static_cast<uint32>(-1))
         {
             continue;
         }

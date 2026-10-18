@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool StatsAction::Execute(Event event)
+bool StatsAction::Execute(Event event [[maybe_unused]])
 {
     std::ostringstream out;
 

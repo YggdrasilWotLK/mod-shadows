@@ -7,7 +7,7 @@
 
 #include "Shadows.h"
 
-bool ResetInstancesAction::Execute(Event event)
+bool ResetInstancesAction::Execute(Event event [[maybe_unused]])
 {
     WorldPacket packet(CMSG_RESET_INSTANCES, 0);
     bot->GetSession()->HandleResetInstancesOpcode(packet);

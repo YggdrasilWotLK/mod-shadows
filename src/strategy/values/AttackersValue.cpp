@@ -107,7 +107,7 @@ void AttackersValue::AddAttackersOf(Player* player, std::unordered_set<Unit*>& t
     {
         ThreatMgr* threatMgr = ref->GetSource();
         Unit* attacker = threatMgr->GetOwner();
-        Unit* victim = attacker->GetVictim();
+        Unit* victim [[maybe_unused]] = attacker->GetVictim();
 
         if (player->IsValidAttackTarget(attacker) &&
             player->GetDistance2d(attacker) < sShadowAIConfig->sightDistance)
@@ -142,10 +142,10 @@ bool AttackersValue::hasRealThreat(Unit* attacker)
     (attacker->GetThreatMgr().getCurrentVictim() || dynamic_cast<Player*>(attacker));
 }
 
-bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range)
+bool AttackersValue::IsPossibleTarget(Unit* attacker, Player* bot, float range [[maybe_unused]])
 {
     Creature* c = attacker->ToCreature();
-    bool rti = false;
+    bool rti [[maybe_unused]] = false;
     if (attacker && bot->GetGroup())
         rti = bot->GetGroup()->GetTargetIcon(7) == attacker->GetGUID();
 

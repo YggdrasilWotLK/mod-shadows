@@ -53,7 +53,7 @@ class FindTankTargetSmartStrategy : public FindTargetStrategy
 public:
     FindTankTargetSmartStrategy(ShadowAI* botAI) : FindTargetStrategy(botAI) {}
 
-    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr) override
+    void CheckAttacker(Unit* attacker, ThreatMgr* threatMgr [[maybe_unused]]) override
     {
         if (Group* group = botAI->GetBot()->GetGroup())
         {

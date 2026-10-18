@@ -11,7 +11,7 @@
 
 std::vector<std::string> split(std::string const s, char delim);
 
-bool GiveItemAction::Execute(Event event)
+bool GiveItemAction::Execute(Event event [[maybe_unused]])
 {
     Unit* target = GetTarget();
     if (!target)
@@ -28,7 +28,7 @@ bool GiveItemAction::Execute(Event event)
     if (receiverAi->GetAiObjectContext()->GetValue<uint32>("item count", item)->Get())
         return true;
 
-    bool moved = false;
+    bool moved [[maybe_unused]] = false;
     std::vector<Item*> items = InventoryAction::parseItems(item, ITERATE_ITEMS_IN_BAGS);
     for (Item* item : items)
     {

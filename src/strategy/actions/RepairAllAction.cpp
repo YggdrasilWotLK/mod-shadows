@@ -9,7 +9,7 @@
 #include "Event.h"
 #include "Shadows.h"
 
-bool RepairAllAction::Execute(Event event)
+bool RepairAllAction::Execute(Event event [[maybe_unused]])
 {
     GuidVector npcs = AI_VALUE(GuidVector, "nearest npcs");
     for (ObjectGuid const guid : npcs)

@@ -187,7 +187,7 @@ bool ShadowSecurity::CheckLevelFor(ShadowSecurityLevel level, bool silent, Playe
         return false;
 
     auto botAI = GET_SHADOW_AI(bot);
-    Player* master = botAI->GetMaster();
+    Player* master [[maybe_unused]] = botAI->GetMaster();
     //if (master && botAI && botAI->IsOpposing(master) && master->GetSession()->GetSecurity() < SEC_GAMEMASTER)
     //    return false;
 

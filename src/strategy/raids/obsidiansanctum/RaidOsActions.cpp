@@ -3,7 +3,7 @@
 
 #include "Shadows.h"
 
-bool SartharionTankPositionAction::Execute(Event event)
+bool SartharionTankPositionAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "sartharion");
     if (!boss) { return false; }
@@ -84,7 +84,7 @@ bool SartharionTankPositionAction::Execute(Event event)
     return false;
 }
 
-bool AvoidTwilightFissureAction::Execute(Event event)
+bool AvoidTwilightFissureAction::Execute(Event event [[maybe_unused]])
 {
     const float radius = 5.0f;
 
@@ -104,7 +104,7 @@ bool AvoidTwilightFissureAction::Execute(Event event)
     return false;
 }
 
-bool AvoidFlameTsunamiAction::Execute(Event event)
+bool AvoidFlameTsunamiAction::Execute(Event event [[maybe_unused]])
 {
     // Adjustable, this is the acceptable distance to stack point that will be accepted as "safe"
     float looseDistance = 4.0f;
@@ -167,7 +167,7 @@ bool AvoidFlameTsunamiAction::Execute(Event event)
     return false;
 }
 
-bool SartharionAttackPriorityAction::Execute(Event event)
+bool SartharionAttackPriorityAction::Execute(Event event [[maybe_unused]])
 {
     Unit* sartharion = AI_VALUE2(Unit*, "find target", "sartharion");
     Unit* shadron = AI_VALUE2(Unit*, "find target", "shadron");
@@ -206,7 +206,7 @@ bool SartharionAttackPriorityAction::Execute(Event event)
     return false;
 }
 
-bool EnterTwilightPortalAction::Execute(Event event)
+bool EnterTwilightPortalAction::Execute(Event event [[maybe_unused]])
 {
     Unit* boss = AI_VALUE2(Unit*, "find target", "sartharion");
     if (!boss || !boss->HasAura(SPELL_GIFT_OF_TWILIGHT_FIRE)) { return false; }
@@ -227,7 +227,7 @@ bool EnterTwilightPortalAction::Execute(Event event)
     return true;
 }
 
-bool ExitTwilightPortalAction::Execute(Event event)
+bool ExitTwilightPortalAction::Execute(Event event [[maybe_unused]])
 {
     GameObject* portal = bot->FindNearestGameObject(GO_NORMAL_PORTAL, 100.0f);
     if (!portal) { return false; }

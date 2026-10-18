@@ -102,7 +102,7 @@ bool PositionAction::Execute(Event event)
     return false;
 }
 
-bool MoveToPositionAction::Execute(Event event)
+bool MoveToPositionAction::Execute(Event event [[maybe_unused]])
 {
     PositionInfo pos = context->GetValue<PositionMap&>("position")->Get()[qualifier];
     if (!pos.isSet())
@@ -123,7 +123,7 @@ bool MoveToPositionAction::isUseful()
     return pos.isSet() && distance > sShadowAIConfig->followDistance && distance < sShadowAIConfig->reactDistance;
 }
 
-bool SetReturnPositionAction::Execute(Event event)
+bool SetReturnPositionAction::Execute(Event event [[maybe_unused]])
 {
     PositionMap& posMap = context->GetValue<PositionMap&>("position")->Get();
     PositionInfo returnPos = posMap["return"];

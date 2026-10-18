@@ -13,7 +13,7 @@ public:
     UsePotionsStrategyActionNodeFactory() { creators["healthstone"] = &healthstone; }
 
 private:
-    static ActionNode* healthstone(ShadowAI* botAI)
+    static ActionNode* healthstone(ShadowAI* botAI [[maybe_unused]])
     {
         return new ActionNode("healthstone",
                               /*P*/ nullptr,

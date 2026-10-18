@@ -39,7 +39,7 @@ std::vector<ReadyChecker*> ReadyChecker::checkers;
 class HealthChecker : public ReadyChecker
 {
 public:
-    bool Check(ShadowAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI [[maybe_unused]], AiObjectContext* context) override
     {
         return AI_VALUE2(uint8, "health", "self target") > sShadowAIConfig->almostFullHealth;
     }
@@ -50,7 +50,7 @@ public:
 class ManaChecker : public ReadyChecker
 {
 public:
-    bool Check(ShadowAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI [[maybe_unused]], AiObjectContext* context) override
     {
         return !AI_VALUE2(bool, "has mana", "self target") ||
                AI_VALUE2(uint8, "mana", "self target") > sShadowAIConfig->mediumHealth;
@@ -62,7 +62,7 @@ public:
 class DistanceChecker : public ReadyChecker
 {
 public:
-    bool Check(ShadowAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context [[maybe_unused]]) override
     {
         Player* bot = botAI->GetBot();
         if (Player* master = botAI->GetMaster())
@@ -84,7 +84,7 @@ public:
 class HunterChecker : public ReadyChecker
 {
 public:
-    bool Check(ShadowAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI, AiObjectContext* context [[maybe_unused]]) override
     {
         Player* bot = botAI->GetBot();
         if (bot->getClass() == CLASS_HUNTER)
@@ -120,7 +120,7 @@ class ItemCountChecker : public ReadyChecker
 public:
     ItemCountChecker(std::string const item, std::string const name) : item(item), name(name) {}
 
-    bool Check(ShadowAI* botAI, AiObjectContext* context) override
+    bool Check(ShadowAI* botAI [[maybe_unused]], AiObjectContext* context) override
     {
         return AI_VALUE2(uint32, "item count", item) > 0;
     }
@@ -214,4 +214,4 @@ bool ReadyCheckAction::ReadyCheck()
     return true;
 }
 
-bool FinishReadyCheckAction::Execute(Event event) { return ReadyCheck(); }
+bool FinishReadyCheckAction::Execute(Event event [[maybe_unused]]) { return ReadyCheck(); }
