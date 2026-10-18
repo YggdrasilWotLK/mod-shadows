@@ -1684,6 +1684,15 @@ void ShadowAI::DoNextAction(bool min)
         }
     }
 
+    // A controlled move (jump, knockback, air-dismount) owns the spline until it
+    // finishes. Let it play out; ticking actions now fights the arc and stutters
+    // the bot in the air.
+    if (bot->GetMotionMaster()->GetMotionSlotType(MOTION_SLOT_CONTROLLED) != NULL_MOTION_TYPE)
+    {
+        SetNextCheckDelay(sShadowAIConfig->globalCoolDown);
+        return;
+    }
+
     // Clear targets if in combat but sticking with old data
     if (currentEngine == engines[BOT_STATE_NON_COMBAT] && bot->IsInCombat())
     {
