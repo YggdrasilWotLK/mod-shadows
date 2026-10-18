@@ -70,13 +70,13 @@ Additionally, this override file can be used to set custom configuration setting
 services:
   ac-worldserver:
     environment:
-      AC_RATE_XP_KILL: "1"
-      AC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "1"
+      YC_RATE_XP_KILL: "1"
+      YC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "1"
     volumes:
       - ./modules:/azerothcore/modules:ro
 ```
 
-For example, to double the experience gain rate per kill, take the setting `Rate.XP.Kill = 1` from [woldserver.conf](https://github.com/YggdrasilWotLK/yggdrasilcore/blob/master-shadows/src/server/apps/worldserver/worldserver.conf.dist), convert it to an environment variable, and change it to the desired setting in the override file to get `AC_RATE_XP_KILL: "2"`. If you wanted to disable random bots from logging in automatically, take the `AiShadow.RandomBotAutologin = 1` setting from [shadows.conf](https://github.com/YggdrasilWotLK/mod-shadows/blob/master/conf/shadows.conf.dist) and do the same to get `AC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "0"`. For more information on how to configure Azerothcore, Shadows, and other module settings as environment variables in Docker Compose, see the "Configuring AzerothCore in Containers" section in the [Install With Docker](https://www.azerothcore.org/wiki/install-with-docker) guide.
+For example, to double the experience gain rate per kill, take the setting `Rate.XP.Kill = 1` from [woldserver.conf](https://github.com/YggdrasilWotLK/yggdrasilcore/blob/master-shadows/src/server/apps/worldserver/worldserver.conf.dist), convert it to an environment variable, and change it to the desired setting in the override file to get `YC_RATE_XP_KILL: "2"`. If you wanted to disable random bots from logging in automatically, take the `AiShadow.RandomBotAutologin = 1` setting from [shadows.conf](https://github.com/YggdrasilWotLK/mod-shadows/blob/master/conf/shadows.conf.dist) and do the same to get `YC_AI_SHADOW_RANDOM_BOT_AUTOLOGIN: "0"`. For more information on how to configure Azerothcore, Shadows, and other module settings as environment variables in Docker Compose, see the "Configuring AzerothCore in Containers" section in the [Install With Docker](https://www.azerothcore.org/wiki/install-with-docker) guide.
 
 Before building, consider setting the database password. One way to do this is to create a `.env` file in the root `azerothcore-wotlk` directory using the [template](https://github.com/YggdrasilWotLK/yggdrasilcore/blob/master-shadows/conf/dist/env.docker). This file also allows you to set the user and group Docker uses for the services in case you run into any permissions issues, which are the most common cause for Docker installation problems.
 

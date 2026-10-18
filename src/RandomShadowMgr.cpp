@@ -2303,8 +2303,8 @@ void RandomShadowMgr::RandomTeleport(Player* bot)
 
     std::list<Unit*> targets;
     float range = sShadowAIConfig->randomBotTeleportDistance;
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 
     if (!targets.empty())

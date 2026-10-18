@@ -251,11 +251,11 @@ public:
 
     std::set<Transport*> getTransports(uint32 entry = 0);
 
-    GridCoord getGridCoord() { return Acore::ComputeGridCoord(getX(), getY()); };
+    GridCoord getGridCoord() { return Ycore::ComputeGridCoord(getX(), getY()); };
     std::vector<GridCoord> getGridCoord(WorldPosition secondPos);
     std::vector<WorldPosition> fromGridCoord(GridCoord GridCoord);
 
-    CellCoord getCellCoord() { return Acore::ComputeCellCoord(getX(), getY()); }
+    CellCoord getCellCoord() { return Ycore::ComputeCellCoord(getX(), getY()); }
     std::vector<WorldPosition> fromCellCoord(CellCoord cellCoord);
     std::vector<WorldPosition> gridFromCellCoord(CellCoord cellCoord);
 

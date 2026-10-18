@@ -59,7 +59,7 @@ void session(socket_ptr sock)
     }
 }
 
-void server(Acore::Asio::IoContext& io_service, short port)
+void server(Ycore::Asio::IoContext& io_service, short port)
 {
     tcp::acceptor a(io_service, tcp::endpoint(tcp::v4(), port));
     for (;;)
@@ -83,7 +83,7 @@ void Run()
 
     try
     {
-        Acore::Asio::IoContext io_service;
+        Ycore::Asio::IoContext io_service;
         server(io_service, sShadowAIConfig->commandServerPort);
     }
 

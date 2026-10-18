@@ -306,7 +306,7 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
     {
         // Verify preferred mounts table existance in the database
         QueryResult checkTable = ShadowsDatabase.Query(
-            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'acore_shadows' AND table_name = 'shadows_preferred_mounts')");
+            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'ycore_shadows' AND table_name = 'shadows_preferred_mounts')");
 
         if (checkTable && checkTable->Fetch()[0].Get<uint32>() == 1)
         {

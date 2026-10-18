@@ -6555,8 +6555,8 @@ bool IccSindragosaFrostBombAction::Execute(Event event [[maybe_unused]])
     // Manually search for units with frost bomb aura (SPELL_FROST_BOMB_VISUAL) using NearestHostileNpcsValue logic
     std::list<Unit*> units;
     float range = 200.0f;
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, units, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, units, u_check);
     Cell::VisitObjects(bot, searcher, range);
 
     for (Unit* unit : units)

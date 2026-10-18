@@ -109,7 +109,7 @@ bool SummonAction::SummonUsingGos(Player* summoner, Player* player)
 {
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(summoner, sShadowAIConfig->sightDistance);
-    Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(summoner, targets, u_check);
+    Ycore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(summoner, targets, u_check);
     Cell::VisitObjects(summoner, searcher, sShadowAIConfig->sightDistance);
 
     for (GameObject* go : targets)
@@ -128,8 +128,8 @@ bool SummonAction::SummonUsingNpcs(Player* summoner, Player* player)
         return false;
 
     std::list<Unit*> targets;
-    Acore::AnyUnitInObjectRangeCheck u_check(summoner, sShadowAIConfig->sightDistance);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(summoner, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(summoner, sShadowAIConfig->sightDistance);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(summoner, targets, u_check);
     Cell::VisitObjects(summoner, searcher, sShadowAIConfig->sightDistance);
 
     for (Unit* unit : targets)

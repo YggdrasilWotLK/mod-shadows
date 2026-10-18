@@ -16,7 +16,7 @@ GuidVector NearestGameObjects::Calculate()
 {
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(bot, range);
-    Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 
     GuidVector result;
@@ -33,7 +33,7 @@ GuidVector NearestTrapWithDamageValue::Calculate()
 {
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(bot, range);
-    Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 
     GuidVector result;

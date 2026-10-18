@@ -47,8 +47,8 @@ PossibleRpgTargetsValue::PossibleRpgTargetsValue(ShadowAI* botAI, float range)
 
 void PossibleRpgTargetsValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -139,8 +139,8 @@ GuidVector PossibleNewRpgTargetsValue::Calculate()
 
 void PossibleNewRpgTargetsValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -167,7 +167,7 @@ GuidVector PossibleNewRpgGameObjectsValue::Calculate()
 {
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(bot, range);
-    Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 
 

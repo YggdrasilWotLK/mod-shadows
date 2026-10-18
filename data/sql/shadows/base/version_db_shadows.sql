@@ -12,7 +12,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Дамп структуры для таблица _acore_shadows.version_db_shadows
+-- Дамп структуры для таблица _ycore_shadows.version_db_shadows
 DROP TABLE IF EXISTS `version_db_shadows`;
 CREATE TABLE IF NOT EXISTS `version_db_shadows` (
   `sql_rev` varchar(100) NOT NULL,

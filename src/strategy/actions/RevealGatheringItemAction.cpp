@@ -38,7 +38,7 @@ bool RevealGatheringItemAction::Execute(Event event [[maybe_unused]])
 
     std::list<GameObject*> targets;
     AnyGameObjectInObjectRangeCheck u_check(bot, sShadowAIConfig->grindDistance);
-    Acore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::GameObjectListSearcher<AnyGameObjectInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, sShadowAIConfig->reactDistance);
 
     std::vector<GameObject*> result;

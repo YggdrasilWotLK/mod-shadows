@@ -21,7 +21,7 @@
 #include "RandomShadowMgr.h"
 #include "ScriptMgr.h"
 
-using namespace Acore::ChatCommands;
+using namespace Ycore::ChatCommands;
 
 class shadows_commandscript : public CommandScript
 {
