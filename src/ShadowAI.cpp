@@ -508,6 +508,9 @@ void ShadowAI::DoFallJump(float x, float y, float z)
 {
     float fromZ = bot->GetPositionZ();
     float jumpSpeed = GetFallJumpSpeed(fromZ, z);
+    LOG_ERROR("server", "[shadow-jump] DoFallJump {} from ({:.1f},{:.1f},{:.1f}) to ({:.1f},{:.1f},{:.1f}) speed={:.1f} dist2d={:.1f}",
+              bot->GetName(), bot->GetPositionX(), bot->GetPositionY(), fromZ, x, y, z, jumpSpeed,
+              bot->GetDistance2d(x, y));
     bot->GetMotionMaster()->Clear();
     bot->GetMotionMaster()->MoveJump(x, y, z, jumpSpeed, 5.0f);
     // Touchdown damage: evaluated once against current auras, never on a timer.
@@ -778,6 +781,8 @@ void ShadowAI::UpdateAIInternal([[maybe_unused]] uint32 elapsed, bool minimal)
         {
             uint32 damage = PredictFallDamage(pendingFallStartZ - botZ);
             pendingFallDamage = false;
+            LOG_ERROR("server", "[shadow-jump] touchdown {} z={:.1f} ground={:.1f} fellFrom={:.1f} damage={}", bot->GetName(),
+                      botZ, ground, pendingFallStartZ, damage);
             if (damage > 0)
             {
                 damage = std::min(damage, bot->GetMaxHealth());
