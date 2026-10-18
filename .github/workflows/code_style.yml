@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "master" ]
 
+permissions:
+  contents: read
+  pull-requests: read
+
 concurrency:
   group: "codestyle-${{ github.event.pull_request.number }}"
   cancel-in-progress: true
@@ -15,12 +19,34 @@ jobs:
     name: "clang-format-always-success"
     runs-on: ubuntu-latest
     steps:
+      - name: Detect source changes
+        id: changes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          files=""
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            files=$(gh api "repos/${{ github.repository }}/pulls/${{ github.event.number }}/files" --paginate --jq '.[].filename')
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            files=$(gh api "repos/${{ github.repository }}/compare/${{ github.event.before }}...${{ github.sha }}" --jq '.files[].filename' || true)
+          fi
+          if [ -z "$files" ] || printf '%s\n' "$files" | grep -qiE '\.(c|cc|cpp|cxx|h|hh|hpp)$'; then
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=false" >> "$GITHUB_OUTPUT"
+            echo "No source changes; skipping codestyle."
+          fi
+
       - name: Checkout Shadow Module
+        if: steps.changes.outputs.code == 'true'
         uses: actions/checkout@v4
       - name: Install clang-format
+        if: steps.changes.outputs.code == 'true'
         run: sudo apt-get install clang-format -y
 
       - name: Run clang-format
+        if: steps.changes.outputs.code == 'true'
         run: |
           # Find all C/C++ source files
           FILES=$(find . -name "*.h" -o -name "*.cpp" -o -name "*.c" -o -name "*.hpp")
