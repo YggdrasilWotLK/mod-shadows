@@ -1289,6 +1289,76 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
         }
     }
 
+    // Master below on a mesh the bot cannot walk down: drive to the ledge lip,
+    // then jump. A partial path to the master's ground ends at the lip; when the
+    // mesh has no path at all, march toward the master and stop at the drop-off.
+    float const dropDz = target->GetPositionZ() - bot->GetPositionZ();
+    float const dropDist2d = bot->GetDistance2d(target);
+    if (dropDz < -3.0f && dropDist2d < 25.0f && target->GetMapId() == bot->GetMapId() && target->IsAlive() &&
+        !bot->CanFly() && !bot->IsInWater() && !bot->IsUnderWater())
+    {
+        float const gz = bot->GetMapHeight(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
+        if (gz > INVALID_HEIGHT && botAI->PredictFallDamage(bot->GetPositionZ() - gz) < bot->GetHealth())
+        {
+            PathGenerator dropProbe(bot);
+            dropProbe.CalculatePath(target->GetPositionX(), target->GetPositionY(), gz, false);
+
+            // A full walkable route means the bot can just follow down normally.
+            if (!(dropProbe.GetPathType() & (PATHFIND_NORMAL | PATHFIND_SHORT)))
+            {
+                // Furthest reachable mesh point toward the master is the ledge lip.
+                G3D::Vector3 lip(0.0f, 0.0f, 0.0f);
+                if (dropProbe.GetPathType() & PATHFIND_INCOMPLETE)
+                {
+                    lip = dropProbe.GetActualEndPosition();
+                }
+                else
+                {
+                    // No mesh path: march toward the master, stop where ground drops away.
+                    float const bx = bot->GetPositionX();
+                    float const by = bot->GetPositionY();
+                    float const bz = bot->GetPositionZ();
+                    float const dirX = target->GetPositionX() - bx;
+                    float const dirY = target->GetPositionY() - by;
+                    float const horiz = std::sqrt(dirX * dirX + dirY * dirY);
+                    lip = G3D::Vector3(bx, by, bz);
+                    bool atEdge = horiz < 1.0f;
+                    for (float step = 1.0f; !atEdge && step <= horiz; step += 1.0f)
+                    {
+                        float const px = bx + dirX * (step / horiz);
+                        float const py = by + dirY * (step / horiz);
+                        float const g = bot->GetMapHeight(px, py, bz);
+                        if (g <= INVALID_HEIGHT || bz - g > 3.0f)
+                            atEdge = true;
+                        else
+                            lip = G3D::Vector3(px, py, g);
+                    }
+                    if (!atEdge)
+                        return false; // ground stays level toward the master; walk it
+                }
+
+                if (bot->GetExactDist(lip.x, lip.y, lip.z) > sShadowAIConfig->followDistance)
+                {
+                    float dx, dy, dz;
+                    bool alreadyHeading = bot->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE &&
+                                          bot->GetMotionMaster()->GetDestination(dx, dy, dz) &&
+                                          (dx - lip.x) * (dx - lip.x) + (dy - lip.y) * (dy - lip.y) + (dz - lip.z) * (dz - lip.z) <
+                                              sShadowAIConfig->followDistance * sShadowAIConfig->followDistance;
+                    if (!alreadyHeading)
+                    {
+                        bot->GetMotionMaster()->Clear();
+                        bot->GetMotionMaster()->MovePoint(0, lip.x, lip.y, lip.z, FORCED_MOVEMENT_NONE, 0.0f, 0.0f, true, false);
+                    }
+                    return true;
+                }
+
+                // At the lip: drop straight to the master's ground; falling needs no mesh.
+                botAI->DoFallJump(target->GetPositionX(), target->GetPositionY(), gz);
+                return true;
+            }
+        }
+    }
+
     if (sServerFacade->IsDistanceGreaterOrEqualThan(sServerFacade->GetDistance2d(bot, target),
                                                     sShadowAIConfig->sightDistance))
     {
@@ -1347,27 +1417,6 @@ bool MovementAction::Follow(Unit* target, float distance, float angle)
     {
         // botAI->TellError("No need to follow");
         return false; // truly in range (2D and Z) => no need to move
-    }
-
-    // Master below with no mesh route down: jump it when survivable, always
-    // MoveJump even straight down. Falling needs no navmesh. No sight, no jump.
-    float const dropDz = target->GetPositionZ() - bot->GetPositionZ();
-    float const dropDist2d = bot->GetDistance2d(target);
-    if (dropDz < -3.0f && dropDist2d < 25.0f && target->GetMapId() == bot->GetMapId() && target->IsAlive() &&
-        !bot->CanFly() && !bot->IsInWater() && !bot->IsUnderWater() && bot->IsWithinLOSInMap(target))
-    {
-        float const gz = bot->GetMapHeight(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
-        if (gz > INVALID_HEIGHT && botAI->PredictFallDamage(bot->GetPositionZ() - gz) < bot->GetHealth())
-        {
-            PathGenerator dropProbe(bot);
-            dropProbe.CalculatePath(target->GetPositionX(), target->GetPositionY(), gz, false);
-            int const dropOk = PATHFIND_NORMAL | PATHFIND_INCOMPLETE;
-            if (!(dropProbe.GetPathType() & dropOk))
-            {
-                botAI->DoFallJump(target->GetPositionX(), target->GetPositionY(), gz);
-                return true;
-            }
-        }
     }
 
     bot->HandleEmoteCommand(0);
