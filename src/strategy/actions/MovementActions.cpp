@@ -1222,25 +1222,15 @@ std::optional<bool> MovementAction::TryJumpDownTo(Unit* target)
 
     float const gz = bot->GetMapHeight(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ());
     uint32 const predicted = gz > INVALID_HEIGHT ? botAI->PredictFallDamage(bot->GetPositionZ() - gz) : 0;
-    LOG_ERROR("server", "[shadow-jump] {} follow->{} dropZ={:.1f} dist2d={:.1f} gz={:.1f} health={} fallDmg={} mayDrop={}",
-              bot->GetName(), target->GetName(), dropDz, dropDist2d, gz, bot->GetHealth(), predicted,
-              (gz > INVALID_HEIGHT && predicted < bot->GetHealth()));
     if (!(gz > INVALID_HEIGHT && predicted < bot->GetHealth()))
-    {
-        LOG_ERROR("server", "[shadow-jump] {} cannot drop (gz invalid or fall damage lethal)", bot->GetName());
         return std::nullopt;
-    }
 
     PathGenerator dropProbe(bot);
     dropProbe.CalculatePath(target->GetPositionX(), target->GetPositionY(), gz, false);
-    LOG_ERROR("server", "[shadow-jump] {} pathType=0x{:X}", bot->GetName(), uint32(dropProbe.GetPathType()));
 
     // A full walkable route means the bot can just follow down normally.
     if (dropProbe.GetPathType() & (PATHFIND_NORMAL | PATHFIND_SHORT))
-    {
-        LOG_ERROR("server", "[shadow-jump] {} has walkable route, not jumping", bot->GetName());
         return std::nullopt;
-    }
 
     // March toward the master and stop where the ground drops away.
     // The mesh cannot be trusted here: once the bot stands on the
@@ -1264,14 +1254,8 @@ std::optional<bool> MovementAction::TryJumpDownTo(Unit* target)
         else
             lip = G3D::Vector3(px, py, g);
     }
-    LOG_ERROR("server", "[shadow-jump] {} atEdge={} lip=({:.1f},{:.1f},{:.1f}) distToLip={:.2f} followDist={:.2f}",
-              bot->GetName(), atEdge, lip.x, lip.y, lip.z, bot->GetExactDist(lip.x, lip.y, lip.z),
-              sShadowAIConfig->followDistance);
     if (!atEdge)
-    {
-        LOG_ERROR("server", "[shadow-jump] {} no drop found toward master, walking", bot->GetName());
         return false; // ground stays level toward the master; walk it
-    }
 
     if (bot->GetExactDist(lip.x, lip.y, lip.z) > sShadowAIConfig->followDistance)
     {
@@ -1280,7 +1264,6 @@ std::optional<bool> MovementAction::TryJumpDownTo(Unit* target)
                               bot->GetMotionMaster()->GetDestination(dx, dy, dz) &&
                               (dx - lip.x) * (dx - lip.x) + (dy - lip.y) * (dy - lip.y) + (dz - lip.z) * (dz - lip.z) <
                                   sShadowAIConfig->followDistance * sShadowAIConfig->followDistance;
-        LOG_ERROR("server", "[shadow-jump] {} heading to lip, alreadyHeading={}", bot->GetName(), alreadyHeading);
         if (!alreadyHeading)
         {
             bot->GetMotionMaster()->Clear();
@@ -1290,8 +1273,6 @@ std::optional<bool> MovementAction::TryJumpDownTo(Unit* target)
     }
 
     // At the lip: drop straight to the master's ground; falling needs no mesh.
-    LOG_ERROR("server", "[shadow-jump] {} AT LIP, DoFallJump -> ({:.1f},{:.1f},{:.1f})", bot->GetName(),
-              target->GetPositionX(), target->GetPositionY(), gz);
     botAI->DoFallJump(target->GetPositionX(), target->GetPositionY(), gz);
     return true;
 }
