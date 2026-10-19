@@ -38,10 +38,21 @@ public:
 
     bool OnDatabasesLoading() override
     {
+        // 1. Global updates disabled (Updates.EnableDatabases = 0) -> shadows
+        //    updates are disabled too.
+        // 2. Global updates enabled -> Shadows.Updates.EnableDatabases decides
+        //    whether this module updates its own database.
+        bool const globalUpdatesEnabled =
+            sConfigMgr->GetOption<uint32>("Updates.EnableDatabases", DatabaseLoader::DATABASE_MASK_ALL) != 0;
+        bool const shadowsUpdatesEnabled =
+            sConfigMgr->GetOption<bool>("Shadows.Updates.EnableDatabases", true);
+
+        uint32 updateFlags = 0;
+        if (globalUpdatesEnabled && shadowsUpdatesEnabled)
+            updateFlags = DatabaseLoader::DATABASE_SHADOWS;
+
         DatabaseLoader shadowLoader("server.shadows");
-        shadowLoader.SetUpdateFlags(sConfigMgr->GetOption<bool>("Shadows.Updates.EnableDatabases", true)
-                                           ? DatabaseLoader::DATABASE_SHADOWS
-                                           : 0);
+        shadowLoader.SetUpdateFlags(updateFlags);
         shadowLoader.AddDatabase(ShadowsDatabase, "Shadows");
 
         return shadowLoader.Load();
