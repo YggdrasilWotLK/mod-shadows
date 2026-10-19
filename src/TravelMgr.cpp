@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -3478,7 +3478,7 @@ std::vector<WorldPosition*> TravelMgr::getNextPoint(WorldPosition* center, std::
                    [center](WorldPosition* point)
                    { return static_cast<uint32>(200000.f / (1.f + point->distance(center))); });
 
-    Acore::Containers::RandomShuffle(retVec);
+    Ycore::Containers::RandomShuffle(retVec);
 
     std::vector<float> dists;
 

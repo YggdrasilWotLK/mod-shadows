@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -251,11 +251,11 @@ public:
 
     std::set<Transport*> getTransports(uint32 entry = 0);
 
-    GridCoord getGridCoord() { return Acore::ComputeGridCoord(getX(), getY()); };
+    GridCoord getGridCoord() { return Ycore::ComputeGridCoord(getX(), getY()); };
     std::vector<GridCoord> getGridCoord(WorldPosition secondPos);
     std::vector<WorldPosition> fromGridCoord(GridCoord GridCoord);
 
-    CellCoord getCellCoord() { return Acore::ComputeCellCoord(getX(), getY()); }
+    CellCoord getCellCoord() { return Ycore::ComputeCellCoord(getX(), getY()); }
     std::vector<WorldPosition> fromCellCoord(CellCoord cellCoord);
     std::vector<WorldPosition> gridFromCellCoord(CellCoord cellCoord);
 

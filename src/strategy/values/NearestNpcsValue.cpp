@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -13,8 +13,8 @@
 
 void NearestNpcsValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -22,8 +22,8 @@ bool NearestNpcsValue::AcceptUnit(Unit* unit) { return !unit->IsPlayer(); }
 
 void NearestHostileNpcsValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -31,8 +31,8 @@ bool NearestHostileNpcsValue::AcceptUnit(Unit* unit) { return unit->IsHostileTo(
 
 void NearestVehiclesValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -50,8 +50,8 @@ bool NearestVehiclesValue::AcceptUnit(Unit* unit)
 
 void NearestTriggersValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnfriendlyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnfriendlyUnitInObjectRangeCheck u_check(bot, bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnfriendlyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 
@@ -59,8 +59,8 @@ bool NearestTriggersValue::AcceptUnit(Unit* unit) { return !unit->IsPlayer(); }
 
 void NearestTotemsValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyUnitInObjectRangeCheck u_check(bot, range);
-    Acore::UnitListSearcher<Acore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyUnitInObjectRangeCheck u_check(bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 

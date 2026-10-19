@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -12,8 +12,8 @@
 
 void NearestFriendlyPlayersValue::FindUnits(std::list<Unit*>& targets)
 {
-    Acore::AnyFriendlyUnitInObjectRangeCheck u_check(bot, bot, range);
-    Acore::UnitListSearcher<Acore::AnyFriendlyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
+    Ycore::AnyFriendlyUnitInObjectRangeCheck u_check(bot, bot, range);
+    Ycore::UnitListSearcher<Ycore::AnyFriendlyUnitInObjectRangeCheck> searcher(bot, targets, u_check);
     Cell::VisitObjects(bot, searcher, range);
 }
 

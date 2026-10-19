@@ -1,236 +1,36 @@
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 DROP TABLE IF EXISTS `shadows_speech`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `shadows_speech` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `text` varchar(1024) NOT NULL,
   `type` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+/*!40000 ALTER TABLE `shadows_speech` DISABLE KEYS */;
+INSERT INTO `shadows_speech` VALUES (1,'taunt','I have puppies under my armor!','say'),(2,'taunt','Bite me, <target>!','say'),(3,'taunt','Hey <target>! Guess what your mom said last night!','say'),(4,'taunt','<target>, you\'re so ugly you couldn\'t score in a monkey whorehouse with a bag of bananas!','say'),(5,'taunt','Shut up <target>, you\'ll never be the man your mother is!!','say'),(6,'taunt','Your mother was a hampster and your father smelt of elderberries!!!!','say'),(7,'taunt','I don\'t want to talk to you no more, you empty headed animal food trough wiper!!!','say'),(8,'taunt','I fart in your general direction!!!','say'),(9,'taunt','Go and boil your bottom, you son of a silly person!!!','say'),(10,'taunt','What are you going to do <target>, bleed on me? HAVE AT YOU!','say'),(11,'taunt','M-O-O-N! That spells aggro!','say'),(12,'taunt','You\'re about as useful as a one-legged man in an ass kicking contest.','say'),(13,'taunt','Hey <target>! Stop hitting on them, they\'re not your type. They aren\'t inflatable.','say'),(14,'taunt','<target> you\'re so far outta your league, you\'re playing a different sport.','say'),(15,'taunt','You made a big mistake today <target>, you got out of bed.','say'),(16,'taunt','I wanna try turning into a horse, but I need help. I\'ll be the front, you be yourself.','say'),(17,'taunt','Can I borrow your face for a few days? My ass is going on holiday....','say'),(18,'taunt','I\'d like to give you a going away present... First you do your part.','say'),(19,'taunt','Before you came along we were hungry, Now we\'re just fed up.','say'),(20,'taunt','I like you. People say I have no taste, but I like you.','say'),(21,'taunt','I think you have an inferiority complex, but that\'s okay, it\'s justified.','say'),(22,'taunt','Hence rotten thing! Or I shall shake thy bones out of thy garments.','say'),(23,'taunt','I can\'t believe I\'m wasting my time with you!','say'),(24,'taunt','I love it when someone insults me, it means I don\'t have to be nice anymore.','say'),(25,'taunt','Thou leathern-jerkin, crystal-button, knot-pated, agatering, puke-stocking, caddis-garter, smooth-tongue, Spanish pouch!','say'),(26,'taunt','Thou qualling bat-fowling malt-worm!','say'),(27,'taunt','Thou art truely an idol of idiot-worshippers!','say'),(28,'taunt','Thou misbegotten knotty-pated wagtail!','say'),(29,'taunt','Thou whoreson mandrake, thou art fitter to be worn in my cap than to wait at my heels!','say'),(30,'taunt','You! You scullion! You rampallian! You fustilarian! I\'ll tickle your catastrophe!','say'),(31,'taunt','Oh <target>! Thou infectious ill-nurtured flax-wench!','say'),(32,'taunt','We leak in your chimney, <target>!','say'),(33,'taunt','Oh thou bootless fen-sucked canker-blossom!','say'),(34,'taunt','Were I like thee I\'d throw away myself!','say'),(35,'taunt','O teach me <target>, how I should forget to think!','say'),(36,'taunt','Truly thou art damned, like an ill-roasted egg, all on one side!','say'),(37,'taunt','You starvelling, you eel-skin, you dried neat\'s-tongue, you bull\'s-pizzle, you stock-fish- O for breath to utter what is like thee!! -you tailor\'s-yard, you sheath, you bow-case, you vile standing tuck!','say'),(38,'taunt','Fie! Drop thee into the rotten mouth of Death!','say'),(39,'taunt','<target>, you are a fishmonger!','say'),(40,'taunt','I shall live to knock thy brains out!','say'),(41,'taunt','Most shallow are you, <target>!! Thou art worms-meat in respect of a good piece of flesh, indeed!!','say'),(42,'taunt','Vile wretch! O <target>, thou odiferous hell-hated pignut!','say'),(43,'taunt','<target>! Thy kiss is as comfortless as frozen water to a starved snake!','say'),(44,'taunt','I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack-linen mate! Away, you moldy rogue, away!','say'),(45,'taunt','Out of my sight! Thou dost infect my eyes <target>!','say'),(46,'taunt','PLAY TIME!!!!','say'),(47,'taunt','None shall pass!','say'),(48,'taunt','We\'re under attack! A vast, ye swabs! Repel the invaders!','say'),(49,'taunt','None may challenge the Brotherhood!','say'),(50,'taunt','Foolsss...Kill the one in the dress!','say'),(51,'taunt','I\'ll feed your soul to Hakkar himself! ','say'),(52,'taunt','Pride heralds the end of your world! Come, mortals! Face the wrath of the <randomfaction>!','say'),(53,'taunt','All my plans have led to this!','say'),(54,'taunt','Ahh! More lambs to the slaughter!','say'),(55,'taunt','Another day, another glorious battle!','say'),(56,'taunt','So, business... or pleasure?','say'),(57,'taunt','You are not prepared!','say'),(58,'taunt','The <randomfaction>\'s final conquest has begun! Once again the subjugation of this world is within our grasp. Let none survive! ','say'),(59,'taunt','Your death will be a painful one. ','say'),(60,'taunt','Cry for mercy! Your meaningless lives will soon be forfeit. ','say'),(61,'taunt','Abandon all hope! The <randomfaction> has returned to finish what was begun so many years ago. This time there will be no escape! ','say'),(62,'taunt','Alert! You are marked for Extermination! ','say'),(63,'taunt','The <subzone> is for guests only...','say'),(64,'taunt','Ha ha ha! You are hopelessly outmatched!','say'),(65,'taunt','I will crush your delusions of grandeur! ','say'),(66,'taunt','Forgive me, for you are about to lose the game.','say'),(67,'taunt','Struggling only makes it worse.','say'),(68,'taunt','Vermin! Leeches! Take my blood and choke on it!','say'),(69,'taunt','Not again... NOT AGAIN!','say'),(70,'taunt','My blood will be the end of you!','say'),(71,'taunt','Good, now you fight me!','say'),(72,'taunt','Get da move on, guards! It be killin\' time!','say'),(73,'taunt','Don\'t be delayin\' your fate. Come to me now. I make your sacrifice quick.','say'),(74,'taunt','You be dead soon enough!','say'),(75,'taunt','Mua-ha-ha!','say'),(76,'taunt','I be da predator! You da prey...','say'),(77,'taunt','You gonna leave in pieces!','say'),(78,'taunt','Death comes. Will your conscience be clear? ','say'),(79,'taunt','Your behavior will not be tolerated.','say'),(80,'taunt','The Menagerie is for guests only.','say'),(81,'taunt','Hmm, unannounced visitors, Preparations must be made... ','say'),(82,'taunt','Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus thirty seconds to re-evaluation.','say'),(83,'taunt','New toys? For me? I promise I won\'t break them this time!','say'),(84,'taunt','I\'m ready to play!','say'),(85,'taunt','Shhh... it will all be over soon.','say'),(86,'taunt','Aaaaaughibbrgubugbugrguburgle!','say'),(87,'taunt','RwlRwlRwlRwl!','say'),(88,'taunt','You too, shall serve!','say'),(89,'taunt','Tell me... tell me everything!  Naughty secrets! I\'ll rip the secrets from your flesh!','say'),(90,'taunt','Prepare yourselves, the bells have tolled! Shelter your weak, your young and your old! Each of you shall pay the final sum! Cry for mercy; the reckoning has come!','say'),(91,'taunt','Where in Bonzo\'s brass buttons am I?','say'),(92,'taunt','I can bear it no longer! Goblin King! Goblin King! Wherever you may be! Take this <target> far away from me!','say'),(93,'taunt','You have thirteen hours in which to solve the labyrinth, before your baby brother becomes one of us... forever.','say'),(94,'taunt','So, the <subzone> is a piece of cake, is it? Well, let\'s see how you deal with this little slice... ','say'),(95,'taunt','Back off, I\'ll take you on, headstrong to take on anyone, I know that you are wrong, and this is not where you belong','say'),(96,'taunt','Show me whatcha got!','say'),(97,'taunt','To the death!','say'),(98,'taunt','Twin blade action, for a clean close shave every time.','say'),(99,'taunt','Bring it on!','say'),(100,'taunt','You\'re goin\' down!','say'),(101,'taunt','Stabby stab stab!','say'),(102,'taunt','Let\'s get this over quick; time is mana.','say'),(103,'taunt','I do not think you realise the gravity of your situation.','say'),(104,'taunt','I will bring honor to my family and my kingdom!','say'),(105,'taunt','Light, give me strength!','say'),(106,'taunt','My church is the field of battle - time to worship...','say'),(107,'taunt','I hold you in contempt...','say'),(108,'taunt','Face the hammer of justice!','say'),(109,'taunt','Prove your worth in the test of arms under the Light!','say'),(110,'taunt','All must fall before the might and right of my cause, you shall be next!','say'),(111,'taunt','Prepare to die!','say'),(112,'taunt','The beast with me is nothing compared to the beast within...','say'),(113,'taunt','Witness the firepower of this fully armed huntsman!','say'),(114,'critical health','Heal me! Quick!','yell'),(115,'critical health','Almost dead! Heal me!','yell'),(116,'critical health','Help! Heal me!','yell'),(117,'critical health','Somebody! Heal me!','yell'),(118,'critical health','Heal! Heal! Heal!','yell'),(119,'critical health','I am dying! Heal! Aaaaarhg!','yell'),(120,'critical health','Heal me!','yell'),(121,'critical health','I will die. I will die. I will die. Heal!','yell'),(122,'critical health','Healers, where are you? I am dying!','yell'),(123,'critical health','Oh the pain. Heal me quick!','yell'),(124,'low health','Need heal','say'),(125,'low health','Low health','say'),(126,'low health','Drop a heal. Please.','say'),(127,'low health','Could somebody drop a heal on me?','say'),(128,'low health','Hey! Better heal me now than rez later','say'),(129,'low health','I am sorry. Need another heal','say'),(130,'low health','Damn mobs. Heal me please','say'),(131,'low health','One more hit and I am done for. Heal please','say'),(132,'low health','Are there any healers?','say'),(133,'low health','Why do they always punch me in the face? Need heal','say'),(134,'low health','Can anybody heal me a bit?','say'),(135,'low mana','OOM','say'),(136,'low mana','I am out of mana','say'),(137,'low mana','Damn I wasted all my mana on this','say'),(138,'low mana','You should wait until I drink or regenerate my mana','say'),(139,'low mana','Low mana','say'),(140,'low mana','No mana. Again?','say'),(141,'low mana','Low mana. Wanna drink','say'),(142,'low mana','Do we have a vending machine? Out of mana again','say'),(143,'low mana','My mana is history','say'),(144,'low mana','I\'d get some drinks next time. Out of mana','say'),(145,'low mana','Where is my mana?','say'),(146,'aoe','Oh god!','say'),(147,'aoe','I am scared','say'),(148,'aoe','We are done for','say'),(149,'aoe','This is over','say'),(150,'aoe','This ends now','say'),(151,'aoe','Could somebody cast blizzard or something?','say'),(152,'aoe','Damn. The tank aggroed all the mobs around','say'),(153,'aoe','We gonna die. We gonna die. We gonna die.','say'),(154,'aoe','Whoa! So many toys to play with','say'),(155,'aoe','I gonna kill them all!','say'),(156,'aoe','If the tank dies we are history','say'),(157,'aoe','Aaaaaargh!','yell'),(158,'aoe','LEEEEERROOOYYYYYYYYYYYY JENNKINNNSSSSSS!!!!!!!','yell'),(159,'aoe','Right. What do we have in AOE?','say'),(160,'aoe','This gets interesting','say'),(161,'aoe','Cool. Get them in one place for a good flamestrike','say'),(162,'aoe','Kill! Kill! Kill!','say'),(163,'aoe','I think my pants are wet','say'),(164,'aoe','We are history','say'),(165,'aoe','I hope healers are ready. Leeeeroy!','say'),(166,'aoe','I hope they won\'t come for me','say'),(167,'aoe','Oh no. I can\'t see at this slaugther','say'),(168,'loot','I hope there will be some money','say'),(169,'loot','Loot! Loot!','say'),(170,'loot','My precious','say'),(171,'loot','I hope there is a shiny epic item waiting for me there','say'),(172,'loot','I have deep pockets and bags','say'),(173,'loot','All is mine!','say'),(174,'loot','Hope no gray shit today','say'),(175,'loot','This loot is MINE!','say'),(176,'loot','Looting is disgusting but I need money','say'),(177,'loot','Gold!','say'),(178,'loot','OK. Let\'s see what they\'ve got','say'),(179,'loot','Do not worry. I will loot eveything','say'),(180,'loot','I am loot ninja','say'),(181,'loot','Do I neeed to roll?','say'),(182,'loot','Somebody explain me, where they did put all this stuff?','say'),(183,'loot','No, I won\'t loot gray shit','say'),(184,'loot','I\'m first. I\'m first. I\'m first.','say'),(185,'loot','Give me your money!','say'),(186,'loot','My pockets are empty, I need to fill them','say'),(187,'loot','I\'ve got a new bag for this','say'),(188,'loot','I hope I won\'t aggro anybody while looting','say'),(189,'loot','Please don\'t watch. I am looting','say'),(190,'loot','Ha! You won\'t get any piece of it!','say'),(191,'loot','Looting is cool','say'),(192,'loot','I like new gear','say'),(193,'loot','I\'l quit if there is nothing valuable again','say'),(194,'loot','I hope it is be a pretty ring','say'),(195,'loot','I\'l rip the loot from you','say'),(196,'loot','Everybody stay off. I\'m going to loot','say'),(197,'loot','Sweet loot','say'),(198,'loot','The Roll God! Give me an epic today','say'),(199,'loot','Please give me new toys','say'),(200,'loot','I hope they carry tasties','say'),(201,'loot','The gold is mine. I\'l leave everyting, I promise','say'),(202,'loot','No, I can\'t resist','say'),(203,'loot','I want more!','say'),(204,'low ammo','I have few <ammo> left!','say'),(205,'low ammo','I need more <ammo>!','say'),(206,'low ammo','100 <ammo> left!','say'),(207,'no ammo','That\'s it! No <ammo>!','say'),(208,'no ammo','And you have my bow... Oops, no <ammo>!','say'),(209,'no ammo','Need ammo!','yell');
+/*!40000 ALTER TABLE `shadows_speech` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'taunt', 'I have puppies under my armor!', 'say'),
-(NULL, 'taunt', 'Bite me, <target>!', 'say'),
-(NULL, 'taunt', 'Hey <target>! Guess what your mom said last night!', 'say'),
-(NULL, 'taunt', '<target>, you''re so ugly you couldn''t score in a monkey whorehouse with a bag of bananas!', 'say'),
-(NULL, 'taunt', 'Shut up <target>, you''ll never be the man your mother is!!', 'say'),
-(NULL, 'taunt', 'Your mother was a hampster and your father smelt of elderberries!!!!', 'say'),
-(NULL, 'taunt', 'I don''t want to talk to you no more, you empty headed animal food trough wiper!!!', 'say'),
-(NULL, 'taunt', 'I fart in your general direction!!!', 'say'),
-(NULL, 'taunt', 'Go and boil your bottom, you son of a silly person!!!', 'say'),
-(NULL, 'taunt', 'What are you going to do <target>, bleed on me? HAVE AT YOU!', 'say'),
-(NULL, 'taunt', 'M-O-O-N! That spells aggro!', 'say'),
-(NULL, 'taunt', 'You''re about as useful as a one-legged man in an ass kicking contest.', 'say'),
-(NULL, 'taunt', 'Hey <target>! Stop hitting on them, they''re not your type. They aren''t inflatable.', 'say'),
-(NULL, 'taunt', '<target> you''re so far outta your league, you''re playing a different sport.', 'say'),
-(NULL, 'taunt', 'You made a big mistake today <target>, you got out of bed.', 'say'),
-(NULL, 'taunt', 'I wanna try turning into a horse, but I need help. I''ll be the front, you be yourself.', 'say'),
-(NULL, 'taunt', 'Can I borrow your face for a few days? My ass is going on holiday....', 'say'),
-(NULL, 'taunt', 'I''d like to give you a going away present... First you do your part.', 'say'),
-(NULL, 'taunt', 'Before you came along we were hungry, Now we''re just fed up.', 'say'),
-(NULL, 'taunt', 'I like you. People say I have no taste, but I like you.', 'say'),
-(NULL, 'taunt', 'I think you have an inferiority complex, but that''s okay, it''s justified.', 'say'),
-(NULL, 'taunt', 'Hence rotten thing! Or I shall shake thy bones out of thy garments.', 'say'),
-(NULL, 'taunt', 'I can''t believe I''m wasting my time with you!', 'say'),
-(NULL, 'taunt', 'I love it when someone insults me, it means I don''t have to be nice anymore.', 'say'),
-(NULL, 'taunt', 'Thou leathern-jerkin, crystal-button, knot-pated, agatering, puke-stocking, caddis-garter, smooth-tongue, Spanish pouch!', 'say'),
-(NULL, 'taunt', 'Thou qualling bat-fowling malt-worm!', 'say'),
-(NULL, 'taunt', 'Thou art truely an idol of idiot-worshippers!', 'say'),
-(NULL, 'taunt', 'Thou misbegotten knotty-pated wagtail!', 'say'),
-(NULL, 'taunt', 'Thou whoreson mandrake, thou art fitter to be worn in my cap than to wait at my heels!', 'say'),
-(NULL, 'taunt', 'You! You scullion! You rampallian! You fustilarian! I''ll tickle your catastrophe!', 'say'),
-(NULL, 'taunt', 'Oh <target>! Thou infectious ill-nurtured flax-wench!', 'say'),
-(NULL, 'taunt', 'We leak in your chimney, <target>!', 'say'),
-(NULL, 'taunt', 'Oh thou bootless fen-sucked canker-blossom!', 'say'),
-(NULL, 'taunt', 'Were I like thee I''d throw away myself!', 'say'),
-(NULL, 'taunt', 'O teach me <target>, how I should forget to think!', 'say'),
-(NULL, 'taunt', 'Truly thou art damned, like an ill-roasted egg, all on one side!', 'say'),
-(NULL, 'taunt', 'You starvelling, you eel-skin, you dried neat''s-tongue, you bull''s-pizzle, you stock-fish- O for breath to utter what is like thee!! -you tailor''s-yard, you sheath, you bow-case, you vile standing tuck!', 'say'),
-(NULL, 'taunt', 'Fie! Drop thee into the rotten mouth of Death!', 'say'),
-(NULL, 'taunt', '<target>, you are a fishmonger!', 'say'),
-(NULL, 'taunt', 'I shall live to knock thy brains out!', 'say'),
-(NULL, 'taunt', 'Most shallow are you, <target>!! Thou art worms-meat in respect of a good piece of flesh, indeed!!', 'say'),
-(NULL, 'taunt', 'Vile wretch! O <target>, thou odiferous hell-hated pignut!', 'say'),
-(NULL, 'taunt', '<target>! Thy kiss is as comfortless as frozen water to a starved snake!', 'say'),
-(NULL, 'taunt', 'I scorn you, scurvy companion. What, you poor, base, rascally, cheating, lack-linen mate! Away, you moldy rogue, away!', 'say'),
-(NULL, 'taunt', 'Out of my sight! Thou dost infect my eyes <target>!', 'say'),
-(NULL, 'taunt', 'PLAY TIME!!!!', 'say'),
-(NULL, 'taunt', 'None shall pass!', 'say'),
-(NULL, 'taunt', 'We''re under attack! A vast, ye swabs! Repel the invaders!', 'say'),
-(NULL, 'taunt', 'None may challenge the Brotherhood!', 'say'),
-(NULL, 'taunt', 'Foolsss...Kill the one in the dress!', 'say'),
-(NULL, 'taunt', 'I''ll feed your soul to Hakkar himself! ', 'say'),
-(NULL, 'taunt', 'Pride heralds the end of your world! Come, mortals! Face the wrath of the <randomfaction>!', 'say'),
-(NULL, 'taunt', 'All my plans have led to this!', 'say'),
-(NULL, 'taunt', 'Ahh! More lambs to the slaughter!', 'say'),
-(NULL, 'taunt', 'Another day, another glorious battle!', 'say'),
-(NULL, 'taunt', 'So, business... or pleasure?', 'say'),
-(NULL, 'taunt', 'You are not prepared!', 'say'),
-(NULL, 'taunt', 'The <randomfaction>''s final conquest has begun! Once again the subjugation of this world is within our grasp. Let none survive! ', 'say'),
-(NULL, 'taunt', 'Your death will be a painful one. ', 'say'),
-(NULL, 'taunt', 'Cry for mercy! Your meaningless lives will soon be forfeit. ', 'say'),
-(NULL, 'taunt', 'Abandon all hope! The <randomfaction> has returned to finish what was begun so many years ago. This time there will be no escape! ', 'say'),
-(NULL, 'taunt', 'Alert! You are marked for Extermination! ', 'say'),
-(NULL, 'taunt', 'The <subzone> is for guests only...', 'say'),
-(NULL, 'taunt', 'Ha ha ha! You are hopelessly outmatched!', 'say'),
-(NULL, 'taunt', 'I will crush your delusions of grandeur! ', 'say'),
-(NULL, 'taunt', 'Forgive me, for you are about to lose the game.', 'say'),
-(NULL, 'taunt', 'Struggling only makes it worse.', 'say'),
-(NULL, 'taunt', 'Vermin! Leeches! Take my blood and choke on it!', 'say'),
-(NULL, 'taunt', 'Not again... NOT AGAIN!', 'say'),
-(NULL, 'taunt', 'My blood will be the end of you!', 'say'),
-(NULL, 'taunt', 'Good, now you fight me!', 'say'),
-(NULL, 'taunt', 'Get da move on, guards! It be killin'' time!', 'say'),
-(NULL, 'taunt', 'Don''t be delayin'' your fate. Come to me now. I make your sacrifice quick.', 'say'),
-(NULL, 'taunt', 'You be dead soon enough!', 'say'),
-(NULL, 'taunt', 'Mua-ha-ha!', 'say'),
-(NULL, 'taunt', 'I be da predator! You da prey...', 'say'),
-(NULL, 'taunt', 'You gonna leave in pieces!', 'say'),
-(NULL, 'taunt', 'Death comes. Will your conscience be clear? ', 'say'),
-(NULL, 'taunt', 'Your behavior will not be tolerated.', 'say'),
-(NULL, 'taunt', 'The Menagerie is for guests only.', 'say'),
-(NULL, 'taunt', 'Hmm, unannounced visitors, Preparations must be made... ', 'say'),
-(NULL, 'taunt', 'Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus thirty seconds to re-evaluation.', 'say'),
-(NULL, 'taunt', 'New toys? For me? I promise I won''t break them this time!', 'say'),
-(NULL, 'taunt', 'I''m ready to play!', 'say'),
-(NULL, 'taunt', 'Shhh... it will all be over soon.', 'say'),
-(NULL, 'taunt', 'Aaaaaughibbrgubugbugrguburgle!', 'say'),
-(NULL, 'taunt', 'RwlRwlRwlRwl!', 'say'),
-(NULL, 'taunt', 'You too, shall serve!', 'say'),
-(NULL, 'taunt', 'Tell me... tell me everything!  Naughty secrets! I''ll rip the secrets from your flesh!', 'say'),
-(NULL, 'taunt', 'Prepare yourselves, the bells have tolled! Shelter your weak, your young and your old! Each of you shall pay the final sum! Cry for mercy; the reckoning has come!', 'say'),
-(NULL, 'taunt', 'Where in Bonzo''s brass buttons am I?', 'say'),
-(NULL, 'taunt', 'I can bear it no longer! Goblin King! Goblin King! Wherever you may be! Take this <target> far away from me!', 'say'),
-(NULL, 'taunt', 'You have thirteen hours in which to solve the labyrinth, before your baby brother becomes one of us... forever.', 'say'),
-(NULL, 'taunt', 'So, the <subzone> is a piece of cake, is it? Well, let''s see how you deal with this little slice... ', 'say'),
-(NULL, 'taunt', 'Back off, I''ll take you on, headstrong to take on anyone, I know that you are wrong, and this is not where you belong', 'say'),
-(NULL, 'taunt', 'Show me whatcha got!', 'say'),
-(NULL, 'taunt', 'To the death!', 'say'),
-(NULL, 'taunt', 'Twin blade action, for a clean close shave every time.', 'say'),
-(NULL, 'taunt', 'Bring it on!', 'say'),
-(NULL, 'taunt', 'You''re goin'' down!', 'say'),
-(NULL, 'taunt', 'Stabby stab stab!', 'say'),
-(NULL, 'taunt', 'Let''s get this over quick; time is mana.', 'say'),
-(NULL, 'taunt', 'I do not think you realise the gravity of your situation.', 'say'),
-(NULL, 'taunt', 'I will bring honor to my family and my kingdom!', 'say'),
-(NULL, 'taunt', 'Light, give me strength!', 'say'),
-(NULL, 'taunt', 'My church is the field of battle - time to worship...', 'say'),
-(NULL, 'taunt', 'I hold you in contempt...', 'say'),
-(NULL, 'taunt', 'Face the hammer of justice!', 'say'),
-(NULL, 'taunt', 'Prove your worth in the test of arms under the Light!', 'say'),
-(NULL, 'taunt', 'All must fall before the might and right of my cause, you shall be next!', 'say'),
-(NULL, 'taunt', 'Prepare to die!', 'say'),
-(NULL, 'taunt', 'The beast with me is nothing compared to the beast within...', 'say'),
-(NULL, 'taunt', 'Witness the firepower of this fully armed huntsman!', 'say');
-
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'critical health', 'Heal me! Quick!', 'yell'),
-(NULL, 'critical health', 'Almost dead! Heal me!', 'yell'),
-(NULL, 'critical health', 'Help! Heal me!', 'yell'),
-(NULL, 'critical health', 'Somebody! Heal me!', 'yell'),
-(NULL, 'critical health', 'Heal! Heal! Heal!', 'yell'),
-(NULL, 'critical health', 'I am dying! Heal! Aaaaarhg!', 'yell'),
-(NULL, 'critical health', 'Heal me!', 'yell'),
-(NULL, 'critical health', 'I will die. I will die. I will die. Heal!', 'yell'),
-(NULL, 'critical health', 'Healers, where are you? I am dying!', 'yell'),
-(NULL, 'critical health', 'Oh the pain. Heal me quick!', 'yell');
-
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'low health', 'Need heal', 'say'),
-(NULL, 'low health', 'Low health', 'say'),
-(NULL, 'low health', 'Drop a heal. Please.', 'say'),
-(NULL, 'low health', 'Could somebody drop a heal on me?', 'say'),
-(NULL, 'low health', 'Hey! Better heal me now than rez later', 'say'),
-(NULL, 'low health', 'I am sorry. Need another heal', 'say'),
-(NULL, 'low health', 'Damn mobs. Heal me please', 'say'),
-(NULL, 'low health', 'One more hit and I am done for. Heal please', 'say'),
-(NULL, 'low health', 'Are there any healers?', 'say'),
-(NULL, 'low health', 'Why do they always punch me in the face? Need heal', 'say'),
-(NULL, 'low health', 'Can anybody heal me a bit?', 'say');
-
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'low mana', 'OOM', 'say'),
-(NULL, 'low mana', 'I am out of mana', 'say'),
-(NULL, 'low mana', 'Damn I wasted all my mana on this', 'say'),
-(NULL, 'low mana', 'You should wait until I drink or regenerate my mana', 'say'),
-(NULL, 'low mana', 'Low mana', 'say'),
-(NULL, 'low mana', 'No mana. Again?', 'say'),
-(NULL, 'low mana', 'Low mana. Wanna drink', 'say'),
-(NULL, 'low mana', 'Do we have a vending machine? Out of mana again', 'say'),
-(NULL, 'low mana', 'My mana is history', 'say'),
-(NULL, 'low mana', 'I''d get some drinks next time. Out of mana', 'say'),
-(NULL, 'low mana', 'Where is my mana?', 'say');
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'aoe', 'Oh god!', 'say'),
-(NULL, 'aoe', 'I am scared', 'say'),
-(NULL, 'aoe', 'We are done for', 'say'),
-(NULL, 'aoe', 'This is over', 'say'),
-(NULL, 'aoe', 'This ends now', 'say'),
-(NULL, 'aoe', 'Could somebody cast blizzard or something?', 'say'),
-(NULL, 'aoe', 'Damn. The tank aggroed all the mobs around', 'say'),
-(NULL, 'aoe', 'We gonna die. We gonna die. We gonna die.', 'say'),
-(NULL, 'aoe', 'Whoa! So many toys to play with', 'say'),
-(NULL, 'aoe', 'I gonna kill them all!', 'say'),
-(NULL, 'aoe', 'If the tank dies we are history', 'say'),
-(NULL, 'aoe', 'Aaaaaargh!', 'yell'),
-(NULL, 'aoe', 'LEEEEERROOOYYYYYYYYYYYY JENNKINNNSSSSSS!!!!!!!', 'yell'),
-(NULL, 'aoe', 'Right. What do we have in AOE?', 'say'),
-(NULL, 'aoe', 'This gets interesting', 'say'),
-(NULL, 'aoe', 'Cool. Get them in one place for a good flamestrike', 'say'),
-(NULL, 'aoe', 'Kill! Kill! Kill!', 'say'),
-(NULL, 'aoe', 'I think my pants are wet', 'say'),
-(NULL, 'aoe', 'We are history', 'say'),
-(NULL, 'aoe', 'I hope healers are ready. Leeeeroy!', 'say'),
-(NULL, 'aoe', 'I hope they won''t come for me', 'say'),
-(NULL, 'aoe', 'Oh no. I can''t see at this slaugther', 'say');
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'loot', 'I hope there will be some money', 'say'),
-(NULL, 'loot', 'Loot! Loot!', 'say'),
-(NULL, 'loot', 'My precious', 'say'),
-(NULL, 'loot', 'I hope there is a shiny epic item waiting for me there', 'say'),
-(NULL, 'loot', 'I have deep pockets and bags', 'say'),
-(NULL, 'loot', 'All is mine!', 'say'),
-(NULL, 'loot', 'Hope no gray shit today', 'say'),
-(NULL, 'loot', 'This loot is MINE!', 'say'),
-(NULL, 'loot', 'Looting is disgusting but I need money', 'say'),
-(NULL, 'loot', 'Gold!', 'say'),
-(NULL, 'loot', 'OK. Let''s see what they''ve got', 'say'),
-(NULL, 'loot', 'Do not worry. I will loot eveything', 'say'),
-(NULL, 'loot', 'I am loot ninja', 'say'),
-(NULL, 'loot', 'Do I neeed to roll?', 'say'),
-(NULL, 'loot', 'Somebody explain me, where they did put all this stuff?', 'say'),
-(NULL, 'loot', 'No, I won''t loot gray shit', 'say'),
-(NULL, 'loot', 'I''m first. I''m first. I''m first.', 'say'),
-(NULL, 'loot', 'Give me your money!', 'say'),
-(NULL, 'loot', 'My pockets are empty, I need to fill them', 'say'),
-(NULL, 'loot', 'I''ve got a new bag for this', 'say'),
-(NULL, 'loot', 'I hope I won''t aggro anybody while looting', 'say'),
-(NULL, 'loot', 'Please don''t watch. I am looting', 'say'),
-(NULL, 'loot', 'Ha! You won''t get any piece of it!', 'say'),
-(NULL, 'loot', 'Looting is cool', 'say'),
-(NULL, 'loot', 'I like new gear', 'say'),
-(NULL, 'loot', 'I''l quit if there is nothing valuable again', 'say'),
-(NULL, 'loot', 'I hope it is be a pretty ring', 'say'),
-(NULL, 'loot', 'I''l rip the loot from you', 'say'),
-(NULL, 'loot', 'Everybody stay off. I''m going to loot', 'say'),
-(NULL, 'loot', 'Sweet loot', 'say'),
-(NULL, 'loot', 'The Roll God! Give me an epic today', 'say'),
-(NULL, 'loot', 'Please give me new toys', 'say'),
-(NULL, 'loot', 'I hope they carry tasties', 'say'),
-(NULL, 'loot', 'The gold is mine. I''l leave everyting, I promise', 'say'),
-(NULL, 'loot', 'No, I can''t resist', 'say'),
-(NULL, 'loot', 'I want more!', 'say');
-
-INSERT INTO `shadows_speech` VALUES
-(NULL, 'low ammo', 'I have few <ammo> left!', 'say'),
-(NULL, 'low ammo', 'I need more <ammo>!', 'say'),
-(NULL, 'low ammo', '100 <ammo> left!', 'say'),
-(NULL, 'no ammo', 'That\'s it! No <ammo>!', 'say'),
-(NULL, 'no ammo', 'And you have my bow... Oops, no <ammo>!', 'say'),
-(NULL, 'no ammo', 'Need ammo!', 'yell');
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 

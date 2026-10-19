@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -59,7 +59,7 @@ void session(socket_ptr sock)
     }
 }
 
-void server(Acore::Asio::IoContext& io_service, short port)
+void server(Ycore::Asio::IoContext& io_service, short port)
 {
     tcp::acceptor a(io_service, tcp::endpoint(tcp::v4(), port));
     for (;;)
@@ -83,7 +83,7 @@ void Run()
 
     try
     {
-        Acore::Asio::IoContext io_service;
+        Ycore::Asio::IoContext io_service;
         server(io_service, sShadowAIConfig->commandServerPort);
     }
 

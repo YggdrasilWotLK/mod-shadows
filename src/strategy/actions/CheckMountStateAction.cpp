@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU GPL v2 license, you may redistribute it
+ * Copyright (C) 2016+ YggdrasilCore <yggdrasilcore.github.io>, released under GNU GPL v2 license, you may redistribute it
  * and/or modify it under version 2 of the License, or (at your option), any later version.
  */
 
@@ -306,7 +306,7 @@ bool CheckMountStateAction::TryPreferredMount(Player* master) const
     {
         // Verify preferred mounts table existance in the database
         QueryResult checkTable = ShadowsDatabase.Query(
-            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'acore_shadows' AND table_name = 'shadows_preferred_mounts')");
+            "SELECT EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = 'ycore_shadows' AND table_name = 'shadows_preferred_mounts')");
 
         if (checkTable && checkTable->Fetch()[0].Get<uint32>() == 1)
         {

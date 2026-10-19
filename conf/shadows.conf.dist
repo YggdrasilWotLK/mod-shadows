@@ -1862,9 +1862,9 @@ AiShadow.RandomClassSpecIndex.11.3 = 3
 #                                                                 section my.ini)
 #                     ".;/path/to/unix_socket;username;password;database" - (use Unix sockets on
 #                                                                           Unix/Linux)
-#        Default:     "127.0.0.1;3306;acore;acore;acore_shadows"       - (ShadowDatabaseInfo)
+#        Default:     "127.0.0.1;3306;ycore;ycore;ycore_shadows"       - (ShadowDatabaseInfo)
 
-ShadowsDatabaseInfo = "127.0.0.1;3306;acore;acore;acore_shadows"
+ShadowsDatabaseInfo = "127.0.0.1;3306;ycore;ycore;ycore_shadows"
 
 #
 #    ShadowsDatabase.WorkerThreads
